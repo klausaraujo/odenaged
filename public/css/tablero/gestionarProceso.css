@@ -1,0 +1,66 @@
+.alert {
+	margin-top: 2px;
+	margin-bottom: 0px;
+}
+
+.container-fluid {
+	background: #fff;
+	margin: auto 8px;
+	width: auto;
+	padding-bottom: 40px;
+}
+
+.btn-secondary {
+	background-color: transparent;
+	border-color: transparent;
+}
+
+.table.table-bordered {
+	margin-top: 20px;
+}
+
+.table th {
+	text-align: center;
+	font-size: 14px;
+}
+
+table.dataTable {
+	border-collapse: collapse !important;
+}
+
+.actionDisable i, .actionEnable i, .actionEdit i, .actionDelete i {
+	color: #FFF;
+}
+
+.error {
+	font-size: 11px;
+	margin: 0;
+}
+
+table tr td .error {
+	text-align: center;
+	width: 100%;
+}
+
+input[class^='mes'], input[class*='mes'] {
+	text-align: center;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+label.error {
+    position: absolute;
+}
+
+.inputfile + label {
+    width: 100%;
+    font-size: 13px;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 10px 30px;
+}

@@ -1,0 +1,302 @@
+#map{
+	width:100%;
+	height:380px;
+}
+
+.tbLista i{
+	   padding:0 4px;
+	   font-size:17px;
+	}
+
+	.seleccionado{
+  	background:#d0f9ff!important;
+  }
+
+   .botones-evento{
+  	 display: flex;
+     list-style: none;
+     padding-left:5px;
+     font-size: 10px;
+   }
+
+   .botones-evento li{
+   		display:inline-block;
+   		margin:3px;
+   		padding:5px;
+   		width:84px;
+   		height:100px;
+   		color:#ccc;
+   		border:2px solid #ccc;
+   		opacity:0.4;
+   		filter:alpha(opacity=40);
+     	pointer-events:none;
+     	position: relative;
+   	}
+
+   	.botones-evento li label{
+   	    display:block!important;
+   	}
+   	.botones-evento span{
+   	    display: block;
+        text-align: center;
+     }
+   	.botones-evento li i{
+   	    display:block!important;
+   	    text-align:center;
+   	    margin:auto;
+   	    font-size:38px;
+   		pointer-events:none;
+   		position: absolute;
+	    top: 12px;
+	    right: 0;
+	    left: 0;
+	    bottom: 0;
+	    width: 38px;
+	    height: 38px;
+   	}
+
+   	.botones-evento li.agregar i,
+   	.botones-evento li.editar i,
+	.botones-evento li.anular i,
+	.botones-evento li.reportar i,
+   	.botones-evento li.agregar span,
+   	.botones-evento li.editar span,
+	.botones-evento li.reportar span,   
+	.botones-evento li.anular span{
+   		cursor:pointer!important;
+   		pointer-events:all!important;
+   	}
+
+   	.botones-evento li.exportar a{
+   		color:#c2359d!important;
+   	}
+
+   	.botones-evento li.agregar{
+   		color:#17a2b8;
+   		border:2px solid #17a2b8;
+   		opacity:1!important;
+   		filter:alpha(opacity=100)!important;
+   		pointer-events:all!important;
+        cursor:pointer;
+   	}
+
+   	.botones-evento li.editar{
+   		color:#28a745;
+   		border:2px solid #28a745;
+   		opacity:1!important;
+   		filter:alpha(opacity=100)!important;
+   		pointer-events:all!important;
+        cursor:pointer;
+   	}
+   	.botones-evento li.anular{
+   		color:#dc3545;
+   		border:2px solid #dc3545;
+   		opacity:1!important;
+   		filter:alpha(opacity=100)!important;
+   		pointer-events:all!important;
+        cursor:pointer;
+	   }
+	   
+   	.botones-evento li.reportar{
+		color:#000000;
+		border:2px solid #000000;
+		opacity:1!important;
+		filter:alpha(opacity=100)!important;
+		pointer-events:all!important;
+	 	cursor:pointer;
+	}	   
+   		
+   	.tbLista tr{
+   	    cursor:pointer;
+   	}
+   	.selected {
+    	background-color: #d6d6d6 !important;
+    }
+
+
+   	i.disabled{
+   	    color: #d8d8d8!important;
+        cursor: not-allowed!important;
+   	}
+
+	.tableEtiqueta{
+		font-size: 10px;
+	}
+
+	.odd,.even{
+		font-size:12px;
+	}
+
+	#aInformeInicial{
+		margin-right:10px;
+	}
+
+	.tbIndicador tbody tr {
+		cursor: pointer;
+	}
+	input[name=Nombre_Indicador] {
+		font-size: 10px;
+	}
+
+   	@media all and (max-width:500px){
+	    .tableEtiqueta{
+	        width:100%;
+	    }
+
+	    .tableEtiqueta td,.tableEtiqueta tr{
+	        display:block;
+	        width:100%;
+	    }
+
+		}
+
+		@media screen and (max-width: 767px){
+			.botones-evento {
+				flex-flow: wrap;
+				justify-content: center;
+			}
+		}
+
+		.fa.fa-times {
+			cursor: pointer;
+		}
+		
+#formRegistrarEspecialidad .table-wrapper,#formRegistrarCertificacion .table-wrapper,#formRegistrarCapacitacion .table-wrapper {
+    max-height: 250px;
+    overflow: auto;
+}
+#formRegistrarCertificacion .table-wrapper,#formRegistrarCapacitacion .table-wrapper {
+	max-height: 400px;
+}
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    width: 100%;
+    font-size: 13px;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 10px 30px;
+}
+
+.inputfile:focus + label,
+.inputfile.has-focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+.inputfile + label i {
+    font-size: 12px;
+    vertical-align: middle;
+    color: #FFF;    
+    right: 15px;
+    top: 50%;
+    position: absolute;
+    margin-top: -6px;
+}
+
+.inputfile-1 + label {
+    color: #FFF;
+    background-color: #555;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+}
+
+.inputfile-1:focus + label,
+.inputfile-1.has-focus + label,
+.inputfile-1 + label:hover {
+    background-color: #0f9eed;
+}
+
+.inputfile1 {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile1 + label {
+    width: 100%;
+    font-size: 13px;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 10px 30px;
+}
+
+.inputfile1:focus + label,
+.inputfile1.has-focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+.inputfile1 + label i {
+    font-size: 12px;
+    vertical-align: middle;
+    color: #FFF;    
+    right: 15px;
+    top: 50%;
+    position: absolute;
+    margin-top: -6px;
+}
+
+.inputfile1-1 + label {
+    color: #FFF;
+    background-color: #555;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+}
+
+.inputfile1-1:focus + label,
+.inputfile1-1.has-focus + label,
+.inputfile1-1 + label:hover {
+    background-color: #0f9eed;
+}
+
+.py-10 {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+#tableCertificacion thead th,#tableCertificacion td {
+	font-size: 11px;
+}
+
+.tableEvento tbody tr {
+	cursor: pointer;
+}
+.evento_content {
+	display: none;
+	background: #f83f3711;
+	border: 1px solid #f83f37;
+	font-size: 12px;
+}
+.evento_datos {
+	text-align: center;
+}
+
+#fotoModal img {
+	width: 100%;
+}

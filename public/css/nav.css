@@ -1,0 +1,108 @@
+.slimScrollBar {
+	background: rgb(135, 135, 135);
+	width: 4px;
+	position: absolute;
+	top: 0px;
+	opacity: 0.4;
+	display: none;
+	border-radius: 0px;
+	z-index: 99;
+	right: 1px;
+	height: 759px;
+}
+
+.slimScrollRail {
+	width: 4px;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	display: none;
+	border-radius: 7px;
+	background: rgb(51, 51, 51);
+	opacity: 0.2;
+	z-index: 90;
+	right: 1px;
+}
+
+.slimScrollDiv {
+	position: relative;
+	overflow: hidden;
+	width: auto;
+	height: 100%;
+}
+
+.slimScrollDiv>.nicescroll-bar {
+	overflow: hidden;
+	width: auto;
+	height: 100%;
+}
+
+.slimScrollDiv>ul {
+	overflow: hidden;
+	width: auto;
+	height: 100%;
+}
+
+.slider-size {
+	height: 40px; 
+  }
+
+  .carousel-fixed-height {
+	margin-top: 55px;
+	background:#3172B5;
+	color: white;
+  }
+  .carousel-fixed-heightR {
+	margin-top: 140px;
+	background:#3172B5;
+	color: white;
+  }
+  .carousel-fixed-heightN {
+	margin-top: 140px;
+	background:#efa433;
+	color: white;
+  }
+
+  .carousel-fixed-heightA {
+	margin-top: 140px;
+	background:#efec33;
+	color: white;
+  }
+  
+  .carousel-fixed-heightV {
+	margin-top: 140px;
+	background:#29c243;
+	color: white;
+  }
+
+  .carousel-fixed-heightR p {
+	  font-size: 18px;
+	  color: white;
+	  line-height: 0px;
+  }
+  .carousel-fixed-heightD p {
+	font-size: 18px;
+	color: white;
+	line-height: 0px;
+}
+.carousel-fixed-heightA p {
+	font-size: 18px;
+	color: white;
+	line-height: 0px;
+}
+.carousel-fixed-heightV p {
+	font-size: 18px;
+	color: white;
+	line-height: 0px;
+}
+.carousel-fixed-height p {
+	font-size: 18px;
+	color: white;
+	line-height: 0px;
+}
+  .carousel-caption {
+	  padding-bottom: 0;
+  }
+  .carousel-caption p a{
+	color: white;
+}

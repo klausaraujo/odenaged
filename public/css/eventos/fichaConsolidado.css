@@ -1,0 +1,59 @@
+.glyphicon.glyphicon-chevron-up, .glyphicon.glyphicon-chevron-down{
+	color: #337ab7;
+}
+
+#atencionModal .form-control{
+	height: 34px;
+	padding: 4px 11px;
+}
+#atencionModal .btn.btn-info.detalle-size{
+	padding: 4px 15px 5px;
+}
+
+.tableEnfermedades tbody tr{
+	cursor: pointer;
+}
+
+.pt-30{
+	padding-top: 30px!important;
+}
+.mb-5{
+	margin-bottom: 5px;
+}
+
+.regresar{
+	cursor: pointer;
+}
+
+#btn-buscar {
+	height: 34px;
+	padding-top: 5px;
+}
+
+.paises {
+	position: relative;
+}
+#paises {
+	position: absolute;
+	top: 46px;
+	left: 0;
+	display: none;
+	background-color: white;
+	border: 1px solid #cccccc;
+	padding: 5px;
+	min-width: 200px;
+}
+#paises ul {
+	padding: 0;
+	list-style: none;
+	margin: 0;
+}
+#paises ul li {
+	padding: 10px 15px;
+	font-size: 12px;
+	text-align: left;
+	cursor: pointer;
+}
+#paises ul li:hover {
+	background-color: #fafafa;
+}

@@ -1,0 +1,28 @@
+.tbLista i{
+	   padding:0 4px;
+	   font-size:20px;
+	}
+	
+.seleccionado{
+  	background:#d0f9ff!important;
+  }
+  
+   	
+   	.tbLista tr{
+   	    cursor:pointer;
+   	}
+   	.selected {
+    	background-color: #d6d6d6 !important;
+    }
+   	
+   	
+   	i.disabled{
+   	    color: #d8d8d8!important;
+        cursor: not-allowed!important;
+   	}
+
+	.dt-center{
+		text-align:center;
+	}
+
+}

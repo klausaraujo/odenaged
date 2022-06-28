@@ -1,0 +1,82 @@
+.label-mes {
+	padding: 8px 15px;
+}
+
+.field-mes {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.field-mes input {
+	padding: 6px 0;
+}
+
+.alert {
+	margin-top: 2px;
+	margin-bottom: 0px;
+}
+
+.container-fluid {
+	background: #fff;
+	margin: auto 8px;
+	width: auto;
+	padding-bottom: 40px;
+}
+
+.btn-secondary {
+	background-color: transparent;
+	border-color: transparent;
+}
+
+.table.table-bordered {
+	margin-top: 20px;
+}
+
+.table th {
+	text-align: center;
+	font-size: 14px;
+}
+
+table.dataTable {
+	border-collapse: collapse !important;
+}
+
+.actionDisable i, .actionEnable i, .actionEdit i, .actionDelete i {
+	color: #FFF;
+}
+
+.error {
+	font-size: 11px;
+	margin: 0;
+}
+
+table tr td .error {
+	text-align: center;
+	width: 100%;
+}
+
+input[class^='mes'], input[class*='mes'] {
+	text-align: center;
+}
+
+#especificaDetalleModal {
+	z-index: 10000 !important;
+}
+
+.tb-prespuesto {
+	font-size: 10px;
+	text-align: center;
+	display: none;
+}
+
+.tb-prespuesto th, .tb-prespuesto td {
+	padding: 3px;
+}
+
+.drop-gasto {
+	cursor: pointer;
+}
+
+#tbListar td{
+	font-size:12px;
+}
