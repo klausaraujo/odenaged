@@ -1,18 +1,4 @@
-DROP TABLE IF EXISTS canillita_estudios;
-DROP TABLE IF EXISTS carreras_universitarias;
-DROP TABLE IF EXISTS carreras_tecnicas;
-DROP TABLE IF EXISTS situacion_academica;
-DROP TABLE IF EXISTS canillita_familiar;
-DROP TABLE IF EXISTS canillita;
-DROP TABLE IF EXISTS punto_venta;
-DROP TABLE IF EXISTS base_sindical;
-DROP TABLE IF EXISTS parentesco;
-DROP TABLE IF EXISTS condicion;
-DROP TABLE IF EXISTS estado_civil;
-DROP TABLE IF EXISTS condicion;
 DROP VIEW IF EXISTS lista_ubigeo;
-DROP TABLE IF EXISTS ubigeo;
-DROP TABLE IF EXISTS anio;
 DROP TABLE IF EXISTS permisos_opcion;
 DROP TABLE IF EXISTS permisos_menu_detalle;
 DROP TABLE IF EXISTS permisos_menu;
@@ -23,6 +9,7 @@ DROP TABLE IF EXISTS modulo_rol;
 DROP TABLE IF EXISTS modulo;
 DROP TABLE IF EXISTS usuarios;
 DROP TABLE IF EXISTS perfil;
+DROP TABLE IF EXISTS ubigeo;
 
 
 CREATE TABLE perfil  (
@@ -33,167 +20,6 @@ PRIMARY KEY (idperfil)) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_gene
 
 insert into perfil (perfil) values('ADMINISTRADOR');
 insert into perfil (perfil) values('ESTANDAR');
-
-CREATE TABLE usuarios  (
-  idusuario smallint(4) NOT NULL AUTO_INCREMENT,
-  dni varchar(8) NOT NULL,
-  avatar varchar(30),
-  apellidos varchar(50) NOT NULL,
-  nombres varchar(50) NOT NULL,
-  usuario varchar(50) NOT NULL,
-  passwd varchar(50) NOT NULL,
-  idperfil smallint(4) NOT NULL,
-  activo char(1) DEFAULT '1',
-  PRIMARY KEY (idusuario),
-	FOREIGN KEY (idperfil) REFERENCES perfil (idperfil) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
-
-INSERT INTO usuarios (dni,avatar,apellidos,nombres,usuario,passwd,idperfil) VALUES ('42545573', '000120190310064855.png', 'ARAUJO CUADROS', 'KLAUS JOSEPH', 'admin', 'e4619e8fb50a0aa59ad1b92364f127afad06afe1',1);
-
-CREATE TABLE modulo  (
-  idmodulo smallint(4) NOT NULL AUTO_INCREMENT,
-  descripcion varchar(100) NOT NULL,
-  menu varchar(30) NOT NULL,
-  icono varchar(25) NOT NULL,
-  url varchar(25) NOT NULL,
-  imagen char(1) NOT NULL,
-  mini varchar(30) NOT NULL,
-  orden smallint(4) NOT NULL,
-  PRIMARY KEY (idmodulo)) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
-	
-	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Registro de Canillitas','Módulo Canillitas','canillitas.png','canillitas','1','fa fa-list-alt',1);
-	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Registro de Atenciones','Módulo Atenciones','atenciones.png','#','1','fa fa-medkit',2);
-	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Trámite Documentario','Módulo Trámite','tramite.png','#','1','fa fa-newspaper-o',3);
-	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Caja Chica e Ingresos','Módulo Caja','caja.png','#','1','fa fa-calculator',4);
-	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Inventarios y Patrimonio','Módulo Inventarios','inventarios.png','#','1','fa fa-calendar-check-o',5);
-	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Contabilidad y Finanzas','Módulo Contable','contabilidad.png','#','1','fa fa-calculator',6);
-	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Recursos Humanos','Módulo RR.HH.','rrhh.png','#','1','fa fa-user',7);
-	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Seguridad y Parámetros','Módulo Seguridad','seguridad.png','usuarios','1','fa fa-wrench',8);
-
-CREATE TABLE modulo_rol  (	
-	idmodulorol smallint(4) NOT NULL AUTO_INCREMENT,
-  idmodulo smallint(4) NOT NULL,
-  idperfil smallint(4) NOT NULL,
-  activo char(1) DEFAULT '1',
-  PRIMARY KEY (idmodulorol),
-	FOREIGN KEY (idmodulo) REFERENCES modulo (idmodulo) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (idperfil) REFERENCES perfil (idperfil) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
-
-  INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(1,1,'1');
-	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(2,1,'1');
-	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(3,1,'1');
-	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(4,1,'1');
-	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(5,1,'1');
-	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(6,1,'1');
-	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(7,1,'1');
-	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(8,1,'1');
-	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(1,2,'1');
-	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(2,2,'1');
-	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(3,2,'1');
-	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(4,2,'1');
-	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(5,2,'1');
-	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(6,2,'1');
-	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(7,2,'1');
-	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(8,2,'0');
-
-DROP TABLE IF EXISTS permiso;
-CREATE TABLE permiso  (
-  idpermiso smallint(4) NOT NULL AUTO_INCREMENT,
-  descripcion varchar(50) NOT NULL,
-  tipo char(1) NOT NULL,
-  orden smallint(4) NOT NULL,
-  activo char(1) DEFAULT '1',
-  idmodulo smallint(4) NOT NULL,
-  PRIMARY KEY (idpermiso),
-	FOREIGN KEY (idmodulo) REFERENCES modulo (idmodulo) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
-
-	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Nuevo Canillita','1',1,1);
-	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Editar Canillita','1',2,1);
-	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Datos Familiares','1',3,1);
-	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Datos Académicos','1',3,1);
-	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Ficha Canillita','1',4,1);
-	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Anular Canillita','1',5,1);
-	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Eliminar Canillita','1',6,1);
-
-DROP TABLE IF EXISTS menu;
-CREATE TABLE menu  (
-  idmenu smallint(4) NOT NULL AUTO_INCREMENT,
-  idmodulo smallint(4) NOT NULL,
-  descripcion varchar(100) NOT NULL,
-  nivel char(1) NOT NULL,
-  url varchar(30) NOT NULL,
-  icono varchar(30) NOT NULL,
-  activo char(1) DEFAULT '1',
-  PRIMARY KEY (idmenu),
-	FOREIGN KEY (idmodulo) REFERENCES modulo (idmodulo) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
-
-  INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Lista Canillitas','0','canillitas','fa fa-list');
-	INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Nuevo Canillita','0','#','fa fa-pencil-square-o');
-
-	
-CREATE TABLE menu_detalle  (
-  idmenudetalle smallint(4) NOT NULL AUTO_INCREMENT,
-  idmenu smallint(4) NOT NULL,
-  descripcion varchar(100) NOT NULL,
-  url varchar(50) NOT NULL,
-  icono varchar(25) NOT NULL,
-  orden int(1) NOT NULL,
-  activo char(1) DEFAULT '1',
-  PRIMARY KEY (idmenudetalle),
-	FOREIGN KEY (idmenu) REFERENCES menu (idmenu) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
-
-DROP TABLE IF EXISTS permisos_menu;
-CREATE TABLE permisos_menu  (
-  idpermisosmenu smallint(4) NOT NULL AUTO_INCREMENT,
-  idmenu smallint(4) NOT NULL,
-  idusuario smallint(4) NOT NULL,
-  activo char(1) DEFAULT '1',
-  PRIMARY KEY (idpermisosmenu),
-	FOREIGN KEY (idmenu) REFERENCES menu (idmenu) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (idusuario) REFERENCES usuarios (idusuario) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
-	
-	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(1,1);
-	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(2,1);
-
-	
-CREATE TABLE permisos_menu_detalle  (
-  idpermisosmenudetalle smallint(4) NOT NULL AUTO_INCREMENT,
-  idmenudetalle smallint(4) NOT NULL,
-  idusuario smallint(4) NOT NULL,
-  activo char(1) DEFAULT '1',
-  PRIMARY KEY (idpermisosmenudetalle),
-	FOREIGN KEY (idmenudetalle) REFERENCES menu_detalle (idmenudetalle) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (idusuario) REFERENCES usuarios (idusuario) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
-	
-
-CREATE TABLE permisos_opcion  (
-  idpermisoopcion smallint(4) NOT NULL AUTO_INCREMENT,
-  idpermiso smallint(4) NOT NULL,
-  idusuario smallint(4) NOT NULL,
-  activo char(1) DEFAULT '1',
-  PRIMARY KEY (idpermisoopcion),
-	FOREIGN KEY (idpermiso) REFERENCES permiso (idpermiso) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (idusuario) REFERENCES usuarios (idusuario) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
-
-	INSERT INTO permisos_opcion(idpermiso,idusuario) VALUES(1,1);
-	INSERT INTO permisos_opcion(idpermiso,idusuario) VALUES(2,1);
-	INSERT INTO permisos_opcion(idpermiso,idusuario) VALUES(3,1);
-	INSERT INTO permisos_opcion(idpermiso,idusuario) VALUES(4,1);
-	INSERT INTO permisos_opcion(idpermiso,idusuario) VALUES(5,1);
-	INSERT INTO permisos_opcion(idpermiso,idusuario) VALUES(6,1);
-
-	
-	/*Tablas de Mantenimiento Frecuente*/
-	
-CREATE TABLE anio(
-	idanio smallint(4) NOT NULL AUTO_INCREMENT,
-	anio smallint(4) NOT NULL,
-	nombre varchar(100),
-	activo char(1) DEFAULT '1',
-	PRIMARY KEY (idanio)) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
-	
-	INSERT INTO anio (anio,nombre) Values (2021,'Año del Bicentenario del Perú: 200 años de Independencia');
-	INSERT INTO anio (anio,nombre) Values (2022,'Año del Fortalecimiento de la Soberanía Nacional');
 
 CREATE TABLE ubigeo(
 	idubigeo smallint(4) NOT NULL AUTO_INCREMENT,
@@ -209,7 +35,7 @@ CREATE TABLE ubigeo(
 	activo Char(1) DEFAULT '1',
 	PRIMARY KEY (idubigeo)) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 	
-	INSERT INTO ubigeo(ubigeo,departamento,provincia,distrito,latitud,longitud,cod_dep,cod_pro,cod_dis) VALUES('010101','AMAZONAS','CHACHAPOYAS','CHACHAPOYAS','-6.2294','-77.8714','01','01','01');
+INSERT INTO ubigeo(ubigeo,departamento,provincia,distrito,latitud,longitud,cod_dep,cod_pro,cod_dis) VALUES('010101','AMAZONAS','CHACHAPOYAS','CHACHAPOYAS','-6.2294','-77.8714','01','01','01');
 INSERT INTO ubigeo(ubigeo,departamento,provincia,distrito,latitud,longitud,cod_dep,cod_pro,cod_dis) VALUES('010102','AMAZONAS','CHACHAPOYAS','ASUNCION','-6.0317','-77.7122','01','01','02');
 INSERT INTO ubigeo(ubigeo,departamento,provincia,distrito,latitud,longitud,cod_dep,cod_pro,cod_dis) VALUES('010103','AMAZONAS','CHACHAPOYAS','BALSAS','-6.8375','-78.0214','01','01','03');
 INSERT INTO ubigeo(ubigeo,departamento,provincia,distrito,latitud,longitud,cod_dep,cod_pro,cod_dis) VALUES('010104','AMAZONAS','CHACHAPOYAS','CHETO','-6.2558','-77.7003','01','01','04');
@@ -2088,202 +1914,134 @@ CREATE VIEW lista_ubigeo
 As
 Select ubigeo,departamento,provincia,distrito,CONCAT_WS(' - ',departamento,provincia,distrito)  As 'descripcion',latitud, longitud From ubigeo;
 
-CREATE TABLE estado_civil  (
-idestadocivil smallint(4) NOT NULL AUTO_INCREMENT,
-estado varchar(50) NOT NULL,
-activo char(1) DEFAULT '1',
-PRIMARY KEY (idestadocivil)) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+CREATE TABLE usuarios  (
+  idusuario smallint(4) NOT NULL AUTO_INCREMENT,
+  dni varchar(8) NOT NULL,
+  avatar varchar(30),
+  apellidos varchar(50) NOT NULL,
+  nombres varchar(50) NOT NULL,
+  usuario varchar(50) NOT NULL,
+  passwd varchar(50) NOT NULL,
+  idperfil smallint(4) NOT NULL,
+  idubigeo smallint(4) NOT NULL,
+  activo char(1) DEFAULT '1',
+  PRIMARY KEY (idusuario),
+	FOREIGN KEY (idperfil) REFERENCES perfil (idperfil) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (idubigeo) REFERENCES ubigeo (idubigeo) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
-Insert Into estado_civil(estado) Values('SOLTERO(A)');
-Insert Into estado_civil(estado) Values('CASADO(A)');
-Insert Into estado_civil(estado) Values('VIUDO(A)');
-Insert Into estado_civil(estado) Values('DIVORCIADO(A)');
+INSERT INTO usuarios (dni,avatar,apellidos,nombres,usuario,passwd,idperfil,idubigeo) VALUES ('42545573', '000120190310064855.png', 'ARAUJO CUADROS', 'KLAUS JOSEPH', 'admin', 'e4619e8fb50a0aa59ad1b92364f127afad06afe1',1,1);
 
-CREATE TABLE condicion  (
-idcondicion smallint(4) NOT NULL AUTO_INCREMENT,
-condicion varchar(50) NOT NULL,
-activo char(1) DEFAULT '1',
-PRIMARY KEY (idcondicion)) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
-
-Insert Into condicion(condicion) Values('TITULAR');
-Insert Into condicion(condicion) Values('VOCERO');
-Insert Into condicion(condicion) Values('AYUDANTE');
-
-CREATE TABLE parentesco  (
-idparentesco smallint(4) NOT NULL AUTO_INCREMENT,
-parentesco varchar(50) NOT NULL,
-activo char(1) DEFAULT '1',
-PRIMARY KEY (idparentesco)) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
-
-Insert Into parentesco(parentesco) Values('ESPOSO(A)');
-Insert Into parentesco(parentesco) Values('HIJO(A)');
-Insert Into parentesco(parentesco) Values('MADRE');
-Insert Into parentesco(parentesco) Values('PADRE');
-Insert Into parentesco(parentesco) Values('HERMANO(A)');
-Insert Into parentesco(parentesco) Values('SOBRINO(A)');
-Insert Into parentesco(parentesco) Values('PRIMO(A)');
-Insert Into parentesco(parentesco) Values('TIO(A)');
-Insert Into parentesco(parentesco) Values('ABUELO(A)');
-Insert Into parentesco(parentesco) Values('CONVIVIENTE');
-
-Create Table base_sindical(
-	idbase smallint(4) NOT NULL AUTO_INCREMENT,
-	nombre VarChar(50),
-	ubigeo VarChar(6),
-	domicilio VarChar(50),
-	fecha_creacion datetime,
-	dni VarChar(8),
-	apellidos VarChar(50),
-	nombres VarChar(50),
-	correo VarChar(50),
-	telefono VarChar(10),
-	activo char(1) DEFAULT '1',
-	PRIMARY KEY(idbase))ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
-
-Insert Into base_sindical(nombre,ubigeo,domicilio,fecha_creacion,dni,apellidos,nombres,correo,telefono)Values('NO ESPECÍFICO','150101','SIN ESPECIFICAR',CURDATE(),'00000000','SIN ESPECIFICAR','SIN ESPECIFICAR','SIN ESPECIFICAR','00000000');
-
-Create Table punto_venta(
-	idpuntoventa smallint(4) NOT NULL AUTO_INCREMENT,
-	puntoventa VarChar(50),
-	ubigeo VarChar(6),
-	latitud VarChar(50),
-	longitud VarChar(50),
-	activo char(1) DEFAULT '1',
-	PRIMARY KEY(idpuntoventa)) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+CREATE TABLE modulo  (
+  idmodulo smallint(4) NOT NULL AUTO_INCREMENT,
+  descripcion varchar(100) NOT NULL,
+  menu varchar(30) NOT NULL,
+  icono varchar(25) NOT NULL,
+  url varchar(25) NOT NULL,
+  imagen char(1) NOT NULL,
+  mini varchar(30) NOT NULL,
+  orden smallint(4) NOT NULL,
+  PRIMARY KEY (idmodulo)) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 	
-	Insert Into punto_venta(puntoventa,ubigeo,latitud,longitud) Values('NO ESPECÍFICO','150101','-12.0467','-77.0322');
-	
-	Create Table canillita(
-	idcanillita smallint(4) NOT NULL AUTO_INCREMENT,
-	dni VarChar(8) Not Null,
-	apellidos VarChar(50),
-	nombres VarChar(50),
-	fecnac datetime,
-	sexo char(1) NOT NULL,
-	idestadocivil smallint(4) NOT NULL,
-	idcondicion smallint(4) NOT NULL,
-	domicilio VarChar(100),
-	Ubigeo VarChar(6),
-	latitud VarChar(50),
-	longitud VarChar(50),
-	telefono01 VarChar(10),
-	telefono02 VarChar(10),
-	correo VarChar(50),
-	idbase smallint(4) NOT NULL,
-	idpuntoVenta smallint(4) NOT NULL,
-	observaciones VarChar(1000),
-	foto varchar(30),
-	usuario_registro smallint(4) NOT NULL,
-	fecha_registro datetime,
-	usuario_actualizacion smallint(4) NOT NULL,
-	fecha_actualizacion datetime,
-	usuario_anulacion smallint(4) NOT NULL,
-	fecha_anulacion datetime,
-	activo Char(1) Default '1',
-	PRIMARY KEY(idcanillita),
-	FOREIGN KEY (idestadocivil) REFERENCES estado_civil (idestadocivil) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (idcondicion) REFERENCES condicion (idcondicion) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (idbase) REFERENCES base_sindical (idbase) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (idpuntoVenta) REFERENCES punto_venta (idpuntoVenta) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
-	
-	Create Table canillita_familiar(
-	idfamiliar smallint(4) NOT NULL AUTO_INCREMENT,
-	idcanillita smallint(4) NOT NULL,
-	dni VarChar(8) Not Null,
-	apellidos VarChar(50),
-	nombres VarChar(50),
-	fecnac Datetime,
-	sexo char(1) NOT NULL,
-	idestadocivil smallint(4) NOT NULL,
-	idparentesco smallint(4) NOT NULL,
-	activo Char(1) Default '1',
-	PRIMARY KEY(idfamiliar),
-	FOREIGN KEY (idcanillita) REFERENCES canillita (idcanillita) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (idestadocivil) REFERENCES estado_civil (idestadocivil) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (idparentesco) REFERENCES parentesco (idparentesco) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Registro de Eventos','Módulo Eventos','canillitas.png','canillitas','1','fa fa-list-alt',1);
+	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Seguridad y Parámetros','Módulo Seguridad','seguridad.png','usuarios','1','fa fa-wrench',2);
 
-CREATE TABLE situacion_academica(
-	idsituacion smallint(4) NOT NULL AUTO_INCREMENT,
-	situacion varchar(20),
-	activo Char(1) Default '1',
-	PRIMARY KEY(idsituacion))ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
-	
-Insert Into situacion_academica(situacion) Values('[N/A]');
-Insert Into situacion_academica(situacion) Values('EN CURSO');
-Insert Into situacion_academica(situacion) Values('CONCLUIDO');
-Insert Into situacion_academica(situacion) Values('INCOMPLETO');
-	
-Create Table carreras_tecnicas(
-	idcarreratecnica smallint(4) NOT NULL AUTO_INCREMENT,
-	carrera_tecnica varchar(50),
-	activo Char(1) Default '1',
-	PRIMARY KEY(idcarreratecnica)) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+CREATE TABLE modulo_rol  (	
+	idmodulorol smallint(4) NOT NULL AUTO_INCREMENT,
+  idmodulo smallint(4) NOT NULL,
+  idperfil smallint(4) NOT NULL,
+  activo char(1) DEFAULT '1',
+  PRIMARY KEY (idmodulorol),
+	FOREIGN KEY (idmodulo) REFERENCES modulo (idmodulo) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (idperfil) REFERENCES perfil (idperfil) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
-Insert Into carreras_tecnicas(carrera_tecnica) Values('[N/A]');
-Insert Into carreras_tecnicas(carrera_tecnica) Values('TÉCNICO EN INGENIERÍA MINERA');
-Insert Into carreras_tecnicas(carrera_tecnica) Values('TÉCNICO EN ARQUITECTURA Y URBANISMO');
-Insert Into carreras_tecnicas(carrera_tecnica) Values('TÉCNICO EN INGENIERÍA CIVIL');
-Insert Into carreras_tecnicas(carrera_tecnica) Values('TÉCNICO EN ELECTRÓNICA INDUSTRIAL');
-Insert Into carreras_tecnicas(carrera_tecnica) Values('TÉCNICO EN DISEÑO GRÁFICO');
-Insert Into carreras_tecnicas(carrera_tecnica) Values('TÉCNICO EN MARKETING');
-Insert Into carreras_tecnicas(carrera_tecnica) Values('TÉCNICO EN CONTABILIDAD');
-Insert Into carreras_tecnicas(carrera_tecnica) Values('TÉCNICO EN MECATRÓNICA');
-Insert Into carreras_tecnicas(carrera_tecnica) Values('TÉCNICO EN COMPUTACIÓN E INFORMÁTICA');
-Insert Into carreras_tecnicas(carrera_tecnica) Values('TÉCNICO EN AGROPECUARIA');
-Insert Into carreras_tecnicas(carrera_tecnica) Values('TÉCNICO EN FARMACIA');
-Insert Into carreras_tecnicas(carrera_tecnica) Values('TÉCNICO EN FISIOTERAPIA');
-Insert Into carreras_tecnicas(carrera_tecnica) Values('TÉCNICO EN TERAPIA FÍSICA');
-Insert Into carreras_tecnicas(carrera_tecnica) Values('TÉCNICO EN ADMINISTRACIÓN');
-Insert Into carreras_tecnicas(carrera_tecnica) Values('TÉCNICO EN FINANZAS');
-Insert Into carreras_tecnicas(carrera_tecnica) Values('TÉCNICO EN ADMINISTRACIÓN Y FINANZAS');
+  INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(1,1,'1');
+	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(2,1,'1');
+	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(1,2,'1');
+	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(2,2,'0');
 
-Create Table carreras_universitarias(
-	idcarrerauniversitaria smallint(4) NOT NULL AUTO_INCREMENT,
-	carrera_universitaria varchar(50),
-	activo Char(1) Default '1',
-	PRIMARY KEY(idcarrerauniversitaria))ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
-	
-Insert Into carreras_universitarias(carrera_universitaria) Values('[N/A]');
-Insert Into carreras_universitarias(carrera_universitaria) Values('ADMINISTRACIÓN DE EMPRESAS');
-Insert Into carreras_universitarias(carrera_universitaria) Values('INGENIERÍA INDUSTRIAL');
-Insert Into carreras_universitarias(carrera_universitaria) Values('INGENIERÍA AMBIENTAL');
-Insert Into carreras_universitarias(carrera_universitaria) Values('INGENIERÍA DE SISTEMAS');
-Insert Into carreras_universitarias(carrera_universitaria) Values('CONTABILIDAD');
-Insert Into carreras_universitarias(carrera_universitaria) Values('ECONOMÍA');
-Insert Into carreras_universitarias(carrera_universitaria) Values('ADMINISTRACIÓN DE NEGOCIOS INTERNACIONALES');
-Insert Into carreras_universitarias(carrera_universitaria) Values('ADMINISTRACIÓN DE EMPRESAS');
-Insert Into carreras_universitarias(carrera_universitaria) Values('MARKETING Y MERCADOTECNIA');
-Insert Into carreras_universitarias(carrera_universitaria) Values('ADMINISTRACIÓN DE NEGOCIOS INTERNACIONALES');
-Insert Into carreras_universitarias(carrera_universitaria) Values('CIENCIAS DE LA COMUNICACIÓN');
-Insert Into carreras_universitarias(carrera_universitaria) Values('DERECHO');
+DROP TABLE IF EXISTS permiso;
+CREATE TABLE permiso  (
+  idpermiso smallint(4) NOT NULL AUTO_INCREMENT,
+  descripcion varchar(50) NOT NULL,
+  tipo char(1) NOT NULL,
+  orden smallint(4) NOT NULL,
+  activo char(1) DEFAULT '1',
+  idmodulo smallint(4) NOT NULL,
+  PRIMARY KEY (idpermiso),
+	FOREIGN KEY (idmodulo) REFERENCES modulo (idmodulo) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
-Create Table canillita_estudios(
-	idestudios smallint(4) NOT NULL AUTO_INCREMENT,
-	idcanillita smallint(4) NOT NULL,
-	idsituacionprimaria smallint(4) NOT NULL,
-	anioinicioprimaria smallint(4) DEFAULT 0,
-	anioegresoprimaria smallint(4) DEFAULT 0,
-	entidadprimaria varchar(100),
-	idsituacionsecundaria smallint(4) NOT NULL,
-	anioiniciosecundaria smallint(4) DEFAULT 0,
-	anioegresosecundaria smallint(4) DEFAULT 0,
-	entidadsecundaria VarChar(100),
-	idsituaciontecnica smallint(4) NOT NULL,
-	anioiniciotecnica smallint(4) DEFAULT 0,
-	anioegresotecnica smallint(4) DEFAULT 0,
-	entidadtecnica VarChar(100),
-	idcarreratecnica smallint(4) NOT NULL,
-	idsituacionuniversidad smallint(4) NOT NULL,
-	anioiniciouniversidad smallint(4) DEFAULT 0,
-	anioegresouniversidad smallint(4) DEFAULT 0,
-	entidaduniversidad VarChar(100),
-	idcarrerauniversitaria smallint(4) NOT NULL,
-	activo Char(1) Default '1',
-	PRIMARY KEY(idestudios),
-	FOREIGN KEY (idcanillita) REFERENCES canillita (idcanillita) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (idcarreratecnica) REFERENCES carreras_tecnicas (idcarreratecnica) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (idcarrerauniversitaria) REFERENCES carreras_universitarias (idcarrerauniversitaria) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Nuevo Registro','1',1,1);
+	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Editar Registro','1',2,1);
+
+DROP TABLE IF EXISTS menu;
+CREATE TABLE menu  (
+  idmenu smallint(4) NOT NULL AUTO_INCREMENT,
+  idmodulo smallint(4) NOT NULL,
+  descripcion varchar(100) NOT NULL,
+  nivel char(1) NOT NULL,
+  url varchar(30) NOT NULL,
+  icono varchar(30) NOT NULL,
+  activo char(1) DEFAULT '1',
+  PRIMARY KEY (idmenu),
+	FOREIGN KEY (idmodulo) REFERENCES modulo (idmodulo) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+
+  INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Lista Eventos','0','#','fa fa-list');
+	INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Nuevo Registro','0','#','fa fa-pencil-square-o');
+
 	
+CREATE TABLE menu_detalle  (
+  idmenudetalle smallint(4) NOT NULL AUTO_INCREMENT,
+  idmenu smallint(4) NOT NULL,
+  descripcion varchar(100) NOT NULL,
+  url varchar(50) NOT NULL,
+  icono varchar(25) NOT NULL,
+  orden int(1) NOT NULL,
+  activo char(1) DEFAULT '1',
+  PRIMARY KEY (idmenudetalle),
+	FOREIGN KEY (idmenu) REFERENCES menu (idmenu) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+
+DROP TABLE IF EXISTS permisos_menu;
+CREATE TABLE permisos_menu  (
+  idpermisosmenu smallint(4) NOT NULL AUTO_INCREMENT,
+  idmenu smallint(4) NOT NULL,
+  idusuario smallint(4) NOT NULL,
+  activo char(1) DEFAULT '1',
+  PRIMARY KEY (idpermisosmenu),
+	FOREIGN KEY (idmenu) REFERENCES menu (idmenu) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (idusuario) REFERENCES usuarios (idusuario) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+	
+	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(1,1);
+	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(2,1);
+
+	
+CREATE TABLE permisos_menu_detalle  (
+  idpermisosmenudetalle smallint(4) NOT NULL AUTO_INCREMENT,
+  idmenudetalle smallint(4) NOT NULL,
+  idusuario smallint(4) NOT NULL,
+  activo char(1) DEFAULT '1',
+  PRIMARY KEY (idpermisosmenudetalle),
+	FOREIGN KEY (idmenudetalle) REFERENCES menu_detalle (idmenudetalle) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (idusuario) REFERENCES usuarios (idusuario) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+	
+
+CREATE TABLE permisos_opcion  (
+  idpermisoopcion smallint(4) NOT NULL AUTO_INCREMENT,
+  idpermiso smallint(4) NOT NULL,
+  idusuario smallint(4) NOT NULL,
+  activo char(1) DEFAULT '1',
+  PRIMARY KEY (idpermisoopcion),
+	FOREIGN KEY (idpermiso) REFERENCES permiso (idpermiso) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (idusuario) REFERENCES usuarios (idusuario) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+
+	INSERT INTO permisos_opcion(idpermiso,idusuario) VALUES(1,1);
+	INSERT INTO permisos_opcion(idpermiso,idusuario) VALUES(2,1);
+
+	
+	/*Tablas de Mantenimiento Frecuente*/
+	
+
+
 	
 	
 
