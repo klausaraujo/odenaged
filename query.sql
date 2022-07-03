@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS evento;
+DROP TABLE IF EXISTS tipo_evento;
 DROP VIEW IF EXISTS lista_ubigeo;
 DROP VIEW IF EXISTS lista_departamentos;
 DROP VIEW IF EXISTS lista_provincias;
@@ -2254,6 +2256,161 @@ select  distinct cod_dep,cod_pro,departamento,provincia from ubigeo;
 	
 	/*Tablas de Mantenimiento Frecuente*/
 	
+CREATE TABLE tipo_evento  (
+  idtipoevento smallint(4) NOT NULL AUTO_INCREMENT,
+  tipo_evento varchar(20) NOT NULL,
+  activo char(1) DEFAULT '1',
+  PRIMARY KEY (idtipoevento))ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+
+INSERT INTO tipo_evento (tipo_evento) VALUES ('NATURAL');
+INSERT INTO tipo_evento (tipo_evento) VALUES ('ANTRÓPICO');
+INSERT INTO tipo_evento (tipo_evento) VALUES ('SANITARIO');
+INSERT INTO tipo_evento (tipo_evento) VALUES ('SIMULACROS');
+
+CREATE TABLE evento  (
+  idevento smallint(4) NOT NULL AUTO_INCREMENT,
+  idtipoevento smallint(4) NOT NULL,
+  evento varchar(30) NOT NULL,
+  activo char(1) DEFAULT '1',
+  PRIMARY KEY (idevento),
+	FOREIGN KEY (idtipoevento) REFERENCES tipo_evento (idtipoevento) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'ACTIVIDAD VOLCÁNICA');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'ALUVIÓN (HUAYCO)');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'AVALANCHA');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'COLMATACIÓN');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'DERRUMBE');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'DESGLACIACIÓN');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'DESLIZAMIENTO DE TIERRA');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'DESPRENDIMIENTO DE ROCAS');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'EROSIÓN FLUVIAL / EROSIÓN EN LAS LADERAS');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'FENÓMENO "EL NIÑO"');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'FRIAJE');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'GRANIZADA');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'HELADA');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'HUNDIMIENTO');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'INCENDIO FORESTAL');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'INUNDACIÓN - ANEGAMIENTO');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'LLOVIZNA PERSISTENTE');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'LLUVIAS INTENSAS');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'MOVIMIENTO EN MASA');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'NEVADA');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'OBSTRUCCIÓN DE CANALES Y PUENTES');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'OLA DE CALOR');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'OLEAJES ANÓMALOS');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'REPTACIÓN');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'SEQUÍA');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'SISMO');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'VIENTOS FUERTES');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'TORMENTAS');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'TSUNAMI (SISMO EN OTRO PAÍS)');
+INSERT INTO evento(idtipoevento,evento) VALUES(1,'OTROS EVENTOS');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'ACCIDENTE AÉREO');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'ACCIDENTE FLUVIAL');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'ACCIDENTE LABORAL');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'ACCIDENTE MARÍTIMO');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'ACCIDENTE DE TRÁNSITO');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'AHOGAMIENTO');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'BLOQUEOS');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'COLAPSO DE ESTRUCTURA');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'CONFLICTO SOCIAL');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'CONTAMINACIÓN AMBIENTAL');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'DEFLAGRACIÓN');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'DELINCUENCIA COMÚN');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'MATERIALES PELIGROSOS');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'DERRUMBE');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'ELECTROCUCIÓN');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'ENFRENTAMIENTO');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'EVENTO PROGRAMADO CON VÍCTIMAS');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'EXPLOSIÓN');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'FUGA DE GASES');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'GUERRA');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'HUELGA DE HAMBRE');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'HUELGA GENERAL INDEFINIDA');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'INCENDIO');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'INTOXICACIÓN');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'INUNDACIÓN - ANEGAMIENTO');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'MOVILIZACIÓN SOCIAL');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'NARCOTRÁFICO');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'PANDILLAJE');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'PAROS');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'SUBVERSIÓN');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'TOMA DE LOCAL');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'TOMA DE REHENES');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'DESPLAZAMIENTO');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'ACCIDENTE DEPORTIVO');
+INSERT INTO evento(idtipoevento,evento) VALUES(2,'OTROS EVENTOS');
+INSERT INTO evento(idtipoevento,evento) VALUES(3,'BROTE');
+INSERT INTO evento(idtipoevento,evento) VALUES(3,'EPIDEMIAS');
+INSERT INTO evento(idtipoevento,evento) VALUES(3,'PLAGAS');
+INSERT INTO evento(idtipoevento,evento) VALUES(3,'OTROS EVENTOS');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE ACTIVIDAD VOLCÁNICA');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE ALUVIÓN (HUAYCO)');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE AVALANCHA');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE COLMATACIÓN');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE DERRUMBE');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE DESGLACIACIÓN');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE DESLIZAMIENTO DE TIERRA');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE DESPRENDIMIENTO DE ROCAS');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE EROSIÓN FLUVIAL / EROSIÓN EN LAS LADE');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE FENÓMENO "EL NIÑO"');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE FRIAJE');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE GRANIZADA');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE HELADA');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE HUNDIMIENTO');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE INCENDIO FORESTAL');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE INUNDACIÓN - ANEGAMIENTO');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE LLOVIZNA PERSISTENTE');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE LLUVIAS INTENSAS');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE MOVIMIENTO EN MASA');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE NEVADA');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE OBSTRUCCIÓN DE CANALES Y PUENTES');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE OLA DE CALOR');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE OLEAJES ANÓMALOS');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE REPTACIÓN');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE SEQUÍA');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE SISMO');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE VIENTOS FUERTES');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE TORMENTAS');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE TSUNAMI (SISMO EN OTRO PAÍS)');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE ACCIDENTE AÉREO');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE ACCIDENTE FLUVIAL');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE ACCIDENTE LABORAL');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE ACCIDENTE MARÍTIMO');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE ACCIDENTE DE TRÁNSITO');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE AHOGAMIENTO');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE BLOQUEOS');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE COLAPSO DE ESTRUCTURA');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE CONFLICTO SOCIAL');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE CONTAMINACIÓN AMBIENTAL');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE DEFLAGRACIÓN');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE DELINCUENCIA COMÚN');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE MATERIALES PELIGROSOS');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE DERRUMBE');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE ELECTROCUCIÓN');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE ENFRENTAMIENTO');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE EVENTO PROGRAMADO CON VÍCTIMAS');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE EXPLOSIÓN');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE FUGA DE GASES');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE GUERRA');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE HUELGA DE HAMBRE');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE HUELGA GENERAL INDEFINIDA');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE INCENDIO');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE INTOXICACIÓN');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE INUNDACIÓN - ANEGAMIENTO');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE MOVILIZACIÓN SOCIAL');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE NARCOTRÁFICO');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE PANDILLAJE');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE PAROS');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE SUBVERSIÓN');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE TOMA DE LOCAL');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE TOMA DE REHENES');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE DESPLAZAMIENTO');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE ACCIDENTE DEPORTIVO');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE BROTE');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE EPIDEMIAS');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE PLAGAS');
+INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE OTROS EVENTOS');
 
 
 
