@@ -109,7 +109,7 @@
 		const canTracking = "1";
 		const canHistory = "1";
 		
-		var URI = "<?=base_url()?>";
+		//var URI = "<?=base_url()?>";
 		//main(URI);
 		/*	
 	$(document).on('shown.bs.modal', function (e) {

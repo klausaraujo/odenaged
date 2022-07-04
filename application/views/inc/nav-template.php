@@ -18,11 +18,10 @@
                      <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Panel de navegación  </span></li>
                                 
                      <li class="<?php echo $this->uri->segment(1)=="" ? "active main-active": ""; ?>" >
-                        <a href="<?=base_url()?>" class="iq-waves-effect "><i class="ri-home-8-fill"></i><span>Inicio</span></a>
+                        <a href="<?=base_url()?>" class="iq-waves-effect"><i class="ri-home-8-fill"></i><span>Inicio</span></a>
                      </li>
 
                     <?php 
-
                         if($this->uri->segment(1)=="") {
 									$listaModulos = $this->session->userdata("modulos");
 									foreach($listaModulos as $row): ?>
