@@ -55,9 +55,9 @@ $route['doLogin'] = 'login/doLogin';
 $route['curl'] = 'main/curl';
 
 #Formularios de Registro y edicion
-$route['canillitas'] = 'canillitas/main/canillitas';
-$route['canillitas/registrar'] = 'canillitas/main/registrar';
-$route['canillitas/listar'] = 'canillitas/main/listar';
+$route['eventos'] = 'eventos/main/eventos';
+#$route['canillitas/registrar'] = 'canillitas/main/registrar';
+#$route['canillitas/listar'] = 'canillitas/main/listar';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

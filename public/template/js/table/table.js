@@ -29,14 +29,14 @@ function tablePersonalized(table, lista, titulo){
 		//colu = JSON.parse(colu += ']'); tit = JSON.parse(tit += ']');
 		
 	}else{
-		if(titulo == 'canillita'){
+		if(titulo == 'evento'){
 			//colu = JSON.parse('[{"data":"dni"},{"data":"apellidos"},{"data":"nombres"},{"data":"fecnac"},{"data":"sexo"},{"data":"domicilio"},{"data":"correo"}]');
 			cols = [
 				{data:null},{data:'dni'},{data:'apellidos'},{data:'nombres'},{data:'fecnac'},{data:'sexo'},{data:'domicilio'},{data:'correo'}
 			];
 			titles = [
-				{title:'Acciones',targets:0},{title:'DNI',targets:1},{title:'Apellidos',targets:2},{title:'Nombres',targets:3},{title:'Fecha Nac.',targets:4},
-				{title:'G&eacute;nero',targets:5},{title:'Direccion',targets:6},{title:'Email',targets:7},
+				{title:'Acciones',targets:0},{title:'C&oacute;d. Evento',targets:1},{title:'Nombre del Evento',targets:2},{title:'Fecha y Hora',targets:3},
+				{title:'Dpto./Prov./Dtto',targets:4},{title:'Afecta al Sector Educaci&oacute;n',targets:5}
 			]
 			
 		}if(titulo == 'mostrar'){
