@@ -3,7 +3,7 @@
    <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>Caja De Protección Y Asistencia Social Ley 10674</title>
+      <title>Centro de Operaciones de Emergencias Sectorial MINEDU</title>
       <link rel="shortcut icon" type="image/png" href="<?=base_url()?>public/images/favicon.jpg"/>
       <link rel="stylesheet" href="<?=base_url()?>public/template/css/bootstrap.min.css">
       <link rel="stylesheet" href="<?=base_url()?>public/template/css/typography.css">

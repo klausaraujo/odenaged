@@ -9,7 +9,7 @@
 	            </ul>
 	         </div>
 	         <div class="col-lg-6 text-right">
-	            Copyright © 2021 <a href="#" target="_blank"> Caja De Protección Y Asistencia Social Ley 10674 </a> Todos los derechos reservados.
+	            Copyright © 2021 <a href="#" target="_blank"> Centro de Operaciones de Emergencias Sectorial MINEDU </a> Todos los derechos reservados.
 	         </div>
 	      </div>
 	   </div>

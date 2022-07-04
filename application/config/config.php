@@ -23,8 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://'.$_SERVER["HTTP_HOST"].'/canillitas';
-$config['path_url'] = 'http://'.$_SERVER["HTTP_HOST"].'/canillitas/index.php/';
+$config['base_url'] = 'http://'.$_SERVER["HTTP_HOST"].'/odenaged';
+$config['path_url'] = 'http://'.$_SERVER["HTTP_HOST"].'/odenaged/index.php/';
 
 /*
 |--------------------------------------------------------------------------

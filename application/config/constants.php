@@ -86,10 +86,10 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 //SISTEMA
 
-define('TITULO_PRINCIPAL','Sistema Integrado de Gestión Administrativa Institucional');
-define('TITULO_WEB','SISGAIN');
-define('TITULO_MAIN','SISGAIN');
-define('COPY_RIGHT','Caja De Protección Y Asistencia Social Ley 10674');
+define('TITULO_PRINCIPAL','Sistema Integrado de Registro de Eventos del Sector Educación');
+define('TITULO_WEB','SIRESE');
+define('TITULO_MAIN','SIRESE');
+define('COPY_RIGHT','Centro de Operaciones de Emergencias Sectorial MINEDU');
 define('AUTOR','Ing. Klaus Joseph Araujo Cuadros');
 define('ROL_SUPER_ADMIN','01');
 define('ROL_ADMIN','02');
