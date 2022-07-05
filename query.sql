@@ -1,8 +1,11 @@
+DROP TABLE IF EXISTS mes;
+DROP TABLE IF EXISTS anio;
 DROP TABLE IF EXISTS evento;
 DROP TABLE IF EXISTS tipo_evento;
 DROP VIEW IF EXISTS lista_ubigeo;
 DROP VIEW IF EXISTS lista_departamentos;
 DROP VIEW IF EXISTS lista_provincias;
+DROP VIEW IF EXISTS lista_distritos;
 DROP TABLE IF EXISTS permisos_opcion;
 DROP TABLE IF EXISTS permisos_menu_detalle;
 DROP TABLE IF EXISTS permisos_menu;
@@ -2253,6 +2256,11 @@ select  distinct cod_dep,departamento from ubigeo;
 create view lista_provincias
 as
 select  distinct cod_dep,cod_pro,departamento,provincia from ubigeo;
+
+create view lista_distritos
+as
+select  distinct cod_dep,cod_pro,cod_dis,departamento,provincia,distrito from ubigeo;
+
 	
 	/*Tablas de Mantenimiento Frecuente*/
 	
@@ -2412,8 +2420,32 @@ INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE EPIDEMIAS');
 INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE PLAGAS');
 INSERT INTO evento(idtipoevento,evento) VALUES(4,'SIMULACRO DE OTROS EVENTOS');
 
+CREATE TABLE anio  (
+idanio smallint(4) NOT NULL AUTO_INCREMENT,
+anio smallint(4) NOT NULL,
+activo char(1) DEFAULT '1',
+PRIMARY KEY (idanio)) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
+INSERT INTO anio (anio) VALUES(2022);
 
+CREATE TABLE mes  (
+idmes smallint(4) NOT NULL AUTO_INCREMENT,
+mes varchar(15) NOT NULL,
+activo char(1) DEFAULT '1',
+PRIMARY KEY (idmes)) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+
+INSERT INTO mes (mes) VALUES('ENERO');
+INSERT INTO mes (mes) VALUES('FEBRERO');
+INSERT INTO mes (mes) VALUES('MARZO');
+INSERT INTO mes (mes) VALUES('ABRIL');
+INSERT INTO mes (mes) VALUES('MAYO');
+INSERT INTO mes (mes) VALUES('JUNIO');
+INSERT INTO mes (mes) VALUES('JULIO');
+INSERT INTO mes (mes) VALUES('AGOSTO');
+INSERT INTO mes (mes) VALUES('SEPTIEMBRE');
+INSERT INTO mes (mes) VALUES('OCTUBRE');
+INSERT INTO mes (mes) VALUES('NOVIEMBRE');
+INSERT INTO mes (mes) VALUES('DICIEMBRE');
 
 
 
