@@ -1,10 +1,10 @@
 DROP TABLE IF EXISTS mes;
 DROP TABLE IF EXISTS anio;
+DROP TABLE IF EXISTS registro_evento;
 DROP TABLE IF EXISTS nivel;
 DROP TABLE IF EXISTS estado_evento;
 DROP TABLE IF EXISTS evento;
 DROP TABLE IF EXISTS tipo_evento;
-DROP TABLE IF EXISTS registro_evento;
 DROP VIEW IF EXISTS lista_ubigeo;
 DROP VIEW IF EXISTS lista_departamentos;
 DROP VIEW IF EXISTS lista_provincias;
@@ -2205,7 +2205,7 @@ CREATE TABLE menu  (
 	FOREIGN KEY (idmodulo) REFERENCES modulo (idmodulo) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
   INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Lista Eventos','0','#','fa fa-list');
-	INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Nuevo Registro','0','#','fa fa-pencil-square-o');
+	INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Nuevo Registro','0','nuevo','fa fa-pencil-square-o');
 
 	
 CREATE TABLE menu_detalle  (
@@ -2507,6 +2507,10 @@ CREATE TABLE registro_evento (
 	FOREIGN KEY (idnivel) REFERENCES nivel (idnivel) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (idevento) REFERENCES evento (idevento) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (idestado) REFERENCES estado_evento (idestado) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+
+
+
+
 
 
 
