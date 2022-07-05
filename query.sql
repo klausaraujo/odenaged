@@ -1,7 +1,10 @@
 DROP TABLE IF EXISTS mes;
 DROP TABLE IF EXISTS anio;
+DROP TABLE IF EXISTS nivel;
+DROP TABLE IF EXISTS estado_evento;
 DROP TABLE IF EXISTS evento;
 DROP TABLE IF EXISTS tipo_evento;
+DROP TABLE IF EXISTS registro_evento;
 DROP VIEW IF EXISTS lista_ubigeo;
 DROP VIEW IF EXISTS lista_departamentos;
 DROP VIEW IF EXISTS lista_provincias;
@@ -2447,12 +2450,63 @@ INSERT INTO mes (mes) VALUES('OCTUBRE');
 INSERT INTO mes (mes) VALUES('NOVIEMBRE');
 INSERT INTO mes (mes) VALUES('DICIEMBRE');
 
+CREATE TABLE nivel  (
+idnivel smallint(4) NOT NULL AUTO_INCREMENT,
+nivel varchar(20) NOT NULL,
+activo char(1) DEFAULT '1',
+PRIMARY KEY (idnivel)) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
+insert into nivel (nivel) values ('NIVEL 1');
+insert into nivel (nivel) values ('NIVEL 2');
+insert into nivel (nivel) values ('NIVEL 3');
+insert into nivel (nivel) values ('NIVEL 4');
+insert into nivel (nivel) values ('NIVEL 5');
 
+CREATE TABLE estado_evento  (
+idestado smallint(4) NOT NULL AUTO_INCREMENT,
+estado varchar(20) NOT NULL,
+activo char(1) DEFAULT '1',
+PRIMARY KEY (idestado)) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
+insert into estado_evento (estado) values ('MONITOREO');
+insert into estado_evento (estado) values ('CERRADO');
+insert into estado_evento (estado) values ('ANULADO');
 
-
-
+CREATE TABLE registro_evento (
+  idregistroevento smallint(4) NOT NULL AUTO_INCREMENT,
+	anio_evento smallint(4) NOT NULL,
+  numero_evento smallint(4) NOT NULL DEFAULT 0,
+  idnivel smallint(4) NOT NULL,
+  idevento smallint(4) NOT NULL,
+	descripcion varchar(5000),
+  ubigeo varchar(6),
+	latitud varchar(25),
+  longitud varchar(25),
+	fecha datetime,
+	hora datetime,
+	idusuario_registro smallint(4),
+	fecha_registro datetime,
+	idusuario_actualizacion smallint(4),
+	fecha_actualizacion datetime,
+  idusuario_anulacion smallint(4),
+	fecha_anulacion datetime,
+	idusuario_cierre smallint(4),
+	fecha_cierre datetime,
+  latitud_sismo varchar(25) DEFAULT NULL,
+  longitud_sismo varchar(25) DEFAULT NULL,
+  profundidad_sismo varchar(5) DEFAULT NULL,
+  magnitud_sismo decimal(9,1) DEFAULT NULL,
+  intensidad_sismo varchar(200) DEFAULT NULL,
+  referencia_sismo varchar(200) DEFAULT NULL,
+  lugar_sismo varchar(200) DEFAULT NULL,
+  idestado smallint(4) NOT NULL,
+  zoom smallint(4) DEFAULT 13,
+	mapa_imagen varchar(30),
+	activo char(1) DEFAULT '1',
+	PRIMARY KEY (idregistroevento),
+	FOREIGN KEY (idnivel) REFERENCES nivel (idnivel) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (idevento) REFERENCES evento (idevento) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (idestado) REFERENCES estado_evento (idestado) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
 
 
