@@ -85,13 +85,10 @@ class Evento_model extends CI_Model
         return $rs->num_rows();
     }
 	
-	public function listardpto(){
-		
-	}
-	public function listarprov(){
-		
-	}
-	public function listardtto(){
-		
+	public function tipoevento(){
+		$this->db->select("*");
+        $this->db->from("tipo_evento");
+		$this->db->where("activo", '1');
+		return $this->db->get();
 	}
 }

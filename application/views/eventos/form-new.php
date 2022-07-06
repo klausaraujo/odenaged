@@ -21,6 +21,10 @@
 											<label for="tipoevento" class="col-sm-12">Tipo de Evento:</label>
 											<select class="form-control col-sm-10" name="tipoevento" id="tipoevento">
 												<option value="">-- Seleccione --</option>
+									<?php
+											foreach($tipoevento as $row):	?>
+												<option value="<?=$row->idtipoevento;?>"><?=$row->tipo_evento;?></option>
+										<?	endforeach;?>
 											</select>
 										</div>
 									</div>
@@ -45,6 +49,10 @@
 											<label for="region" class="col-sm-12">Departamento:</label>
 											<select class="form-control col-sm-10" name="region" id="region">
 												<option value="">-- Seleccione --</option>
+									<?php
+											foreach($dpto as $row):	?>
+												<option value="<?=$row->cod_dep;?>"><?=$row->departamento;?></option>
+										<?	endforeach;?>
 											</select>
 										</div>
 									</div>

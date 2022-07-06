@@ -56,6 +56,8 @@ $route['curl'] = 'main/curl';
 
 #Formularios de Registro y edicion
 $route['eventos'] = 'eventos/main/eventos';
+$route['cargarprov'] = 'eventos/main/cargarprov';
+$route['cargardis'] = 'eventos/main/cargardis';
 #$route['canillitas/registrar'] = 'canillitas/main/registrar';
 #$route['canillitas/listar'] = 'canillitas/main/listar';
 

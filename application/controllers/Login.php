@@ -103,11 +103,7 @@ class Login extends CI_Controller
                         $i ++;
 
                     endforeach;
-
-                    
-
                 }
-
             endforeach;
 
             $this->Usuario_model->setId($row->idusuario);
@@ -145,7 +141,6 @@ class Login extends CI_Controller
             $this->session->set_userdata("avatar", $row->avatar);
             $this->session->set_userdata("modulos", $listaModulo->result());
             $this->session->set_userdata("menu", $menu);
-
             /*$token = JWT::encode(array("usuario"=>sha1($row->idusuario),"modulos"=>$listaModulo->result()),getenv("SECRET_SERVER_KEY"));
             $this->session->set_userdata("token", $token);*/
 
@@ -159,6 +154,10 @@ class Login extends CI_Controller
             $this->session->set_userdata("Codigo_Centro_Costos", $row->Codigo_Centro_Costos);
             $this->session->set_userdata("Codigo_Sub_Centro_Costos", $row->Codigo_Sub_Centro_Costos);
             $this->session->set_userdata("Codigo_Area", $area);*/
+			$anio = $this->Usuario_model->anio();
+			$mes = $this->Usuario_model->mes();
+			$this->session->set_userdata("anio", $anio->result());
+			$this->session->set_userdata("mes", $mes->result());
 
             header("location:" . base_url());
         } else {

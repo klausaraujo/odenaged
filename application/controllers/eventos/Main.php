@@ -19,6 +19,7 @@ class Main extends CI_Controller
 	public function eventos()
     {
 		$this->load->model("Evento_model");
+		$this->load->model("Ubigeo_model");
 		#$listaCanillitas = $this->Evento_model->listar();
 		
 		/*if ($listaCanillitas->num_rows() > 0) {
@@ -26,37 +27,49 @@ class Main extends CI_Controller
         } else {
             $listaCanillitas = array();
         }*/	
-		$listaDpto = $this->Evento_model->listardpto();
-		$listaProv = $this->Evento_model->listarprov();
-		$listaDtto = $this->Evento_model->listardtto();
+		$tipoevento = $this->Evento_model->tipoevento();
+		$dpto = $this->Ubigeo_model->dptos();
 		
 		$data = array(
-			"listarCanillita" => 'Lista'#json_encode($listaCanillitas)
+			"listarCanillita" => 'Lista',#json_encode($listaCanillitas)
+			"tipoevento" => $tipoevento->result(),
+			"dpto" => $dpto->result()
 		);
 		#$data['formNew'] = $this->load->view('canillitas/form-new', NULL, TRUE);
 		$this->load->view($this->uri->segment(1).'/main',$data);
-    }
-	
-	public function listar(){
-		$this->load->model("canillitas/Canillita_model");
-		$listaCanillitas = $this->Canillita_model->listar();		
+    }	
+	public function cargarprov(){
+		$this->load->model("Ubigeo_model");
+		$region = $this->input->post("region");
+		$this->Ubigeo_model->setidDpto($region);
 		
-		if ($listaCanillitas->num_rows() > 0) {
-            $listaCanillitas = $listaCanillitas->result();
-        } else {
-            $listaCanillitas = array();
-        }
-
-        $data = array(
-            "status" => 200,
-            "data" => array(
-						"listarCanillita" => $listaCanillitas
-					)
+		$listaProv = $this->Ubigeo_model->listarProv();		
+		
+		$data = array(
+            "lista" => $listaProv->result(),
+			"id" => $region
         );
-
+        
         echo json_encode($data);
 	}
-	
+	public function cargardis(){
+		$this->load->model("Ubigeo_model");
+		
+		$region = $this->input->post("region");
+		$prov = $this->input->post("provincia");
+		
+		$this->Ubigeo_model->setidDpto($region);
+		$this->Ubigeo_model->setidProv($prov);
+		
+		$listaDis = $this->Ubigeo_model->listarDtto();		
+		
+		$data = array(
+            "lista" => $listaDis->result(),
+			"id" => $prov
+        );
+        
+        echo json_encode($data);
+	}
 	public function registrar()
     {
 		$this->load->model("canillitas/Canillita_model");

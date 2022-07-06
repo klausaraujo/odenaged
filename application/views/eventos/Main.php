@@ -25,7 +25,7 @@
 	    }
 	    input[type=number] { -moz-appearance:textfield; }
 	    //.form-group {display: flex;align-items: center;}
-		.modal-lg {max-width: 100% !important;margin:0 !important}
+		.modal-lg {max-width: 100% !important;margin:0 !important;max-height:100% !important;}
 		.modal-body {font-size:13px;}
 		#message, #cargando{text-align:center}
 		.succes{color:#008F39;font-size:1.1rem}
@@ -56,13 +56,37 @@
                </div>
             </div>
             
-            
             <div class="row">
                <div class="col-xl-12 col-md-12">
                   <div class="card m-b-30 pb-35">
+					
                      <div class="card-body">
                         <h4 class="mt-0 m-b-15 header-title">Listado General de Eventos Registrados</h4>
                         <br>
+						<div class="row ml-1">
+							<label for="mes" class="col-sm-12">Aplicar Filtros por A&ntilde;o y mes del Evento:</label>
+							<select class="form-control col-sm-2 mx-2" name="anio" id="anio">
+								<option value="">-- Seleccione --</option>
+								<?
+								  $anio = $this->session->userdata("anio");
+								  foreach($anio as $row):
+									echo '<option value="'.$row->idanio.'">'.$row->anio.'</option>';
+								  endforeach;
+								?>
+							</select>
+							<select class="form-control col-sm-2" name="mes" id="mes">
+								<option value="">-- Seleccione --</option>
+								<?
+								  $mes = $this->session->userdata("mes");
+								  foreach($mes as $row):
+									echo '<option value="'.$row->idmes.'">'.$row->mes.'</option>';
+								  endforeach;
+								?>
+							</select>
+							
+						</div>
+						<br>
+
                         <div class="table-responsive">
                            <table id="tablaCanillita" class="table table-striped dt-responsive w-100 table-bordered display nowrap table-hover mb-0" style="width:100%">
 								
@@ -121,6 +145,7 @@
 	  //const lista = JSON.parse('<?=$listarCanillita?>');
 	  const table = tablePersonalized('#tablaCanillita',lista,'evento');
 	  main(URI);
+	  
 	  //tablePersonalized(table);
 	  //canillitas(URI,table,'canillita');
       /*const lista = <?= $lista ?>;*/

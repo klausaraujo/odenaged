@@ -26,7 +26,7 @@
 			</div>
 			<div class="modal-body">
 				<!--<?if(!$this->uri->segment(1)=="")
-					echo $formNew;
+					//echo $formNew;
 				?>-->
 				<?php if(!$this->uri->segment(1)=="") $this->load->view("eventos/form-new"); ?>
 			</div>

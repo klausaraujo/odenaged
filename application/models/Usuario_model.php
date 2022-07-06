@@ -111,6 +111,16 @@ class Usuario_model extends CI_Model
         $this->db->where("usuarios.activo", "1");
         return $this->db->get();
     }
+	public function anio(){
+		$this->db->select('*');
+		$this->db->from('anio');
+		return $this->db->get();
+	}
+	public function mes(){
+		$this->db->select('*');
+		$this->db->from('mes');
+		return $this->db->get();
+	}
     /*public function actualizar_chat () {
         $this->db->select('cu.idchat_usuario, cu.Guid, cu.Estado');
         $this->db->from('chat_usuario cu');
