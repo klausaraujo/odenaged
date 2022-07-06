@@ -19,7 +19,7 @@
     background: rgba(0,0,0,0.8);
 }
 .horizontal-nav .fixed-sidebar-left .side-nav > li > a:before {
-    background: #63afe8e6!important;
+    background: #e43421e6!important;
     /* background: linear-gradient(45deg, #f83f37, #ab26aa) !important; */
     background: -webkit-bg-linear-gradient(45deg, #63afe8e6, #63afe8e6)!important;
 

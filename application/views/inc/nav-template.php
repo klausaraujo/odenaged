@@ -1,5 +1,6 @@
 		<div class="iq-sidebar">
-            <div class="#">
+		<div class="iq-sidebar-logo d-flex justify-content-between">
+            <a href="/odenaged">
               
                <span>ODENAGED</span>
                </a>
@@ -15,7 +16,7 @@
             <div id="sidebar-scrollbar">
                <nav class="iq-sidebar-menu">
                   <ul id="iq-sidebar-toggle" class="iq-menu">
-                     <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Panel de navegación  </span></li>
+                     <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Panel de Navegación</span></li>
                                 
                      <li class="<?php echo $this->uri->segment(1)=="" ? "active main-active": ""; ?>" >
                         <a href="<?=base_url()?>" class="iq-waves-effect"><i class="ri-home-8-fill"></i><span>Inicio</span></a>
@@ -56,7 +57,7 @@
 								$idModulo = $row->idmodulo;
 						endforeach;
 						
-                        if($idModulo =="6" and $idusuario =='01'){ ?>
+                        if($idModulo =="3" and $idusuario =='1'){ ?>
                         <li id="menu3">
                         <a href="<?=base_url()?>/usuarios/usuario"><div class="pull-left"><i class="ti-user mr-20"></i><span class="right-nav-text">Usuarios</span></div><div class="clearfix"></div></a>
                         </li>

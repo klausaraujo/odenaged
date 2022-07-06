@@ -68,7 +68,7 @@
           <div class="col-sm-6 col-md-3 dashboard__card">
             <a href="<?=base_url()?><?=$row->url?>" class="card_button">
               <div class="iq-card">
-                <div class="iq-card-body text-center" style="background: #089eae; height : 230px; border-radius:20px; padding-top: 15px;">
+                <div class="iq-card-body text-center" style="background: #e33d3d; height : 230px; border-radius:20px; padding-top: 15px;">
 					<div style="margin-top: 15px;" class="doc-profile">
 						<img class="img-fluid avatar-80" src="<?=base_url()?>public/images/principal/<?=$row->icono?>" alt="<?=$row->url?>">
 					</div>

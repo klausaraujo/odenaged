@@ -10,7 +10,7 @@
       <link rel="stylesheet" href="<?=base_url()?>public/template/css/style.css">
       <link rel="stylesheet" href="<?=base_url()?>public/template/css/responsive.css">
    </head>
-   <body style="background-color:#b53c3c;">
+   <body style="background-color:#ba2d2d;">
       <!--<div id="loading">
          <div id="loading-center">
 		</div>
