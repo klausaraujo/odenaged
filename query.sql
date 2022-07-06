@@ -2484,6 +2484,7 @@ CREATE TABLE registro_evento (
   longitud varchar(25),
 	fecha datetime,
 	hora datetime,
+	afecta_sector char(1) DEFAULT '0',
 	idusuario_registro smallint(4),
 	fecha_registro datetime,
 	idusuario_actualizacion smallint(4),

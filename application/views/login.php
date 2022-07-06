@@ -10,7 +10,7 @@
       <link rel="stylesheet" href="<?=base_url()?>public/template/css/style.css">
       <link rel="stylesheet" href="<?=base_url()?>public/template/css/responsive.css">
    </head>
-   <body style="background-color:#244B5A;">
+   <body style="background-color:#b53c3c;">
       <!--<div id="loading">
          <div id="loading-center">
 		</div>
@@ -20,7 +20,7 @@
                 <div class="row no-gutters">
                     <div class="col-md-6 text-center">
                         <div class="sign-in-detail text-white">
-                            <a class="sign-in-logo mb-3" href="#"><img style="width:700px; height:250px" src="<?php echo base_url('public/images/logo-white.png'); ?>" alt="Minsa" class="img-fluid"  ></a>
+                            <a class="sign-in-logo mb-3" href="#"><img style="width:700px; height:250px" src="<?php echo base_url('public/images/logo-white.png'); ?>" alt="Minedu" class="img-fluid"  ></a>
                             <div class="owl-carousel" data-autoplay="true" data-loop="true" data-nav="false" data-dots="true" data-items="1" data-items-laptop="1" data-items-tab="1" data-items-mobile="1" data-items-mobile-sm="1" data-margin="0">
                                 <div class="item">
                                     <img src="<?=base_url()?>public/template/images/login/1.jpg" class="img-fluid mb-4" alt="logo">
