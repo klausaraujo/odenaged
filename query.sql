@@ -2204,7 +2204,7 @@ CREATE TABLE menu  (
   PRIMARY KEY (idmenu),
 	FOREIGN KEY (idmodulo) REFERENCES modulo (idmodulo) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
-  INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Lista Eventos','0','#','fa fa-list');
+  INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Lista Eventos','0','eventos','fa fa-list');
 	INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Nuevo Registro','0','nuevo','fa fa-pencil-square-o');
 
 	
