@@ -102,29 +102,22 @@ function tablePersonalized(table, lista, titulo){
 		lengthMenu: [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'Todas']],
 		
 		"columns":cols,
-		"columnDefs":titles,/*[
-			{
-				targets: 0,
-				data: null,
-				render: function (data, type, row, meta) {
-				const btnEdit = '<button class="btn btn-success btn-sm actionEdit" title="Editar Registro" type="button"'+
-						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>';
-				const btnCargas = '<button class="btn btn-warning btn-circle btn-sm actionCargas" title="Registrar Cargas Familiares" type="button"'+
-						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-users" aria-hidden="true"></i></button>';
-				const btnEst = '<button class="btn btn-warning btn-circle btn-sm actionEstud" title="Registrar Estudios" type="button"'+
-						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-graduation-cap" aria-hidden="true"></i></button>';
-				const btnPdf = '<button class="btn btn-warning btn-circle btn-sm actionReport" title="Ver Reporte" type="button"'+
-						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>';
-				return btnEdit+btnCargas+btnEst+btnPdf;
-				
-				}
-			}
-		
-		],*/
+		"columnDefs":titles,
 		"dom": '<"row"<"col-sm-12 mb-2"B><"col-sm-6 float-left"l><"col-sm-6 float-right"f>>rtip',
-		"buttons": [
-			'copy','csv','excel','pdf','print'
-		]
+		"buttons": {
+			dom: {
+			  container: {
+				tag: 'div',
+				className: 'flexcontent'
+			  },
+			  buttonLiner: {
+				tag: null
+			  }
+			},
+			buttons: [
+				'copy','csv','excel','pdf','print'
+			]
+		}
 		/*"buttons": {
 			dom: {
 			  container: {
@@ -191,6 +184,20 @@ function tablePersonalized(table, lista, titulo){
 			  className: 'selectTable'
 			}]
 		}*/
+	});
+	
+	$(table + ' tbody').on('click', '.cont', function(){
+		if($(this).children().attr('alt') === 'editar'){
+			if(dataTable.row(this).child.isShown()){
+				var data = dataTable.row(this).data();
+				//console.log(data);
+			}else{
+				var data = dataTable.row($(this).parents("tr")).data();
+			}
+			console.log(data);
+			$("#decisionModal").modal("show");
+			$(".modal-title").html('Editar Canillita');
+		}
 	});
 	
 	return dataTable;

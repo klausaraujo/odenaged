@@ -15,7 +15,7 @@
 	   </div>
 	</footer>
 </div>
-<div class="modal fade" id="decisionModal" tabindex="-1" role="dialog" aria-labelledby="decisionModalLabel" style="padding-right: 0 !important">
+<!--<div class="modal fade" id="decisionModal" tabindex="-1" role="dialog" aria-labelledby="decisionModalLabel" style="padding-right: 0 !important">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -25,10 +25,10 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<!--<?if(!$this->uri->segment(1)=="")
+				<!--<?//if(!$this->uri->segment(1)=="")
 					//echo $formNew;
-				?>-->
-				<?php if(!$this->uri->segment(1)=="") $this->load->view("eventos/form-new"); ?>
+				?>
+				<?php //if(!$this->uri->segment(1)=="") $this->load->view("eventos/form-new"); ?>
 			</div>
 			<div class="modal-footer">
 				<div class="row">
@@ -41,4 +41,4 @@
 			<div class="col-md-12 text-center cargando"></div>
 		</div>
 	</div>
-</div>
+</div>-->

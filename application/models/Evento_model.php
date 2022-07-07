@@ -3,7 +3,7 @@ if (! defined('BASEPATH'))
     exit('No direct script access allowed');
 class Evento_model extends CI_Model
 {
-    private $id;
+    private $idTipoEvt;
     private $apellidos;
     private $nombres;
     private $documento_numero;
@@ -23,7 +23,7 @@ class Evento_model extends CI_Model
     private $usuario_actualizacion;
     private $fecha_actualizacion;
 	
-    public function setId($data){ $this->id = $this->db->escape_str($data); }
+    public function setIdTipoEvt($data){ $this->idTipoEvt = $this->db->escape_str($data); }
     public function setApellidos($data){ $this->apellidos = $this->db->escape_str($data); }
     public function setNombres($data){ $this->nombres = $this->db->escape_str($data); }
     public function setDocumento_numero($data){ $this->documento_numero = $this->db->escape_str($data); }
@@ -85,9 +85,27 @@ class Evento_model extends CI_Model
         return $rs->num_rows();
     }
 	
-	public function tipoevento(){
+	public function tipoEvento(){
 		$this->db->select("*");
         $this->db->from("tipo_evento");
+		$this->db->where("activo", '1');
+		return $this->db->get();
+	}
+	public function cargarEvento(){
+		$this->db->select('idevento,evento');
+        $this->db->from('evento');
+		$this->db->where('idtipoevento', $this->idTipoEvt);
+		$this->db->where('activo', '1');
+		return $this->db->get();
+	}
+	public function sumaEventos(){
+		$this->db->select('COUNT(*)');
+        $this->db->from('registro_evento');
+		return $this->db->get();
+	}
+	public function cargaNivel(){
+		$this->db->select("idnivel,nivel");
+        $this->db->from("nivel");
 		$this->db->where("activo", '1');
 		return $this->db->get();
 	}

@@ -20,24 +20,31 @@ class Main extends CI_Controller
     {
 		$this->load->model("Evento_model");
 		$this->load->model("Ubigeo_model");
-		#$listaCanillitas = $this->Evento_model->listar();
-		
-		/*if ($listaCanillitas->num_rows() > 0) {
-            $listaCanillitas = $listaCanillitas->result();
-        } else {
-            $listaCanillitas = array();
-        }*/	
-		$tipoevento = $this->Evento_model->tipoevento();
+		$tipoevento = $this->Evento_model->tipoEvento();
+		$nivel = $this->Evento_model->cargaNivel();
 		$dpto = $this->Ubigeo_model->dptos();
 		
 		$data = array(
 			"listarCanillita" => 'Lista',#json_encode($listaCanillitas)
 			"tipoevento" => $tipoevento->result(),
-			"dpto" => $dpto->result()
+			"dpto" => $dpto->result(),
+			"nivel" => $nivel->result()
 		);
-		#$data['formNew'] = $this->load->view('canillitas/form-new', NULL, TRUE);
+		
 		$this->load->view($this->uri->segment(1).'/main',$data);
-    }	
+    }
+	public function cargarEvento(){
+		$this->load->model("Evento_model");
+		$count = $this->Evento_model->sumaEventos();
+		$tipo = $this->input->post("tipo");
+		$this->Evento_model->setIdTipoEvt($this->input->post("tipo"));
+		$evento = $this->Evento_model->cargarEvento();
+		$data = array(
+			"lista" => $evento->result()
+		);
+		
+		echo json_encode($data);
+	}
 	public function cargarprov(){
 		$this->load->model("Ubigeo_model");
 		$region = $this->input->post("region");

@@ -5,15 +5,54 @@ function main(URI) {
 				var rel= $(this).attr('rel');
 				evt.preventDefault();
 				if(rel == 'nuevo'){
-					$(".modal-title").html('Datos Generales de la Emergencia');
+					/*$(".modal-title").html('Datos Generales de la Emergencia');
 					$("#decisionModal").modal("show");
-					$("#decisionModal").css("padding-right", "0px");
-				}else if(rel !== 'nuevo'){
-					alert(rel);
+					$("#decisionModal").css("padding-right", "0px");*/
+					if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
+					if($('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 0) $('.ajaxForm').show();
+				}else if(rel !== 'nuevo' && rel != null){
+					//console.log(rel);
+					//loadData();
+					if(!$('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 1) $('.ajaxForm').hide();
+					if($('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 0) $('.ajaxTable').show();
 				}
 			});
 		});
 	});
+	
+	$("#btnEnviar").on('click', function(evt){
+		evt.preventDefault();
+		var anio = $("#fechaevento").val();
+		alert(anio.substring(0,4));
+	});
+	
+	
+	$('#tipoevento').change(function(){
+		var id = $(this).val();
+        if (id.length > 0) {
+          $.ajax({
+            data: { tipo: id },
+            url: URI + "eventos/main/cargarEvento",
+            method: "POST",
+            dataType: "json",
+            beforeSend: function () {
+				$("#evento").html('<option value="">Cargando...</option>');
+            },
+            success: function (data) {
+				console.log(data);
+				var $html = '<option value="">--Seleccione--</option>';
+				$.each(data.lista, function (i, e) {
+    
+                $html += '<option value="' + e.idevento + '">' + e.evento + '</option>';
+    
+              });
+              $("#evento").html($html);
+    
+            }
+          });
+    
+        }
+    });
 	
 	$('#region').change(function(){
 		var id = $(this).val();
@@ -25,7 +64,8 @@ function main(URI) {
             method: "POST",
             dataType: "json",
             beforeSend: function () {
-              $("#provincia").html('<option value="">Cargando...</option>');
+				$("#distrito").html('<option value="">--Seleccione--</option>');
+				$("#provincia").html('<option value="">Cargando...</option>');
             },
             success: function (data) {
 				console.log(data);
