@@ -67,13 +67,13 @@
                               </div>
                               <div class="media-body ml-3">
                                  <h6 class="mb-0 ">Mi Perfil de Usuario</h6>
-                                 <p class="mb-0 font-size-12">Cambiar mi Clave y/o foto del perfil.</p>
+                                 <p class="mb-0 font-size-12">Cambiar mi Clave y/o Foto del Perfil.</p>
                               </div>
                            </div>
                         </a>
                         
                         <div class="d-inline-block w-100 text-center p-3">
-                           <a class="bg-primary iq-sign-btn" href="<?=base_url()?>login/logout" role="button">Cerrar sesión<i class="ri-login-box-line ml-2"></i></a>
+                           <a class="bg-primary iq-sign-btn" href="<?=base_url()?>login/logout" role="button">Cerrar Sesión<i class="ri-login-box-line ml-2"></i></a>
                         </div>
                      </div>
                   </div>

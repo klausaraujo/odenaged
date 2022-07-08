@@ -101,37 +101,8 @@
          <?php $this->load->view("inc/footer-template"); ?>
       </div>
    </div>
-   <script src="<?=base_url()?>public/template/js/jquery.min.js"></script>
-   <script src="<?=base_url()?>public/template/js/jquery-ui.min.js"></script>
-   <!--<script src="<?=base_url()?>public/template/js/popper.min.js"></script>-->
-   <script src="<?=base_url()?>public/template/js/bootstrap.min.js"></script>
-   <!--<script src="<?=base_url()?>public/template/js/jquery.appear.js"></script>
-   <script src="<?=base_url()?>public/template/js/countdown.min.js"></script>
-   <script src="<?=base_url()?>public/template/js/waypoints.min.js"></script>-->
-   <script src="<?=base_url()?>public/template/js/jquery.counterup.min.js"></script>
-   <script src="<?=base_url()?>public/template/js/wow.min.js"></script>
-   <script src="<?=base_url()?>public/template/js/apexcharts.js"></script>
-   <script src="<?=base_url()?>public/template/js/slick.min.js"></script>
-   <script src="<?=base_url()?>public/template/js/select2.min.js"></script>
-   <!--<script src="<?=base_url()?>public/template/js/owl.carousel.min.js"></script>-->
-   <script src="<?=base_url()?>public/template/js/jquery.magnific-popup.min.js"></script>
-   <script src="<?=base_url()?>public/template/js/smooth-scrollbar.js"></script>
-   <!--<script src="<?=base_url()?>public/template/js/lottie.js"></script>-->
-   <script src="<?=base_url()?>public/template/js/chart-custom.js"></script>
-   <script src="<?=base_url()?>public/template/js/custom.js"></script>
-   <!--<script src="<?=base_url()?>public/template/js/chart.min.js"></script>
-   <script src="<?=base_url()?>public/template/js/datatables.min.js"></script>-->
-   <script src="<?=base_url()?>public/template/js/jquery.validate.min.js"></script>
+   <?php $this->load->view("inc/resource-template"); ?>
    
-   <!-- JS DataTable -->
-   <script src="<?=base_url()?>public/template/js/table/datatable/datatables.min.js"></script>
-   <!--<script src="<?=base_url()?>public/template/js/table/datatable/dataTables.buttons.min.js"></script>-->
-   <script src="<?=base_url()?>public/template/js/table/datatable/jszip.min.js"></script>
-   <script src="<?=base_url()?>public/template/js/table/datatable/pdfmake.min.js"></script>
-   <script src="<?=base_url()?>public/template/js/table/datatable/vfs_fonts.js"></script>
-   <!--script src="<?=base_url()?>public/template/js/table/datatable/buttons.html5.min.js"></script>-->
-   <!--<script src="<?=base_url()?>public/template/js/table/datatable/buttons.print.min.js"></script>-->
-   <script src="<?=base_url()?>public/template/js/table/table.js"></script>
 	<script src="<?=base_url()?>public/template/js/eventos/main.js"></script>
 	<script>
       //const URI_MAP = "<?=base_url()?>";
