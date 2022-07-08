@@ -8,13 +8,13 @@ function main(URI) {
 					/*$(".modal-title").html('Datos Generales de la Emergencia');
 					$("#decisionModal").modal("show");
 					$("#decisionModal").css("padding-right", "0px");*/
-					/*if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
-					if($('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 0) $('.ajaxForm').show();*/
+					if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
+					if($('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 0) $('.ajaxForm').show();
 				}else if(rel !== 'nuevo' && rel != null){
 					//console.log(rel);
 					//loadData();
-					/*if(!$('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 1) $('.ajaxForm').hide();
-					if($('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 0) $('.ajaxTable').show();*/
+					if(!$('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 1) $('.ajaxForm').hide();
+					if($('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 0) $('.ajaxTable').show();
 				}
 			});
 		});
@@ -122,6 +122,7 @@ function main(URI) {
 				}
 				//console.log(opt);
 				mapa(opt);
+				if($('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 0) $('.ajaxTable').show();
               /*var $html = '<option value="">--Seleccione--</option>';
               $.each(data.lista, function (i, e) {
     

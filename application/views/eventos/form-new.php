@@ -73,8 +73,8 @@
 										</div>
 									</div>
 								</div>
-								<div class="row"><hr class="col-sm-11" style="margin:20px 0"></div>
-								<div class="row">
+								<div class="row ajaxMap" style="display:none">
+									<div class="row"><hr class="col-sm-11" style="margin:20px 0"></div>
 									<div class="col-sm-12">
 										<div class="pac-card" id="pac-card">
 										  <div id="pac-container" class="place-map">
