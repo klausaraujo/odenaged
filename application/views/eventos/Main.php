@@ -51,7 +51,7 @@
             
             <div class="row">
                <div class="col-xl-12 col-md-12">
-				<div class="ajaxForm" style=""><?php $this->load->view("eventos/form-new"); ?></div>
+				<div class="ajaxForm" style="display:none"><?php $this->load->view("eventos/form-new"); ?></div>
 				<div class="ajaxTable">
 					  <div class="card m-b-30 pb-35">
 						 <div class="card-body">
