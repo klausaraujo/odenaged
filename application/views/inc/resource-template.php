@@ -1,51 +1,35 @@
 <script src="<?=base_url()?>public/template/js/jquery.min.js"></script>
-<script src="<?=base_url()?>public/template/js/popper.min.js"></script>
-<script src="<?=base_url()?>public/template/js/bootstrap.min.js"></script>
+   <script src="<?=base_url()?>public/template/js/jquery-ui.min.js"></script>
+   <!--<script src="<?=base_url()?>public/template/js/popper.min.js"></script>-->
+   <script src="<?=base_url()?>public/template/js/bootstrap.min.js"></script>
+   <!--<script src="<?=base_url()?>public/template/js/jquery.appear.js"></script>
+   <script src="<?=base_url()?>public/template/js/countdown.min.js"></script>
+   <script src="<?=base_url()?>public/template/js/waypoints.min.js"></script>-->
+   <script src="<?=base_url()?>public/template/js/jquery.counterup.min.js"></script>
+   <script src="<?=base_url()?>public/template/js/wow.min.js"></script>
+   <script src="<?=base_url()?>public/template/js/apexcharts.js"></script>
+   <script src="<?=base_url()?>public/template/js/slick.min.js"></script>
+   <script src="<?=base_url()?>public/template/js/select2.min.js"></script>
+   <!--<script src="<?=base_url()?>public/template/js/owl.carousel.min.js"></script>-->
+   <script src="<?=base_url()?>public/template/js/jquery.magnific-popup.min.js"></script>
+   <script src="<?=base_url()?>public/template/js/smooth-scrollbar.js"></script>
+   <!--<script src="<?=base_url()?>public/template/js/lottie.js"></script>-->
+   <script src="<?=base_url()?>public/template/js/chart-custom.js"></script>
+   <script src="<?=base_url()?>public/template/js/custom.js"></script>
+   <!--<script src="<?=base_url()?>public/template/js/chart.min.js"></script>
+   <script src="<?=base_url()?>public/template/js/datatables.min.js"></script>-->
+   <script src="<?=base_url()?>public/template/js/jquery.validate.min.js"></script>
+   
+   <!-- JS DataTable -->
+   <script src="<?=base_url()?>public/template/js/table/datatable/datatables.min.js"></script>
+   <!--<script src="<?=base_url()?>public/template/js/table/datatable/dataTables.buttons.min.js"></script>-->
+   <script src="<?=base_url()?>public/template/js/table/datatable/jszip.min.js"></script>
+   <script src="<?=base_url()?>public/template/js/table/datatable/pdfmake.min.js"></script>
+   <script src="<?=base_url()?>public/template/js/table/datatable/vfs_fonts.js"></script>
+   <!--script src="<?=base_url()?>public/template/js/table/datatable/buttons.html5.min.js"></script>-->
+   <!--<script src="<?=base_url()?>public/template/js/table/datatable/buttons.print.min.js"></script>-->
+   <script src="<?=base_url()?>public/template/js/table/table.js"></script>
 
-<script src="<?=base_url()?>public/template/js/jquery.appear.js"></script>
-
-<script src="<?=base_url()?>public/template/js/countdown.min.js"></script>
-
-<script src="<?=base_url()?>public/template/js/waypoints.min.js"></script>
-<script src="<?=base_url()?>public/template/js/jquery.counterup.min.js"></script>
-
-<script src="<?=base_url()?>public/template/js/wow.min.js"></script>
-
-<script src="<?=base_url()?>public/template/js/apexcharts.js"></script>
-
-<script src="<?=base_url()?>public/template/js/slick.min.js"></script>
-
-<script src="<?=base_url()?>public/template/js/select2.min.js"></script>
-
-<script src="<?=base_url()?>public/template/js/owl.carousel.min.js"></script>
-
-<script src="<?=base_url()?>public/template/js/jquery.magnific-popup.min.js"></script>
-
-<script src="<?=base_url()?>public/template/js/smooth-scrollbar.js"></script>
-
-<script src="<?=base_url()?>public/template/js/lottie.js"></script>
-
-<script src="<?=base_url()?>public/template/js/chart-custom.js"></script>
-
-<script src="<?=base_url()?>public/template/js/custom.js"></script>
-<script src="<?=base_url()?>public/js/echarts-en.min.js"></script>
-
-<script src="<?=base_url()?>public/js/jquery.validate.min.js"></script>
-
-<script src="<?=base_url()?>public/js/circles.js"></script>
-<script src="<?=base_url()?>public/js/bootstrap-datetimepicker.min.js"></script>
-<script src="<?=base_url()?>public/js/Chart.min.js"></script>
-<script type="text/javascript" src="<?=base_url()?>public/template/js/datatable/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="<?=base_url()?>public/template/js/datatable/dataTables.bootstrap4.min.js"></script>
-<script type="text/javascript" src="<?=base_url()?>public/template/js/datatable/dataTables.rowsGroup.js"></script>
-<script type="text/javascript" src="<?=base_url()?>public/template/js/datatable/dataTables.buttons.min.js"></script>
-<script type="text/javascript" src="<?=base_url()?>public/template/js/datatable/buttons.bootstrap4.min.js"></script>
-<script type="text/javascript" src="<?=base_url()?>public/template/js/datatable/jszip.min.js"></script>
-<script type="text/javascript" src="<?=base_url()?>public/template/js/datatable/pdfmake.min.js"></script>
-<script type="text/javascript" src="<?=base_url()?>public/template/js/datatable/vfs_fonts.js"></script>
-<script type="text/javascript" src="<?=base_url()?>public/template/js/datatable/buttons.html5.min.js"></script>
-<script type="text/javascript" src="<?=base_url()?>public/template/js/datatable/buttons.print.min.js"></script>
-<script type="text/javascript" src="<?=base_url()?>public/template/js/datatable/buttons.colVis.min.js"></script>
 <script>
     var languageDatatable = {
     "sProcessing":     "Procesando...",

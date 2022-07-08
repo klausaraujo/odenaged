@@ -4,12 +4,12 @@
 	      <div class="row">
 	         <div class="col-lg-6">
 	            <ul class="list-inline mb-0">
-	               <li class="list-inline-item"><a href="#" target="_blank">Politicas de Privacidad</a></li>
+	               <li class="list-inline-item"><a href="#" target="_blank">Políticas de Privacidad</a></li>
 	               <li class="list-inline-item"><a href="#" target="_blank">Términos de Uso</a></li>
 	            </ul>
 	         </div>
 	         <div class="col-lg-6 text-right">
-	            Copyright © 2021 <a href="#" target="_blank"> Centro de Operaciones de Emergencias Sectorial MINEDU </a> Todos los derechos reservados.
+	            Copyright © 2022 <a href="#" target="_blank"> Centro de Operaciones de Emergencias Sectorial MINEDU </a> Todos los derechos reservados.
 	         </div>
 	      </div>
 	   </div>
@@ -33,7 +33,7 @@
 			<div class="modal-footer">
 				<div class="row">
 					<div class="col-sm-4 offset-sm-8">
-						<button type="submit" class="btn btn-primary" id="btnEnviar">Guardar registro</button>
+						<button type="submit" class="btn btn-primary" id="btnEnviar">Guardar Registro</button>
 						<button class="btn btn-primary" id="btnCancelar" name="btnCancelar" role="button" data-dismiss="modal" aria-pressed="true">Cancelar</button>
 					</div>
 				</div>

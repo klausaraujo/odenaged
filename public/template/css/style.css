@@ -257,7 +257,7 @@ a:hover { text-decoration: none; color: #02818f; }
 .iq-sidebar-menu .iq-menu li a .badge { position: absolute; right: 10px;padding: 3px; -webkit-transition: all 0.9s ease-out 0s; -moz-transition: all 0.9s ease-out 0s; -ms-transition: all 0.9s ease-out 0s; -o-transition: all 0.9s ease-out 0s; transition: all 0.9s ease-out 0s; }
 .iq-sidebar-menu .iq-menu li.active, .iq-sidebar-menu .iq-menu li.main-active { border-bottom: none; }
 .iq-sidebar-menu .iq-menu li a:hover { color: #ffffff; }
-.iq-sidebar-menu .iq-menu li.active>a, .iq-sidebar-menu .iq-menu li.main-active>a { color: #089bab; background-color: #ffffff; text-decoration: none; transition: none; }
+.iq-sidebar-menu .iq-menu li.active>a, .iq-sidebar-menu .iq-menu li.main-active>a { color: #e33d3d; background-color: #ffffff; text-decoration: none; transition: none; }
 .iq-search-bar .searchbox .search-link { position: absolute; right: 15px; top: 2px; font-size: 16px; }
 .iq-sidebar-menu .iq-menu li a[aria-expanded="true"] .iq-arrow-right{ transform: rotate(90deg); transition: all 0.3s ease-in-out; -webkit-transition: all 0.3s ease-in-out; -moz-transition: all 0.3s ease-in-out; -o-transition: all 0.3s ease-in-out; -ms-transition: all 0.3s ease-in-out; }
 .iq-sidebar-menu .iq-menu li .iq-submenu li a:hover, .iq-sidebar-menu .iq-menu li.active .iq-submenu li>a { background: transparent; }
@@ -716,6 +716,13 @@ Footer
 .nav.nav-pills.style-three .nav-link.active:before, .nav.nav-pills.style-three .nav-link:hover:before { display: inline-block; width: 100%; height: 3px; background: #089bab; content: ""; position: absolute; left: 0; bottom: 0px; }
 .nav.nav-pills.style-three .nav-link:before { width: 0; -webkit-transition: all 0.3s ease-in-out; -o-transition: all 0.3s ease-in-out; -ms-transition: all 0.3s ease-in-out; -webkit-transition: all 0.3s ease-in-out; height: 3px; background: #19beec; content: ""; position: absolute; right: 0; bottom: 0px; }
 .iq-card-body.banner-box { padding-bottom: 0; }
+.iq-card-body-elements {
+  background: #e33d3d; 
+  height : 230px; 
+  border-radius:20px; 
+  padding-top: 15px;
+  text-align: center!important;
+}
 .nav.nav-pills.style-three { margin-top: 10px; }
 .nav.nav-pills.style-three a:last-child { margin-right: 0px; }
 .nav.nav-pills.style-three a { background: transparent; position: relative; margin-right: 30px; padding: 10px 0px; }
