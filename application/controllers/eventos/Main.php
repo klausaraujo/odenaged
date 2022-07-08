@@ -25,7 +25,6 @@ class Main extends CI_Controller
 		$dpto = $this->Ubigeo_model->dptos();
 		
 		$data = array(
-			"listarCanillita" => 'Lista',#json_encode($listaCanillitas)
 			"tipoevento" => $tipoevento->result(),
 			"dpto" => $dpto->result(),
 			"nivel" => $nivel->result()
@@ -36,7 +35,6 @@ class Main extends CI_Controller
 	public function cargarEvento(){
 		$this->load->model("Evento_model");
 		$count = $this->Evento_model->sumaEventos();
-		$tipo = $this->input->post("tipo");
 		$this->Evento_model->setIdTipoEvt($this->input->post("tipo"));
 		$evento = $this->Evento_model->cargarEvento();
 		$data = array(
@@ -47,14 +45,12 @@ class Main extends CI_Controller
 	}
 	public function cargarprov(){
 		$this->load->model("Ubigeo_model");
-		$region = $this->input->post("region");
-		$this->Ubigeo_model->setidDpto($region);
+		$this->Ubigeo_model->setIdDpto($this->input->post("region"));
 		
-		$listaProv = $this->Ubigeo_model->listarProv();		
+		$listaProv = $this->Ubigeo_model->prov();		
 		
 		$data = array(
-            "lista" => $listaProv->result(),
-			"id" => $region
+            "lista" => $listaProv->result()
         );
         
         echo json_encode($data);
@@ -62,20 +58,32 @@ class Main extends CI_Controller
 	public function cargardis(){
 		$this->load->model("Ubigeo_model");
 		
-		$region = $this->input->post("region");
-		$prov = $this->input->post("provincia");
+		$this->Ubigeo_model->setIdDpto($this->input->post("region"));
+		$this->Ubigeo_model->setIdProv($this->input->post("provincia"));
 		
-		$this->Ubigeo_model->setidDpto($region);
-		$this->Ubigeo_model->setidProv($prov);
-		
-		$listaDis = $this->Ubigeo_model->listarDtto();		
+		$listaDis = $this->Ubigeo_model->dttos();		
 		
 		$data = array(
-            "lista" => $listaDis->result(),
-			"id" => $prov
+            "lista" => $listaDis->result()
         );
         
         echo json_encode($data);
+	}
+	public function cargarLatLng(){
+		$this->load->model("Ubigeo_model");
+		
+		$ubig = $this->input->post("dpto").$this->input->post("prov").$this->input->post("dtto");
+		$this->Ubigeo_model->setUbigeo($this->input->post("dpto").$this->input->post("prov").$this->input->post("dtto"));
+		$ubigeo = $this->Ubigeo_model->ubigeo();
+		
+		$data = array(
+			"ubigeo" => $ubigeo->result(),
+			"ubi" => $ubig
+		
+		);
+		
+		echo json_encode($data);
+		
 	}
 	public function registrar()
     {

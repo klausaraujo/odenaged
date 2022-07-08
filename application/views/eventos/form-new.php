@@ -75,6 +75,21 @@
 								</div>
 								<div class="row"><hr class="col-sm-11" style="margin:20px 0"></div>
 								<div class="row">
+									<div class="col-sm-12">
+										<div class="pac-card" id="pac-card">
+										  <div id="pac-container" class="place-map">
+											<input id="pac-input" type="text" placeholder="Enter a location" />
+										  </div>
+										</div>
+										<div id="map" style="min-height: 350px; width: 100%;"></div>
+										<div id="infowindow-content">
+										  <span id="place-name" class="title"></span><br />
+										  <span id="place-address"></span>
+										</div>
+									</div>
+								</div>
+								<div class="row"><hr class="col-sm-11" style="margin:10px 0"></div>
+								<div class="row">
 									<div class="col-sm-4">
 										<div class="row">
 											<label for="region" class="col-sm-12">Departamento:</label>

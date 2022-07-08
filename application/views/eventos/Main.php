@@ -12,11 +12,6 @@
    <link rel="stylesheet" href="<?=base_url()?>public/template/css/style.css">
    <link rel="stylesheet" href="<?=base_url()?>public/template/css/responsive.css">
    <link rel="stylesheet" href="<?=base_url()?>public/template/js/table/datatable/datatables.min.css" type="text/css">
-   <!--<link rel="stylesheet" href="<?=base_url()?>public/template/js/table/datatable/buttons.datatables.min.css" type="text/css">-->
-   <!--<link rel="stylesheet" href="<?=base_url()?>public/css/datatables.min.css" type="text/css"> 
-   <link href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
-   <link href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css">
-   <link href="<?=base_url()?>public/css/datatables.min.css" rel="stylesheet" type="text/css">-->
    <style>                        
 		input[type=number]::-webkit-inner-spin-button, 
 		input[type=number]::-webkit-outer-spin-button { 
@@ -56,7 +51,7 @@
             
             <div class="row">
                <div class="col-xl-12 col-md-12">
-				<div class="ajaxForm" style="display:none"><?php $this->load->view("eventos/form-new"); ?></div>
+				<div class="ajaxForm" style=""><?php $this->load->view("eventos/form-new"); ?></div>
 				<div class="ajaxTable">
 					  <div class="card m-b-30 pb-35">
 						 <div class="card-body">
@@ -103,9 +98,11 @@
    </div>
    <?php $this->load->view("inc/resource-template"); ?>
    
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=<?='AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc'?>&libraries=places&v=weekly" async></script>
+	<script src="<?=base_url()?>public/template/js/mapa/map.js"></script>
 	<script src="<?=base_url()?>public/template/js/eventos/main.js"></script>
 	<script>
-      //const URI_MAP = "<?=base_url()?>";
       const canDelete = "1";
       const canEdit = "1";
       const canIdioma = "1";
@@ -113,9 +110,25 @@
       const canHistory = "1";
       const URI = "<?=base_url()?>";
 	  var lista = [];
-	  //const lista = JSON.parse('<?=$listarCanillita?>');
 	  const table = tablePersonalized('#tablaCanillita',lista,'evento');
 	  main(URI);
+	  window.onload = function(){
+		//var macc = {lat: 42.1382114, lng: -71.5212585};
+
+		/*var map = new google.maps.Map(
+
+        document.getElementById('map'), {zoom: 15, center: macc});
+
+		var marker = new google.maps.Marker({position: macc, map: map});*/
+		/*var opt ={
+			lat : -12.0147737,
+			lng : -76.88504329999999,
+			zoom : 15,
+		}
+		console.log(opt.zoom);
+		
+		mapa(opt);*/
+    }
 	  
 	  //tablePersonalized(table);
 	  //canillitas(URI,table,'canillita');
