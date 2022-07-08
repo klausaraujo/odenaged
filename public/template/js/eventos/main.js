@@ -122,7 +122,7 @@ function main(URI) {
 				}
 				//console.log(opt);
 				mapa(opt);
-				if($('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 0) $('.ajaxTable').show();
+				if($('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 0) $('.ajaxMap').show();
               /*var $html = '<option value="">--Seleccione--</option>';
               $.each(data.lista, function (i, e) {
     
