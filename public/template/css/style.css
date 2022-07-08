@@ -329,12 +329,12 @@ a:hover { text-decoration: none; color: #02818f; }
   100% { box-shadow: 0 0 0 15px rgba(0, 132, 255, 0); }
 }
 div#lottie-beil, div#lottie-mail, div#lottie-fullscreen { height: 20px; width: 20px; }
-div#lottie-beil svg path, div#lottie-mail svg path, div#lottie-fullscreen svg path { stroke: #089bab; }
+div#lottie-beil svg path, div#lottie-mail svg path, div#lottie-fullscreen svg path { stroke: #ab0826; }
 .navbar-list li .caption { line-height: 16px; }
 .top-nav-bottom { margin-left: 260px; border-top: 1px solid #f2edff; }
 .topnav-toolbar li a { display: block; padding: 10px 15px; text-transform: capitalize; color: #a09e9e; border-radius: 10px; -webkit-border-radius: 10px; }
 .topnav-toolbar li.date-today { background: #f2f3f7; }
-.topnav-toolbar li.active a { background: #eff7f8; color: #089bab; }
+.topnav-toolbar li.active a { background: #eff7f8; color: #ab0841; }
 .topnav-toolbar ul li { list-style: none; padding: 13px 0; }
 .navbar-list li > .dropdown { line-height: 73px; cursor: pointer; }
 .iq-search-bar { padding: 0 15px; }
