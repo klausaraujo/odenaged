@@ -1,5 +1,5 @@
 	<div class="container-fluid">
-		<form id="formCanillita" name="formCanillita" method="POST" action="" autocomplete="off" enctype="multipart/form-data">
+		<form id="formEvento" name="formEvento" method="POST" action="" autocomplete="off" enctype="multipart/form-data">
 			<div class="row">                 
 				<div class="col-sm-12">
 				<? 
@@ -69,26 +69,27 @@
 										<div class="row">
 											<label class="col-sm-12">&nbsp;</label>
 											<label class="form-check-label col-sm-9" for="afecta">Afecta al Sector Educaci&oacute;n:</label>
-											<input class="form-control col-sm-1" type="checkbox" value="" id="afecta">
+											<input class="form-control col-sm-1" type="checkbox" id="afecta">
 										</div>
 									</div>
 								</div>
-								<div class="row ajaxMap" style="display:none">
-									<div class="row"><hr class="col-sm-11" style="margin:20px 0"></div>
-									<div class="col-sm-12">
-										<div class="pac-card" id="pac-card">
+								<div class="row ajaxMap"><hr class="col-sm-11" style="margin:20px 0"></div>
+								<div class="row ajaxMap">
+									<div class="col-sm-12 px-0 pr-sm-5">
+										<!--<div class="pac-card" id="pac-card">
 										  <div id="pac-container" class="place-map">
 											<input id="pac-input" type="text" placeholder="Enter a location" />
 										  </div>
 										</div>
-										<div id="map" style="min-height: 350px; width: 100%;"></div>
 										<div id="infowindow-content">
-										  <span id="place-name" class="title"></span><br />
-										  <span id="place-address"></span>
-										</div>
+										  <div id="place-name" class="title"></div>
+										  <div id="place-address"></div>
+										</div>-->
+										<input type="hidden" name="lat" id="lat" /><input type="hidden" name="lng" id="lng" />
+										<div id="map" style="min-height: 350px; width: 100%;margin-left: auto;margin-right: auto"></div>
 									</div>
 								</div>
-								<div class="row"><hr class="col-sm-11" style="margin:10px 0"></div>
+								<div class="row"><hr class="col-sm-11" style="margin:20px 0"></div>
 								<div class="row">
 									<div class="col-sm-4">
 										<div class="row">
@@ -135,8 +136,8 @@
 									</div>
 									<div class="col-sm-4">
 										<div class="row">
-											<label for="distrito" class="col-sm-12">Instituci&oacute;n:</label>
-											<select class="form-control col-sm-10" name="distrito" id="distrito">
+											<label for="distrito1" class="col-sm-12">Instituci&oacute;n:</label>
+											<select class="form-control col-sm-10" name="distrito1" id="distrito1">
 												<option value="">-- Seleccione --</option>
 											</select>
 										</div>
@@ -149,7 +150,7 @@
 			</div>
 			<div class="col-sm-12"><h5 id="cargando" class="succes"></h5></div>
 			<div class="col-sm-12"><h5 id="message" class="succes"></h5></div>
-			<div class="col-sm-4 ml-auto mr-auto pb-3">
+			<div class="col-sm-12 mx-auto pb-3">
 				<button type="submit" class="btn btn-primary mx-3" id="btnEnviar">Guardar registro</button>
 				<button class="btn btn-primary" id="btnCancelar" name="btnCancelar" role="button" data-dismiss="modal" aria-pressed="true">Cancelar</button>
 			</div>

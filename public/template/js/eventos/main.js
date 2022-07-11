@@ -1,4 +1,4 @@
-function main(URI) {
+function main(URI, map,url) {
 	$(document).ready(function () {
 		$('.iq-menu li #linkAjax').each(function() {
 			$(this).on('click',function(evt) {
@@ -12,7 +12,7 @@ function main(URI) {
 					if($('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 0) $('.ajaxForm').show();
 				}else if(rel !== 'nuevo' && rel != null){
 					//console.log(rel);
-					//loadData();
+					loadData();
 					if(!$('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 1) $('.ajaxForm').hide();
 					if($('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 0) $('.ajaxTable').show();
 				}
@@ -20,10 +20,92 @@ function main(URI) {
 		});
 	});
 	
-	$("#btnEnviar").on('click', function(evt){
+	/*$("#btnEnviar").on('click', function(evt){
 		evt.preventDefault();
-		var anio = $("#fechaevento").val();
-		alert(anio.substring(0,4));
+		
+	});*/
+	
+	
+	$("#formEvento").validate({
+		rules: {
+			tipoevento: { required: function () { if ($("#tipoevento").css("display") != "none") return true; else return false; } },
+			evento: { required: function () { if ($("#evento").css("display") != "none") return true; else return false; } },
+			nivelevento: { required: function () { if ($("#nivelevento").css("display") != "none") return true; else return false; } },
+			fechaevento: { required: function () { if ($("#fechaevento").css("display") != "none") return true; else return false; } },
+			horaevento: { required: function () { if ($("#horaevento").css("display") != "none") return true; else return false; } },
+			region: { required: function () { if ($("#region").css("display") != "none") return true; else return false; } },
+			provincia: { required: function () { if ($("#provincia").css("display") != "none") return true; else return false; } },
+			distrito: { required: function () { if ($("#distrito").css("display") != "none") return true; else return false; } },
+		},
+		messages: {
+			tipoevento: { required : "Campo Requerido" },
+			evento: { required : "Campo Requerido" },
+			nivelevento: { required : "Campo Requerido" },
+			fechaevento: { required : "Campo Requerido" },
+			horaevento: { required : "Campo Requerido" },
+			region: { required : "Campo Requerido" },
+			provincia: { required : "Campo Requerido" },
+			distrito: { required : "Campo Requerido" }
+		},
+		errorPlacement: function (error, element) {
+			if (element.attr("name") == "documento_numero") {
+				error.insertAfter("#error_numero_documento");
+			}
+			else if (element.attr("name") == "fecha_nacimiento") {
+				error.insertAfter("#error_fecha_nacimiento");
+			}
+			else {
+				error.insertAfter(element);
+			}
+		},
+		submitHandler: function (form, event) {
+			event.preventDefault();
+			var formData = new FormData(document.querySelector('form'));
+			//console.log(formData.get('fechaevento'));
+			/*for (var [key, value] of formData.entries()) { 
+			  console.log(key, value);
+			}*/
+			formData.set('afecta',$("#afecta").is(':checked')? 1 : 0);
+			formData.set('anio',($("#fechaevento").val()).substring(0,4));
+			formData.set('ubigeo',$("#region").val() + $("#provincia").val() + $("#distrito").val());
+			formData.set('descripcion',$('select[name="evento"] option:selected').text());
+			formData.set('zoom', map.getZoom());
+			
+			$('#message').switchClass('succes', 'warn');
+			$('#cargando').html('');
+			$("#message").html('');
+			
+			/*var formData = new FormData(document.getElementById("formBrigadista"));
+			formData.append("file", document.getElementById("file")); */
+			$.ajax({
+				data: formData,
+				url: URI + "eventos/main/registrar",
+				method: "POST",
+				dataType: "json",
+				cache: false,
+				contentType: false,
+				processData: false,
+				beforeSend: function () {
+					$("#cargando").html("<i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i>");/*fa-spinner,fa-circle-o-notch,fa-refresh,fa-cog,fa-spinner fa-pulse*/
+					$("#message").hide(); $('#cargando').show();
+				},
+				success: function (data) {
+					console.log(data);
+					var $message = "";
+					$('#message').switchClass('succes', 'warn');
+					
+					if (parseInt(data.status) == 200){ $('#message').switchClass('warn', 'succes'); $message = 'Evento registrado exitosamente'; }
+					else { $message = 'No se pudo registrar el Evento'; }
+					
+					setTimeout(function () { $('#cargando').hide(); $("#message").html($message); $("#message").show() }, 300);
+					if (parseInt(data.status) == 200){ setTimeout(function () { $("#message").slideUp();}, 3000);}
+				}
+			}).fail( function( jqXHR, textStatus, errorThrown ) {
+				// Un callback .fail()
+				setTimeout(function () { $('#cargando').hide(); $("#message").html(/*jqXHR + ",  " +*/ textStatus.toUpperCase() + ":  " + errorThrown); $("#message").show()}, 500);
+				
+			});
+		}
 	});
 	
 	
@@ -115,13 +197,9 @@ function main(URI) {
             success: function (data) {
 				//console.log(data);
 				const {ubigeo} = data;
-				var opt ={
-					lat : parseFloat(ubigeo[0].latitud),
-					lng : parseFloat(ubigeo[0].longitud),
-					zoom : 15,
-				}
-				//console.log(opt);
-				mapa(opt);
+				var opt = {lat: parseFloat(ubigeo[0].latitud), lng: parseFloat(ubigeo[0].longitud), zoom: 16};
+				//console.log(map.getZoom());
+				map.setCenter(opt);
 				if($('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 0) $('.ajaxMap').show();
               /*var $html = '<option value="">--Seleccione--</option>';
               $.each(data.lista, function (i, e) {
@@ -134,6 +212,34 @@ function main(URI) {
           });
         }
     });
+	
+	function loadData() {
+		$.ajax({
+		  type: 'POST',
+		  url: URI + 'eventos/main/listar',
+		  data: {},
+		  dataType: 'json',
+		  success: function (response) {
+			const { data: { lista } } = response;
+			console.log(response);
+			console.log(lista);
+			/*table.clear();
+			table.rows.add(listar).draw();*/
+			
+			/*$(".actionEdit").on('click', function (event) {
+			  var valor ="", i = 0;
+			  $(this).parents("tr").find("td").each(function(){
+				if(i == 1)
+				  valor = $(this).html();
+				i++;
+			  });
+		
+			  buscar(valor);
+			  showModal(event, 'Editar Usuario');
+			});*/
+		  }
+		});
+	}
 	
 	
 }

@@ -20,21 +20,48 @@ class Main extends CI_Controller
     {
 		$this->load->model("Evento_model");
 		$this->load->model("Ubigeo_model");
+		
 		$tipoevento = $this->Evento_model->tipoEvento();
 		$nivel = $this->Evento_model->cargaNivel();
 		$dpto = $this->Ubigeo_model->dptos();
+		$listar = $this->Evento_model->listar();
+		
+		if ($listar->num_rows() > 0) {
+            $listar = $listar->result();
+        } else {
+            $listar = array();
+        }
 		
 		$data = array(
 			"tipoevento" => $tipoevento->result(),
 			"dpto" => $dpto->result(),
-			"nivel" => $nivel->result()
+			"nivel" => $nivel->result(),
+			"lista" => json_encode($listar)
 		);
 		
 		$this->load->view($this->uri->segment(1).'/main',$data);
     }
+	public function listar(){
+		$this->load->model("Evento_model");
+		$listar = $this->Evento_model->listar();		
+		
+		if ($listar->num_rows() > 0) {
+            $listar = $listar->result();
+        } else {
+            $listar = array();
+        }
+
+        $data = array(
+            "status" => 200,
+            "data" => array(
+						"lista" => $listar
+					)
+        );
+
+        echo json_encode($data);
+	}
 	public function cargarEvento(){
 		$this->load->model("Evento_model");
-		$count = $this->Evento_model->sumaEventos();
 		$this->Evento_model->setIdTipoEvt($this->input->post("tipo"));
 		$evento = $this->Evento_model->cargarEvento();
 		$data = array(
@@ -87,92 +114,66 @@ class Main extends CI_Controller
 	}
 	public function registrar()
     {
-		$this->load->model("canillitas/Canillita_model");
+		$this->load->model("Evento_model");
+		
 		$dtz = new DateTimeZone("America/Lima");
         $dt = new DateTime("now", $dtz);
-        $fechaActual = $dt->format("Y-m-d h:i:s a");
+        //$fechaActual = $dt->format("Y-m-d h:i:s a");
+		$fechaActual = $dt->format("Y-m-d h:i:s");
+		$count = $this->Evento_model->sumaEventos();
 		
-		/*$fechanac = strtotime($this->input->post("fechaNac"));
-		$fechanac = date('Y-m-d H:i:s');*/
-		
-		$dni = $this->input->post("documento_numero");
-		$nombres = $this->input->post("nombres");
-		$apellidos = $this->input->post("apellidos");
-		$fechanac = $this->input->post("fechaNac");
-		$genero = $this->input->post("genero");
-		$edocivil = $this->input->post("edoCivil");
-		$condicion = $this->input->post("condic");
-		$domic = $this->input->post("domicilio");
-		$telf = $this->input->post("tlf1");
-		$telf2 = $this->input->post("tlf2");
-		$email = $this->input->post("correo");
-		$obs = $this->input->post("observacion");
-		
-		$this->Canillita_model->setDocumento_numero($dni);
-		$this->Canillita_model->setNombres($nombres);
-		$this->Canillita_model->setApellidos($apellidos);		
-		$this->Canillita_model->setFecha_nacimiento($fechanac);
-		$this->Canillita_model->setGenero($genero);
-		$this->Canillita_model->setEstado_civil($edocivil);
-		$this->Canillita_model->setCondicion($condicion);
-		$this->Canillita_model->setDomicilio($domic);
-		$this->Canillita_model->setTelefono_01($telf);
-		$this->Canillita_model->setTelefono_02($telf2);
-		$this->Canillita_model->setEmail($email);
-		$this->Canillita_model->setObs($obs);
-		$this->Canillita_model->setUsuario_registro($this->session->userdata("idusuario"));
-		$this->Canillita_model->setFecha_registro($fechaActual);
-		
-		
+		$this->Evento_model->setAnio($this->input->post('anio'));
+		$this->Evento_model->setCtaEvento($count + 1);
+		$this->Evento_model->setNivelEvento($this->input->post('nivelevento'));
+		$this->Evento_model->setIdEvento($this->input->post('evento'));
+		$this->Evento_model->setDescripcion($this->input->post('descripcion'));
+		$this->Evento_model->setUbigeo($this->input->post('ubigeo'));
+		$this->Evento_model->setLat($this->input->post('lat'));
+		$this->Evento_model->setLng($this->input->post('lng'));
+		$this->Evento_model->setFechaEvento($this->input->post('fechaevento'));
+		$this->Evento_model->setHoraEvento($this->input->post('fechaevento')." ".$this->input->post('horaevento'));
+		$this->Evento_model->setAfecta($this->input->post('afecta'));
+		$this->Evento_model->setZoom($this->input->post('zoom'));
+		$this->Evento_model->setUsuarioReg($this->session->userdata("idusuario"));
+		$this->Evento_model->setFechaReg($fechaActual);
 		
 		$campos = array(
-			'dni ' =>  $this->input->post("documento_numero"),
-			'nombres ' =>  $this->input->post("nombres"),
-			'apellidos ' =>  $this->input->post("apellidos"),
-			'fechanac ' =>  $fechanac,
-			'genero ' =>  $this->input->post("genero"),
-			'edocivil ' =>  $this->input->post("edoCivil"),
-			'condicion ' =>  $this->input->post("condic"),
-			'domic ' =>  $this->input->post("domicilio"),
-			'telf ' =>  $this->input->post("tlf1"),
-			'telf2 ' =>  $this->input->post("tlf2"),
-			'email ' =>  $this->input->post("correo"),
-			'obs ' =>  $this->input->post("observacion"),
-			'usuario' => $this->session->userdata("idusuario"),
+			'anio' =>  $this->input->post('anio'),
+			'idusuario' =>  $this->session->userdata("idusuario"),
+			'fecha' =>  $fechaActual,
+			'nivel' => $this->input->post('nivelevento'),
+			'idevento' => $this->input->post('evento'),
+			'evento' => $this->input->post('descripcion'),
+			'ubigeo' => $this->input->post('ubigeo'),
+			'latitud' => $this->input->post('lat'),
+			'longitud' => $this->input->post('lng'),
+			'fechaevento' => $this->input->post('fechaevento'),
+			'horaevento' => $this->input->post('fechaevento')." ".$this->input->post('horaevento'),
+			'afecta' => $this->input->post('afecta'),
+			'zoom' => $this->input->post('zoom'),
 		);
-		
-		$count = $this->Canillita_model->existe_canillita();
-		
-		
-		if (strlen($apellidos) < 1 or strlen($nombres) < 1 or strlen($dni) < 1 or strlen($genero) < 1 or strlen($fechanac) < 1)
-        {
+				
+		if (strlen($this->input->post('evento')) < 1 or strlen($this->input->post('nivelevento')) < 1 or strlen($this->input->post('fechaevento')) < 1)
+		{
             $data = array(
                 "status" => 500,
 				"campos" => $campos
             );
         }else{
-			if ($count > 0)
-            {
-                $data = array(
-                    "status" => 201,
+			$id = $this->Evento_model->registrar();
+			if ($id > 0){
+				$data = array(
+					"status" => 200,
 					"campos" => $campos
                 );
-            }else{
-				$id = $this->Canillita_model->registrar();
-				if ($id > 0){
-					$data = array(
-                        "status" => 200,
-						"campos" => $campos
-                    );
-				}else{
-                    $data = array(
-                        "status" => 500,
-						"campos" => $campos
-                    );
-                }
-			}
+			}else{
+				$data = array(
+					"status" => 500,
+					"campos" => $campos
+                 );
+            }
 		}
+		
 		echo json_encode($data);
-		//$this->load->view($this->uri->segment(1).'/form-new');
     }
 }

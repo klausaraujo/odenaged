@@ -48,6 +48,21 @@
                   <?php //echo "<pre>"; echo $lista; echo '<br>'.$pacientes;//echo "<pre>"; echo var_dump($lista); ?>
                </div>
             </div>
+			<?
+			/*	
+				año en el servidor  = strftime('%Y')
+				$hoy = date("F j, Y, g:i a");                 // March 10, 2001, 5:16 pm
+				$hoy = date("m.d.y");                         // 03.10.01
+				$hoy = date("j, n, Y");                       // 10, 3, 2001
+				$hoy = date("Ymd");                           // 20010310
+				$hoy = date('h-i-s, j-m-y, it is w Day');     // 05-16-18, 10-03-01, 1631 1618 6 Satpm01
+				$hoy = date('\i\t \i\s \t\h\e jS \d\a\y.');   // it is the 10th day.
+				$hoy = date("D M j G:i:s T Y");               // Sat Mar 10 17:16:18 MST 2001
+				$hoy = date('H:m:s \m \i\s\ \m\o\n\t\h');     // 17:03:18 m is month
+				$hoy = date("H:i:s");                         // 17:16:18
+				$hoy = date("Y-m-d H:i:s");                   // 2001-03-10 17:16:18 (el formato DATETIME de MySQL)
+			*/
+			?>
             
             <div class="row">
                <div class="col-xl-12 col-md-12">
@@ -62,19 +77,23 @@
 								<select class="form-control col-sm-2 mx-2" name="anio" id="anio">
 									<option value="">-- Seleccione --</option>
 									<?
-									  $anio = $this->session->userdata("anio");
-									  foreach($anio as $row):
-										echo '<option value="'.$row->idanio.'">'.$row->anio.'</option>';
-									  endforeach;
+									foreach($this->session->userdata("anio") as $row):
+										if($row->anio == strftime('%Y'))
+											echo '<option value="'.$row->idanio.'" selected >'.$row->anio.'</option>';
+										else
+											echo '<option value="'.$row->idanio.'">'.$row->anio.'</option>';
+									endforeach;
 									?>
 								</select>
 								<select class="form-control col-sm-2 mx-2" name="mes" id="mes">
 									<option value="">-- Seleccione --</option>
 									<?
-									  $mes = $this->session->userdata("mes");
-									  foreach($mes as $row):
-										echo '<option value="'.$row->idmes.'">'.$row->mes.'</option>';
-									  endforeach;
+										foreach($this->session->userdata("mes") as $row):
+											if(intval($row->idmes) == date('n'))
+												echo '<option value="'.$row->idmes.'" selected >'.$row->mes.'</option>';
+											else
+												echo '<option value="'.$row->idmes.'">'.$row->mes.'</option>';
+										endforeach;
 									?>
 								</select>
 								
@@ -82,7 +101,7 @@
 							<br>
 
 							<div class="table-responsive">
-							   <table id="tablaCanillita" class="table table-striped dt-responsive w-100 table-bordered display nowrap table-hover mb-0" style="width:100%">
+							   <table id="tablaEvento" class="table table-striped dt-responsive w-100 table-bordered display nowrap table-hover mb-0" style="width:100%">
 									
 							   </table>
 							</div>
@@ -103,16 +122,18 @@
 	<script src="<?=base_url()?>public/template/js/mapa/map.js"></script>
 	<script src="<?=base_url()?>public/template/js/eventos/main.js"></script>
 	<script>
-      const canDelete = "1";
-      const canEdit = "1";
-      const canIdioma = "1";
-      const canTracking = "1";
-      const canHistory = "1";
-      const URI = "<?=base_url()?>";
-	  var lista = [];
-	  const table = tablePersonalized('#tablaCanillita',lista,'evento');
-	  main(URI);
-	  window.onload = function(){
+		const canDelete = "1";
+		const canEdit = "1";
+		const canIdioma = "1";
+		const canTracking = "1";
+		const canHistory = "1";
+		const URI = "<?=base_url()?>";
+		const lista = JSON.parse('<?=$lista?>');
+		const table = tablePersonalized('#tablaEvento',lista,'evento');
+		window.onload = function(){
+			var opt = {lat: 42.1382114, lng: -71.5212585,zoom: 16};
+			$('.ajaxMap').hide();
+			main(URI, mapa(opt));
 		//var macc = {lat: 42.1382114, lng: -71.5212585};
 
 		/*var map = new google.maps.Map(
@@ -128,7 +149,7 @@
 		console.log(opt.zoom);
 		
 		mapa(opt);*/
-    }
+		}
 	  
 	  //tablePersonalized(table);
 	  //canillitas(URI,table,'canillita');

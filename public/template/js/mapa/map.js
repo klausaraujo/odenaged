@@ -1,14 +1,24 @@
 function mapa(macc) {
 	//la macc recibida es un array de valores para setear el mapa
 	var place;
+	var lat = macc.lat;
+	var lng = macc.lng;
+	var zoom = macc.zoom;
 	
 	const map = new google.maps.Map(document.getElementById("map"), {
 		//center: { lat: lati, lng: longi },
-		center: {lat: macc.lat,lng: macc.lng},
-		zoom: macc.zoom,
+		center: {lat: lat,lng: lng},
+		zoom: zoom,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
-			  
+	const geocoder = new google.maps.Geocoder();
+	const marker = new google.maps.Marker({
+		map,
+		anchorPoint: new google.maps.Point(0, -29),
+		draggable: true,
+		position: new google.maps.LatLng(lat, lng)
+	});
+/*	
 	const card = document.getElementById("pac-card");
 	const input = document.getElementById("pac-input");
 	const options = {
@@ -24,16 +34,9 @@ function mapa(macc) {
 	// bounds option in the request.
 	autocomplete.bindTo("bounds", map);
 	const infowindow = new google.maps.InfoWindow();
-	const geocoder = new google.maps.Geocoder();
 	const infowindowContent = document.getElementById("infowindow-content");
 	infowindow.setContent(infowindowContent);
-	const marker = new google.maps.Marker({
-		map,
-		anchorPoint: new google.maps.Point(0, -29),
-		draggable: true,
-		position: new google.maps.LatLng(macc.lat, macc.lng)
-	});
-		  
+	
 	autocomplete.addListener("place_changed", () => {
 		infowindow.close();
 		marker.setVisible(false);
@@ -49,24 +52,24 @@ function mapa(macc) {
 			map.fitBounds(place.geometry.viewport);
 		}else {
 			map.setCenter(place.geometry.location);
-			map.setZoom(12);
+			//map.setZoom(16);
 		}
-		marker.setPosition(place.geometry.location);
+		marker.setPosition(place.geometry.location);	
 		marker.setVisible(true);
 		infowindowContent.children["place-name"].textContent = place.name;
 		infowindowContent.children["place-address"].textContent = place.formatted_address;
 		infowindow.open(map, marker);
-	});
-		  
-	google.maps.event.addListener(marker, "dragend", function (event) {
-		var lat = marker.getPosition().lat();
-		var lng = marker.getPosition().lng();
-		console.log(lat+",  "+lng);
 		
+		//lat = place.geometry.location.lat();
+		//lng = place.geometry.location.lng();
+		//console.log(lat+",  "+lng);
+	});
+*/
+		  
+	google.maps.event.addListener(marker, "dragend", function (event) {		
 		//document.getElementById("latitud").value = lat;
 		//document.getElementById("longitud").value = lng;
 		geocoder.geocode({'latLng': marker.getPosition()},function (results, status) {
-			
 			if (status == google.maps.GeocoderStatus.OK) {
 				//console.log  (results[0].address_components);
 				//var address = results[0]['formatted_address'];
@@ -75,5 +78,42 @@ function mapa(macc) {
 				//infowindow.open(map, marker);
 			}
 		});
+		lat = marker.getPosition().lat();
+		lng = marker.getPosition().lng();
+		$('#lat').val(lat);
+		$('#lng').val(lng);
+		//console.log(lat+",  "+lng);
 	});
+	
+	google.maps.event.addListener(map,"center_changed", () => {
+		// 3 seconds after the center of the map has changed, pan back to the marker.
+		//var c = map.getCenter();
+		//console.log(c);
+		map.setZoom(16);
+		marker.setPosition(map.getCenter());
+		lat = marker.getPosition().lat();
+		lng = marker.getPosition().lng();
+		$('#lat').val(lat);
+		$('#lng').val(lng);
+		//window.setTimeout(() => { map.panTo(marker.getPosition()); lat = marker.getPosition().lat(); lng = marker.getPosition().lng(); console.log(lat+",  "+lng); }, 3000);
+	});
+	
+	google.maps.event.addListener(marker, "position_changed", function() {
+		/*lat = marker.getPosition().lat();
+		lng = marker.getPosition().lng();
+		console.log(lat+",  "+lng);
+		console.log(marker.getPosition());*/
+	});
+	
+	google.maps.event.addListener(marker,"click", () => {
+		//map.setZoom(8);
+		//map.setCenter(marker.getPosition());
+	});	
+	
+	//Evento que se produce cuando cambia cualquier cosa en la ventana del mapa
+	google.maps.event.addListener(map, 'bounds_changed', function(event) {
+		
+    });
+	
+	return map;
 }

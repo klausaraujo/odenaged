@@ -32,11 +32,11 @@ function tablePersonalized(table, lista, titulo){
 		if(titulo == 'evento'){
 			//colu = JSON.parse('[{"data":"dni"},{"data":"apellidos"},{"data":"nombres"},{"data":"fecnac"},{"data":"sexo"},{"data":"domicilio"},{"data":"correo"}]');
 			cols = [
-				{data:null},{data:'dni'},{data:'apellidos'},{data:'nombres'},{data:'fecnac'},{data:'sexo'},{data:'domicilio'},{data:'correo'}
+				{data:null},{data:'anio_evento'},{data:'numero_evento'},{data:'descripcion'},{data:'ubigeo'},{data:'latitud'},{data:'longitud'},{data:'fecha'}
 			];
 			titles = [
-				{title:'Acciones',targets:0},{title:'C&oacute;d. Evento',targets:1},{title:'Nombre del Evento',targets:2},{title:'Fecha y Hora',targets:3},
-				{title:'Dpto./Prov./Dtto',targets:4},{title:'Afecta al Sector Educaci&oacute;n',targets:5}
+				{title:'Acciones',targets:0},{title:'A&ntilde;o Evento',targets:1},{title:'N&uacute;mero del Evento',targets:2},{title:'Evento',targets:3},
+				{title:'Ubigeo',targets:4},{title:'Latitud',targets:5},{title:'Longitud',targets:6},{title:'Fecha del Evento',targets:7}
 			]
 			
 		}if(titulo == 'mostrar'){
@@ -49,7 +49,7 @@ function tablePersonalized(table, lista, titulo){
 				targets: 0,
 				data: null,
 				render: function (data, type, row, meta) {
-				const btnEdit = '<button class="btn btn-success btn-sm actionEdit" title="Editar Registro" type="button"'+
+				const btnEdit = '<button class="btn btn-success btn-sm actionEdit" title="Editar Registro" type="button" alt="editar"'+
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>';
 				const btnCargas = '<button class="btn btn-warning btn-circle btn-sm actionCargas" title="Registrar Cargas Familiares" type="button"'+
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-users" aria-hidden="true"></i></button>';
@@ -195,8 +195,8 @@ function tablePersonalized(table, lista, titulo){
 				var data = dataTable.row($(this).parents("tr")).data();
 			}
 			console.log(data);
-			$("#decisionModal").modal("show");
-			$(".modal-title").html('Editar Canillita');
+			/*$("#decisionModal").modal("show");
+			$(".modal-title").html('Editar Canillita');*/
 		}
 	});
 	
