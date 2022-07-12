@@ -45,9 +45,9 @@ class Evento_model extends CI_Model
     public function listar()
 	{
         #$this->db->select("brigadista_id id,apellidos,nombres,Tipo_Documento_Codigo,documento_numero,genero,DATE_FORMAT(fecha_nacimiento,'%d/%m/%Y') fecha_nacimiento,foto");
-        $this->db->select("*");
+        #$this->db->select("*");
+		$this->db->select("idregistroevento idevento,anio_evento a&ntilde;o,numero_evento n&uacute;mero,descripcion,ubigeo,DATE_FORMAT(fecha,'%d/%m/%Y') fecha");
         $this->db->from("registro_evento");
-		
         return $this->db->get();
     }
     public function registrar()

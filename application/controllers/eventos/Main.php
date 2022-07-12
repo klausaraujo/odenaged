@@ -16,6 +16,7 @@ class Main extends CI_Controller
     {
 		
     }
+	
 	public function eventos()
     {
 		$this->load->model("Evento_model");
@@ -41,6 +42,7 @@ class Main extends CI_Controller
 		
 		$this->load->view($this->uri->segment(1).'/main',$data);
     }
+	
 	public function listar(){
 		$this->load->model("Evento_model");
 		$listar = $this->Evento_model->listar();		
@@ -58,6 +60,7 @@ class Main extends CI_Controller
 
         echo json_encode($data);
 	}
+	
 	public function cargarEvento(){
 		$this->load->model("Evento_model");
 		$this->Evento_model->setIdTipoEvt($this->input->post("tipo"));
@@ -68,6 +71,7 @@ class Main extends CI_Controller
 		
 		echo json_encode($data);
 	}
+	
 	public function cargarprov(){
 		$this->load->model("Ubigeo_model");
 		$this->Ubigeo_model->setIdDpto($this->input->post("region"));
@@ -80,6 +84,7 @@ class Main extends CI_Controller
         
         echo json_encode($data);
 	}
+	
 	public function cargardis(){
 		$this->load->model("Ubigeo_model");
 		
@@ -94,6 +99,7 @@ class Main extends CI_Controller
         
         echo json_encode($data);
 	}
+	
 	public function cargarLatLng(){
 		$this->load->model("Ubigeo_model");
 		
@@ -110,6 +116,7 @@ class Main extends CI_Controller
 		echo json_encode($data);
 		
 	}
+	
 	public function registrar()
     {
 		$this->load->model("Evento_model");

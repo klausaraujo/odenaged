@@ -1,42 +1,35 @@
 function tablePersonalized(table, lista, titulo){
 	
-	let cols = []; let titles = []; let render = []; //let colu = ''; let tit = '';
+	let cols = []; let titles = []; let render = [];
 	
 	if(lista.length > 0){
-		let j = 1; let i = 0; //colu = '[{"data":null},'; tit = '[{"title":"Acciones","targets":0},';
+		let j = 1; let i = 0;
 		cols.push({data:null});
 		lista.forEach(function(col){
 			for(const [key, value] of Object.entries(col)){
 				let pal = '';
 				if(j < 8 && i == 0){
-					//Crear columnas y titulos de datatables con un for y un String para JSON
-					/*colu += '{"data":"'+key+'"},';
-					tit += '{"title":"'+key.toUpperCase()+'","targets":'+j+'},';*/
-					//Crear columnas y titulos de datatables con un for y un array
-					cols.push({data:key});
-					key == 'fecnac'? pal = 'Fecha Nac.': key !== 'dni'? pal = key.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase()):pal = key.toUpperCase();
-					titles.push({title:pal,targets:j});
-				}/*else if(j == 8){
-					colu += '{"data":"'+key+'"}';
-					tit += '{"title":"'+key.toUpperCase()+'","targets":'+j+'}';
-					cols.push({data:key});
-					titles.push({title:key.toUpperCase(),targets:j});
-				}*/
-				j++;
+					alert(key);
+					if(key !== 'idevento'){
+						cols.push({data:key});
+						key == 'fecnac'? pal = 'Fecha Nac.': key !== 'dni'? pal = key.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase()):pal = key.toUpperCase();
+						titles.push({title:pal,targets:j});
+						j++;
+					}
+				}				
 			}
 			i++;
 		});
-		//colu = JSON.parse(colu += ']'); tit = JSON.parse(tit += ']');
 		
 	}else{
 		if(titulo == 'evento'){
 			//colu = JSON.parse('[{"data":"dni"},{"data":"apellidos"},{"data":"nombres"},{"data":"fecnac"},{"data":"sexo"},{"data":"domicilio"},{"data":"correo"}]');
 			cols = [
-				{data:null},{data:'anio_evento'},{data:'numero_evento'},{data:'descripcion'},{data:'ubigeo'},{data:'latitud'},{data:'longitud'},{data:'fecha'}
+				{data:null},{data:'a&ntilde;o'},{data:'n&uacute;mero'},{data:'descripcion'},{data:'ubigeo'},{data:'fechaevento'}
 			];
 			titles = [
-				{title:'Acciones',targets:0},{title:'A&ntilde;o Evento',targets:1},{title:'N&uacute;mero del Evento',targets:2},{title:'Evento',targets:3},
-				{title:'Ubigeo',targets:4},{title:'Latitud',targets:5},{title:'Longitud',targets:6},{title:'Fecha del Evento',targets:7}
+				{title:'Acciones',targets:0},{title:'A&ntilde;o',targets:1},{title:'N&uacute;mero',targets:2},{title:'Descripcion',targets:3},
+				{title:'Ubigeo',targets:4},{title:'Fecha',targets:5}
 			]
 			
 		}if(titulo == 'mostrar'){
