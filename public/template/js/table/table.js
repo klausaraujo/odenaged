@@ -9,7 +9,7 @@ function tablePersonalized(table, lista, titulo){
 			for(const [key, value] of Object.entries(col)){
 				let pal = '';
 				if(j < 8 && i == 0){
-					alert(key);
+					//alert(key);
 					if(key !== 'idevento'){
 						cols.push({data:key});
 						key == 'fecnac'? pal = 'Fecha Nac.': key !== 'dni'? pal = key.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase()):pal = key.toUpperCase();
