@@ -1,5 +1,7 @@
 function main(URI, map,url) {
 	$(document).ready(function () {
+		$('#menu1').addClass('active');
+		
 		$('.iq-menu li #linkAjax').each(function() {
 			$(this).on('click',function(evt) {
 				var rel= $(this).attr('rel');
@@ -8,13 +10,10 @@ function main(URI, map,url) {
 					/*$(".modal-title").html('Datos Generales de la Emergencia');
 					$("#decisionModal").modal("show");
 					$("#decisionModal").css("padding-right", "0px");*/
-					if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
-					if($('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 0) $('.ajaxForm').show();
+					ocultarElem(false);
 				}else if(rel !== 'nuevo' && rel != null){
 					//console.log(rel);
-					loadData();
-					if(!$('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 1) $('.ajaxForm').hide();
-					if($('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 0) $('.ajaxTable').show();
+					ocultarElem(true);
 				}
 			});
 		});
@@ -24,7 +23,32 @@ function main(URI, map,url) {
 		evt.preventDefault();
 		
 	});*/
+	function ocultarElem(on){
+		$('html, body').animate({ scrollTop: 0 }, 'fast');
+		if(on){
+			loadData();
+			if(!$('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 1) $('.ajaxForm').hide();
+			if($('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 0) $('.ajaxTable').show();
+			if(!$('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 1) $('.ajaxMap').hide();
+			$('#menu2').removeClass('active');
+			$('#menu1').addClass('active');
+			resetForm();
+			$('#message').switchClass('succes', 'warn');
+			$('#cargando').html('');
+			$("#message").html('');
+		}else{
+			if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
+			if($('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 0) $('.ajaxForm').show();
+		}
+	}
+	function resetForm(){
+		$("#formEvento")[0].reset();$("#formEvento select").prop('selectedIndex',0);//('#blah').attr('src',URI+'public/template/images/camera.png')
+	}
 	
+	$("#btnCancelar").on('click', function(evt){
+		evt.preventDefault();
+		ocultarElem(true);
+	});
 	
 	$("#formEvento").validate({
 		rules: {
@@ -71,10 +95,6 @@ function main(URI, map,url) {
 			formData.set('descripcion',$('select[name="evento"] option:selected').text());
 			formData.set('zoom', map.getZoom());
 			
-			$('#message').switchClass('succes', 'warn');
-			$('#cargando').html('');
-			$("#message").html('');
-			
 			/*var formData = new FormData(document.getElementById("formBrigadista"));
 			formData.append("file", document.getElementById("file")); */
 			$.ajax({
@@ -92,18 +112,21 @@ function main(URI, map,url) {
 				success: function (data) {
 					console.log(data);
 					var $message = "";
-					$('#message').switchClass('succes', 'warn');
+					//$('#message').switchClass('succes', 'warn');
 					
 					if (parseInt(data.status) == 200){ $('#message').switchClass('warn', 'succes'); $message = 'Evento registrado exitosamente'; }
 					else { $message = 'No se pudo registrar el Evento'; }
 					
 					setTimeout(function () { $('#cargando').hide(); $("#message").html($message); $("#message").show() }, 300);
-					if (parseInt(data.status) == 200){ setTimeout(function () { $("#message").slideUp();}, 3000);}
+					if (parseInt(data.status) == 200){
+						setTimeout(function () {
+							ocultarElem(true);
+						}, 1000);
+					}
 				}
 			}).fail( function( jqXHR, textStatus, errorThrown ) {
 				// Un callback .fail()
 				setTimeout(function () { $('#cargando').hide(); $("#message").html(/*jqXHR + ",  " +*/ textStatus.toUpperCase() + ":  " + errorThrown); $("#message").show()}, 500);
-				
 			});
 		}
 	});
@@ -201,13 +224,6 @@ function main(URI, map,url) {
 				//console.log(map.getZoom());
 				map.setCenter(opt);
 				if($('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 0) $('.ajaxMap').show();
-              /*var $html = '<option value="">--Seleccione--</option>';
-              $.each(data.lista, function (i, e) {
-    
-                $html += '<option value="' + e.cod_dis + '">' + e.distrito + '</option>';
-    
-              });
-              $("#distrito").html($html);*/
             }
           });
         }
@@ -221,22 +237,10 @@ function main(URI, map,url) {
 		  dataType: 'json',
 		  success: function (response) {
 			const { data: { lista } } = response;
-			console.log(response);
-			console.log(lista);
-			/*table.clear();
-			table.rows.add(listar).draw();*/
-			
-			/*$(".actionEdit").on('click', function (event) {
-			  var valor ="", i = 0;
-			  $(this).parents("tr").find("td").each(function(){
-				if(i == 1)
-				  valor = $(this).html();
-				i++;
-			  });
-		
-			  buscar(valor);
-			  showModal(event, 'Editar Usuario');
-			});*/
+			//console.log(response);
+			//console.log(lista);
+			table.clear();
+			table.rows.add(lista).draw();
 		  }
 		});
 	}

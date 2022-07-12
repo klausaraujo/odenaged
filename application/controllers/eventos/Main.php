@@ -53,9 +53,7 @@ class Main extends CI_Controller
 
         $data = array(
             "status" => 200,
-            "data" => array(
-						"lista" => $listar
-					)
+            "data" => array( "lista" => $listar )
         );
 
         echo json_encode($data);

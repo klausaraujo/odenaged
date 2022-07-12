@@ -152,7 +152,7 @@
 			<div class="col-sm-12"><h5 id="message" class="succes"></h5></div>
 			<div class="col-sm-12 mx-auto pb-3">
 				<button type="submit" class="btn btn-primary mx-3" id="btnEnviar">Guardar registro</button>
-				<button class="btn btn-primary" id="btnCancelar" name="btnCancelar" role="button" data-dismiss="modal" aria-pressed="true">Cancelar</button>
+				<button class="btn btn-primary" id="btnCancelar" name="btnCancelar">Cancelar</button>
 			</div>
 		</form>
 	</div>
