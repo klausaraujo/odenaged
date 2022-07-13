@@ -50,6 +50,59 @@
 										</div>
 									</div>
 								</div>
+								<div class="row sismo" style="display:none"><hr class="col-sm-11" style="margin:20px 0"></div>
+								<div class="sismo row mr-sm-2" style="display:none">
+									<div class="col-sm-12 py-3" style="/*background-color:rgba(255, 0, 0, 0.4);*/background-color:#DAF7A6;border-radius:0.7rem">
+										<label class="col-sm-12 col-form-label">Evento Sismo/Terremoto</label>
+										<hr class="col-sm-11" style="" />
+										<div class="row px-2">
+											<div class="col-sm-4">
+												<div class="row">
+													<label for="latitudsismo" class="col-sm-12">Latitud:</label>
+													<input type="text" class="form-control col-sm-11" style="background:#fff" name="latitudsismo" id="latitudsismo"
+														placeholder="Latitud Sismo" />
+												</div>
+											</div>
+											<div class="col-sm-4">
+												<div class="row">
+													<label for="longitudsismo" class="col-sm-12">Longitud:</label>
+													<input type="text" class="form-control col-sm-11" style="background:#fff"	name="longitudsismo" id="longitudsismo"
+														placeholder="Longitud Sismo" />
+												</div>
+											</div>
+											<div class="col-sm-4">
+												<div class="row">
+													<label for="profundidad" class="col-sm-12">Profundidad:</label>
+													<input type="text" class="form-control col-sm-11" style="background:#fff" name="profundidad" id="profundidad"
+														placeholder="Profundidad" />
+												</div>
+											</div>
+										</div>
+										<div class="row px-2">
+											<div class="col-sm-4">
+												<div class="row">
+													<label for="magnitud" class="col-sm-12">Magnitud:</label>
+													<input type="text" class="form-control col-sm-11" style="background:#fff" name="magnitud" id="magnitud" 
+														placeholder="Magnitud" />
+												</div>
+											</div>
+											<div class="col-sm-4">
+												<div class="row">
+													<label for="intensidad" class="col-sm-12">Intensidad:</label>
+													<input type="text" class="form-control col-sm-11" style="background:#fff" name="intensidad" id="intensidad" 
+														placeholder="Intensidad" />
+												</div>
+											</div>
+											<div class="col-sm-4">
+												<div class="row">
+													<label for="referencia" class="col-sm-12">Referencia del Sismo:</label>
+													<input type="text" class="form-control col-sm-11" style="background:#fff" name="referencia" id="referencia" 
+														placeholder="Referencia" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 								<div class="row"><hr class="col-sm-11" style="margin:20px 0"></div>
 								<!--<h4>Ubicacion del Evento</h4>-->
 								<div class="row">

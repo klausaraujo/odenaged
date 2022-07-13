@@ -29,7 +29,6 @@ function main(URI, map,url) {
 			loadData();
 			if(!$('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 1) $('.ajaxForm').hide();
 			if($('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 0) $('.ajaxTable').show();
-			if(!$('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 1) $('.ajaxMap').hide();
 			$('#menu2').removeClass('active');
 			$('#menu1').addClass('active');
 			resetForm();
@@ -40,6 +39,8 @@ function main(URI, map,url) {
 			if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
 			if($('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 0) $('.ajaxForm').show();
 		}
+		if(!$('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 1) $('.ajaxMap').hide();
+		if(!$('.sismo').css('display') == 'none' || $('.sismo').css('opacity') == 1) $('.sismo').hide();
 	}
 	function resetForm(){
 		$("#formEvento")[0].reset();$("#formEvento select").prop('selectedIndex',0);//('#blah').attr('src',URI+'public/template/images/camera.png')
@@ -227,6 +228,16 @@ function main(URI, map,url) {
             }
           });
         }
+    });
+	
+	$('#evento').change(function(){
+		var id = $(this).val();
+		var txt = $(this).find(":selected").text()
+		if(txt == 'SISMO'){
+			if($('.sismo').css('display') == 'none' || $('.sismo').css('opacity') == 0) $('.sismo').show();
+		}else{
+			if(!$('.sismo').css('display') == 'none' || $('.sismo').css('opacity') == 1) $('.sismo').hide();
+		}
     });
 	
 	function loadData() {
