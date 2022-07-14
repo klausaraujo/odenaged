@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+<body>
+
+	<div id="demo" class="indigo">Hola Mundo!!!</div>
+	<button onclick="document.getElementById('demo').innerHTML = 'Hello javascript'; document.getElementById('demo').style.backgroundColor = 'lightblue'; document.getElementById('demo').style.fontSize = '35px'">Estilo y texto</button><br><br>
+    
+	<div id="demo2">Hola Mundo!!!</div>
+	<button onclick="document.getElementById('demo2').style.display = 'none'">Ocultar</button><br><br>
+
+	<div id="container">
+		<div id="animate"></div>
+	</div>
+	<button id="animar">Animacion</button><br><br>
+
+	<img id="pic" src="images/02.jpg" width="100px"><br>
+	<button onclick="document.getElementById('pic').src = 'images/03.jpg'">Cambiar src</button><br><br>
+	
+	<label for="cambio">Cambia a mayusculas al perder el foco<input type="text" id="cambio"></label><br>
+
+
+	<div id="myNav" class="overlay">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		<div class="overlay-content">
+			<a href="#">About</a>
+			<a href="#">About</a>
+			<a href="#">About</a>
+			<a href="#">About</a>
+		</div>
+	</div>
+	<span style="font-size:30px;cursor:pointer;" onclick="openNav()"><i class="fa fa-bars fa-1x" style="color:blue"></i>&#9776;</span>
+
+
+    <script type="text/javascript" src="js/javascript.js"></script>
+    <script type="text/javascript">
+    	function openNav() {
+            document.getElementById("myNav").style.width = "70%";
+        }
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+    </script>
+</body>
+</html> 

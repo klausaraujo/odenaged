@@ -4,19 +4,20 @@ if (! defined("BASEPATH"))
 
 class Main extends CI_Controller
 {
-
+	private $path;
+	
     public function __construct()
     {
         parent::__construct();
 		if (!$this->session->userdata("usuario"))
 			header("location:" . base_url() . "login");
+		$this->path = $_SERVER["DOCUMENT_ROOT"].'/odenaged/';
     }
 
     public function index()
     {
 		
     }
-	
 	public function eventos()
     {
 		$this->load->model("Evento_model");
@@ -39,7 +40,7 @@ class Main extends CI_Controller
 			"nivel" => $nivel->result(),
 			"lista" => json_encode($listar)
 		);
-		
+		//$this->informe($this->load->view('index.html',NULL,TRUE));
 		$this->load->view($this->uri->segment(1).'/main',$data);
     }
 	
@@ -110,7 +111,6 @@ class Main extends CI_Controller
 		$data = array(
 			"ubigeo" => $ubigeo->result(),
 			"ubi" => $ubig
-		
 		);
 		
 		echo json_encode($data);
@@ -125,10 +125,10 @@ class Main extends CI_Controller
         $dt = new DateTime("now", $dtz);
         //$fechaActual = $dt->format("Y-m-d h:i:s a");
 		$fechaActual = $dt->format("Y-m-d h:i:s");
-		$count = $this->Evento_model->sumaEventos();
+		$count = ($this->Evento_model->sumaEventos()) + 1;
 		
 		$this->Evento_model->setAnio($this->input->post('anio'));
-		$this->Evento_model->setCtaEvento($count + 1);
+		$this->Evento_model->setCtaEvento($count);
 		$this->Evento_model->setNivelEvento($this->input->post('nivelevento'));
 		$this->Evento_model->setIdEvento($this->input->post('evento'));
 		$this->Evento_model->setDescripcion($this->input->post('descripcion'));
@@ -141,6 +141,12 @@ class Main extends CI_Controller
 		$this->Evento_model->setZoom($this->input->post('zoom'));
 		$this->Evento_model->setUsuarioReg($this->session->userdata("idusuario"));
 		$this->Evento_model->setFechaReg($fechaActual);
+		$this->Evento_model->setlatSismo($this->input->post('latitudsismo'));
+		$this->Evento_model->setlngSismo($this->input->post('longitudsismo'));
+		$this->Evento_model->setProfundidad($this->input->post('profundidad'));
+		$this->Evento_model->setMagnitud($this->input->post('magnitud'));
+		$this->Evento_model->setIntensidad($this->input->post('intensidad'));
+		$this->Evento_model->setReferencia($this->input->post('referencia'));
 		
 		$campos = array(
 			'anio' =>  $this->input->post('anio'),
@@ -158,27 +164,47 @@ class Main extends CI_Controller
 			'zoom' => $this->input->post('zoom'),
 		);
 				
-		if (strlen($this->input->post('evento')) < 1 or strlen($this->input->post('nivelevento')) < 1 or strlen($this->input->post('fechaevento')) < 1)
-		{
-            $data = array(
-                "status" => 500,
+		$id = $this->Evento_model->registrar();
+		if ($id > 0){
+			$imag = $this->saveImage($this->path .'public/template/images/eventos/',$count);
+			if(!$imag == ''){
+				$this->Evento_model->setId($id);
+				$this->Evento_model->setMapa($imag);
+				$resp_Mapa = $this->Evento_model->guardarMapa();
+			}
+			$data = array(
+				"status" => 200,
+				"campos" => $campos,
+				"img" => $imag,
+				'mapa' => $resp_Mapa
+            );
+		}else{
+			$data = array(
+				"status" => 500,
 				"campos" => $campos
             );
-        }else{
-			$id = $this->Evento_model->registrar();
-			if ($id > 0){
-				$data = array(
-					"status" => 200,
-					"campos" => $campos
-                );
-			}else{
-				$data = array(
-					"status" => 500,
-					"campos" => $campos
-                 );
-            }
-		}
+        }
 		
 		echo json_encode($data);
     }
+	public function saveImage($path,$count){
+		$url = "https://maps.googleapis.com/maps/api/staticmap?language=es&center=" . trim($this->input->post('lat')) ."," . trim($this->input->post('lng')) . "&markers=color:red|label:|" . trim($this->input->post('lat')) . "," . trim($this->input->post('lng')) . "&zoom=" . $this->input->post('zoom') . "&size=596x280&key=AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc";
+		$img = $count . "_gm.png";
+		if(!file_exists($path)){
+			$parts = explode('/', $ubic);
+			array_pop($parts);
+			$dir = implode( '/', $parts );;
+			if( !is_dir( $dir ) )
+				mkdir( $dir, 0777, true );
+		}
+		if(!file_put_contents($path . $img, file_get_contents($url),LOCK_EX) > 0)
+			$img = '';
+		
+		return $img;
+	}
+	public function informe($html){
+		$this->load->library("dom");
+		//$html = $this->load->view($vista, $data, true);
+        $this->dom->generate("portrait", "informe", $html, "Informe");
+	}
 }

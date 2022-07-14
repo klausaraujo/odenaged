@@ -60,21 +60,21 @@
 												<div class="row">
 													<label for="latitudsismo" class="col-sm-12">Latitud:</label>
 													<input type="text" class="form-control col-sm-11" style="background:#fff" name="latitudsismo" id="latitudsismo"
-														placeholder="Latitud Sismo" />
+														placeholder="Latitud Sismo" value="" />
 												</div>
 											</div>
 											<div class="col-sm-4">
 												<div class="row">
 													<label for="longitudsismo" class="col-sm-12">Longitud:</label>
 													<input type="text" class="form-control col-sm-11" style="background:#fff"	name="longitudsismo" id="longitudsismo"
-														placeholder="Longitud Sismo" />
+														placeholder="Longitud Sismo" value="" />
 												</div>
 											</div>
 											<div class="col-sm-4">
 												<div class="row">
 													<label for="profundidad" class="col-sm-12">Profundidad:</label>
 													<input type="text" class="form-control col-sm-11" style="background:#fff" name="profundidad" id="profundidad"
-														placeholder="Profundidad" />
+														placeholder="Profundidad" value="" />
 												</div>
 											</div>
 										</div>
@@ -83,21 +83,21 @@
 												<div class="row">
 													<label for="magnitud" class="col-sm-12">Magnitud:</label>
 													<input type="text" class="form-control col-sm-11" style="background:#fff" name="magnitud" id="magnitud" 
-														placeholder="Magnitud" />
+														placeholder="Magnitud" value="" />
 												</div>
 											</div>
 											<div class="col-sm-4">
 												<div class="row">
 													<label for="intensidad" class="col-sm-12">Intensidad:</label>
 													<input type="text" class="form-control col-sm-11" style="background:#fff" name="intensidad" id="intensidad" 
-														placeholder="Intensidad" />
+														placeholder="Intensidad" value="" />
 												</div>
 											</div>
 											<div class="col-sm-4">
 												<div class="row">
 													<label for="referencia" class="col-sm-12">Referencia del Sismo:</label>
 													<input type="text" class="form-control col-sm-11" style="background:#fff" name="referencia" id="referencia" 
-														placeholder="Referencia" />
+														placeholder="Referencia" value="" />
 												</div>
 											</div>
 										</div>
