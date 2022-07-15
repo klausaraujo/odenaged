@@ -25,8 +25,11 @@ class Main extends CI_Controller
 		
 		$tipoevento = $this->Evento_model->tipoEvento();
 		$nivel = $this->Evento_model->cargaNivel();
-		$dpto = $this->Ubigeo_model->dptos();
 		$listar = $this->Evento_model->listar();
+		
+		$this->Ubigeo_model->setIdUser($this->session->userdata("idusuario"));
+		//$ubigeo = $this->Ubigeo_model->ubigeo();
+		$dpto = $this->Ubigeo_model->dptos();
 		
 		if ($listar->num_rows() > 0) {
             $listar = $listar->result();
@@ -38,11 +41,16 @@ class Main extends CI_Controller
 			"tipoevento" => $tipoevento->result(),
 			"dpto" => $dpto->result(),
 			"nivel" => $nivel->result(),
-			"lista" => json_encode($listar)
+			"lista" => json_encode($listar),
+			"ubigeo" => $this->config->item('path_url')
 		);
 		//$this->informe($this->load->view('index.html',NULL,TRUE));
 		$this->load->view($this->uri->segment(1).'/main',$data);
     }
+	
+	public function cargarUbigeo(){
+		
+	}
 	
 	public function listar(){
 		$this->load->model("Evento_model");
@@ -75,6 +83,7 @@ class Main extends CI_Controller
 	
 	public function cargarprov(){
 		$this->load->model("Ubigeo_model");
+		$this->Ubigeo_model->setIdUser($this->session->userdata("idusuario"));
 		$this->Ubigeo_model->setIdDpto($this->input->post("region"));
 		
 		$listaProv = $this->Ubigeo_model->prov();		
@@ -106,15 +115,13 @@ class Main extends CI_Controller
 		
 		$ubig = $this->input->post("dpto").$this->input->post("prov").$this->input->post("dtto");
 		$this->Ubigeo_model->setUbigeo($this->input->post("dpto").$this->input->post("prov").$this->input->post("dtto"));
-		$ubigeo = $this->Ubigeo_model->ubigeo();
+		$ubigeo = $this->Ubigeo_model->latLng();
 		
 		$data = array(
 			"ubigeo" => $ubigeo->result(),
 			"ubi" => $ubig
 		);
-		
 		echo json_encode($data);
-		
 	}
 	
 	public function registrar()
@@ -166,7 +173,12 @@ class Main extends CI_Controller
 				
 		$id = $this->Evento_model->registrar();
 		if ($id > 0){
+			$pa = '';
 			$imag = $this->saveImage($this->path .'public/template/images/eventos/',$count);
+			$resp_Mapa = '';
+			if($this->path)
+				$pa = $this->path;
+			
 			if(!$imag == ''){
 				$this->Evento_model->setId($id);
 				$this->Evento_model->setMapa($imag);
@@ -176,7 +188,9 @@ class Main extends CI_Controller
 				"status" => 200,
 				"campos" => $campos,
 				"img" => $imag,
-				'mapa' => $resp_Mapa
+				'mapa' => $resp_Mapa,
+				'segmento' => $this->uri->segment(3),
+				'path' => $pa
             );
 		}else{
 			$data = array(
@@ -187,11 +201,16 @@ class Main extends CI_Controller
 		
 		echo json_encode($data);
     }
+	
+	public function editarEvento(){
+		
+	}
+	
 	public function saveImage($path,$count){
 		$url = "https://maps.googleapis.com/maps/api/staticmap?language=es&center=" . trim($this->input->post('lat')) ."," . trim($this->input->post('lng')) . "&markers=color:red|label:|" . trim($this->input->post('lat')) . "," . trim($this->input->post('lng')) . "&zoom=" . $this->input->post('zoom') . "&size=596x280&key=AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc";
 		$img = $count . "_gm.png";
 		if(!file_exists($path)){
-			$parts = explode('/', $ubic);
+			$parts = explode('/', $path);
 			array_pop($parts);
 			$dir = implode( '/', $parts );;
 			if( !is_dir( $dir ) )
@@ -202,6 +221,7 @@ class Main extends CI_Controller
 		
 		return $img;
 	}
+	
 	public function informe($html){
 		$this->load->library("dom");
 		//$html = $this->load->view($vista, $data, true);

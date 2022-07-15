@@ -180,21 +180,7 @@
 											<label for="fechaaccion" class="col-sm-12">Fecha:</label>
 											<input type="date" class="form-control col-sm-10" name="fechaaccion" id="fechaaccion" value="<?=$fechaActual?>"/>
 										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="row">
-											<label for="cargo" class="col-sm-12">Cargo:</label>
-											<input type="text" class="form-control col-sm-10" id="cargo" name="cargo" placeholder="Ejemplo: Director de la Instituci&oacute;n Educativa">
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="row">
-											<label for="distrito1" class="col-sm-12">Instituci&oacute;n:</label>
-											<select class="form-control col-sm-10" name="distrito1" id="distrito1">
-												<option value="">-- Seleccione --</option>
-											</select>
-										</div>
-									</div>						
+									</div>					
 								</div>						
 							</div>
 						</div>

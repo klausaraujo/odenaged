@@ -26,6 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $config['base_url'] = 'http://'.$_SERVER["HTTP_HOST"].'/odenaged';
 $config['path_url'] = 'http://'.$_SERVER["HTTP_HOST"].'/odenaged/index.php/';
 
+
 /*
 |--------------------------------------------------------------------------
 | Index File

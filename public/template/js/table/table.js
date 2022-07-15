@@ -25,7 +25,7 @@ function tablePersonalized(table, lista, titulo){
 		if(titulo == 'evento'){
 			//colu = JSON.parse('[{"data":"dni"},{"data":"apellidos"},{"data":"nombres"},{"data":"fecnac"},{"data":"sexo"},{"data":"domicilio"},{"data":"correo"}]');
 			cols = [
-				{data:null},{data:'a&ntilde;o'},{data:'n&uacute;mero'},{data:'descripcion'},{data:'ubigeo'},{data:'fechaevento'}
+				{data:null},{data:'anio'},{data:'numero'},{data:'descripcion'},{data:'ubigeo'},{data:'fecha'}
 			];
 			titles = [
 				{title:'Acciones',targets:0},{title:'A&ntilde;o',targets:1},{title:'N&uacute;mero',targets:2},{title:'Descripcion',targets:3},
@@ -179,7 +179,9 @@ function tablePersonalized(table, lista, titulo){
 		}*/
 	});
 	
-	$(table + ' tbody').on('click', '.cont', function(){
+	$(table + ' tbody').on('click', 'button.btn', function(){
+		console.log(dataTable.row($(this).parents("tr")).data());
+		
 		if($(this).children().attr('alt') === 'editar'){
 			if(dataTable.row(this).child.isShown()){
 				var data = dataTable.row(this).data();

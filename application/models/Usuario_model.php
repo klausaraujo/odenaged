@@ -121,45 +121,6 @@ class Usuario_model extends CI_Model
 		$this->db->from('mes');
 		return $this->db->get();
 	}
-    /*public function actualizar_chat () {
-        $this->db->select('cu.idchat_usuario, cu.Guid, cu.Estado');
-        $this->db->from('chat_usuario cu');
-        $this->db->where('cu.Codigo_usuario', $this->id);
-        $result = $this->db->get();
-        $row = $result->row();
-        if ($row->idchat_usuario > 0) {
-            $this->db->db_debug = FALSE;
-            $this->db->set("Estado", $this->Estado, TRUE);
-            $this->db->where("Codigo_Usuario", $this->id);
-            $this->db->update('chat_usuario');
-            return $result;
-        }
-        else {
-            $data = array(
-                "Codigo_Usuario" => $this->id,
-                "Nombre_usuario" => strtoupper($this->Nombres),
-                "Apellido_usuario" => strtoupper($this->Apellidos),
-                "Estado" => $this->Estado
-            );
-            $this->db->set('Guid', 'UUID()', FALSE);
-            if ($this->db->insert('chat_usuario', $data)){
-                $id = $this->db->insert_id();
-                $response = $this->db->get_where('chat_usuario', array('idchat_usuario' => $id));
-                return $response;
-            }
-            else
-                return false;
-        }
-    }
-    */
-    /*public function areas()
-    {
-        $this->db->select('ua.Codigo_Usuario,ua.Anio_Ejecucion,ua.Codigo_Sector,ua.Codigo_Pliego,ua.Codigo_Ejecutora,ua.Codigo_Centro_Costos,ua.Codigo_Sub_Centro_Costos,ua.Codigo_Area,ua.Activo');
-        $this->db->from('usuarios u');
-        $this->db->join('usuarios_areas ua', 'u.Codigo_Usuario=ua.Codigo_Usuario');
-        $this->db->where("u.Codigo_Usuario", $this->id);
-        return $this->db->get();
-    }*/
     public function listaModulo()
     {
         $this->db->select('modulo.idmodulo,descripcion,menu,icono,url,modulo_rol.activo,imagen,mini');
@@ -169,17 +130,6 @@ class Usuario_model extends CI_Model
         $this->db->order_by("orden", "asc");
         return $this->db->get();
     }
-    /*public function listaChat()
-    {
-        $this->db->select('cu.Nombre_Usuario, cu.Guid, cu.Estado, u.avatar');
-        $this->db->from('chat_usuario cu');
-        $this->db->join("usuarios u", "u.Codigo_Usuario  = cu.Codigo_usuario");
-        $this->db->where_not_in("cu.Codigo_usuario", $this->id);
-        $this->db->order_by("cu.Estado", "desc");
-        $this->db->order_by("cu.Nombre_Usuario", "asc");
-        return $this->db->get();
-    }
-    */
     public function lista()
     {
         $this->db->select("u.idusuario,u.dni,u.avatar,u.apellidos,u.nombres,u.usuario,u.passwd,u.idperfil,u.activo,p.descripcion");

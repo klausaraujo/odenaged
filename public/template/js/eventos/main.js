@@ -1,4 +1,4 @@
-function main(URI, map,url) {
+function main(URI, map) {
 	$(document).ready(function () {
 		$('#menu1').addClass('active');
 		
@@ -100,7 +100,7 @@ function main(URI, map,url) {
 			formData.append("file", document.getElementById("file")); */
 			$.ajax({
 				data: formData,
-				url: URI + "eventos/main/registrar",
+				url: URI + "eventosRegistrar",
 				method: "POST",
 				dataType: "json",
 				cache: false,
@@ -138,7 +138,7 @@ function main(URI, map,url) {
         if (id.length > 0) {
           $.ajax({
             data: { tipo: id },
-            url: URI + "eventos/main/cargarEvento",
+            url: URI + "cargarEvento",
             method: "POST",
             dataType: "json",
             beforeSend: function () {
@@ -161,7 +161,7 @@ function main(URI, map,url) {
         if (id.length > 0) {
           $.ajax({
             data: { region: id },
-            url: URI + "eventos/main/cargarprov",
+            url: URI + "cargarprov",
             method: "POST",
             dataType: "json",
             beforeSend: function () {
@@ -187,7 +187,7 @@ function main(URI, map,url) {
         if (id.length > 0) {
           $.ajax({
             data: { region: departamento, provincia: id },
-            url: URI + "eventos/main/cargardis",
+            url: URI + "cargardis",
             method: "POST",
             dataType: "json",
             beforeSend: function () {
@@ -212,7 +212,7 @@ function main(URI, map,url) {
         if (id.length > 0) {
           $.ajax({
             data: { dpto: dpto, prov: prov, dtto: id },
-            url: URI + "eventos/main/cargarLatLng",
+            url: URI + "cargarLatLng",
             method: "POST",
             dataType: "json",
             beforeSend: function () {
@@ -243,7 +243,7 @@ function main(URI, map,url) {
 	function loadData() {
 		$.ajax({
 		  type: 'POST',
-		  url: URI + 'eventos/main/listar',
+		  url: URI + 'eventosListar',
 		  data: {},
 		  dataType: 'json',
 		  success: function (response) {

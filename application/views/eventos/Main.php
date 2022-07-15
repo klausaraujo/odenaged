@@ -127,9 +127,9 @@
 		const canIdioma = "1";
 		const canTracking = "1";
 		const canHistory = "1";
-		const URI = "<?=base_url()?>";
+		//const URI = "<?//=base_url()?>";
 		const lista = JSON.parse('<?=$lista?>');
-		//console.log(lista);
+		const URI = '<?=$ubigeo?>';
 		const table = tablePersonalized('#tablaEvento',lista,'evento');
 		window.onload = function(){
 			var opt = {lat: 42.1382114, lng: -71.5212585,zoom: 16};
@@ -151,10 +151,6 @@
 		
 		mapa(opt);*/
 		}
-	  
-	  //tablePersonalized(table);
-	  //canillitas(URI,table,'canillita');
-      /*const lista = <?= $lista ?>;*/
    </script>
    <script>
    </script>
