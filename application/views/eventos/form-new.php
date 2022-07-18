@@ -1,5 +1,6 @@
 	<div class="container-fluid">
 		<form id="formEvento" name="formEvento" method="POST" action="" autocomplete="off" enctype="multipart/form-data">
+			<input type="hidden" name="tipo" id="tipo" />
 			<div class="row">                 
 				<div class="col-sm-12">
 				<? 
@@ -24,7 +25,7 @@
 												<option value="">-- Seleccione --</option>
 									<?php
 											foreach($tipoevento as $row):	?>
-												<option value="<?=$row->idtipoevento;?>"><?=$row->tipo_evento;?></option>
+												<option value="<?=$row->idtipoevento;?>" ><?=$row->tipo_evento;?></option>
 										<?	endforeach;?>
 											</select>
 										</div>
@@ -173,15 +174,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="row"><hr class="col-sm-11" style="margin:20px 0"></div>
-								<div class="row">
-									<div class="col-sm-4">
-										<div class="row">
-											<label for="fechaaccion" class="col-sm-12">Fecha:</label>
-											<input type="date" class="form-control col-sm-10" name="fechaaccion" id="fechaaccion" value="<?=$fechaActual?>"/>
-										</div>
-									</div>					
-								</div>						
+								<div class="row"><hr class="col-sm-11" style="margin:20px 0"></div>					
 							</div>
 						</div>
 					</div>

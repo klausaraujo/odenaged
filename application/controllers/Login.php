@@ -12,9 +12,10 @@ class Login extends CI_Controller
 
     public function index()
     {
-		if ($this->session->userdata("usuario"))
-            $this->load->view("main");
-        else
+		if ($this->session->userdata("usuario")){
+			$data = array('inicio' => 'inicio');
+            $this->load->view("main",$data);
+        }else
             header("location:" . base_url() . "login");
     }
 

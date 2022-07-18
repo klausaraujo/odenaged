@@ -83,7 +83,3 @@
       </nav>
    </div>
    </div>
-
-   <script type="text/javascript">
-         
-   </script>

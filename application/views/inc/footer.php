@@ -57,35 +57,38 @@
 <script src="<?=base_url()?>public/template/js/table/datatable/pdfmake.min.js"></script>
 <script src="<?=base_url()?>public/template/js/table/datatable/vfs_fonts.js"></script>
 <script src="<?=base_url()?>public/template/js/table/table.js"></script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=<?='AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc'?>&libraries=places&v=weekly" async></script>
-<script src="<?=base_url()?>public/template/js/mapa/map.js"></script>
-<script src="<?=base_url()?>public/template/js/eventos/main.js"></script>
-<script>
-	const canDelete = "1";
-	const canEdit = "1";
-	const canIdioma = "1";
-	const canTracking = "1";
-	const canHistory = "1";
-	//const URI = "<?//=base_url()?>";
-	const lista = JSON.parse('<?=$lista?>');
-	const URI = '<?=$ubigeo?>';
-	const table = tablePersonalized('#tablaEvento',lista,'evento');
-	window.onload = function(){
-		var opt = {lat: 42.1382114, lng: -71.5212585,zoom: 16};
-		$('.ajaxMap').hide();
-		main(URI, mapa(opt));
-	//var macc = {lat: 42.1382114, lng: -71.5212585};
-		/*var map = new google.maps.Map(
-        document.getElementById('map'), {zoom: 15, center: macc});
-		var marker = new google.maps.Marker({position: macc, map: map});*/
-	/*var opt ={
-		lat : -12.0147737,
-		lng : -76.88504329999999,
-		zoom : 15,
-	}
-	console.log(opt.zoom);
-	
-	mapa(opt);*/
-	}
-</script>
+
+<?	if(isset($eventos)){	?>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=<?='AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc'?>&libraries=places&v=weekly" async></script>
+		<script src="<?=base_url()?>public/template/js/mapa/map.js"></script>
+		<script src="<?=base_url()?>public/template/js/eventos/main.js"></script>
+		<script>
+			const canDelete = "1";
+			const canEdit = "1";
+			const canIdioma = "1";
+			const canTracking = "1";
+			const canHistory = "1";
+			//const URI = "<?//=base_url()?>";
+			const lista = JSON.parse('<?=$lista?>');
+			const URI = '<?=$ubigeo?>';
+			const table = tablePersonalized('#tablaEvento',lista,'evento');
+			window.onload = function(){
+				var opt = {lat: 42.1382114, lng: -71.5212585,zoom: 16};
+				$('.ajaxMap').hide();
+				main(URI, mapa(opt));
+			//var macc = {lat: 42.1382114, lng: -71.5212585};
+				/*var map = new google.maps.Map(
+				document.getElementById('map'), {zoom: 15, center: macc});
+				var marker = new google.maps.Marker({position: macc, map: map});*/
+			/*var opt ={
+				lat : -12.0147737,
+				lng : -76.88504329999999,
+				zoom : 15,
+			}
+			console.log(opt.zoom);
+			
+			mapa(opt);*/
+			}
+		</script>
+<?	}	?>

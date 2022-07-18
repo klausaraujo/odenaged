@@ -53,15 +53,17 @@ $route['default_controller'] = 'login';
 $route['login'] = 'login/login';
 $route['doLogin'] = 'login/doLogin';
 $route['curl'] = 'main/curl';
+$route['eventos'] = 'main/eventos';
 
-#Formularios de Registro y edicion
-$route['eventos'] = 'eventos/main/eventos';
+#Formularios de Registro y edicion de Eventos
 $route['cargarEvento'] = 'eventos/main/cargarEvento';
 $route['cargarprov'] = 'eventos/main/cargarprov';
 $route['cargardis'] = 'eventos/main/cargardis';
 $route['cargarLatLng'] = 'eventos/main/cargarLatLng';
-$route['eventosRegistrar'] = 'eventos/main/registrar';
+$route['registrarEvento'] = 'eventos/main/registrar';
 $route['eventosListar'] = 'eventos/main/listar';
+$route['editarEvento'] = 'eventos/main/editarEvento';
+$route['eventoEditar'] = 'eventos/main/editar';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

@@ -17,6 +17,38 @@ class Main extends CI_Controller
 		
     }
 	
+	public function eventos()
+    {
+		$this->load->model("Evento_model");
+		$this->load->model("Ubigeo_model");
+		
+		$tipoevento = $this->Evento_model->tipoEvento();
+		$nivel = $this->Evento_model->cargaNivel();
+		$listar = $this->Evento_model->listar();
+		
+		$this->Ubigeo_model->setIdUser($this->session->userdata("idusuario"));
+		//$ubigeo = $this->Ubigeo_model->ubigeo();
+		$dpto = $this->Ubigeo_model->dptos();
+		
+		if ($listar->num_rows() > 0) {
+            $listar = $listar->result();
+        } else {
+            $listar = array();
+        }
+		
+		$data = array(
+			"tipoevento" => $tipoevento->result(),
+			"dpto" => $dpto->result(),
+			"nivel" => $nivel->result(),
+			"lista" => json_encode($listar),
+			"ubigeo" => $this->config->item('path_url'),
+			'eventos' => 'eventos'
+		);
+		//$this->informe($this->load->view('index.html',NULL,TRUE));
+		//$this->load->view($this->uri->segment(1).'/main',$data);
+		$this->load->view('main',$data);
+    }
+	
 	#Funcion para conectarse a la api de la RENIEC
 	public function curl()
     {

@@ -10,41 +10,51 @@ function main(URI, map) {
 					/*$(".modal-title").html('Datos Generales de la Emergencia');
 					$("#decisionModal").modal("show");
 					$("#decisionModal").css("padding-right", "0px");*/
+					resetForm();
+					$('#tipo').val('registrarEvento');
 					ocultarElem(false);
 				}else if(rel !== 'nuevo' && rel != null){
 					//console.log(rel);
 					ocultarElem(true);
+					resetForm();
 				}
 			});
 		});
 	});
 	
-	/*$("#btnEnviar").on('click', function(evt){
-		evt.preventDefault();
-		
-	});*/
 	function ocultarElem(on){
 		$('html, body').animate({ scrollTop: 0 }, 'fast');
 		if(on){
 			loadData();
+			if(!$('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 1) $('.ajaxMap').hide();
+			if(!$('.sismo').css('display') == 'none' || $('.sismo').css('opacity') == 1) $('.sismo').hide();
 			if(!$('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 1) $('.ajaxForm').hide();
 			if($('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 0) $('.ajaxTable').show();
-			$('#menu2').removeClass('active');
-			$('#menu1').addClass('active');
-			resetForm();
+			if($('#menu2').hasClass('active')){
+				$('#menu2').removeClass('active');
+				$('#menu1').addClass('active');
+			}
 			$('#message').switchClass('succes', 'warn');
 			$('#cargando').html('');
 			$("#message").html('');
+			$('#tipo').val('');
 		}else{
 			if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
 			if($('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 0) $('.ajaxForm').show();
+			if($('#menu1').hasClass('active')){
+				$('#menu1').removeClass('active');
+				$('#menu2').addClass('active');
+			}
 		}
-		if(!$('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 1) $('.ajaxMap').hide();
-		if(!$('.sismo').css('display') == 'none' || $('.sismo').css('opacity') == 1) $('.sismo').hide();
 	}
 	function resetForm(){
 		$("#formEvento")[0].reset();$("#formEvento select").prop('selectedIndex',0);//('#blah').attr('src',URI+'public/template/images/camera.png')
 	}
+	
+	$("#btnEditar").on('click', function(evt){
+		evt.preventDefault();
+		
+	});
 	
 	$("#btnCancelar").on('click', function(evt){
 		evt.preventDefault();
@@ -100,7 +110,7 @@ function main(URI, map) {
 			formData.append("file", document.getElementById("file")); */
 			$.ajax({
 				data: formData,
-				url: URI + "eventosRegistrar",
+				url: URI + $('#tipo').val(),
 				method: "POST",
 				dataType: "json",
 				cache: false,
@@ -255,6 +265,83 @@ function main(URI, map) {
 		  }
 		});
 	}
+	
+	function editarReg(edita, data){
+		$('#tipo').val('eventoEditar');
+		$.ajax({
+		  type: 'POST',
+		  url: URI + 'editarEvento',
+		  data: {data: data, segmento: edita},
+		  dataType: 'json',
+		  success: function (response) {
+			//if(!$('.sismo').css('display') == 'none' || $('.sismo').css('opacity') == 1) $('.sismo').hide();
+			const { status } = response;
+			if(status == 200){
+				const { data } = response;
+				const { eventos } = response;
+				const { regiones : { prov } } = response;
+				const { regiones : { dtto } } = response;
+				//const { form } = response;
+				console.log(response);
+				//$('.ajaxForm').html(form);
+				$("#region option").each(function(){ if( $(this).val() == (data.ubigeo).substr(0,2) ){ $(this).prop("selected",true); } });
+				$("#tipoevento option").each(function(){ if( $(this).val() == data.idtipoevento ){ $(this).prop("selected",true); }});
+				$("#nivelevento option").each(function(){ if( $(this).val() == data.idnivel ){ $(this).prop("selected",true); }});
+				$("#fechaevento").val((data.fecha).substring(0,10));
+				$("#horaevento").val((data.hora).slice(-8));
+				if(data.afecta_sector == '1')$("#afecta").attr('checked',true);
+				var html = '<option value="">-- Seleccione --</option>';
+				prov.forEach(function(row){
+					if(row.cod_pro == (data.ubigeo).substr(2,2)){
+						html += '<option value="' + row.cod_pro + '" selected>' + row.provincia + '</option>';
+					}else
+						html += '<option value="' + row.cod_pro + '">' + row.provincia + '</option>';
+				});
+				$("#provincia").html(html);
+				html = '<option value="">-- Seleccione --</option>';
+				dtto.forEach(function(row){
+					if(row.cod_dis == (data.ubigeo).substr(4,2)){
+						html += '<option value="' + row.cod_dis + '" selected>' + row.distrito + '</option>';
+					}else
+						html += '<option value="' + row.cod_dis + '">' + row.distrito + '</option>';
+				});
+				$("#distrito").html(html);
+				html = '<option value="">-- Seleccione --</option>';
+				eventos.forEach(function(row){
+					if(row.idevento == data.idevento){
+						html += '<option value="' + row.idevento + '" selected>' + row.evento + '</option>';
+					}else
+						html += '<option value="' + row.idevento + '">' + row.evento + '</option>';
+				});
+				$("#evento").html(html);
+				$('#lat').val(data.latitud);
+				$('#lng').val(data.longitud);
+				
+				var opt = {lat: parseFloat(data.latitud), lng: parseFloat(data.longitud), zoom: 16};
+				//console.log(map.getZoom());
+				map.setCenter(opt);
+				
+				if($('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 0) $('.ajaxMap').show();
+				ocultarElem(false);
+			}
+			//loadData;
+		  }
+		});
+	}
+	
+	table.on('click', 'button', function(){
+		//console.log(table.row($(this).parents("tr")).data());
+		//table.row($(this).parents("tr")).deselect();
+		if($(this).hasClass('actionEdit')){
+			if(table.row(this).child.isShown()){
+				var data = table.row(this).data();
+				//console.log(data);
+			}else{
+				var data = table.row($(this).parents("tr")).data();
+			}
+			editarReg('editar',data.idevento);
+		}
+	});
 	
 	
 }

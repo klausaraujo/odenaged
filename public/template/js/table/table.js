@@ -42,7 +42,7 @@ function tablePersonalized(table, lista, titulo){
 				targets: 0,
 				data: null,
 				render: function (data, type, row, meta) {
-				const btnEdit = '<button class="btn btn-success btn-sm actionEdit" title="Editar Registro" type="button" alt="editar"'+
+				const btnEdit = '<button class="btn btn-warning btn-circle btn-sm actionEdit" title="Editar Registro" type="button" '+
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>';
 				const btnCargas = '<button class="btn btn-warning btn-circle btn-sm actionCargas" title="Registrar Cargas Familiares" type="button"'+
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-users" aria-hidden="true"></i></button>';
@@ -50,7 +50,7 @@ function tablePersonalized(table, lista, titulo){
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-graduation-cap" aria-hidden="true"></i></button>';
 				const btnPdf = '<button class="btn btn-warning btn-circle btn-sm actionReport" title="Ver Reporte" type="button"'+
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>';
-				return btnEdit+btnCargas+btnEst+btnPdf;
+				return btnEdit+btnPdf;
 				
 				}
 		}	
@@ -84,12 +84,12 @@ function tablePersonalized(table, lista, titulo){
 		/*"bPaginate":false,
 		"bInfo":false,
 		"bFilter":false,
-		"bScrollCollapse": false,
-		"bJQueryUI": false,*/
+		"bScrollCollapse": false,*/
+		"bJQueryUI": false,
 		"bAutoWidth": true,
 		"bDestroy": true,		
-		//"responsive": true,
-		"select": true,
+		"responsive": true,
+		"select": false,
 		//"pageLength": "10",
 		//dom: 'Bfrt<"col-sm-12 inline"i> <"col-sm-12 inline"p>',
 		lengthMenu: [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'Todas']],
@@ -177,22 +177,6 @@ function tablePersonalized(table, lista, titulo){
 			  className: 'selectTable'
 			}]
 		}*/
-	});
-	
-	$(table + ' tbody').on('click', 'button.btn', function(){
-		console.log(dataTable.row($(this).parents("tr")).data());
-		
-		if($(this).children().attr('alt') === 'editar'){
-			if(dataTable.row(this).child.isShown()){
-				var data = dataTable.row(this).data();
-				//console.log(data);
-			}else{
-				var data = dataTable.row($(this).parents("tr")).data();
-			}
-			console.log(data);
-			/*$("#decisionModal").modal("show");
-			$(".modal-title").html('Editar Canillita');*/
-		}
 	});
 	
 	return dataTable;

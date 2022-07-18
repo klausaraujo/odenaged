@@ -123,7 +123,13 @@ class Evento_model extends CI_Model
         }
     }
 	public function editarEvento(){
-		
+		$this->db->select('*');
+        $this->db->from('registro_evento re');
+		$this->db->join('evento e','re.idevento=e.idevento');
+		$this->db->join('tipo_evento te','e.idtipoevento=te.idtipoevento');
+		$this->db->where('re.idregistroevento',$this->id);
+		//$this->db->where('activo','1');
+		return $this->db->get();
 	}
 	public function guardarMapa(){
 		$this->db->db_debug = FALSE;

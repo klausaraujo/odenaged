@@ -50,7 +50,4 @@ class Ubigeo_model extends CI_Model
 		$this->db->where("ubigeo", $this->ubigeo);
 		return $this->db->get();
 	}
-	public function ubigeo(){
-		
-	}
 }
