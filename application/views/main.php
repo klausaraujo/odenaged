@@ -6,12 +6,12 @@ if (!isset($_SESSION['usuario'])) {
 <!doctype html>
 <html lang="en">
 <?	require_once('inc/header.php');	?>
-<body>
+<body class="<?=(!isset($inicio))?'sidebar-main':'';?>" >
    <!--<div id="loading">
       <div id="loading-center">
       </div>
    </div>-->
-	<div class="wrapper">
+	<div class="wrapper bg-sirese">
 		<?php $this->load->view("inc/nav-template"); ?>
 		<div id="content-page" class="content-page">
         <?php $this->load->view("inc/nav-top-template"); ?>

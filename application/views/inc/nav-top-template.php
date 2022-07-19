@@ -12,12 +12,12 @@
       <nav class="navbar navbar-expand-lg navbar-light p-0">
 
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-         <i class="ri-menu-3-line"></i>
+         <i class="ri-menu-3-line font-sirese"></i>
          </button>
          <div class="iq-menu-bt align-self-center">
             <div class="wrapper-menu">
-               <div class="main-circle"><i class="ri-more-fill"></i></div>
-               <div class="hover-circle"><i class="ri-more-2-fill"></i></div>
+               <div class="main-circle"><i class="ri-more-fill font-sirese"></i></div>
+               <div class="hover-circle"><i class="ri-more-2-fill font-sirese"></i></div>
             </div>
          </div>
          <div class="collapse navbar-collapse" id="navbarSupportedContent" aria-hidden="true">

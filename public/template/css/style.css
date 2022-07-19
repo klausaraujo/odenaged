@@ -69,7 +69,7 @@ NOTE: This file contains the styling for responsive Template.
 .btn-sirese{ background: -moz-linear-gradient(left, #e33d3d, #FF0000);background: -o-linear-gradient(left, #e33d3d, #FF0000);background: linear-gradient(to right, #e33d3d, #FF0000); color: white; }
 .btn-sirese:hover{ background: -moz-linear-gradient(right, #e33d3d, #FF0000);background: -o-linear-gradient(right, #e33d3d, #FF0000);background: linear-gradient(to left, #e33d3d, #FF0000);color: white; }
 .font-sirese{ color : #e33d3d }
-.bg-sirese{ background: #e33d3d }
+.bg-sirese{ background: -moz-linear-gradient(right, #e33d3d, #e33d3d) !important;background: -o-linear-gradient(right, #e33d3d, #e33d3d) !important;background: linear-gradient(to left, #e33d3d, #e33d3d) !important; }
 
 /* Definition Lists */
 dl dd { margin-bottom: 15px; }
