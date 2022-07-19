@@ -1,10 +1,14 @@
 DROP TABLE IF EXISTS mes;
 DROP TABLE IF EXISTS anio;
+DROP TABLE IF EXISTS tipo_accion_evento_preliminar;
+DROP TABLE IF EXISTS tipo_accion;
+DROP TABLE IF EXISTS evento_tipo_danio_preliminar;
+DROP TABLE IF EXISTS tipo_danio;
 DROP TABLE IF EXISTS registro_evento;
-DROP TABLE IF EXISTS nivel;
-DROP TABLE IF EXISTS estado_evento;
 DROP TABLE IF EXISTS evento;
 DROP TABLE IF EXISTS tipo_evento;
+DROP TABLE IF EXISTS estado_evento;
+DROP TABLE IF EXISTS nivel;
 DROP VIEW IF EXISTS lista_ubigeo;
 DROP VIEW IF EXISTS lista_departamentos;
 DROP VIEW IF EXISTS lista_provincias;
@@ -21,7 +25,6 @@ DROP TABLE IF EXISTS usuarios_ubigeo;
 DROP TABLE IF EXISTS usuarios;
 DROP TABLE IF EXISTS perfil;
 DROP TABLE IF EXISTS ubigeo;
-
 
 CREATE TABLE perfil  (
 idperfil smallint(4) NOT NULL AUTO_INCREMENT,
@@ -2509,12 +2512,70 @@ CREATE TABLE registro_evento (
 	FOREIGN KEY (idevento) REFERENCES evento (idevento) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (idestado) REFERENCES estado_evento (idestado) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
+CREATE TABLE tipo_danio (
+  idtipodanio smallint(4) NOT NULL AUTO_INCREMENT,
+	tipo_danio varchar(30) NOT NULL,
+	activo char(1) DEFAULT '1',
+	PRIMARY KEY (idtipodanio))ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
+insert into tipo_danio (tipo_danio) values ('ESTUDIANTE LESIONADO');
+insert into tipo_danio (tipo_danio) values ('ESTUDIANTE DESAPARECIDO');
+insert into tipo_danio (tipo_danio) values ('ESTUDIANTE FALLECIDO');
+insert into tipo_danio (tipo_danio) values ('DOCENTE LESIONADO');
+insert into tipo_danio (tipo_danio) values ('DOCENTE DESAPARECIDO');
+insert into tipo_danio (tipo_danio) values ('DOCENTE FALLECIDO');
+insert into tipo_danio (tipo_danio) values ('ADMINISTRATIVO LESIONADO');
+insert into tipo_danio (tipo_danio) values ('ADMINISTRATIVO DESAPARECIDO');
+insert into tipo_danio (tipo_danio) values ('ADMINISTRATIVO FALLECIDO');
+insert into tipo_danio (tipo_danio) values ('OTROS TIPOS DE DAÑOS');
 
+CREATE TABLE evento_tipo_danio_preliminar(
+	ideventotipodanio smallint(4) NOT NULL AUTO_INCREMENT,
+	idtipodanio smallint(4) NOT NULL,
+	idregistroevento smallint(4) NOT NULL,
+	cantidad smallint(4),
+	activo char(1) DEFAULT '1',
+	PRIMARY KEY (ideventotipodanio),
+	FOREIGN KEY (idtipodanio) REFERENCES tipo_danio (idtipodanio) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (idregistroevento) REFERENCES registro_evento (idregistroevento) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
+CREATE TABLE tipo_accion (
+  idtipoaccion smallint(4) NOT NULL AUTO_INCREMENT,
+	tipo_accion varchar(100) NOT NULL,
+	activo char(1) DEFAULT '1',
+	PRIMARY KEY (idtipoaccion))ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
+Insert Into tipo_accion (tipo_accion) values ('REGISTRO DE EVENTO');
+Insert Into tipo_accion (tipo_accion) values ('MONITOREO DE EVENTO');
+Insert Into tipo_accion (tipo_accion) values ('SEGUIMIENTO DE EVENTO');
+Insert Into tipo_accion (tipo_accion) values ('COMUNICACIÓN Y COORDINACIÓN');
+Insert Into tipo_accion (tipo_accion) values ('ELABORACIÓN DE EDAN');
+Insert Into tipo_accion (tipo_accion) values ('MOVILIZACIÓN DE RR.HH.');
+Insert Into tipo_accion (tipo_accion) values ('TRASLADOS DE ESTUDIANTES');
+Insert Into tipo_accion (tipo_accion) values ('TRASLADOS DE ADMINISTRATIVOS');
+Insert Into tipo_accion (tipo_accion) values ('GESTIÓN DE AULAS PREFEBRICADAS');
+Insert Into tipo_accion (tipo_accion) values ('COORDINACIONES VIA DEFENSA CIVIL');
+Insert Into tipo_accion (tipo_accion) values ('SOPORTE SOCIOEMOCIONAL Y LÚDICO');
+Insert Into tipo_accion (tipo_accion) values ('ASISTENCIA TÉCNICA A DIRECTORES');
+Insert Into tipo_accion (tipo_accion) values ('ASISTENCIA TÉCNICA A DOCENTES');
+Insert Into tipo_accion (tipo_accion) values ('IDENTIFICACION DE ESPACIOS ALTERNOS');
+Insert Into tipo_accion (tipo_accion) values ('LIMPIEZA DE CANALETAS');
+Insert Into tipo_accion (tipo_accion) values ('LIMPIEZA DE PERIFERICOS');
+Insert Into tipo_accion (tipo_accion) values ('SUMINISTRO DE KITS INDIVIDUALES');
+Insert Into tipo_accion (tipo_accion) values ('EMPADRONAMIENTO DE DOCENTES Y ESTUDIANTES');
+Insert Into tipo_accion (tipo_accion) values ('RESGUARDO DE MATERIALES Y MOBILIARIO EDUCATIVO');
+Insert Into tipo_accion (tipo_accion) values ('SESIONES DE ORIENTACIÓN Y SENSIBILIZACIÓN');
 
-
+CREATE TABLE tipo_accion_evento_preliminar (
+  idtipoaccionevento smallint(4) NOT NULL AUTO_INCREMENT,
+	idtipoaccion smallint(4) NOT NULL,
+	idregistroevento smallint(4) NOT NULL,
+	descripcion varchar(500) NOT NULL,
+	fecha datetime,
+	activo char(1) DEFAULT '1',
+	PRIMARY KEY (idtipoaccionevento),
+	FOREIGN KEY (idtipoaccion) REFERENCES tipo_accion (idtipoaccion) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (idregistroevento) REFERENCES registro_evento (idregistroevento) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
 
 
