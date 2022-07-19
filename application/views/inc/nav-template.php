@@ -1,6 +1,6 @@
 		<div class="iq-sidebar">
 		<div class="iq-sidebar-logo d-flex justify-content-between">
-            <a href="/odenaged">
+            <a href="#">
               
                <span>ODENAGED</span>
                </a>

@@ -18,7 +18,7 @@
 							<div class="iq-card">
 							<div class="iq-card-body-elements">
 								<div style="margin-top: 15px;" class="doc-profile">
-									<img class="img-fluid avatar-80" src="<?=base_url()?>public/images/principal/<?=$row->icono?>" alt="<?=$row->url?>">
+									<img class="img-fluid avatar-80" src="<?=base_url()?>public/template/images/principal/<?=$row->icono?>" alt="<?=$row->url?>">
 								</div>
 								<div class="dashboard__title">
 									<h6 style="color: white;"> <?=$row->descripcion?></h6>
@@ -68,7 +68,6 @@
 
 								<div class="table-responsive">
 								   <table id="tablaEvento" class="table table-striped dt-responsive w-100 table-bordered display nowrap table-hover mb-0" style="width:100%">
-										
 								   </table>
 								</div>
 

@@ -11,15 +11,15 @@ if (!isset($_SESSION['usuario'])) {
       <div id="loading-center">
       </div>
    </div>-->
-   <div class="wrapper">
-      <?php $this->load->view("inc/nav-template"); ?>
-      <div id="content-page" class="content-page">
-         <?php $this->load->view("inc/nav-top-template"); ?>
-         <div class="container-fluid">
+	<div class="wrapper">
+		<?php $this->load->view("inc/nav-template"); ?>
+		<div id="content-page" class="content-page">
+        <?php $this->load->view("inc/nav-top-template"); ?>
+        <div class="container-fluid">
             <div class="row">
-               <div class="col-lg-12">
+				<div class="col-lg-12">
                   <?php //echo "<pre>"; echo $lista; echo '<br>'.$pacientes;//echo "<pre>"; echo var_dump($lista); ?>
-               </div>
+				</div>
             </div>
 			<?
 			/*	
@@ -40,10 +40,10 @@ if (!isset($_SESSION['usuario'])) {
             <div class="row">
 				<?php $this->load->view("inicio"); ?>
             </div>
-         </div>
-         <?php $this->load->view("inc/footer-template"); ?>
-      </div>
-   </div>
+        </div>
+        <?php $this->load->view("inc/footer-template"); ?>
+		</div>
+	</div>
+	<?	require_once('inc/footer.php');?>
 </body>
-<?	require_once('inc/footer.php');?>
 </html>

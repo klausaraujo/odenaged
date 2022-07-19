@@ -183,8 +183,8 @@
 			<div class="col-sm-12"><h5 id="cargando" class="succes"></h5></div>
 			<div class="col-sm-12"><h5 id="message" class="succes"></h5></div>
 			<div class="col-sm-12 mx-auto pb-3">
-				<button type="submit" class="btn btn-primary mx-3" id="btnEnviar">Guardar registro</button>
-				<button class="btn btn-primary" id="btnCancelar" name="btnCancelar">Cancelar</button>
+				<button type="submit" class="btn btn-sirese mx-3" id="btnEnviar">Guardar registro</button>
+				<button class="btn btn-sirese" id="btnCancelar" name="btnCancelar">Cancelar</button>
 			</div>
 		</form>
 	</div>

@@ -9,8 +9,11 @@
       <link rel="stylesheet" href="<?=base_url()?>public/template/css/typography.css">
       <link rel="stylesheet" href="<?=base_url()?>public/template/css/style.css">
       <link rel="stylesheet" href="<?=base_url()?>public/template/css/responsive.css">
+	  <style>
+		body{background: rgb(44, 68, 80)}
+	  </style>
    </head>
-   <body style="background-color:#ba2d2d;">
+   <body>
       <!--<div id="loading">
          <div id="loading-center">
 		</div>
@@ -20,7 +23,7 @@
                 <div class="row no-gutters">
                     <div class="col-md-6 text-center">
                         <div class="sign-in-detail text-white">
-                            <a class="sign-in-logo mb-3" href="#"><img style="width:700px; height:250px" src="<?php echo base_url('public/images/logo-white.png'); ?>" alt="Minedu" class="img-fluid"  ></a>
+                            <a class="sign-in-logo mb-3" href="#"><img style="width:700px; height:250px" src="<?php echo base_url('public/template/images/logo-white.png'); ?>" alt="Minedu" class="img-fluid"  ></a>
                             <div class="owl-carousel" data-autoplay="true" data-loop="true" data-nav="false" data-dots="true" data-items="1" data-items-laptop="1" data-items-tab="1" data-items-mobile="1" data-items-mobile-sm="1" data-margin="0">
                                 <div class="item">
                                     <img src="<?=base_url()?>public/template/images/login/1.jpg" class="img-fluid mb-4" alt="logo">
@@ -75,7 +78,7 @@
                                     <input type="password" class="form-control mb-0" name="key" id="key" placeholder="Ingrese su contraseña" autocomplete="new-password" >
                                 </div>
                                 <div class="d-inline-block w-100">
-                                    <button type="submit" class="btn btn-primary float-right">Iniciar Sesi&oacute;n </button>
+                                    <button type="submit" class="btn btn-sirese float-right">Iniciar Sesi&oacute;n </button>
 									<?php
 									if($this->session->userdata('error_session')!=null) echo "<div class='text-center'>".$this->session->userdata('error_session')."</div>";
 									?>
@@ -95,7 +98,7 @@
 							<br/>
 							<br/><br/>
 							<div class="media" style="width: 100%;">
-								<img class="align-self-end  " src="<?=base_url()?>public/images/logo.jpg" 
+								<img class="align-self-end  " src="<?=base_url()?>public/template/images/logo.jpg" 
 								style="width: auto;height: 70px;margin: 0 auto;" />
 							</div>
  
@@ -111,14 +114,12 @@
       <script src="<?=base_url()?>public/template/js/jquery.appear.js"></script>
       <script src="<?=base_url()?>public/template/js/waypoints.min.js"></script>
       <script src="<?=base_url()?>public/template/js/jquery.counterup.min.js"></script>
-      <<script src="<?=base_url()?>public/template/js/wow.min.js"></script>
+      <script src="<?=base_url()?>public/template/js/wow.min.js"></script>
       <script src="<?=base_url()?>public/template/js/slick.min.js"></script>
       <script src="<?=base_url()?>public/template/js/select2.min.js"></script>
       <script src="<?=base_url()?>public/template/js/owl.carousel.min.js"></script>
       <script src="<?=base_url()?>public/template/js/jquery.magnific-popup.min.js"></script>
       <script src="<?=base_url()?>public/template/js/smooth-scrollbar.js"></script>
       <script src="<?=base_url()?>public/template/js/custom.js"></script>
-	  <!--<script src="<?=base_url()?>public/js/jquery.validate.min.js"></script>
-	  <script src="<?=base_url()?>public/js/login.js?v=<?=date("is")?>"></script>-->
    </body>
 </html>
