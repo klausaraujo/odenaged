@@ -11,7 +11,7 @@ function main(URI, map) {
 					$("#decisionModal").modal("show");
 					$("#decisionModal").css("padding-right", "0px");*/
 					resetForm();
-					$('#tipo').val('registrarEvento');
+					$('#tipo').val('registrar');
 					ocultarElem(false);
 				}else if(rel !== 'nuevo' && rel != null){
 					//console.log(rel);
@@ -24,20 +24,15 @@ function main(URI, map) {
 	
 	function ocultarElem(on){
 		$('html, body').animate({ scrollTop: 0 }, 'fast');
+		$('.error').each(function(){ let herm = $(this).prev(); if(herm.attr('name')){ $('#'+$(herm).attr('name')+'-error').remove(); } });
 		if(on){
 			loadData();
-			if(!$('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 1) $('.ajaxMap').hide();
-			if(!$('.sismo').css('display') == 'none' || $('.sismo').css('opacity') == 1) $('.sismo').hide();
 			if(!$('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 1) $('.ajaxForm').hide();
 			if($('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 0) $('.ajaxTable').show();
 			if($('#menu2').hasClass('active')){
 				$('#menu2').removeClass('active');
 				$('#menu1').addClass('active');
 			}
-			$('#message').switchClass('succes', 'warn');
-			$('#cargando').html('');
-			$("#message").html('');
-			$('#tipo').val('');
 		}else{
 			if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
 			if($('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 0) $('.ajaxForm').show();
@@ -46,6 +41,11 @@ function main(URI, map) {
 				$('#menu2').addClass('active');
 			}
 		}
+		if(!$('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 1) $('.ajaxMap').hide();
+		if(!$('.sismo').css('display') == 'none' || $('.sismo').css('opacity') == 1) $('.sismo').hide();
+		$('#message').switchClass('succes', 'warn');
+		$('#cargando').html('');
+		$("#message").html('');
 	}
 	function resetForm(){
 		$("#formEvento")[0].reset();$("#formEvento select").prop('selectedIndex',0);//('#blah').attr('src',URI+'public/template/images/camera.png')
@@ -110,7 +110,7 @@ function main(URI, map) {
 			formData.append("file", document.getElementById("file")); */
 			$.ajax({
 				data: formData,
-				url: URI + $('#tipo').val(),
+				url: URI + 'registrarEvento',
 				method: "POST",
 				dataType: "json",
 				cache: false,
@@ -267,7 +267,7 @@ function main(URI, map) {
 	}
 	
 	function editarReg(edita, data){
-		$('#tipo').val('eventoEditar');
+		$('#tipo').val('editar');
 		$.ajax({
 		  type: 'POST',
 		  url: URI + 'editarEvento',
@@ -321,8 +321,9 @@ function main(URI, map) {
 				//console.log(map.getZoom());
 				map.setCenter(opt);
 				
-				if($('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 0) $('.ajaxMap').show();
 				ocultarElem(false);
+				if($('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 0) $('.ajaxMap').show();
+				if(eventos.evento == 'SISMO')if($('.sismo').css('display') == 'none' || $('.sismo').css('opacity') == 0) $('.sismo').show();
 			}
 			//loadData;
 		  }

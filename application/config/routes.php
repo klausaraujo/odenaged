@@ -60,10 +60,9 @@ $route['cargarEvento'] = 'eventos/main/cargarEvento';
 $route['cargarprov'] = 'eventos/main/cargarprov';
 $route['cargardis'] = 'eventos/main/cargardis';
 $route['cargarLatLng'] = 'eventos/main/cargarLatLng';
-$route['registrarEvento'] = 'eventos/main/registrar';
+$route['registrarEvento'] = 'eventos/main/index';
 $route['eventosListar'] = 'eventos/main/listar';
 $route['editarEvento'] = 'eventos/main/editarEvento';
-$route['eventoEditar'] = 'eventos/main/editar';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

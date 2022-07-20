@@ -5,6 +5,7 @@ if (! defined("BASEPATH"))
 class Main extends CI_Controller
 {
 	private $path;
+	private $coun;
 	
     public function __construct()
     {
@@ -16,7 +17,42 @@ class Main extends CI_Controller
 
     public function index()
     {
-		
+		if($this->input->post('tipo')){
+			$this->load->model("Evento_model");
+			
+			$dtz = new DateTimeZone("America/Lima");
+			$dt = new DateTime("now", $dtz);
+			//$fechaActual = $dt->format("Y-m-d h:i:s a");
+			$fechaActual = $dt->format("Y-m-d h:i:s");
+			
+			if($this->input->post('tipo') == 'registrar'){
+				$this->coun = ($this->Evento_model->sumaEventos()) + 1;
+				$this->Evento_model->setAnio($this->input->post('anio'));
+				$this->Evento_model->setCtaEvento($this->coun);
+				$this->Evento_model->setNivelEvento($this->input->post('nivelevento'));
+				$this->Evento_model->setIdEvento($this->input->post('evento'));
+				$this->Evento_model->setDescripcion($this->input->post('descripcion'));
+				$this->Evento_model->setUbigeo($this->input->post('ubigeo'));
+				$this->Evento_model->setLat($this->input->post('lat'));
+				$this->Evento_model->setLng($this->input->post('lng'));
+				$this->Evento_model->setFechaEvento($this->input->post('fechaevento'));
+				$this->Evento_model->setHoraEvento($this->input->post('fechaevento')." ".$this->input->post('horaevento'));
+				$this->Evento_model->setAfecta($this->input->post('afecta'));
+				$this->Evento_model->setZoom($this->input->post('zoom'));
+				$this->Evento_model->setUsuarioReg($this->session->userdata("idusuario"));
+				$this->Evento_model->setFechaReg($fechaActual);
+				$this->Evento_model->setlatSismo($this->input->post('latitudsismo'));
+				$this->Evento_model->setlngSismo($this->input->post('longitudsismo'));
+				$this->Evento_model->setProfundidad($this->input->post('profundidad'));
+				$this->Evento_model->setMagnitud($this->input->post('magnitud'));
+				$this->Evento_model->setIntensidad($this->input->post('intensidad'));
+				$this->Evento_model->setReferencia($this->input->post('referencia'));
+				$this->registrar();
+			}
+			if($this->input->post('tipo') == 'editar'){
+				$this->editar();
+			}
+		}
     }
 	
 	public function listar(){
@@ -92,54 +128,10 @@ class Main extends CI_Controller
 	public function registrar()
     {
 		$this->load->model("Evento_model");
-		
-		$dtz = new DateTimeZone("America/Lima");
-        $dt = new DateTime("now", $dtz);
-        //$fechaActual = $dt->format("Y-m-d h:i:s a");
-		$fechaActual = $dt->format("Y-m-d h:i:s");
-		$count = ($this->Evento_model->sumaEventos()) + 1;
-		
-		$this->Evento_model->setAnio($this->input->post('anio'));
-		$this->Evento_model->setCtaEvento($count);
-		$this->Evento_model->setNivelEvento($this->input->post('nivelevento'));
-		$this->Evento_model->setIdEvento($this->input->post('evento'));
-		$this->Evento_model->setDescripcion($this->input->post('descripcion'));
-		$this->Evento_model->setUbigeo($this->input->post('ubigeo'));
-		$this->Evento_model->setLat($this->input->post('lat'));
-		$this->Evento_model->setLng($this->input->post('lng'));
-		$this->Evento_model->setFechaEvento($this->input->post('fechaevento'));
-		$this->Evento_model->setHoraEvento($this->input->post('fechaevento')." ".$this->input->post('horaevento'));
-		$this->Evento_model->setAfecta($this->input->post('afecta'));
-		$this->Evento_model->setZoom($this->input->post('zoom'));
-		$this->Evento_model->setUsuarioReg($this->session->userdata("idusuario"));
-		$this->Evento_model->setFechaReg($fechaActual);
-		$this->Evento_model->setlatSismo($this->input->post('latitudsismo'));
-		$this->Evento_model->setlngSismo($this->input->post('longitudsismo'));
-		$this->Evento_model->setProfundidad($this->input->post('profundidad'));
-		$this->Evento_model->setMagnitud($this->input->post('magnitud'));
-		$this->Evento_model->setIntensidad($this->input->post('intensidad'));
-		$this->Evento_model->setReferencia($this->input->post('referencia'));
-		
-		$campos = array(
-			'anio' =>  $this->input->post('anio'),
-			'idusuario' =>  $this->session->userdata("idusuario"),
-			'fecha' =>  $fechaActual,
-			'nivel' => $this->input->post('nivelevento'),
-			'idevento' => $this->input->post('evento'),
-			'evento' => $this->input->post('descripcion'),
-			'ubigeo' => $this->input->post('ubigeo'),
-			'latitud' => $this->input->post('lat'),
-			'longitud' => $this->input->post('lng'),
-			'fechaevento' => $this->input->post('fechaevento'),
-			'horaevento' => $this->input->post('fechaevento')." ".$this->input->post('horaevento'),
-			'afecta' => $this->input->post('afecta'),
-			'zoom' => $this->input->post('zoom'),
-		);
-				
 		$id = $this->Evento_model->registrar();
 		if ($id > 0){
 			$pa = '';
-			$imag = $this->saveImage($this->path .'public/template/images/eventos/',$count);
+			$imag = $this->saveImage($this->path .'public/template/images/eventos/',$this->coun);
 			$resp_Mapa = '';
 			if($this->path)
 				$pa = $this->path;
@@ -151,10 +143,9 @@ class Main extends CI_Controller
 			}
 			$data = array(
 				"status" => 200,
-				"campos" => $campos,
 				"img" => $imag,
 				'mapa' => $resp_Mapa,
-				'segmento' => $this->uri->segment(3),
+				'segmento' => $this->uri->segment(2),
 				'path' => $pa
             );
 		}else{
