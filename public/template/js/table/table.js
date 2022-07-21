@@ -50,7 +50,9 @@ function tablePersonalized(table, lista, titulo){
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-graduation-cap" aria-hidden="true"></i></button>';
 				const btnPdf = '<button class="btn btn-warning btn-circle btn-sm actionReport" title="Ver Reporte" type="button"'+
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>';
-				return btnEdit+btnPdf;
+				const btnHome = '<button class="btn btn-warning btn-circle btn-sm actionEvento" title="Complementarios" type="button"'+
+						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-home" aria-hidden="true"></i></button>';
+				return btnEdit+btnPdf+btnHome;
 				
 				}
 		}	
