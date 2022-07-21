@@ -183,8 +183,9 @@
 														placeholder="Descripci&oacute;n del Evento" value="" />
 										</div>
 									</div>
-								</div>
+								</div><br>
 								<div class="row"><hr class="col-sm-11" style="margin:20px 0"></div>
+								<br>
 							</div>
 							<!--<div class="row">-->
 								<nav>
