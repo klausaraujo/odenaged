@@ -174,8 +174,95 @@
 										</div>
 									</div>
 								</div>
-								<div class="row"><hr class="col-sm-11" style="margin:20px 0"></div>					
+								<div class="row"><hr class="col-sm-11" style="margin:20px 0"></div>
+								<div class="row">
+									<div class="col-sm-11">
+										<div class="row">
+											<label for="descripcion" class="col-sm-12">Descripci&oacute;n:</label>
+											<input type="text" class="form-control col-sm-12" name="descripcion" id="descripcion"
+														placeholder="Descripci&oacute;n del Evento" value="" />
+										</div>
+									</div>
+								</div>
+								<div class="row"><hr class="col-sm-11" style="margin:20px 0"></div>
 							</div>
+							<!--<div class="row">-->
+								<nav>
+									<div class="nav nav-tabs" id="nav-tab" role="tablist">
+										<a class="nav-item nav-link font-sirese active" id="nav-danios-tab" data-toggle="tab" href="#nav-danios" role="tab" aria-controls="nav-danios" aria-selected="true">Registro de Da&ntilde;os</a>
+										<a class="nav-item nav-link font-sirese" id="nav-acciones-tab" data-toggle="tab" href="#nav-acciones" role="tab" aria-controls="nav-acciones" aria-selected="false">Registro de Acciones</a>
+										<a class="nav-item nav-link font-sirese" id="nav-ie-tab" data-toggle="tab" href="#nav-ie" role="tab" aria-controls="nav-ie" aria-selected="false">Registro de IE Afectadas</a>
+										<a class="nav-item nav-link font-sirese" id="nav-fotos-tab" data-toggle="tab" href="#nav-fotos" role="tab" aria-controls="nav-fotos" aria-selected="false">Galer&iacute;a de fotos</a>
+									</div>
+								</nav>
+								<div class="tab-content" id="nav-tabContent">
+									<div class="tab-pane fade show active" id="nav-danios" role="tabpanel" aria-labelledby="nav-danios-tab">
+										<div class="row">
+											<div class="col-sm-1"></div>
+											<div class="col-sm-4">
+												<div class="row">
+													<label for="tipodanio" class="col-sm-12">Tipo de Da&ntilde;o:</label>
+													<select class="form-control col-sm-11" name="tipodanio" id="tipodanio">
+														<option value="">-- Seleccione --</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-sm-4">
+												<div class="row">
+													<label for="cantidad" class="col-sm-12">Cantidad:</label>
+													<input type="text" class="form-control col-sm-11" name="cantidad" id="cantidad"
+														onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
+														placeholder="Cantidad" value="" />
+												</div>
+											</div>
+											<div class="col-sm-3">
+												<div class="row">
+													<label for="btnDanio" class="col-sm-12">&nbsp;</label>
+													<button type="button" class="btn btn-sirese mx-3" id="btnDanio">Registrar</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="nav-acciones" role="tabpanel" aria-labelledby="nav-acciones-tab">
+										<div class="row">
+											<div class="col-sm-1"></div>
+											<div class="col-sm-4">
+												<div class="row">
+													<label for="tipoaccion" class="col-sm-12">Tipo de Acci&oacute;n:</label>
+													<select class="form-control col-sm-11" name="tipoaccion" id="tipoaccion">
+														<option value="">-- Seleccione --</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-sm-6">
+												<div class="row">
+													<label for="descripaccion" class="col-sm-12">Descripci&oacute;n:</label>
+													<input type="text" class="form-control col-sm-11" name="descripaccion" id="descripaccion"
+														placeholder="Descripci&oacute;n de la Acci&oacute;n" value="" />
+												</div>
+											</div>
+											<div class="col-sm-1"></div>
+											<div class="col-sm-1"></div>
+											<div class="col-sm-4">
+												<label for="fechaaccion" class="col-sm-12">Fecha de la Acci&oacute;n:</label>
+												<input type="date" class="form-control col-sm-11" name="fechaaccion" id="fechaaccion" value="<?=$fechaActual?>"/>
+											</div>
+											<div class="col-sm-4">
+												<label for="horaaccion" class="col-sm-12">Fecha de la Acci&oacute;n:</label>
+												<input type="time" class="form-control col-sm-11" name="horaaccion" id="horaaccion" value="<?=$hora?>"/>
+											</div>
+											<div class="col-sm-3">
+												<div class="row">
+													<label for="btnAccion" class="col-sm-12">&nbsp;</label>
+													<button type="button" class="btn btn-sirese mx-3" id="btnAccion">Registrar</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="nav-ie" role="tabpanel" aria-labelledby="nav-ie-tab"></div>
+									<div class="tab-pane fade" id="nav-fotos" role="tabpanel" aria-labelledby="nav-fotos-tab"></div>
+								</div>
+							<!--</div>-->
 						</div>
 					</div>
 				</div>			

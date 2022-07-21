@@ -6,7 +6,7 @@ if (!isset($_SESSION['usuario'])) {
 <!doctype html>
 <html lang="en">
 <?	require_once('inc/header.php');	?>
-<body class="<?=(!isset($inicio))?'sidebar-main':'';?>" >
+<body class="" >
    <!--<div id="loading">
       <div id="loading-center">
       </div>
