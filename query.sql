@@ -1,5 +1,8 @@
 DROP TABLE IF EXISTS mes;
 DROP TABLE IF EXISTS anio;
+DROP TABLE IF EXISTS iest_2020_all_evento_preliminar;
+DROP TABLE IF EXISTS iest_2020_all;
+DROP TABLE IF EXISTS galeria_evento_preliminar;
 DROP TABLE IF EXISTS tipo_accion_evento_preliminar;
 DROP TABLE IF EXISTS tipo_accion;
 DROP TABLE IF EXISTS evento_tipo_danio_preliminar;
@@ -2486,7 +2489,6 @@ CREATE TABLE registro_evento (
 	latitud varchar(25),
   longitud varchar(25),
 	fecha datetime,
-	hora datetime,
 	afecta_sector char(1) DEFAULT '0',
 	idusuario_registro smallint(4),
 	fecha_registro datetime,
@@ -2577,10 +2579,82 @@ CREATE TABLE tipo_accion_evento_preliminar (
 	FOREIGN KEY (idtipoaccion) REFERENCES tipo_accion (idtipoaccion) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (idregistroevento) REFERENCES registro_evento (idregistroevento) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
+CREATE TABLE galeria_evento_preliminar (
+  idgaleria smallint(4) NOT NULL AUTO_INCREMENT,
+	idregistroevento smallint(4) NOT NULL,
+	fotografia varchar(30),
+	descripcion varchar(500) NOT NULL,
+	activo char(1) DEFAULT '1',
+	PRIMARY KEY (idgaleria),
+	FOREIGN KEY (idregistroevento) REFERENCES registro_evento (idregistroevento) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
+CREATE TABLE iest_2020_all (
+  ID int(11) NOT NULL,
+  COD_MOD varchar(7) DEFAULT NULL,
+  ANEXO int(1) DEFAULT NULL,
+  CODLOCAL varchar(10) DEFAULT NULL,
+  CEN_EDU varchar(100) DEFAULT NULL,
+  NIV_MOD varchar(100) DEFAULT NULL,
+  D_NIV_MOD varchar(300) DEFAULT NULL,
+  D_FORMA varchar(50) DEFAULT NULL,
+  COD_CAR varchar(50) DEFAULT NULL,
+  D_COD_CAR varchar(50) DEFAULT NULL,
+  TIPSSEXO varchar(20) DEFAULT NULL,
+  D_TIPSSEXO varchar(50) DEFAULT NULL,
+  GESTION varchar(50) DEFAULT NULL,
+  D_GESTION varchar(50) DEFAULT NULL,
+  GES_DEP varchar(2) DEFAULT NULL,
+  D_GES_DEP varchar(50) DEFAULT NULL,
+  DIRECTOR varchar(50) DEFAULT NULL,
+  TELEFONO varchar(10) DEFAULT NULL,
+  EMAIL varchar(10) DEFAULT NULL,
+  PAGWEB varchar(10) DEFAULT NULL,
+  DIR_CEN varchar(100) DEFAULT NULL,
+  REFERENCIA varchar(100) DEFAULT NULL,
+  LOCALIDAD varchar(50) DEFAULT NULL,
+  CODCP_INEI int(9) DEFAULT NULL,
+  CODCCPP varchar(6) DEFAULT NULL,
+  CEN_POB varchar(50) DEFAULT NULL,
+  AREA_SIG int(1) DEFAULT NULL,
+  D_AREASIG varchar(6) DEFAULT NULL,
+  CODGEO varchar(6) DEFAULT NULL,
+  D_DPTO varchar(50) DEFAULT NULL,
+  D_PROV varchar(50) DEFAULT NULL,
+  D_DIST varchar(50) DEFAULT NULL,
+  D_REGION varchar(50) DEFAULT NULL,
+  CODOOII varchar(7) DEFAULT NULL,
+  D_DREUGEL varchar(50) DEFAULT NULL,
+  NLAT_IE double DEFAULT NULL,
+  NLONG_IE double DEFAULT NULL,
+  TIPOPROG varchar(10) DEFAULT NULL,
+  D_TIPOPROG varchar(10) DEFAULT NULL,
+  COD_TUR int(2) DEFAULT NULL,
+  D_COD_TUR varchar(50) DEFAULT NULL,
+  ESTADO int(1) DEFAULT NULL,
+  D_ESTADO varchar(50) DEFAULT NULL,
+  D_FTE_DATO varchar(50) DEFAULT NULL,
+  TALUM_HOM int(11) DEFAULT NULL,
+  TALUM_MUJ int(11) DEFAULT NULL,
+  TALUMNO int(11) DEFAULT NULL,
+  TDOCENTE int(11) DEFAULT NULL,
+  TSECCION int(11) DEFAULT NULL,
+  FECHAREG date DEFAULT NULL,
+  FECHA_ACT date DEFAULT NULL,
+  num_tur int(1) DEFAULT NULL,
+  fuente varchar(50) DEFAULT NULL,
+  PRIMARY KEY(ID)
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
-
-
+CREATE TABLE iest_2020_all_evento_preliminar (
+  idiestevento smallint(4) NOT NULL AUTO_INCREMENT,
+	idiest int(11) NOT NULL,
+	idregistroevento smallint(4) NOT NULL,
+	descripcion varchar(500) NOT NULL,
+	fecha datetime,
+	activo char(1) DEFAULT '1',
+	PRIMARY KEY (idiestevento),
+	FOREIGN KEY (idiest) REFERENCES iest_2020_all (ID) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (idregistroevento) REFERENCES registro_evento (idregistroevento) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
 
 
