@@ -63,16 +63,21 @@
 		<script src="https://maps.googleapis.com/maps/api/js?key=<?='AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc'?>&libraries=places&v=weekly" async></script>
 		<script src="<?=base_url()?>public/template/js/mapa/map.js"></script>
 		<script src="<?=base_url()?>public/template/js/eventos/main.js"></script>
+		<script src="<?=base_url()?>public/template/js/table/tableComp.js"></script>
 		<script>
-			const canDelete = "1";
+			/*const canDelete = "1";
 			const canEdit = "1";
 			const canIdioma = "1";
 			const canTracking = "1";
-			const canHistory = "1";
+			const canHistory = "1";*/
 			//const URI = "<?//=base_url()?>";
 			const lista = JSON.parse('<?=$lista?>');
 			const URI = '<?=$ubigeo?>';
 			const table = tablePersonalized('#tablaEvento',lista,'evento');
+			
+			var daniosCol = [{'idtipodanio':'id','cantidad':'cantidad'}];
+			const tableDanio = tableComp('#tableDanio',daniosCol);
+			
 			window.onload = function(){
 				var opt = {lat: 42.1382114, lng: -71.5212585,zoom: 16};
 				$('.ajaxMap').hide();

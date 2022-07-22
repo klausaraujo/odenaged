@@ -35,8 +35,7 @@ class Main extends CI_Controller
 				$this->Evento_model->setUbigeo($this->input->post('ubigeo'));
 				$this->Evento_model->setLat($this->input->post('lat'));
 				$this->Evento_model->setLng($this->input->post('lng'));
-				$this->Evento_model->setFechaEvento($this->input->post('fechaevento'));
-				$this->Evento_model->setHoraEvento($this->input->post('fechaevento')." ".$this->input->post('horaevento'));
+				$this->Evento_model->setFechaEvento($this->input->post('fechaevento')." ".$this->input->post('horaevento'));
 				$this->Evento_model->setAfecta($this->input->post('afecta'));
 				$this->Evento_model->setZoom($this->input->post('zoom'));
 				$this->Evento_model->setUsuarioReg($this->session->userdata("idusuario"));

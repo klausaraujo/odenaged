@@ -36,10 +36,10 @@ function main(URI, map) {
 		}else{
 			if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
 			if($('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 0) $('.ajaxForm').show();
-			if($('#menu1').hasClass('active')){
+			/*if($('#menu1').hasClass('active')){
 				$('#menu1').removeClass('active');
 				$('#menu2').addClass('active');
-			}
+			}*/
 		}
 		if(!$('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 1) $('.ajaxMap').hide();
 		if(!$('.sismo').css('display') == 'none' || $('.sismo').css('opacity') == 1) $('.sismo').hide();
@@ -288,7 +288,7 @@ function main(URI, map) {
 				$("#tipoevento option").each(function(){ if( $(this).val() == data.idtipoevento ){ $(this).prop("selected",true); }});
 				$("#nivelevento option").each(function(){ if( $(this).val() == data.idnivel ){ $(this).prop("selected",true); }});
 				$("#fechaevento").val((data.fecha).substring(0,10));
-				$("#horaevento").val((data.hora).slice(-8));
+				$("#horaevento").val((data.fecha).slice(-8));
 				if(data.afecta_sector == '1')$("#afecta").attr('checked',true);
 				var html = '<option value="">-- Seleccione --</option>';
 				prov.forEach(function(row){
@@ -344,5 +344,19 @@ function main(URI, map) {
 		}
 	});
 	
+	$('#btnDanio').on('click',function(evt){
+		var jSon = [{'idtipodanio':'valor','cantidad':$('#cantidad').val()}];
+		var row = [];
+		tableDanio.rows().data().each(function (value) { row.push(value); });
+		row = row.concat(jSon);
+		tableDanio.clear();
+		tableDanio.rows.add(row).draw();
+	});
 	
+	tableDanio.on('click', 'button', function(){
+		if($(this).hasClass('actionDelete')){
+			if(tableDanio.row(this).child.isShown()) tableDanio.row(this).remove().draw();
+			else tableDanio.row($(this).parents("tr")).remove().draw();
+		}
+	});
 }
