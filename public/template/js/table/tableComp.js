@@ -1,6 +1,6 @@
-function tableComp(table, lista){
+function tableComp(table, lista, img){
 	
-	let cols = []; let titles = []; let render = [];
+	let cols = []; let titles = []; let render = []; let imagen = [];
 	
 	if(lista.length > 0){
 		let j = 1;
@@ -16,7 +16,6 @@ function tableComp(table, lista){
 				}
 			}
 		});
-		
 	}
 	
 	render = [
@@ -41,7 +40,22 @@ function tableComp(table, lista){
 		}	
 	];
 	
+	if(img){
+		imagen = [
+			{
+				data: 'foto',
+				render: function (data, type) {
+					if(data)
+						return '<img src="'+data+'" alt="'+data+'" class="img-fluid" />';
+					else
+						return '';
+				}
+			}	
+		];
+	}
 	titles = render.concat(titles);
+	if(img){ cols = cols.concat(imagen);titles = titles.concat([{title: 'Foto',targets: 3}]); }
+	
 	
 	//String JSON con su identificador
 	//json = {"data":[{"name":"Tiger Nikon","position":"system"}]};
@@ -77,11 +91,12 @@ function tableComp(table, lista){
 		"select": false,
 		"pageLength": "4",
 		//dom: 'Bfrt<"col-sm-12 inline"i> <"col-sm-12 inline"p>',
-		lengthMenu: [[4, 10, 25, 50, 100, -1], [4, 10, 25, 50, 100, 'Todas']],
+		//lengthMenu: [[4, 10, 25, 50, 100, -1], [4, 10, 25, 50, 100, 'Todas']],
 		
 		"columns":cols,
 		"columnDefs":titles,
-		"dom": '<"row mt-5"rt><"row"<"col-sm-4 offset-5"p>>',
+		//"dom": '<"row mt-5"rt><"row"<"col-sm-4 offset-5"p>>',
+		"dom": '<"row justify-content-center mt-5"<"col-sm-7"rt>><"row"<"col-sm-7"<"float-right"p>>>',
 		/*"buttons": {
 			dom: {
 			  container: {

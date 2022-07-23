@@ -359,4 +359,67 @@ function main(URI, map) {
 			else tableDanio.row($(this).parents("tr")).remove().draw();
 		}
 	});
+	
+	$('#btnAccion').on('click',function(evt){
+		var jSon = [{'idtipoaccion':'valor','descripcion':$('#descripaccion').val(),'fecha':$('#fechaaccion').val(),'hora':$('#horaaccion').val()}];
+		var row = [];
+		tableAccion.rows().data().each(function (value) { row.push(value); });
+		row = row.concat(jSon);
+		tableAccion.clear();
+		tableAccion.rows.add(row).draw();
+	});
+	
+	tableAccion.on('click', 'button', function(){
+		if($(this).hasClass('actionDelete')){
+			if(tableAccion.row(this).child.isShown()) tableAccion.row(this).remove().draw();
+			else tableAccion.row($(this).parents("tr")).remove().draw();
+		}
+	});
+	
+	tableFotos.on('click', 'button', function(){
+		if($(this).hasClass('actionDelete')){
+			if(tableFotos.row(this).child.isShown()) tableFotos.row(this).remove().draw();
+			else tableFotos.row($(this).parents("tr")).remove().draw();
+		}
+	});
+	
+	fileLoad.onchange = function (e) {
+		const file = document.querySelector('input[type=file]').files[0];
+		//var input =  e.srcElement;
+		if ( file ) {
+			if ( /\.(jpe?g|png|gif)$/i.test(file.name) ) {
+				var reader = new FileReader();
+				reader.addEventListener("load", function () {
+					/*console.log(this.result);
+					var divCol = document.createElement("div");
+					var filePreview = document.createElement('img');
+					var previewZone = document.getElementById('file-preview-zone');
+					
+					divCol.classList.add('col-sm-2');
+					filePreview.id = 'file-preview';
+					
+					filePreview.src = this.result;
+					filePreview.classList.add('img-fluid');
+					
+					divCol.appendChild(filePreview);
+					previewZone.appendChild(divCol);*/
+					
+					var jSon = [{'fotografia':'valor','descripcion':'valor','foto': this.result}];
+					var row = [];
+					tableFotos.rows().data().each(function (value) { row.push(value); });
+					row = row.concat(jSon);
+					tableFotos.clear();
+					tableFotos.rows.add(row).draw();
+					
+				}, false);
+				
+				/*reader.onload = function (e) {
+					//e.target.result contents the base64 data from the image uploaded
+					//console.log(e.target.result);
+				}*/
+				
+				reader.readAsDataURL(file);
+			}
+		}
+    }
 }

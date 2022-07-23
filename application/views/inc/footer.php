@@ -75,8 +75,11 @@
 			const URI = '<?=$ubigeo?>';
 			const table = tablePersonalized('#tablaEvento',lista,'evento');
 			
-			var daniosCol = [{'idtipodanio':'id','cantidad':'cantidad'}];
-			const tableDanio = tableComp('#tableDanio',daniosCol);
+			const tableDanio = tableComp('#tableDanio',[{'idtipodanio':'id','cantidad':'cantidad'}]);
+			const tableAccion = tableComp('#tableAccion',[{'idtipoaccion':'valor','descripcion':'descr','fecha':'fecha','hora':'hora'}]);
+			const tableFotos = tableComp('#tableFotos',[{'fotografia':'valor','descripcion':'descr'}],'foto');
+			const fileLoad = document.getElementById('file-upload');
+			
 			
 			window.onload = function(){
 				var opt = {lat: 42.1382114, lng: -71.5212585,zoom: 16};

@@ -225,8 +225,7 @@
 										</div>
 									</div>
 									<div class="table-responsive">
-										<table id="tableDanio" class="table table-striped dt-responsive table-bordered display nowrap table-hover col-sm-7
-											offset-2 px-0" style="width:80%">
+										<table id="tableDanio" class="table table-striped dt-responsive table-bordered display nowrap table-hover px-0" style="width:100%">
 										</table>
 									</div>
 								</div>
@@ -269,14 +268,27 @@
 										<div class="col-sm-3">
 											<div class="row">
 												<label for="btnAccion" class="col-sm-12">&nbsp;</label>
-												<button type="button" class="btn btn-sirese mx-3" id="btnAccion">Registrar</button>
+												<button type="button" class="btn btn-sirese mx-3" id="btnAccion">Agregar</button>
 											</div>
 										</div>
 										<div class="col-sm-1"></div>
 									</div>
+									<div class="table-responsive">
+										<table id="tableAccion" class="table table-striped dt-responsive table-bordered display nowrap table-hover px-0" style="width:100%">
+										</table>
+									</div>
 								</div>
 								<div class="tab-pane fade" id="nav-ie" role="tabpanel" aria-labelledby="nav-ie-tab"></div>
-								<div class="tab-pane fade" id="nav-fotos" role="tabpanel" aria-labelledby="nav-fotos-tab"></div>
+								<div class="tab-pane fade" id="nav-fotos" role="tabpanel" aria-labelledby="nav-fotos-tab">
+									<div class="row" id="divFileUpload">
+										<input id="file-upload" type="file" accept="image/*" />
+									</div>
+									<div id="file-preview-zone" class="row"></div>
+									
+									<div class="table-responsive">
+										<table id="tableFotos" class="table table-striped dt-responsive table-bordered display nowrap table-hover px-0" style="width:100%"></table>
+									</div>
+								</div>
 								<br><br>
 							</div>
 						</div>
