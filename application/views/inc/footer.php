@@ -74,10 +74,14 @@
 			const lista = JSON.parse('<?=$lista?>');
 			const URI = '<?=$ubigeo?>';
 			const table = tablePersonalized('#tablaEvento',lista,'evento');
+			//const danios = ;
+			//const acciones = ;
+			//const galeria = ;
+			const datos = [];
 			
-			const tableDanio = tableComp('#tableDanio',[{'idtipodanio':'id','cantidad':'cantidad'}]);
-			const tableAccion = tableComp('#tableAccion',[{'idtipoaccion':'valor','descripcion':'descr','fecha':'fecha','hora':'hora'}]);
-			const tableFotos = tableComp('#tableFotos',[{'fotografia':'valor','descripcion':'descr'}],'foto');
+			const tableDanio = tableComp('#tableDanio',[{'idtipodanio':'','cantidad':''}],datos);
+			const tableAccion = tableComp('#tableAccion',[{'idtipoaccion':'','descripcion':'','fecha':'','hora':''}],datos);
+			const tableFotos = tableComp('#tableFotos',[{'fotografia':'','descripcion':''}],datos,'foto');
 			const fileLoad = document.getElementById('file-upload');
 			
 			

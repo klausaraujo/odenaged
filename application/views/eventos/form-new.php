@@ -206,6 +206,10 @@
 												<label for="tipodanio" class="col-sm-12">Tipo de Da&ntilde;o:</label>
 												<select class="form-control col-sm-11" name="tipodanio" id="tipodanio">
 													<option value="">-- Seleccione --</option>
+										<?php
+											foreach($danio as $row):	?>
+												<option value="<?=$row->idtipodanio;?>" ><?=$row->tipo_danio;?></option>
+										<?	endforeach;?>
 												</select>
 											</div>
 										</div>
@@ -224,9 +228,13 @@
 											</div>
 										</div>
 									</div>
-									<div class="table-responsive">
-										<table id="tableDanio" class="table table-striped dt-responsive table-bordered display nowrap table-hover px-0" style="width:100%">
-										</table>
+									<div class="row justify-content-center">
+										<div class="col-sm-8">
+											<div class="table-responsive">
+												<table id="tableDanio" class="table table-striped dt-responsive table-bordered display nowrap table-hover px-0" style="width:100%">
+												</table>
+											</div>
+										</div>
 									</div>
 								</div>
 								<div class="tab-pane fade py-4" id="nav-acciones" role="tabpanel" aria-labelledby="nav-acciones-tab">
@@ -237,6 +245,10 @@
 												<label for="tipoaccion" class="col-sm-12">Tipo de Acci&oacute;n:</label>
 												<select class="form-control col-sm-11" name="tipoaccion" id="tipoaccion">
 													<option value="">-- Seleccione --</option>
+										<?php
+											foreach($accion as $row):	?>
+												<option value="<?=$row->idtipoaccion;?>" ><?=$row->tipo_accion;?></option>
+										<?	endforeach;?>
 												</select>
 											</div>
 										</div>
@@ -273,20 +285,24 @@
 										</div>
 										<div class="col-sm-1"></div>
 									</div>
-									<div class="table-responsive">
-										<table id="tableAccion" class="table table-striped dt-responsive table-bordered display nowrap table-hover px-0" style="width:100%">
-										</table>
+									<div class="row justify-content-center">
+										<div class="col-sm-8">
+											<div class="table-responsive">
+												<table id="tableAccion" class="table table-striped dt-responsive table-bordered display nowrap table-hover px-0" style="width:100%">
+												</table>
+											</div>
+										</div>
 									</div>
 								</div>
-								<div class="tab-pane fade" id="nav-ie" role="tabpanel" aria-labelledby="nav-ie-tab"></div>
-								<div class="tab-pane fade" id="nav-fotos" role="tabpanel" aria-labelledby="nav-fotos-tab">
-									<div class="row" id="divFileUpload">
-										<input id="file-upload" type="file" accept="image/*" />
-									</div>
-									<div id="file-preview-zone" class="row"></div>
-									
-									<div class="table-responsive">
-										<table id="tableFotos" class="table table-striped dt-responsive table-bordered display nowrap table-hover px-0" style="width:100%"></table>
+								<div class="tab-pane fade py-4" id="nav-ie" role="tabpanel" aria-labelledby="nav-ie-tab"></div>
+								<div class="tab-pane fade py-4" id="nav-fotos" role="tabpanel" aria-labelledby="nav-fotos-tab">
+									<div class="row justify-content-center">
+										<div class="col-sm-8">
+											<input id="file-upload" type="file" accept="image/*" />
+											<div class="table-responsive">
+												<table id="tableFotos" class="table table-striped dt-responsive table-bordered display nowrap table-hover px-0" style="width:100%"></table>
+											</div>
+										</div>
 									</div>
 								</div>
 								<br><br>

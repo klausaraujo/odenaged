@@ -345,7 +345,7 @@ function main(URI, map) {
 	});
 	
 	$('#btnDanio').on('click',function(evt){
-		var jSon = [{'idtipodanio':'valor','cantidad':$('#cantidad').val()}];
+		var jSon = [{'idtipodanio':$('select[name="tipodanio"] option:selected').text(),'cantidad':$('#cantidad').val()}];
 		var row = [];
 		tableDanio.rows().data().each(function (value) { row.push(value); });
 		row = row.concat(jSon);
@@ -361,7 +361,8 @@ function main(URI, map) {
 	});
 	
 	$('#btnAccion').on('click',function(evt){
-		var jSon = [{'idtipoaccion':'valor','descripcion':$('#descripaccion').val(),'fecha':$('#fechaaccion').val(),'hora':$('#horaaccion').val()}];
+		var jSon = [{'idtipoaccion':$('select[name="tipodanio"] option:selected').text(),'descripcion':$('#descripaccion').val(),
+					'fecha':$('#fechaaccion').val(),'hora':$('#horaaccion').val()}];
 		var row = [];
 		tableAccion.rows().data().each(function (value) { row.push(value); });
 		row = row.concat(jSon);
@@ -386,6 +387,7 @@ function main(URI, map) {
 	fileLoad.onchange = function (e) {
 		const file = document.querySelector('input[type=file]').files[0];
 		//var input =  e.srcElement;
+		//alert(file.name);
 		if ( file ) {
 			if ( /\.(jpe?g|png|gif)$/i.test(file.name) ) {
 				var reader = new FileReader();
@@ -404,7 +406,7 @@ function main(URI, map) {
 					divCol.appendChild(filePreview);
 					previewZone.appendChild(divCol);*/
 					
-					var jSon = [{'fotografia':'valor','descripcion':'valor','foto': this.result}];
+					var jSon = [{'fotografia':file.name,'descripcion':file.name,'foto': this.result}];
 					var row = [];
 					tableFotos.rows().data().each(function (value) { row.push(value); });
 					row = row.concat(jSon);

@@ -79,16 +79,28 @@ class Evento_model extends CI_Model
 		$this->db->where('activo', '1');
 		return $this->db->get();
 	}
-	public function sumaEventos(){
-		$this->db->select('*');
-        $this->db->from('registro_evento');
-		return $this->db->count_all_results();
-	}
 	public function cargaNivel(){
 		$this->db->select("idnivel,nivel");
         $this->db->from("nivel");
 		$this->db->where("activo", '1');
 		return $this->db->get();
+	}
+	public function tipoDanio(){
+		$this->db->select("idtipodanio,tipo_danio");
+        $this->db->from("tipo_danio");
+		$this->db->where("activo", '1');
+		return $this->db->get();
+	}
+	public function tipoAccion(){
+		$this->db->select("idtipoaccion,tipo_accion");
+        $this->db->from("tipo_accion");
+		$this->db->where("activo", '1');
+		return $this->db->get();
+	}
+	public function sumaEventos(){
+		$this->db->select('*');
+        $this->db->from('registro_evento');
+		return $this->db->count_all_results();
 	}
 	public function registrar()
 	{

@@ -1,22 +1,24 @@
-function tableComp(table, lista, img){
+function tableComp(table, headers, data,img){
 	
-	let cols = []; let titles = []; let render = []; let imagen = [];
+	let cols = [], titles = [], render = [], imagen = [], lista = [], j = 1;
 	
-	if(lista.length > 0){
-		let j = 1;
-		cols.push({data:null});
-		lista.forEach(function(col){
-			for(const [key, value] of Object.entries(col)){
-				let pal = '';
-				if(key !== 'idevento'){
-					cols.push({data:key});
-					key == 'fecnac'? pal = 'Fecha Nac.': key !== 'dni'? pal = key.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase()):pal = key.toUpperCase();
-					titles.push({title:pal,targets:j});
-					j++;
-				}
+	if(data.length > 0) lista = data;
+	else lista = headers;
+	
+	cols.push({data:null});
+	
+	lista.forEach(function(col){
+		//console.log(col);
+		for(const [key, value] of Object.entries(col)){
+			let pal = '';
+			if(key !== 'idevento'){
+				cols.push({data:key});
+				key == 'fecnac'? pal = 'Fecha Nac.': key !== 'dni'? pal = key.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase()):pal = key.toUpperCase();
+				titles.push({title:pal,targets:j});
+				j++;
 			}
-		});
-	}
+		}
+	});
 	
 	render = [
 		{
@@ -25,7 +27,7 @@ function tableComp(table, lista, img){
 			data: null,
 			render: function (data, type, row, meta) {
 				const btnEdit = '<button class="btn btn-warning btn-circle btn-sm actionDelete" title="Eliminar" type="button" '+
-						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>';
+						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-trash" aria-hidden="true"></i></button>';
 				const btnCargas = '<button class="btn btn-warning btn-circle btn-sm actionCargas" title="Registrar Cargas Familiares" type="button"'+
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-users" aria-hidden="true"></i></button>';
 				const btnEst = '<button class="btn btn-warning btn-circle btn-sm actionEstud" title="Registrar Estudios" type="button"'+
@@ -44,9 +46,10 @@ function tableComp(table, lista, img){
 		imagen = [
 			{
 				data: 'foto',
-				render: function (data, type) {
+				render: function (data, type, row) {
+					let img = '<img src="'+data+'" alt="'+type+'" class="img-fluid" />';
 					if(data)
-						return '<img src="'+data+'" alt="'+data+'" class="img-fluid" />';
+						return '<div class="justify-content-center" style="width:35px;height:35px;margin:0">'+img+'</div>';
 					else
 						return '';
 				}
@@ -54,7 +57,7 @@ function tableComp(table, lista, img){
 		];
 	}
 	titles = render.concat(titles);
-	if(img){ cols = cols.concat(imagen);titles = titles.concat([{title: 'Foto',targets: 3}]); }
+	if(img){ cols = cols.concat(imagen);titles = titles.concat([{title: 'Foto',targets: j}]); }
 	
 	
 	//String JSON con su identificador
@@ -79,7 +82,7 @@ function tableComp(table, lista, img){
 	palabras.join(" ");*/
 
 	const dataTable = $(table).DataTable({
-		"data": lista,
+		"data": data,
 		/*"bPaginate":false,
 		"bInfo":false,
 		"bFilter":false,
@@ -96,7 +99,7 @@ function tableComp(table, lista, img){
 		"columns":cols,
 		"columnDefs":titles,
 		//"dom": '<"row mt-5"rt><"row"<"col-sm-4 offset-5"p>>',
-		"dom": '<"row justify-content-center mt-5"<"col-sm-7"rt>><"row"<"col-sm-7"<"float-right"p>>>',
+		"dom": '<"row mt-5"rt><"row float-right"p>',
 		/*"buttons": {
 			dom: {
 			  container: {
