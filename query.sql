@@ -2486,6 +2486,7 @@ CREATE TABLE registro_evento (
   idnivel smallint(4) NOT NULL,
   idevento smallint(4) NOT NULL,
 	descripcion varchar(5000),
+	fuente_inicial varchar(1000),
   ubigeo varchar(6),
 	latitud varchar(25),
   longitud varchar(25),
