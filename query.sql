@@ -1,11 +1,11 @@
 DROP TABLE IF EXISTS mes;
 DROP TABLE IF EXISTS anio;
-DROP TABLE IF EXISTS iest_2020_all_evento_preliminar;
+DROP TABLE IF EXISTS iest_2020_all_evento;
 DROP TABLE IF EXISTS iest_2020_all;
-DROP TABLE IF EXISTS galeria_evento_preliminar;
-DROP TABLE IF EXISTS tipo_accion_evento_preliminar;
+DROP TABLE IF EXISTS galeria_evento;
+DROP TABLE IF EXISTS tipo_accion_evento;
 DROP TABLE IF EXISTS tipo_accion;
-DROP TABLE IF EXISTS evento_tipo_danio_preliminar;
+DROP TABLE IF EXISTS evento_tipo_danio;
 DROP TABLE IF EXISTS tipo_danio;
 DROP TABLE IF EXISTS registro_evento;
 DROP TABLE IF EXISTS evento;
@@ -2533,8 +2533,9 @@ insert into tipo_danio (tipo_danio) values ('ADMINISTRATIVO DESAPARECIDO');
 insert into tipo_danio (tipo_danio) values ('ADMINISTRATIVO FALLECIDO');
 insert into tipo_danio (tipo_danio) values ('OTROS TIPOS DE DAÑOS');
 
-CREATE TABLE evento_tipo_danio_preliminar(
+CREATE TABLE evento_tipo_danio(
 	ideventotipodanio smallint(4) NOT NULL AUTO_INCREMENT,
+	version smallint(4) DEFAULT 0,
 	idtipodanio smallint(4) NOT NULL,
 	idregistroevento smallint(4) NOT NULL,
 	cantidad smallint(4),
@@ -2570,8 +2571,9 @@ Insert Into tipo_accion (tipo_accion) values ('EMPADRONAMIENTO DE DOCENTES Y EST
 Insert Into tipo_accion (tipo_accion) values ('RESGUARDO DE MATERIALES Y MOBILIARIO EDUCATIVO');
 Insert Into tipo_accion (tipo_accion) values ('SESIONES DE ORIENTACIÓN Y SENSIBILIZACIÓN');
 
-CREATE TABLE tipo_accion_evento_preliminar (
+CREATE TABLE tipo_accion_evento (
   idtipoaccionevento smallint(4) NOT NULL AUTO_INCREMENT,
+	version smallint(4) DEFAULT 0,
 	idtipoaccion smallint(4) NOT NULL,
 	idregistroevento smallint(4) NOT NULL,
 	descripcion varchar(500) NOT NULL,
@@ -2581,8 +2583,9 @@ CREATE TABLE tipo_accion_evento_preliminar (
 	FOREIGN KEY (idtipoaccion) REFERENCES tipo_accion (idtipoaccion) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (idregistroevento) REFERENCES registro_evento (idregistroevento) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
-CREATE TABLE galeria_evento_preliminar (
+CREATE TABLE galeria_evento (
   idgaleria smallint(4) NOT NULL AUTO_INCREMENT,
+	version smallint(4) DEFAULT 0,
 	idregistroevento smallint(4) NOT NULL,
 	fotografia varchar(30),
 	descripcion varchar(500) NOT NULL,
@@ -2647,8 +2650,9 @@ CREATE TABLE iest_2020_all (
   PRIMARY KEY(ID)
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
-CREATE TABLE iest_2020_all_evento_preliminar (
+CREATE TABLE iest_2020_all_evento (
   idiestevento smallint(4) NOT NULL AUTO_INCREMENT,
+	version smallint(4) DEFAULT 0,
 	idiest int(11) NOT NULL,
 	idregistroevento smallint(4) NOT NULL,
 	descripcion varchar(500) NOT NULL,
