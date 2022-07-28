@@ -37,6 +37,7 @@ class Main extends CI_Controller
 		($tipodanio->num_rows() > 0)? $tipodanio = $tipodanio->result() : $tipodanio = array();
 		($tipoaccion->num_rows() > 0)? $tipoaccion = $tipoaccion->result() : $tipoaccion = array();
 		($dpto->num_rows() > 0)? $dpto = $dpto->result() : $dpto = array();
+		//$pdf = $this->informe($this->load->view('eventos/dompdf.php',NULL,TRUE));
 		
 		$data = array(
 			'tipoevento' => $tipoevento,
@@ -45,35 +46,18 @@ class Main extends CI_Controller
 			'danio' => $tipodanio,
 			'accion' => $tipoaccion,
 			'dpto' => $dpto,
-			'ubigeo' => $this->config->item('path_url'),
+			'url' => $this->config->item('path_url'),
+			//'pdf' => $pdf,
 			'eventos' => 'eventos'
 		);
-		//$this->informe($this->load->view('index.html',NULL,TRUE));
+		
 		//$this->load->view($this->uri->segment(1).'/main',$data);
 		$this->load->view('main',$data);
     }
 	
-	#Funcion para conectarse a la api de la RENIEC
-	public function curl()
-    {
-        $tipo_documento = $this->input->post("type");
-        $documento = $this->input->post("dni");
-        $api = "http://mpi.minsa.gob.pe/api/v1/ciudadano/ver/";
-        $token = "Bearer d90f5ad5d9c64268a00efaa4bd62a2a0";
-        $handler = curl_init();
-
-        curl_setopt($handler, CURLOPT_URL,  $api. $tipo_documento . "/" . $documento . "/");
-        curl_setopt($handler, CURLOPT_HEADER, false);
-        curl_setopt($handler, CURLOPT_HTTPHEADER, array(
-            "Authorization: " . $token,
-            "Content-Type: application/json"
-        ));
-        curl_setopt($handler, CURLOPT_RETURNTRANSFER, true);
-        $data = curl_exec($handler);
-        $code = curl_getinfo($handler, CURLINFO_HTTP_CODE);
-
-        curl_close($handler);
-
-        echo $data;
-    }
+	public function informe($html){
+		$this->load->library("dom");
+		//$html = $this->load->view('eventos/dompdf', null, true);
+        $this->dom->generate("portrait", "informe", $html, "Informe");
+	}
 }

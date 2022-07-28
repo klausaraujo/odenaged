@@ -10,6 +10,10 @@
    <link rel="stylesheet" href="<?=base_url()?>public/template/css/style.css">
    <link rel="stylesheet" href="<?=base_url()?>public/template/css/responsive.css">
    <link rel="stylesheet" href="<?=base_url()?>public/template/js/table/datatable/datatables.min.css" type="text/css">
+   <?if(isset($eventos)){?>
+	<link rel="stylesheet" href="<?=base_url()?>public/template/css/dropzone.css" />
+   <?}?>
+   
    <style>
 		input[type=number]::-webkit-inner-spin-button, 
 		input[type=number]::-webkit-outer-spin-button { 

@@ -21,7 +21,7 @@ class Menu_model extends CI_Model
     {
         $this->idmenudetalle = $this->db->escape_str($data);
     }
-    public function setIdUsusario($data)
+    public function setIdUsuario($data)
     {
         $this->idusuario = $this->db->escape_str($data);
     }

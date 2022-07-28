@@ -51,34 +51,44 @@
 						$lMod = $this->session->userdata("modulos");
 						$idusuario = $this->session->userdata("idusuario");
 						$idModulo = "";
+						/*foreach($lMod as $fil):
+							echo $fil->url.'<br>'.$this->uri->segment(1);
+						endforeach;*/
 						$i = 0;
-						foreach($lMod as $row):
+						/*foreach($lMod as $row):
 							if($row->url == $this->uri->segment(1))
 								$idModulo = $row->idmodulo;
 						endforeach;
+						foreach($lMenu as $row=>$value):
+							echo var_dump($value[$i]);
+							$i++;
+						endforeach;
+						$i=0;*/
 						
                         if($idModulo =="3" and $idusuario =='1'){ ?>
                         <li id="menu3">
                         <a href="<?=base_url()?>/usuarios/usuario"><div class="pull-left"><i class="ti-user mr-20"></i><span class="right-nav-text">Usuarios</span></div><div class="clearfix"></div></a>
                         </li>
                         <?php } ?>
-
-                    <?php if(!empty($lMenu[$idModulo])){ ?>
-                        <?php foreach($lMenu[$idModulo] as $row): ?>
-                            <li id="menu<?=$row["idmenu"]?>">
-                            <?php if($row["nivel"]==0){ ?>
-                                <a href="#" rel="<?=$row['url']?>" id="linkAjax">
+						
+                    <?php if(!empty($lMenu)){ ?>
+                        <?php foreach($lMenu as $key=>$value): ?>
+                            <li id="menu<?=$value[$i]->idmenu?>">
+                            <?php if($value[$i]->nivel == 0){ ?>
+                                <a href="#" rel="<?=$value[$i]->url?>" id="linkAjax">
                                     <div class="pull-left">
-                                        <i class="<?=$row["icono"]?> mr-20"></i>
-                                        <span class="right-nav-text"><?=$row["descripcion"]?></span>
+                                        <i class="<?=$value[$i]->icono?> mr-20"></i>
+                                        <span class="right-nav-text"><?=$value[$i]->descripcion?></span>
                                     </div>
                                     <div class="clearfix"></div>
                                 </a>
-                            <?php }else{ ?>
-                                <a href="javascript:void(0);" data-toggle="collapse" data-target="#sub_<?=$row["idmenu"]?>">
+                            <?php
+							
+								}else{ ?>
+                                <a href="javascript:void(0);" data-toggle="collapse" data-target="#sub_<?=$value[$i]->idmenu?>">
                                     <div class="pull-left">
-                                        <i class="<?=$row["icono"]?>  mr-20"></i>
-                                        <span class="right-nav-text"><?=$row["descripcion"]?></span>
+                                        <i class="<?=$value[$i]->icono?>  mr-20"></i>
+                                        <span class="right-nav-text"><?=$value[$i]->descripcion?></span>
                                     </div>
                                     <div class="pull-right">
                                        
@@ -87,20 +97,15 @@
                                 </a>
                             <?php } ?>
 
-                            <?php if($row["nivel"]==1){ ?>
-                                <ul id="sub_<?=$row["idmenu"]?>" class="collapse collapse-level-1">
-                                <?php foreach($row["submenu"] as $srow): ?>
-                                <li>
-                                <a href="<?=base_url()?><?=$srow["url"]?>"><?=$srow["descripcion"]?></a>
-                                </li>
-                                <?php endforeach; ?> 
-                                </ul>
-                            <?php } ?>
-
-                            </li>
-                        <?php endforeach; ?> 
-                     <?php }  ?>
-                     <?php }?>
+                            <?php if($value[$i]->nivel == 1){ }?>
+							</li>
+                        <?php
+							$i++;						
+						endforeach; ?> 
+                     <?php }
+					 
+						}
+					?>
 
                   </ul>
                </nav>

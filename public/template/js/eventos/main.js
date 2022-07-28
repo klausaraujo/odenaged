@@ -1,4 +1,5 @@
-function main(URI, map) {
+function main(map) {
+	
 	$(document).ready(function () {
 		$('#menu1').addClass('active');
 		
@@ -330,98 +331,40 @@ function main(URI, map) {
 		});
 	}
 	
+	function informe(id){
+		$.ajax({
+            data: { idevento: id },
+            url: URI + "buscaPreliminar",
+            method: "POST",
+            dataType: "json",
+            beforeSend: function () {},
+            success: function (data) {
+				console.log(data);
+				const { danio } = data;
+				const { accion } = data;
+				const { fotos } = data;
+				tableDanio.clear(); if(!danio.length === 0) tableDanio.rows.add(danio).draw();
+				tableAccion.clear(); if(!accion.length === 0) tableAccion.rows.add(accion).draw();
+				tableFotos.clear(); if(!fotos.length === 0) tableFotos.rows.add(fotos).draw();
+			}
+        });
+	}
+	
 	table.on('click', 'button', function(){
 		//console.log(table.row($(this).parents("tr")).data());
 		//table.row($(this).parents("tr")).deselect();
-		if($(this).hasClass('actionEdit')){
-			if(table.row(this).child.isShown()){
-				var data = table.row(this).data();
-				//console.log(data);
-			}else{
-				var data = table.row($(this).parents("tr")).data();
-			}
-			editarReg('editar',data.idevento);
+		if(table.row(this).child.isShown()){
+			var data = table.row(this).data();
+			//console.log(data);
+		}else{
+			var data = table.row($(this).parents("tr")).data();
+		}
+		if($(this).hasClass('actionEdit'))editarReg('editar',data.idevento);
+		if($(this).hasClass('actionInforme')){
+			informe(data.idevento);
+			$('#idregevento').val(data.idevento);
+			if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
+			if($('.ajaxPreliminar').css('display') == 'none' || $('.ajaxPreliminar').css('opacity') == 0) $('.ajaxPreliminar').show();
 		}
 	});
-	
-	$('#btnDanio').on('click',function(evt){
-		var jSon = [{'idtipodanio':$('select[name="tipodanio"] option:selected').text(),'cantidad':$('#cantidad').val()}];
-		var row = [];
-		tableDanio.rows().data().each(function (value) { row.push(value); });
-		row = row.concat(jSon);
-		tableDanio.clear();
-		tableDanio.rows.add(row).draw();
-	});
-	
-	tableDanio.on('click', 'button', function(){
-		if($(this).hasClass('actionDelete')){
-			if(tableDanio.row(this).child.isShown()) tableDanio.row(this).remove().draw();
-			else tableDanio.row($(this).parents("tr")).remove().draw();
-		}
-	});
-	
-	$('#btnAccion').on('click',function(evt){
-		var jSon = [{'idtipoaccion':$('select[name="tipodanio"] option:selected').text(),'descripcion':$('#descripaccion').val(),
-					'fecha':$('#fechaaccion').val(),'hora':$('#horaaccion').val()}];
-		var row = [];
-		tableAccion.rows().data().each(function (value) { row.push(value); });
-		row = row.concat(jSon);
-		tableAccion.clear();
-		tableAccion.rows.add(row).draw();
-	});
-	
-	tableAccion.on('click', 'button', function(){
-		if($(this).hasClass('actionDelete')){
-			if(tableAccion.row(this).child.isShown()) tableAccion.row(this).remove().draw();
-			else tableAccion.row($(this).parents("tr")).remove().draw();
-		}
-	});
-	
-	tableFotos.on('click', 'button', function(){
-		if($(this).hasClass('actionDelete')){
-			if(tableFotos.row(this).child.isShown()) tableFotos.row(this).remove().draw();
-			else tableFotos.row($(this).parents("tr")).remove().draw();
-		}
-	});
-	
-	fileLoad.onchange = function (e) {
-		const file = document.querySelector('input[type=file]').files[0];
-		//var input =  e.srcElement;
-		//alert(file.name);
-		if ( file ) {
-			if ( /\.(jpe?g|png|gif)$/i.test(file.name) ) {
-				var reader = new FileReader();
-				reader.addEventListener("load", function () {
-					/*console.log(this.result);
-					var divCol = document.createElement("div");
-					var filePreview = document.createElement('img');
-					var previewZone = document.getElementById('file-preview-zone');
-					
-					divCol.classList.add('col-sm-2');
-					filePreview.id = 'file-preview';
-					
-					filePreview.src = this.result;
-					filePreview.classList.add('img-fluid');
-					
-					divCol.appendChild(filePreview);
-					previewZone.appendChild(divCol);*/
-					
-					var jSon = [{'fotografia':file.name,'descripcion':file.name,'foto': this.result}];
-					var row = [];
-					tableFotos.rows().data().each(function (value) { row.push(value); });
-					row = row.concat(jSon);
-					tableFotos.clear();
-					tableFotos.rows.add(row).draw();
-					
-				}, false);
-				
-				/*reader.onload = function (e) {
-					//e.target.result contents the base64 data from the image uploaded
-					//console.log(e.target.result);
-				}*/
-				
-				reader.readAsDataURL(file);
-			}
-		}
-    }
 }

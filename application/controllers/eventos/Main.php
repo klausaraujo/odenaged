@@ -126,11 +126,13 @@ class Main extends CI_Controller
 	
 	public function registrar()
     {
+		$this->load->library('general');
 		$this->load->model("Evento_model");
 		$id = $this->Evento_model->registrar();
 		if ($id > 0){
 			$pa = '';
-			$imag = $this->saveImage($this->path .'public/template/images/eventos/',$this->coun);
+			$imag = $this->general->saveImageMap($this->path .'public/images/mapas_eventos/',$this->coun .'_gm.png',
+												$this->input->post('lat'),$this->input->post('lng'),$this->input->post('zoom'));
 			$resp_Mapa = '';
 			if($this->path)
 				$pa = $this->path;
@@ -218,27 +220,5 @@ class Main extends CI_Controller
 		}
 		
 		echo json_encode($data);
-	}
-	
-	public function saveImage($path,$count){
-		$url = "https://maps.googleapis.com/maps/api/staticmap?language=es&center=" . trim($this->input->post('lat')) ."," . trim($this->input->post('lng')) . "&markers=color:red|label:|" . trim($this->input->post('lat')) . "," . trim($this->input->post('lng')) . "&zoom=" . $this->input->post('zoom') . "&size=596x280&key=AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc";
-		$img = $count . "_gm.png";
-		if(!file_exists($path)){
-			$parts = explode('/', $path);
-			array_pop($parts);
-			$dir = implode( '/', $parts );;
-			if( !is_dir( $dir ) )
-				mkdir( $dir, 0777, true );
-		}
-		if(!file_put_contents($path . $img, file_get_contents($url),LOCK_EX) > 0)
-			$img = '';
-		
-		return $img;
-	}
-	
-	public function informe($html){
-		$this->load->library("dom");
-		//$html = $this->load->view($vista, $data, true);
-        $this->dom->generate("portrait", "informe", $html, "Informe");
 	}
 }

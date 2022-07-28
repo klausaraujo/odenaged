@@ -48,39 +48,27 @@ class Login extends CI_Controller
                 $this->session->set_flashdata("loginError", "Usuario deshabilitado");
                 header("location:" . base_url() . "login");
             }
-
-            $idrol = $row->idrol;
-
-            $this->Usuario_model->setIdRol($idrol);
+			
+            $this->Usuario_model->setIdRol($row->idrol);
             $listaModulo = $this->Usuario_model->listaModulo();
-            
-            $menu = array();
-			$idModulos = array();
-
-            $this->Menu_model->setIdUsusario($row->idusuario);
-            $permisosOpcion = $this->Menu_model->listaPermisosOpcion();
+			//$menus = $this->Usuario_model->listaMenu();
+			
+			$lMenu = array(); $i = 0;
+			
+			$this->Menu_model->setIdUsuario($row->idusuario);
+            #$permisosOpcion = $this->Menu_model->listaPermisosOpcion();
             foreach ($listaModulo->result() as $lrow) :
+				if ($lrow->activo == 1) {
+					$this->Menu_model->setIdModulo($lrow->idmodulo);
+                    $lista = $this->Menu_model->listaPermisos(); 
+					
+                    foreach ($lista->result() as $key=>$value) :
 
-                if ($lrow->activo == 1) {
-                    $this->Menu_model->setIdModulo($lrow->idmodulo);
-                    $lista = $this->Menu_model->listaPermisos();
+                        $lMenu[$i][$key] = $value;                        
 
-                    $lMenu = array();
-                    $i = 0;
-					$j = 0;
-                    foreach ($lista->result() as $mrow) :
+                        if ($key === 'nivel' && $value === 1) {
 
-                        $lMenu[$i]["idmenu"] = $mrow->idmenu;
-						$lMenu[$i]["idmodulo"] = $mrow->idmodulo;
-                        $lMenu[$i]["descripcion"] = $mrow->descripcion;
-                        $lMenu[$i]["nivel"] = $mrow->nivel;
-                        $lMenu[$i]["url"] = $mrow->url;
-                        $lMenu[$i]["icono"] = $mrow->icono;
-                        
-
-                        if ($mrow->nivel == 1) {
-
-                            $this->Menu_model->setId($mrow->idmenu);
+                            /*$this->Menu_model->setId($mrow->idmenu);
                             $listaSubMenu = $this->Menu_model->listaSubMenuPermisos();
                             $lSubMenu = array();
                             $j = 0;
@@ -93,13 +81,13 @@ class Login extends CI_Controller
 
                             endforeach;
 
-                            if(count($lSubMenu)>0) $lMenu[$i]["submenu"] = $lSubMenu;
+                            if(count($lSubMenu)>0) $lMenu[$i]["submenu"] = $lSubMenu;*/
                         }
 						
-						if(count($lMenu)>0){
+						/*if(count($lMenu)>0){
 							$menu[$j] = $lMenu;
 							$j++;
-						}
+						}*/
 						
                         $i ++;
 
@@ -141,12 +129,12 @@ class Login extends CI_Controller
             $this->session->set_userdata("apellido", $row->apellido);
             $this->session->set_userdata("avatar", $row->avatar);
             $this->session->set_userdata("modulos", $listaModulo->result());
-            $this->session->set_userdata("menu", $menu);
+            $this->session->set_userdata("menu", $lMenu);
             /*$token = JWT::encode(array("usuario"=>sha1($row->idusuario),"modulos"=>$listaModulo->result()),getenv("SECRET_SERVER_KEY"));
             $this->session->set_userdata("token", $token);*/
 
-            $permisos = ($permisosOpcion->num_rows()>0)?$permisosOpcion->result():null;
-            $this->session->set_userdata("Permisos_Opcion", $permisos);
+            //$permisos = ($permisosOpcion->num_rows()>0)?$permisosOpcion->result():null;
+            //$this->session->set_userdata("Permisos_Opcion", $permisos);
             /*$this->session->set_userdata("Codigo_Region", $row->Codigo_Region);
             $this->session->set_userdata("Anio_Ejecucion", $row->Anio_Ejecucion);
             $this->session->set_userdata("Codigo_Sector", $row->Codigo_Sector);

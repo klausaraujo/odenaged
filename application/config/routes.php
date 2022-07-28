@@ -64,5 +64,8 @@ $route['registrarEvento'] = 'eventos/main/index';
 $route['eventosListar'] = 'eventos/main/listar';
 $route['editarEvento'] = 'eventos/main/editarEvento';
 
+#Informes
+$route['buscaPreliminar'] = 'eventos/Informe_Preliminar';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

@@ -44,15 +44,13 @@ function tablePersonalized(table, lista, titulo){
 				render: function (data, type, row, meta) {
 				const btnEdit = '<button class="btn btn-warning btn-circle btn-sm actionEdit" title="Editar Registro" type="button" '+
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>';
-				const btnCargas = '<button class="btn btn-warning btn-circle btn-sm actionCargas" title="Registrar Cargas Familiares" type="button"'+
-						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-users" aria-hidden="true"></i></button>';
-				const btnEst = '<button class="btn btn-warning btn-circle btn-sm actionEstud" title="Registrar Estudios" type="button"'+
-						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-graduation-cap" aria-hidden="true"></i></button>';
+				const btnPreliminar = '<button class="btn btn-warning btn-circle btn-sm actionInforme" title="Preliminar" type="button"'+
+						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-file" aria-hidden="true"></i></button>';
 				const btnPdf = '<button class="btn btn-warning btn-circle btn-sm actionReport" title="Ver Reporte" type="button"'+
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>';
-				const btnHome = '<button class="btn btn-warning btn-circle btn-sm actionEvento" title="Complementarios" type="button"'+
+				const btnHome = '<button class="btn btn-warning btn-circle btn-sm actionComp" title="Complementarios" type="button"'+
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-home" aria-hidden="true"></i></button>';
-				return btnEdit+btnPdf+btnHome;
+				return btnEdit+btnPreliminar+btnHome+btnPdf;
 				
 				}
 		}	

@@ -62,6 +62,7 @@
 		<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=<?='AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc'?>&libraries=places&v=weekly" async></script>
 		<script src="<?=base_url()?>public/template/js/mapa/map.js"></script>
+		<script src="<?=base_url()?>public/template/js/eventos/eventos.js"></script>
 		<script src="<?=base_url()?>public/template/js/eventos/main.js"></script>
 		<script src="<?=base_url()?>public/template/js/table/tableComp.js"></script>
 		<script>
@@ -72,23 +73,21 @@
 			const canHistory = "1";*/
 			//const URI = "<?//=base_url()?>";
 			const lista = JSON.parse('<?=$lista?>');
-			const URI = '<?=$ubigeo?>';
+			const URI = '<?=$url?>';
 			const table = tablePersonalized('#tablaEvento',lista,'evento');
 			//const danios = ;
 			//const acciones = ;
 			//const galeria = ;
 			const datos = [];
-			
 			const tableDanio = tableComp('#tableDanio',[{'idtipodanio':'','cantidad':''}],datos);
 			const tableAccion = tableComp('#tableAccion',[{'idtipoaccion':'','descripcion':'','fecha':'','hora':''}],datos);
 			const tableFotos = tableComp('#tableFotos',[{'fotografia':'','descripcion':''}],datos,'foto');
-			const fileLoad = document.getElementById('file-upload');
-			
 			
 			window.onload = function(){
 				var opt = {lat: 42.1382114, lng: -71.5212585,zoom: 16};
 				$('.ajaxMap').hide();
-				main(URI, mapa(opt));
+				main(mapa(opt));
+				eventos();
 			//var macc = {lat: 42.1382114, lng: -71.5212585};
 				/*var map = new google.maps.Map(
 				document.getElementById('map'), {zoom: 15, center: macc});
@@ -102,5 +101,6 @@
 			
 			mapa(opt);*/
 			}
+			function mayus(e){e.value = e.value.toUpperCase();}
 		</script>
 <?	}	?>
