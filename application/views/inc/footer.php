@@ -65,6 +65,7 @@
 		<script src="<?=base_url()?>public/template/js/eventos/eventos.js"></script>
 		<script src="<?=base_url()?>public/template/js/eventos/main.js"></script>
 		<script src="<?=base_url()?>public/template/js/table/tableComp.js"></script>
+		<script src="<?=base_url()?>public/template/js/dropzone/dropzone.js"></script>
 		<script>
 			/*const canDelete = "1";
 			const canEdit = "1";
@@ -82,12 +83,14 @@
 			const tableDanio = tableComp('#tableDanio',[{'idtipodanio':'','cantidad':''}],datos);
 			const tableAccion = tableComp('#tableAccion',[{'idtipoaccion':'','descripcion':'','fecha':'','hora':''}],datos);
 			const tableFotos = tableComp('#tableFotos',[{'fotografia':'','descripcion':''}],datos,'foto');
+			const tableIE = tableComp('#tableIE',[{'institucion':'','cod_M':'','cod_L':'','nivel':'','descripcion':'','fecha':''}],datos);
 			
 			window.onload = function(){
 				var opt = {lat: 42.1382114, lng: -71.5212585,zoom: 16};
 				$('.ajaxMap').hide();
 				main(mapa(opt));
 				eventos();
+				dropzone();
 			//var macc = {lat: 42.1382114, lng: -71.5212585};
 				/*var map = new google.maps.Map(
 				document.getElementById('map'), {zoom: 15, center: macc});

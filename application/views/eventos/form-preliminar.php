@@ -123,11 +123,76 @@
 										</div>
 									</div>
 								</div>
-								<div class="tab-pane fade py-4" id="nav-ie" role="tabpanel" aria-labelledby="nav-ie-tab"></div>
+								<div class="tab-pane fade py-4" id="nav-ie" role="tabpanel" aria-labelledby="nav-ie-tab">
+									<div class="row">
+										<div class="col-sm-1"></div>
+										<div class="col-sm-5">
+											<div class="row">
+												<label for="institucion" class="col-sm-12">Instituci&oacute;n:</label>
+												<input type="text" class="form-control col-sm-11" name="institucion" id="institucion"
+													onKeyUp="mayus(this)" placeholder="Instituci&oacute;n" value="" />
+											</div>
+										</div>
+										<div class="col-sm-5">
+											<div class="row">
+												<label for="descripie" class="col-sm-12">Descripci&oacute;n:</label>
+												<input type="text" class="form-control col-sm-11" name="descripie" id="descripie"
+													onKeyUp="mayus(this)" placeholder="Descripci&oacute;n de la Instituci&oacute;n" value="" />
+											</div>
+										</div>
+										<div class="col-sm-1"></div>
+									</div>
+									<div class="row justify-content-center"><hr class="col-sm-10" style="margin:20px 0"></div>
+									<div class="row">
+										<div class="col-sm-1"></div>
+										<div class="col-sm-4">
+											<div class="row">
+												<label for="fechaie" class="col-sm-12">Fecha Acci&oacute;n:</label>
+												<input type="date" class="form-control col-sm-11" name="fechaie" id="fechaie" value="<?=$fechaActual?>"/>
+											</div>
+										</div>
+										<div class="col-sm-2"></div>
+										<div class="col-sm-2">
+											<div class="row">
+												<label for="btnbuscaIE" class="col-sm-12">&nbsp;</label>
+												<button type="button" class="btn btn-sirese mx-3" id="btnbuscaIE">Buscar IE</button>
+											</div>
+										</div>
+										<div class="col-sm-2">
+											<div class="row">
+												<label for="btnIE" class="col-sm-12">&nbsp;</label>
+												<button type="button" class="btn btn-sirese mx-3" id="btnIE">Agregar</button>
+											</div>
+										</div>
+										<div class="col-sm-1"></div>
+									</div>
+									<div class="row justify-content-center">
+										<div class="col-sm-9">
+											<div class="table-responsive">
+												<table id="tableIE" class="table table-striped dt-responsive table-bordered display nowrap table-hover px-0" style="width:100%">
+												</table>
+											</div>
+										</div>
+									</div>
+								
+								</div>
 								<div class="tab-pane fade py-4" id="nav-fotos" role="tabpanel" aria-labelledby="nav-fotos-tab">
 									<div class="row justify-content-center">
+										<div class="col-4 align-self-center" id="drop-files" ondragover="return false">
+											Arrastre Im&aacute;genes o click aqu&iacute;
+										</div><br>
+									</div>
+									<div id="uploaded-holder" class="container" >
+										<div id="dropped-files" class="row"></div>
+										<div id="extra-files">
+											<div class="number">0</div>
+											<div id="file-list"><ul></ul></div>
+										</div>
+									</div>
+									<input id="file-upload" type="file" accept="image/*" style="display:none" />
+									<!--<div class="row"><button type="button" data-toggle="modal" class="btn btn-sirese pull-right" data-target="#addModal">Agregar Imagen</button></div>-->
+									<div class="row justify-content-center">
 										<div class="col-sm-8">
-											<input id="file-upload" type="file" accept="image/*" />
 											<div class="table-responsive">
 												<table id="tableFotos" class="table table-striped dt-responsive table-bordered display nowrap table-hover px-0" style="width:100%"></table>
 											</div>
@@ -147,3 +212,39 @@
 			</div>
 		</form>
 	</div>
+	<!--<div class="modal fade" id="addModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-md" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">Cargar Imagen</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" style="overflow: hidden;">
+					<!--<div class="col-sm-12">
+						<div class="dropzone needsclick dz-clickable" id="addUpload">
+							<div class="dz-message needsclick">Arrastre o haga click</div>
+						</div>
+					</div>-->
+					<!--<div class="row justify-content-center">
+										<div class="col-4 align-self-center" id="drop-files" ondragover="return false">
+											Arrastre Im&aacute;genes o click aqu&iacute;
+										</div><br>
+									</div>
+									<div id="uploaded-holder" class="container" >
+										<div id="dropped-files" class="row"></div>
+										<div id="extra-files">
+											<div class="number">0</div>
+											<div id="file-list"><ul></ul></div>
+										</div>
+									</div>
+				</div>
+				<div class="clearfix"></div>
+				<div class="modal-footer"></div>
+				<div class="col-md-12 text-center" id="cargando"></div>
+			</div>
+		</div>
+	</div>-->

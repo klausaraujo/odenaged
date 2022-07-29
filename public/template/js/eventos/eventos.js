@@ -42,8 +42,13 @@ function eventos() {
 		}
 	});
 	
+	$('#drop-files').on('click', function(){
+		$('#file-upload').trigger('click');
+		//$('#file-upload').trigger('change');
+	});
+	
 	fileLoad.onchange = function (e) {
-		const file = document.querySelector('input[type=file]').files[0];
+		const file = fileLoad.files[0];
 		//var input =  e.srcElement;
 		//alert(file.name);
 		if ( file ) {

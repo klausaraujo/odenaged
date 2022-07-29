@@ -33,7 +33,7 @@
 			?>
 				<div class="col-xl-12 col-md-12">
 					<div class="ajaxForm" style="display:none"><?php $this->load->view("eventos/form-new"); ?></div>
-					<div class="ajaxTable" style="">
+					<div class="ajaxTable" style="display:none">
 						<div class="card m-b-30 pb-35">
 							 <div class="card-body">
 								<h4 class="mt-0 m-b-15 header-title">Listado General de Eventos Registrados</h4>
@@ -74,6 +74,6 @@
 							</div>
 						</div>
 					</div>
-					<div class="ajaxPreliminar" style="display:none"><?php $this->load->view("eventos/form-preliminar"); ?></div>
+					<div class="ajaxPreliminar" style=""><?php $this->load->view("eventos/form-preliminar"); ?></div>
 				</div>
 				<? } ?>
