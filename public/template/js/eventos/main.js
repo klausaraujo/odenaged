@@ -44,6 +44,7 @@ function main(map) {
 		}
 		if(!$('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 1) $('.ajaxMap').hide();
 		if(!$('.sismo').css('display') == 'none' || $('.sismo').css('opacity') == 1) $('.sismo').hide();
+		if(!$('.ajaxPreliminar').css('display') == 'none' || $('.ajaxPreliminar').css('opacity') == 1) $('.ajaxPreliminar').hide();
 		$('#message').switchClass('succes', 'warn');
 		$('#cargando').html('');
 		$("#message").html('');
