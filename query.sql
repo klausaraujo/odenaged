@@ -28,6 +28,7 @@ DROP TABLE IF EXISTS usuarios_ubigeo;
 DROP TABLE IF EXISTS usuarios;
 DROP TABLE IF EXISTS perfil;
 DROP TABLE IF EXISTS ubigeo;
+DROP VIEW IF EXISTS lista_general_eventos;
 
 CREATE TABLE perfil  (
 idperfil smallint(4) NOT NULL AUTO_INCREMENT,
@@ -1947,6 +1948,7 @@ CREATE TABLE usuarios  (
 
 INSERT INTO usuarios (dni,avatar,apellidos,nombres,usuario,passwd,idperfil) VALUES ('42545573', '000120190310064855.png', 'ARAUJO CUADROS', 'KLAUS JOSEPH', 'admin', 'e4619e8fb50a0aa59ad1b92364f127afad06afe1',1);
 INSERT INTO usuarios (dni,avatar,apellidos,nombres,usuario,passwd,idperfil) VALUES ('00000000', '000120190310064855.png', 'ARAUJO CUADROS', 'JAVIER ANDES', 'jaraujo', 'e4619e8fb50a0aa59ad1b92364f127afad06afe1',2);
+
 CREATE TABLE usuarios_ubigeo  (
   idusuarioubigeo smallint(4) NOT NULL AUTO_INCREMENT,
   idusuario smallint(4) NOT NULL,
@@ -2154,6 +2156,7 @@ insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'25','03');
 insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'25','04');
 
 insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (2,'01','01');
+
 CREATE TABLE modulo  (
   idmodulo smallint(4) NOT NULL AUTO_INCREMENT,
   descripcion varchar(100) NOT NULL,
@@ -2185,7 +2188,6 @@ CREATE TABLE modulo_rol  (
 	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(2,2,'1');
 	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(3,2,'0');
 
-DROP TABLE IF EXISTS permiso;
 CREATE TABLE permiso  (
   idpermiso smallint(4) NOT NULL AUTO_INCREMENT,
   descripcion varchar(50) NOT NULL,
@@ -2199,7 +2201,6 @@ CREATE TABLE permiso  (
 	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Nuevo Registro','1',1,1);
 	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Editar Registro','1',2,1);
 
-DROP TABLE IF EXISTS menu;
 CREATE TABLE menu  (
   idmenu smallint(4) NOT NULL AUTO_INCREMENT,
   idmodulo smallint(4) NOT NULL,
@@ -2214,7 +2215,6 @@ CREATE TABLE menu  (
   INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Lista Eventos','0','eventos','fa fa-list');
 	INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Nuevo Registro','0','nuevo','fa fa-pencil-square-o');
 
-	
 CREATE TABLE menu_detalle  (
   idmenudetalle smallint(4) NOT NULL AUTO_INCREMENT,
   idmenu smallint(4) NOT NULL,
@@ -2226,7 +2226,7 @@ CREATE TABLE menu_detalle  (
   PRIMARY KEY (idmenudetalle),
 	FOREIGN KEY (idmenu) REFERENCES menu (idmenu) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
-DROP TABLE IF EXISTS permisos_menu;
+
 CREATE TABLE permisos_menu  (
   idpermisosmenu smallint(4) NOT NULL AUTO_INCREMENT,
   idmenu smallint(4) NOT NULL,
@@ -2662,5 +2662,53 @@ CREATE TABLE iest_2020_all_evento (
 	FOREIGN KEY (idiest) REFERENCES iest_2020_all (ID) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (idregistroevento) REFERENCES registro_evento (idregistroevento) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
+CREATE VIEW lista_general_eventos
+as
+select evento.idregistroevento,
+	evento.anio_evento,
+  RIGHT(CONCAT('00000',numero_evento),5) as 'numero_evento' ,
+	evento.idnivel,
+	nivel.nivel,
+	tipo_evento.idtipoevento,
+	tipo_evento.tipo_evento,
+  evento.idevento,
+	eventos.evento,
+	evento.descripcion,
+	evento.fuente_inicial,
+  evento.ubigeo,
+	CONCAT_WS(' - ',ubigeo.departamento,ubigeo.departamento,ubigeo.distrito) as 'ubigeo_descripcion',
+	ubigeo.departamento,
+	ubigeo.provincia,
+	ubigeo.distrito,
+	evento.latitud,
+  evento.longitud,
+	date_format(evento.fecha,'%d/%m/%Y') AS 'fecha',
+	date_format(evento.fecha,"%H:%i;%S") AS 'hora',
+	case evento.afecta_sector when '0' then 'NO' when '1' then 'SI' end as 'afecta_sector' ,
+	evento.idusuario_registro,
+	CONCAT_WS(' ',usuarios.apellidos,usuarios.nombres) as 'usuario_registro',
+	date_format(evento.fecha_registro,'%d/%m/%Y') AS 'fecha_registro',
+	evento.idusuario_actualizacion,
+	CONCAT_WS(' ',usuarios_a.apellidos,usuarios_a.nombres) as 'usuario_actualizacion',
+	date_format(evento.fecha_actualizacion,'%d/%m/%Y') AS 'fecha_actualizacion',
+	CONCAT_WS(' ',usuarios_an.apellidos,usuarios_an.nombres) as 'usuario_anulacion',
+	date_format(evento.fecha_anulacion,'%d/%m/%Y') AS 'fecha_anulacion',
+	evento.idusuario_cierre,
+	CONCAT_WS(' ',usuarios_c.apellidos,usuarios_c.nombres) as 'usuario_cierre',
+	date_format(evento.fecha_cierre,'%d/%m/%Y') AS 'fecha_cierre',
+	evento.latitud_sismo,
+  evento.longitud_sismo,
+  evento.profundidad_sismo,
+  evento.magnitud_sismo,
+  evento.intensidad_sismo,
+  evento.referencia_sismo,
+  evento.lugar_sismo,
+  evento.idestado,
+	estado_evento.estado,
+  evento.zoom,
+	evento.mapa_imagen,
+	evento.activo
+ from registro_evento as evento inner join ubigeo as ubigeo on ubigeo.ubigeo=evento.ubigeo inner join nivel on nivel.idnivel = evento.idnivel inner join evento as eventos on eventos.idevento = evento.idevento inner join tipo_evento on tipo_evento.idtipoevento=eventos.idtipoevento inner join usuarios on usuarios.idusuario=evento.idusuario_registro inner join estado_evento on estado_evento.idestado = evento.idestado left join usuarios as usuarios_a on usuarios_a.idusuario=evento.idusuario_actualizacion left join usuarios as usuarios_an on usuarios_an.idusuario=evento.idusuario_anulacion left join usuarios as usuarios_c on usuarios_c.idusuario=evento.idusuario_anulacion;
+ 
 
 
