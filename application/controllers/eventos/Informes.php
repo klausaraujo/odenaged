@@ -2,7 +2,7 @@
 if (! defined("BASEPATH"))
     exit("No direct script access allowed");
 
-class Informe_Preliminar extends CI_Controller
+class Informes extends CI_Controller
 {
 	private $path;
 	
@@ -16,6 +16,9 @@ class Informe_Preliminar extends CI_Controller
 
     public function index()
     {
+    }
+	
+	function preliminar(){
 		//echo $this->input->post('idevento');
 		$this->load->model("Informe_model");
 		$this->Informe_model->setIdEvento($this->input->post('idevento'));
@@ -69,5 +72,5 @@ class Informe_Preliminar extends CI_Controller
 				$this->editar();
 			}*/
 		}
-    }
+	}
 }

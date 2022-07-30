@@ -84,6 +84,7 @@
 			const tableAccion = tableComp('#tableAccion',[{'idtipoaccion':'','descripcion':'','fecha':'','hora':''}],datos);
 			const tableFotos = tableComp('#tableFotos',[{'fotografia':'','descripcion':''}],datos,'foto');
 			const tableIE = tableComp('#tableIE',[{'institucion':'','cod_M':'','cod_L':'','nivel':'','descripcion':'','fecha':''}],datos);
+			const tableIEUbigeo = tableComp('#tableIEUbigeo',[{'codigo':'','nombre':'','clasificacion':''}],datos);
 			
 			window.onload = function(){
 				var opt = {lat: 42.1382114, lng: -71.5212585,zoom: 16};

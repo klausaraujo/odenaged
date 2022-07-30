@@ -90,22 +90,21 @@ function eventos() {
 	
 	$("#btnPreliminar").on('click', function(evt){
 		evt.preventDefault();
-		if($('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 0) $('.ajaxTable').show();
-		if(!$('.ajaxPreliminar').css('display') == 'none' || $('.ajaxPreliminar').css('opacity') == 1) $('.ajaxPreliminar').hide();
-		tableDanio.clear(); tableDanio.draw();
-		tableAccion.clear(); tableAccion.draw();
-		tableFotos.clear(); tableFotos.draw();
-		formulario.reset();		
+		ocultar();
 	});
 	
 	$("#btnCancelPrel").on('click', function(evt){
 		evt.preventDefault();
+		ocultar();
+	});
+	
+	function ocultar(){
 		if($('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 0) $('.ajaxTable').show();
 		if(!$('.ajaxPreliminar').css('display') == 'none' || $('.ajaxPreliminar').css('opacity') == 1) $('.ajaxPreliminar').hide();
 		tableDanio.clear(); tableDanio.draw();
 		tableAccion.clear(); tableAccion.draw();
 		tableFotos.clear(); tableFotos.draw();
+		tableIE.clear(); tableIE.draw();
 		formulario.reset();
-		
-	});
+	}
 }
