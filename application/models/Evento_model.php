@@ -10,6 +10,7 @@ class Evento_model extends CI_Model
 	private $nivelEvento;
 	private $idEvento;
 	private $descripcion;
+	private $fuente;
     private $ubigeo;
 	private $lat;
 	private $lng;
@@ -37,6 +38,7 @@ class Evento_model extends CI_Model
 	public function setNivelEvento($data){ $this->nivelEvento = $this->db->escape_str($data); }
 	public function setIdEvento($data){ $this->idEvento = $this->db->escape_str($data); }
 	public function setDescripcion($data){ $this->descripcion = $this->db->escape_str($data); }
+	public function setFuente($data){ $this->fuente = $this->db->escape_str($data); }
     public function setUbigeo($data){ $this->ubigeo = $this->db->escape_str($data); }
 	public function setLat($data){ $this->lat = $this->db->escape_str($data); }
 	public function setLng($data){ $this->lng = $this->db->escape_str($data); }
@@ -53,11 +55,7 @@ class Evento_model extends CI_Model
 	public function setMagnitud($data){ $this->magnitud = $this->db->escape_str($data); }
 	public function setIntensidad($data){ $this->intensidad = $this->db->escape_str($data); }
 	public function setReferencia($data){ $this->referencia = $this->db->escape_str($data); }
-	
-	#Actualizacion	
-    public function setUsuarioAct($data){ $this->usuarioActualizacion = $this->db->escape_str($data); }
-    public function setFechaAct($data){ $this->fechaActualizacion = $this->db->escape_str($data); }
-    
+	    
     public function listar()
 	{
         #$this->db->select("brigadista_id id,apellidos,nombres,Tipo_Documento_Codigo,documento_numero,genero,DATE_FORMAT(fecha_nacimiento,'%d/%m/%Y') fecha_nacimiento,foto");
@@ -104,12 +102,15 @@ class Evento_model extends CI_Model
 	}
 	public function registrar()
 	{
+		$this->descripcion = $this->db->escape($this->descripcion);
+		$this->fuente = $this->db->escape($this->fuente);
         $data = array(
 			"anio_evento" => $this->anio,
             "numero_evento" => $this->ctaEvento, 
             "idnivel" => $this->nivelEvento,
 			"idevento" => $this->idEvento,
 			"descripcion" => $this->descripcion,
+			"fuente_inicial" => $this->fuente,
 			"ubigeo" => $this->ubigeo,
 			"latitud" => $this->lat, 
             "longitud" => $this->lng, 
@@ -128,10 +129,37 @@ class Evento_model extends CI_Model
         );
         if($this->db->insert("registro_evento", $data)) {
             return $this->db->insert_id();
-        }
-        else {
-            return 0;
-        }
+        }else { return 0; }
+    }
+	public function editar()
+	{
+		$this->descripcion = $this->db->escape($this->descripcion);
+		$this->fuente = $this->db->escape($this->fuente);
+        $data = array(
+			"anio_evento" => $this->anio,
+            "idnivel" => $this->nivelEvento,
+			"idevento" => $this->idEvento,
+			"descripcion" => $this->descripcion,
+			"fuente_inicial" => $this->fuente,
+			"ubigeo" => $this->ubigeo,
+			"latitud" => $this->lat, 
+            "longitud" => $this->lng, 
+            "fecha" => $this->fechaEvt,
+            "afecta_sector" => $this->afecta,
+			"idusuario_actualizacion" => $this->usuarioReg,
+			"fecha_actualizacion" => $this->fechaReg,
+			"latitud_sismo" => $this->latSismo,
+			"longitud_sismo" => $this->lngSismo,
+			"profundidad_sismo" => $this->profundidad,
+			"magnitud_sismo" => $this->magnitud,
+			"intensidad_sismo" => $this->intensidad,
+			"referencia_sismo" => $this->referencia,
+			"zoom" => $this->zoom,
+        );
+        $this->db->where('idregistroevento', $this->id);
+		$result = $this->db->update('registro_evento',$data);
+		if($result) return true;
+        else return false;
     }
 	public function editarEvento(){
 		$this->db->select('*');
@@ -139,6 +167,7 @@ class Evento_model extends CI_Model
 		$this->db->join('evento e','re.idevento=e.idevento');
 		$this->db->join('tipo_evento te','e.idtipoevento=te.idtipoevento');
 		$this->db->where('re.idregistroevento',$this->id);
+		$this->db->limit(1);
 		//$this->db->where('activo','1');
 		return $this->db->get();
 	}

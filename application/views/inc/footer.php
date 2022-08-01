@@ -65,6 +65,7 @@
 		<script src="<?=base_url()?>public/template/js/eventos/eventos.js"></script>
 		<script src="<?=base_url()?>public/template/js/eventos/main.js"></script>
 		<script src="<?=base_url()?>public/template/js/table/tableComp.js"></script>
+		<script src="<?=base_url()?>public/template/js/table/tableIE.js"></script>
 		<script src="<?=base_url()?>public/template/js/dropzone/dropzone.js"></script>
 		<script>
 			/*const canDelete = "1";
@@ -75,16 +76,22 @@
 			//const URI = "<?//=base_url()?>";
 			const lista = JSON.parse('<?=$lista?>');
 			const URI = '<?=$url?>';
+			const path = '<?=$uri?>';
 			const table = tablePersonalized('#tablaEvento',lista,'evento');
 			//const danios = ;
 			//const acciones = ;
 			//const galeria = ;
 			const datos = [];
-			const tableDanio = tableComp('#tableDanio',[{'idtipodanio':'','cantidad':''}],datos);
-			const tableAccion = tableComp('#tableAccion',[{'idtipoaccion':'','descripcion':'','fecha':'','hora':''}],datos);
-			const tableFotos = tableComp('#tableFotos',[{'fotografia':'','descripcion':''}],datos,'foto');
-			const tableIE = tableComp('#tableIE',[{'institucion':'','cod_M':'','cod_L':'','nivel':'','descripcion':'','fecha':''}],datos);
-			const tableIEUbigeo = tableComp('#tableIEUbigeo',[{'codigo':'','nombre':'','clasificacion':''}],datos);
+			const danio = [{'version':'version','tipo_danio':'tipo da&ntilde;o','cantidad':'cantidad'}];
+			const accion = [{'version':'version','tipo_accion':'tipo accion','descripcion':'descripcion','fecha':'fecha'}];
+			const foto = [{'version':'version','fotografia':'fotografia','descripcion':'descripcion'}];
+			const ie = [{'version':'version','CEN_EDU':'inst. educativa','descripcion':'descripcion','fecha':'fecha'}];
+			const ieUB = [{'CEN_EDU':'institucion educativa','COD_MOD':'cod. mod','CODLOCAL':'cod. local','D_NIV_MOD':'nivel'}];
+			const tableDanio = tableComp('#tableDanio',danio,datos);
+			const tableAccion = tableComp('#tableAccion',accion,datos);
+			const tableFotos = tableComp('#tableFotos',foto,datos,'foto');
+			const tableIEF = tableComp('#tableIE',ie,datos);
+			const tableIEUbigeo = tableIE('#tableIEUbigeo',ieUB,datos);
 			
 			window.onload = function(){
 				var opt = {lat: 42.1382114, lng: -71.5212585,zoom: 16};

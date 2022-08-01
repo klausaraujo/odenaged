@@ -80,7 +80,7 @@ function tableComp(table, headers, data,img){
 		palabras[i] = palabras[i][0].toUpperCase() + palabras[i].substr(1);
 	}
 	palabras.join(" ");*/
-
+	
 	const dataTable = $(table).DataTable({
 		"data": data,
 		/*"bPaginate":false,

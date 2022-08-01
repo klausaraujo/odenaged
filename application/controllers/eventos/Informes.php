@@ -25,52 +25,117 @@ class Informes extends CI_Controller
 		$danio = $this->Informe_model->listaDanio();
 		$accion = $this->Informe_model->listaAccion();
 		$fotos = $this->Informe_model->listaFotos();
+		$ies = $this->Informe_model->listaIE();
 		
-		($danio->num_rows() > 0)? $danio = $danio->result() : $danio = array();
-		($accion->num_rows() > 0)? $accion = $accion->result() : $accion = array();
-		($fotos->num_rows() > 0)? $fotos = $fotos->result() : $fotos = array();
+		($danio->num_rows() > 0)? $danio = json_encode($danio->result()) : $danio = array();
+		($accion->num_rows() > 0)? $accion = json_encode($accion->result()) : $accion = array();
+		($fotos->num_rows() > 0)? $fotos = json_encode($fotos->result()) : $fotos = array();
+		($ies->num_rows() > 0)? $ies = json_encode($ies->result()) : $ies = array();
 		
 		$data = array(
-			'danio' => json_encode($danio),
-			'accion' => json_encode($accion),
-			'fotos' => json_encode($fotos),
+			'danio' => $danio,
+			'accion' => $accion,
+			'fotos' => $fotos,
+			'ies' => $ies,
+			'url' => 'public/images/galerias_eventos/',
 			'status' => 200
 		);
 		echo json_encode($data);
+	}
+	
+	function registrar(){
+		$this->load->model("Informe_model");
+		//$this->Informe_model->setVersion($row->version);
+		$this->Informe_model->setIdEvento($this->input->post('id'));
+		$this->Informe_model->setVersion($this->input->post('version'));
+		$status = 0; $img = '';$id = 0;
 		
-		if($this->input->post('tipo')){
-			
-			
-			$dtz = new DateTimeZone("America/Lima");
-			$dt = new DateTime("now", $dtz);
-			//$fechaActual = $dt->format("Y-m-d h:i:s a");
-			$fechaActual = $dt->format("Y-m-d h:i:s");
-			
-			//if($this->input->post('tipo') == 'registrar'){
-				/*$this->Evento_model->setAnio($this->input->post('anio'));
-				$this->Evento_model->setCtaEvento($this->coun);
-				$this->Evento_model->setNivelEvento($this->input->post('nivelevento'));
-				$this->Evento_model->setIdEvento($this->input->post('evento'));
-				$this->Evento_model->setDescripcion($this->input->post('descripcion'));
-				$this->Evento_model->setUbigeo($this->input->post('ubigeo'));
-				$this->Evento_model->setLat($this->input->post('lat'));
-				$this->Evento_model->setLng($this->input->post('lng'));
-				$this->Evento_model->setFechaEvento($this->input->post('fechaevento')." ".$this->input->post('horaevento'));
-				$this->Evento_model->setAfecta($this->input->post('afecta'));
-				$this->Evento_model->setZoom($this->input->post('zoom'));
-				$this->Evento_model->setUsuarioReg($this->session->userdata("idusuario"));
-				$this->Evento_model->setFechaReg($fechaActual);
-				$this->Evento_model->setlatSismo($this->input->post('latitudsismo'));
-				$this->Evento_model->setlngSismo($this->input->post('longitudsismo'));
-				$this->Evento_model->setProfundidad($this->input->post('profundidad'));
-				$this->Evento_model->setMagnitud($this->input->post('magnitud'));
-				$this->Evento_model->setIntensidad($this->input->post('intensidad'));
-				$this->Evento_model->setReferencia($this->input->post('referencia'));
-				$this->registrar();*/
-			/*}
-			if($this->input->post('tipo') == 'editar'){
-				$this->editar();
-			}*/
+		$fotos = json_decode($_POST['fotos']); $danios = json_decode($_POST['danio']);
+		$acciones = json_decode($_POST['accion']); $ies = json_decode($_POST['ies']);
+		
+		# Guardar Fotos
+		$this->Informe_model->setTabla('galeria_evento');
+		$del = $this->Informe_model->borraPreliminar();
+		
+		$this->load->library('general');
+		$ubi = $this->path.'public/images/galerias_eventos/';
+		foreach($fotos as $row){
+			if(base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $row->foto),true)){
+				$img = $this->general->saveImage($ubi,$row->foto);
+			}else{
+				$nombre = explode('/',$row->foto);
+				$file = base64_encode(file_get_contents($row->foto));
+				$img = end($nombre);
+				$this->general->saveImage1($ubi,$file,$img);
+			}
+			if(!$img == ''){
+				$this->Informe_model->setImg($img);
+				//$this->Informe_model->setFoto($row->foto);
+				$this->Informe_model->setDescripcion($row->descripcion);
+				$id = $this->Informe_model->registrarFotos();
+			}
 		}
+		
+		# Guardar Daños
+		$this->Informe_model->setTabla('evento_tipo_danio');
+		$this->Informe_model->borraPreliminar();
+		
+		foreach($danios as $row){
+			$this->Informe_model->setTipoDanio($row->idtipodanio);
+			$this->Informe_model->setCantidad($row->cantidad);
+			$id = $this->Informe_model->registrarDanios();
+		}
+		
+		# Guardar Acciones
+		$this->Informe_model->setTabla('tipo_accion_evento');
+		$this->Informe_model->borraPreliminar();
+		$dtz = new DateTimeZone("America/Lima");
+		
+		foreach($acciones as $row){
+			$this->Informe_model->setTipoAccion($row->idtipoaccion);
+			$this->Informe_model->setDescripcion($row->descripcion);
+			$dt = new DateTime($row->fecha, $dtz);
+			$fecha = $dt->format("Y-m-d h:i:s");
+			$this->Informe_model->setFechaHora($fecha);
+			$id = $this->Informe_model->registrarAcciones();
+		}
+		
+		# Guardar IES
+		$this->Informe_model->setTabla('iest_2020_all_evento');
+		$this->Informe_model->borraPreliminar();
+		
+		foreach($ies as $row){
+			$this->Informe_model->setIdIES($row->idiest);
+			$this->Informe_model->setDescripcion($row->descripcion);
+			$dt = new DateTime($row->fecha, $dtz);
+			$fecha = $dt->format("Y-m-d");
+			$this->Informe_model->setFechaHora($fecha);
+			$id = $this->Informe_model->registrarIES();
+		}
+		
+		if ($id > 0)$status = 200;
+		else $status = 500;
+		
+		$data = array(
+			'img' => $img,
+			'status' => $status
+		);
+		
+		echo json_encode($data);
+	}
+	
+	function buscaIE(){
+		$this->load->model("Informe_model");
+		$ubigeo = $this->input->post('dpto').$this->input->post('prov').$this->input->post('dtto');
+		$this->Informe_model->setUbigeo($ubigeo);
+		$ies = $this->Informe_model->buscaIE();
+		($ies->num_rows() > 0)? $ies = $ies->result() : $ies = array();
+		
+		$data = array(
+			'dpto' => $ubigeo,
+			'ies' => $ies
+		);
+		
+		echo json_encode($data);
 	}
 }

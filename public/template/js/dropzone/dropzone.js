@@ -64,7 +64,7 @@ function dropzone(){
 					return function(e) {
 						
 						// Push the data URI into an array
-						dataArray.push({'fotografia' : file.name,'descripcion' : file.name, 'foto' : this.result});
+						dataArray.push({'version':1,'fotografia': file.name,'descripcion' : file.name, 'foto' : this.result});
 						
 						// Move each image 40 more pixels across
 						//z = z+40;

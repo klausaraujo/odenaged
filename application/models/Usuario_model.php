@@ -109,6 +109,7 @@ class Usuario_model extends CI_Model
         $this->db->where("usuarios.usuario", $this->usuario);
         $this->db->where("usuarios.passwd", sha1($this->password));
         $this->db->where("usuarios.activo", "1");
+		$this->db->limit(1);
         return $this->db->get();
     }
 	public function anio(){

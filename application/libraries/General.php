@@ -6,9 +6,7 @@
 
 class General {
 
-	public function saludo(){
-		return 'Hello World';
-	}
+	private $c = 0;
 	
 	#Funcion para guardar la imagen del mapa segun las coordenadas
 	public function saveImageMap($path,$image,$lat,$lng,$zoom){
@@ -20,10 +18,32 @@ class General {
 			if( !is_dir( $dir ) )
 				mkdir( $dir, 0777, true );
 		}
-		if(!file_put_contents($path . $image, file_get_contents($url),LOCK_EX) > 0)
+		if(!file_put_contents($path . $image, file_get_contents($url)) > 0)
 			$image = '';
 		
 		return $image;
+	}
+	
+	public function saveImage($path,$data){
+		$this->c++;
+		// We need to remove the "data:image/png;base64,"
+		$base_to_php = explode(',', $data);
+		// the 2nd item in the base_to_php array contains the content of the image
+		$img = base64_decode($base_to_php[1]);
+		$name = date('Ymdhis');
+		$filename = $name.$this->c.'.png';
+		if(!file_put_contents($path.$filename,$img) > 0)
+			$filename = '';
+		
+		return $filename;
+	}
+	public function saveImage1($path,$data,$name){
+		$img = base64_decode($data);
+		$filename = $name;
+		if(!file_put_contents($path.$filename,$img) > 0)
+			$filename = '';
+		
+		return $filename;
 	}
 	
 	#Funcion para conectarse a la api de la RENIEC

@@ -1,6 +1,8 @@
 	<div class="container-fluid">
 		<form id="formEvento" name="formEvento" method="POST" action="" autocomplete="off" enctype="multipart/form-data">
 			<input type="hidden" name="tipo" id="tipo" />
+			<input type="hidden" name="idregistro" id="idregistro" />
+			<input type="hidden" name="ctaevento" id="ctaevento" />
 			<div class="row">                 
 				<div class="col-sm-12">
 				<? 
@@ -180,7 +182,17 @@
 										<div class="row">
 											<label for="descripcion" class="col-sm-12">Descripci&oacute;n:</label>
 											<textarea type="text" class="form-control col-sm-12" name="descripcion" id="descripcion"
-											onKeyUp="mayus(this)" placeholder="Descripci&oacute;n del Evento" value="" ></textarea>
+											onKeyUp="mayus(this)" placeholder="Descripci&oacute;n del Evento" value="" maxlength="5000"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="row"><hr class="col-sm-11" style="margin:20px 0"></div>
+								<div class="row">
+									<div class="col-sm-11">
+										<div class="row">
+											<label for="fuente" class="col-sm-12">Fuente Inicial:</label>
+											<textarea type="text" class="form-control col-sm-12" name="fuente" id="fuente"
+											onKeyUp="mayus(this)" placeholder="Fuente Inicial" value="" maxlength="1000" ></textarea>
 										</div>
 									</div>
 								</div>

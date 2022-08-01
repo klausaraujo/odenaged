@@ -8,14 +8,10 @@ function main(map) {
 				var rel= $(this).attr('rel');
 				evt.preventDefault();
 				if(rel == 'nuevo'){
-					/*$(".modal-title").html('Datos Generales de la Emergencia');
-					$("#decisionModal").modal("show");
-					$("#decisionModal").css("padding-right", "0px");*/
 					resetForm();
 					$('#tipo').val('registrar');
 					ocultarElem(false);
 				}else if(rel !== 'nuevo' && rel != null){
-					//console.log(rel);
 					ocultarElem(true);
 					resetForm();
 				}
@@ -37,25 +33,22 @@ function main(map) {
 		}else{
 			if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
 			if($('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 0) $('.ajaxForm').show();
-			/*if($('#menu1').hasClass('active')){
-				$('#menu1').removeClass('active');
-				$('#menu2').addClass('active');
-			}*/
 		}
 		if(!$('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 1) $('.ajaxMap').hide();
 		if(!$('.sismo').css('display') == 'none' || $('.sismo').css('opacity') == 1) $('.sismo').hide();
 		if(!$('.ajaxPreliminar').css('display') == 'none' || $('.ajaxPreliminar').css('opacity') == 1) $('.ajaxPreliminar').hide();
+		$('#formInforme')[0].reset();
+		$('#formInforme select').each(function(){ $(this).prop('selectedIndex',0); });
 		$('#message').switchClass('succes', 'warn');
 		$('#cargando').html('');
 		$("#message").html('');
 	}
 	function resetForm(){
-		$("#formEvento")[0].reset();$("#formEvento select").prop('selectedIndex',0);//('#blah').attr('src',URI+'public/template/images/camera.png')
+		$("#formEvento")[0].reset();$("#formEvento select").prop('selectedIndex',0);$("#afecta").prop('checked',false);
 	}
 	
 	$("#btnEditar").on('click', function(evt){
 		evt.preventDefault();
-		
 	});
 	
 	$("#btnCancelar").on('click', function(evt){
@@ -70,9 +63,17 @@ function main(map) {
 			nivelevento: { required: function () { if ($("#nivelevento").css("display") != "none") return true; else return false; } },
 			fechaevento: { required: function () { if ($("#fechaevento").css("display") != "none") return true; else return false; } },
 			horaevento: { required: function () { if ($("#horaevento").css("display") != "none") return true; else return false; } },
+			latitudsismo: { required: function () { if ($("#latitudsismo").css("display") != "none") return true; else return false; } },
+			longitudsismo: { required: function () { if ($("#longitudsismo").css("display") != "none") return true; else return false; } },
+			profundidad: { required: function () { if ($("#profundidad").css("display") != "none") return true; else return false; } },
+			magnitud: { required: function () { if ($("#magnitud").css("display") != "none") return true; else return false; } },
+			intensidad: { required: function () { if ($("#intensidad").css("display") != "none") return true; else return false; } },
+			referencia: { required: function () { if ($("#referencia").css("display") != "none") return true; else return false; } },
 			region: { required: function () { if ($("#region").css("display") != "none") return true; else return false; } },
 			provincia: { required: function () { if ($("#provincia").css("display") != "none") return true; else return false; } },
 			distrito: { required: function () { if ($("#distrito").css("display") != "none") return true; else return false; } },
+			descripcion: { required: function () { if ($("#descripcion").css("display") != "none") return true; else return false; } },
+			fuente: { required: function () { if ($("#fuente").css("display") != "none") return true; else return false; } },
 		},
 		messages: {
 			tipoevento: { required : "Campo Requerido" },
@@ -80,9 +81,17 @@ function main(map) {
 			nivelevento: { required : "Campo Requerido" },
 			fechaevento: { required : "Campo Requerido" },
 			horaevento: { required : "Campo Requerido" },
+			latitudsismo: { required : "Campo Requerido" },
+			longitudsismo: { required : "Campo Requerido" },
+			profundidad: { required : "Campo Requerido" },
+			magnitud: { required : "Campo Requerido" },
+			intensidad: { required : "Campo Requerido" },
+			referencia: { required : "Campo Requerido" },
 			region: { required : "Campo Requerido" },
 			provincia: { required : "Campo Requerido" },
-			distrito: { required : "Campo Requerido" }
+			distrito: { required : "Campo Requerido" },
+			descripcion: { required : "Campo Requerido" },
+			fuente: { required : "Campo Requerido" }
 		},
 		errorPlacement: function (error, element) {
 			if (element.attr("name") == "documento_numero") {
@@ -105,7 +114,7 @@ function main(map) {
 			formData.set('afecta',$("#afecta").is(':checked')? 1 : 0);
 			formData.set('anio',($("#fechaevento").val()).substring(0,4));
 			formData.set('ubigeo',$("#region").val() + $("#provincia").val() + $("#distrito").val());
-			formData.set('descripcion',$('select[name="evento"] option:selected').text());
+			//formData.set('descripcion',$('select[name="evento"] option:selected').text());
 			formData.set('zoom', map.getZoom());
 			
 			/*var formData = new FormData(document.getElementById("formBrigadista"));
@@ -270,6 +279,7 @@ function main(map) {
 	
 	function editarReg(edita, data){
 		$('#tipo').val('editar');
+		$('#idregistro').val(data);
 		$.ajax({
 		  type: 'POST',
 		  url: URI + 'editarEvento',
@@ -285,13 +295,13 @@ function main(map) {
 				const { regiones : { dtto } } = response;
 				//const { form } = response;
 				console.log(response);
+				$('#ctaevento').val(data.numero_evento);
 				//$('.ajaxForm').html(form);
 				$("#region option").each(function(){ if( $(this).val() == (data.ubigeo).substr(0,2) ){ $(this).prop("selected",true); } });
 				$("#tipoevento option").each(function(){ if( $(this).val() == data.idtipoevento ){ $(this).prop("selected",true); }});
 				$("#nivelevento option").each(function(){ if( $(this).val() == data.idnivel ){ $(this).prop("selected",true); }});
 				$("#fechaevento").val((data.fecha).substring(0,10));
 				$("#horaevento").val((data.fecha).slice(-8));
-				if(data.afecta_sector == '1')$("#afecta").attr('checked',true);
 				var html = '<option value="">-- Seleccione --</option>';
 				prov.forEach(function(row){
 					if(row.cod_pro == (data.ubigeo).substr(2,2)){
@@ -316,8 +326,18 @@ function main(map) {
 						html += '<option value="' + row.idevento + '">' + row.evento + '</option>';
 				});
 				$("#evento").html(html);
+				$('#latitudsismo').val(data.latitud_sismo);
+				$('#longitudsismo').val(data.longitud_sismo);
+				$('#profundidad').val(data.profundidad_sismo);
+				$('#magnitud').val(data.magnitud_sismo);
+				$('#intensidad').val(data.intensidad_sismo);
+				$('#referencia').val(data.referencia_sismo);
+				$('#descripcion').val(data.descripcion);
+				$('#fuente').val(data.referencia_sismo);
 				$('#lat').val(data.latitud);
 				$('#lng').val(data.longitud);
+				$('#fuente').val(data.fuente_inicial);
+				if(data.afecta_sector == '1')$("#afecta").prop('checked',true);
 				
 				var opt = {lat: parseFloat(data.latitud), lng: parseFloat(data.longitud), zoom: 16};
 				//console.log(map.getZoom());
@@ -325,7 +345,7 @@ function main(map) {
 				
 				ocultarElem(false);
 				if($('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 0) $('.ajaxMap').show();
-				if(eventos.evento == 'SISMO')if($('.sismo').css('display') == 'none' || $('.sismo').css('opacity') == 0) $('.sismo').show();
+				if(data.evento == 'SISMO')if($('.sismo').css('display') == 'none' || $('.sismo').css('opacity') == 0) $('.sismo').show();
 			}
 			//loadData;
 		  }
@@ -344,9 +364,23 @@ function main(map) {
 				const { danio } = data;
 				const { accion } = data;
 				const { fotos } = data;
-				tableDanio.clear(); if(!danio.length === 0) tableDanio.rows.add(danio).draw();
-				tableAccion.clear(); if(!accion.length === 0) tableAccion.rows.add(accion).draw();
-				tableFotos.clear(); if(!fotos.length === 0) tableFotos.rows.add(fotos).draw();
+				const { ies } = data;
+				const { url } = data;
+				tableDanio.clear(); if(danio.length > 0) tableDanio.rows.add(JSON.parse(danio)).draw();
+				tableAccion.clear(); if(accion.length > 0) tableAccion.rows.add(JSON.parse(accion)).draw();
+				tableFotos.clear();
+				tableIEF.clear(); if(ies.length > 0) tableIEF.rows.add(JSON.parse(ies)).draw();
+				$('#version').val(1);
+				if(fotos.length > 0){
+					let json = [];
+					let row = JSON.parse(fotos);
+					row.forEach(function(col){
+						json.push({'version':col.version,'fotografia':col.fotografia,'descripcion':col.descripcion,'foto':path+url+col.fotografia});
+					});
+					tableFotos.rows.add(json).draw();
+				}
+				if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
+				if($('.ajaxPreliminar').css('display') == 'none' || $('.ajaxPreliminar').css('opacity') == 0) $('.ajaxPreliminar').show();
 			}
         });
 	}
@@ -354,18 +388,15 @@ function main(map) {
 	table.on('click', 'button', function(){
 		//console.log(table.row($(this).parents("tr")).data());
 		//table.row($(this).parents("tr")).deselect();
-		if(table.row(this).child.isShown()){
-			var data = table.row(this).data();
-			//console.log(data);
-		}else{
-			var data = table.row($(this).parents("tr")).data();
-		}
+		var data = [];
+		(table.row(this).child.isShown())? data = table.row(this).data() : data = table.row($(this).parents("tr")).data();
+		
 		if($(this).hasClass('actionEdit'))editarReg('editar',data.idevento);
 		if($(this).hasClass('actionInforme')){
+			$('#formInforme')[0].reset();
+			$('#formInforme select').each(function(){ $(this).prop('selectedIndex',0); });
 			informe(data.idevento);
 			$('#idregevento').val(data.idevento);
-			if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
-			if($('.ajaxPreliminar').css('display') == 'none' || $('.ajaxPreliminar').css('opacity') == 0) $('.ajaxPreliminar').show();
 		}
 	});
 }

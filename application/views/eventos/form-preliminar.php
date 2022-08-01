@@ -1,7 +1,7 @@
 	<div class="container-fluid">
-		<form id="formPreliminar" name="formPreliminar" method="POST" action="" autocomplete="off" enctype="multipart/form-data">
+		<form id="formInforme" name="formInforme" method="POST" action="" autocomplete="off" enctype="multipart/form-data">
 			<input type="hidden" id="idregevento" value="" />
-			<input type="hidden" id="tipo" value="" />
+			<input type="hidden" id="version" value="" />
 			<div class="row">                 
 				<div class="col-sm-12">
 				<? 
@@ -102,7 +102,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="row">
-												<label for="horaaccion" class="col-sm-12">Fecha de la Acci&oacute;n:</label>
+												<label for="horaaccion" class="col-sm-12">Hora de la Acci&oacute;n:</label>
 												<input type="time" class="form-control col-sm-11" name="horaaccion" id="horaaccion" value="<?=$hora?>"/>
 											</div>
 										</div>
@@ -124,13 +124,14 @@
 									</div>
 								</div>
 								<div class="tab-pane fade py-4" id="nav-ie" role="tabpanel" aria-labelledby="nav-ie-tab">
+									<input type="hidden" value="" id="idiest">
 									<div class="row">
 										<div class="col-sm-1"></div>
 										<div class="col-sm-5">
 											<div class="row">
 												<label for="institucion" class="col-sm-12">Instituci&oacute;n:</label>
 												<input type="text" class="form-control col-sm-11" name="institucion" id="institucion"
-													onKeyUp="mayus(this)" placeholder="Instituci&oacute;n" value="" />
+													onKeyUp="mayus(this)" value="" readonly />
 											</div>
 										</div>
 										<div class="col-sm-5">
@@ -155,7 +156,7 @@
 										<div class="col-sm-2">
 											<div class="row">
 												<label for="btnbuscaIE" class="col-sm-12">&nbsp;</label>
-												<button type="button" data-toggle="modal" class="btn btn-sirese mx-3" id="btnbuscaIE" data-target="#modalIE" >Buscar IE</button>
+												<button type="button" data-toggle="modal" class="btn btn-sirese mx-3" id="btnbuscaIE">Buscar IE</button>
 											</div>
 										</div>
 										<div class="col-sm-2">
@@ -207,64 +208,61 @@
 			<div class="col-sm-12"><h5 id="cargando" class="succes"></h5></div>
 			<div class="col-sm-12"><h5 id="message" class="succes"></h5></div>
 			<div class="col-sm-12 mx-auto pb-3">
-				<button type="submit" class="btn btn-sirese mx-3" id="btnPreliminar">Guardar</button>
+				<button type="submit" class="btn btn-sirese mx-3" id="btnInforme">Guardar</button>
 				<button class="btn btn-sirese" id="btnCancelPrel" name="btnCancelPrel">Cancelar</button>
 			</div>
 			
 			<div class="modal fade modal-fullscreen" id="modalIE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
+					<div id="loading" style="diaplay:none"><div id="loading-center"></div></div>
 						<div class="modal-header">
-							<h4 class="modal-title" id="myModalLabel">Buscar Instituciones Educativas</h4>
+							<h4 class="modal-title" id="myModalLabel"></h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
 						<div class="modal-body" style="overflow: hidden;">
-							<div class="row">
-								<div class="col-sm-1"></div>
-								<div class="col-sm-3">
-									<div class="row">
-										<label for="region" class="col-sm-12">Departamento:</label>
-											<select class="form-control col-sm-11" name="region" id="region">
+							<form id="formIE" name="formIE" method="POST" action="" autocomplete="off" enctype="multipart/form-data">
+								<div class="row">
+									<div class="col-sm-4">
+										<div class="row">
+											<label for="dpto" class="col-sm-12">Departamento:</label>
+												<select class="form-control col-sm-11" name="dpto" id="dpto">
+													<option value="">-- Seleccione --</option>
+										<?php
+												foreach($dpto as $row):	?>
+													<option value="<?=$row->cod_dep;?>"><?=$row->departamento;?></option>
+											<?	endforeach;?>
+												</select>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="row ml-3">
+											<label for="prov" class="col-sm-12">Provincia:</label>
+											<select class="form-control col-sm-11" name="prov" id="prov">
 												<option value="">-- Seleccione --</option>
-									<?php
-											foreach($dpto as $row):	?>
-												<option value="<?=$row->cod_dep;?>"><?=$row->departamento;?></option>
-										<?	endforeach;?>
 											</select>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="row">
+											<label for="dist" class="col-sm-12">Distrito:</label>
+											<select class="form-control col-sm-11" name="dist" id="dist">
+												<option value="">-- Seleccione --</option>
+											</select>
+										</div>
 									</div>
 								</div>
-								<div class="col-sm-3">
-									<div class="row">
-										<label for="provincia" class="col-sm-12">Provincia:</label>
-										<select class="form-control col-sm-11" name="provincia" id="provincia">
-											<option value="">-- Seleccione --</option>
-										</select>
+								<div class="row justify-content-center mt-2" id="content"></div>
+								<div class="row justify-content-center">
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<table id="tableIEUbigeo" class="table table-striped dt-responsive table-bordered display nowrap table-hover px-0" style="width:100%"></table>
+										</div>
 									</div>
 								</div>
-								<div class="col-sm-3">
-									<div class="row">
-										<label for="distrito" class="col-sm-12">Distrito:</label>
-										<select class="form-control col-sm-11" name="distrito" id="distrito">
-											<option value="">-- Seleccione --</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-sm-2">
-									<div class="row">
-										<label for="btnbuscarIEUbigeo" class="col-sm-12">&nbsp;</label>
-										<button type="button" class="btn btn-sirese mx-3" id="btnbuscarIEUbigeo">Buscar</button>
-									</div>
-								</div>
-							</div>
-							<div class="row justify-content-center">
-								<div class="col-sm-12">
-									<div class="table-responsive">
-										<table id="tableIEUbigeo" class="table table-striped dt-responsive table-bordered display nowrap table-hover px-0" style="width:100%"></table>
-									</div>
-								</div>
-							</div>
+							</form>
 						</div>
 							
 						<!--<div class="clearfix"></div>-->
