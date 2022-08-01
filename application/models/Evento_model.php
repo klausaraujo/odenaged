@@ -102,8 +102,8 @@ class Evento_model extends CI_Model
 	}
 	public function registrar()
 	{
-		$this->descripcion = $this->db->escape($this->descripcion);
-		$this->fuente = $this->db->escape($this->fuente);
+		#$this->descripcion = $this->db->escape($this->descripcion);
+		#$this->fuente = $this->db->escape($this->fuente);
         $data = array(
 			"anio_evento" => $this->anio,
             "numero_evento" => $this->ctaEvento, 
@@ -133,8 +133,8 @@ class Evento_model extends CI_Model
     }
 	public function editar()
 	{
-		$this->descripcion = $this->db->escape($this->descripcion);
-		$this->fuente = $this->db->escape($this->fuente);
+		#$this->descripcion = $this->db->escape($this->descripcion);
+		#$this->fuente = $this->db->escape($this->fuente);
         $data = array(
 			"anio_evento" => $this->anio,
             "idnivel" => $this->nivelEvento,
