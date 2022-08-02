@@ -21,23 +21,23 @@
             </div>
          </div>
          <div class="collapse navbar-collapse" id="navbarSupportedContent" aria-hidden="true">
-            <ul class="navbar-nav ml-auto navbar-list">
-               <li class="nav-item">
-                  
-               </li>
+         <ul class="navbar-nav ml-auto navbar-list">
+         <li class="nav-item">
+            <h3 style="font-size:22px;" class="text-center">
+               Sistema Integrado de Registro de Eventos del Sector Educación
+            <h3>   
+         </li>      
                <li class="nav-item iq-full-screen">
                   <a href="#" class="iq-waves-effect" id="btnFullscreen"><i class="ri-fullscreen-line font-sirese"></i></a>
                </li>
                             
                <li class="nav-item">
-                           <a class="search-toggle iq-waves-effect language-title" href="https://www.facebook.com/digerd.minsa/" target="_blank"><img src="<?=base_url()?>public/template/images/flag-01.png" alt="img-flaf" class="img-fluid mr-1" style="height: 30px; width: 30px;" />  </a>
+                  <a class="search-toggle iq-waves-effect language-title" href="https://www.facebook.com/digerd.minsa/" target="_blank"><img src="<?=base_url()?>public/template/images/flag-01.png" alt="img-flaf" class="img-fluid mr-1" style="height: 30px; width: 30px;" />  </a>
                          
                </li>
                <li class="nav-item">
-                           <a class="search-toggle iq-waves-effect language-title" href="https://twitter.com/digerd_minsa" target="_blank"><img src="<?=base_url()?>public/template/images/flag-02.png" alt="img-flaf" class="img-fluid mr-1" style="height: 30px; width: 30px;" />  </a>
-                         
+                  <a class="search-toggle iq-waves-effect language-title" href="https://twitter.com/digerd_minsa" target="_blank"><img src="<?=base_url()?>public/template/images/flag-02.png" alt="img-flaf" class="img-fluid mr-1" style="height: 30px; width: 30px;" />  </a>
                </li>
-
             </ul>
          </div>
          <ul class="navbar-list">
