@@ -8,10 +8,16 @@ function eventos() {
         event.stopPropagation();
         event.stopImmediatePropagation();
     }
-	function resetear(){
-		$('#formInforme')[0].reset();
-		$('#formInforme select').each(function(){ $(this).prop('selectedIndex',0); });
+	function ocultar(){
+		if($('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 0) $('.ajaxTable').show();
+		if(!$('.ajaxPreliminar').css('display') == 'none' || $('.ajaxPreliminar').css('opacity') == 1) $('.ajaxPreliminar').hide();
+		tableDanio.clear(); tableDanio.draw();
+		tableAccion.clear(); tableAccion.draw();
+		tableFotos.clear(); tableFotos.draw();
+		tableIEF.clear(); tableIEF.draw();
+		resetear();
 	}
+	function resetear(){ $('#formInforme')[0].reset(); $('#formInforme select').each(function(){ $(this).prop('selectedIndex',0); }); }
 	
 	$('#btnbuscaIE').on('click', function(){
 		showModal(event,'Buscar Instituciones Educativas');
@@ -164,10 +170,21 @@ function eventos() {
 				
             },
             success: function (data) {
-				loadTables(id);
-            }
-        });
-		//ocultar();
+				//loadTables(id);
+				if (parseInt(data.status) == 200){ $('#message').switchClass('warn', 'succes'); $message = 'Acciones Registradas'; }
+				else { $message = 'No se pudo registrar las Acciones'; }
+					
+				setTimeout(function () { $('#cargando').hide(); $("#message").html($message); $("#message").show() }, 300);
+				if (parseInt(data.status) == 200){
+					setTimeout(function () {
+						ocultar();
+					}, 1000);
+				}
+			}
+		}).fail( function( jqXHR, textStatus, errorThrown ) {
+			// Un callback .fail()
+			setTimeout(function () { $('#cargando').hide(); $("#message").html(/*jqXHR + ",  " +*/ textStatus.toUpperCase() + ":  " + errorThrown); $("#message").show()}, 500);
+		});
 	});
 	
 	$("#btnCancelPrel").on('click', function(evt){
@@ -175,64 +192,7 @@ function eventos() {
 		ocultar();
 	});
 	
-	function ocultar(){
-		if($('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 0) $('.ajaxTable').show();
-		if(!$('.ajaxPreliminar').css('display') == 'none' || $('.ajaxPreliminar').css('opacity') == 1) $('.ajaxPreliminar').hide();
-		tableDanio.clear(); tableDanio.draw();
-		tableAccion.clear(); tableAccion.draw();
-		tableFotos.clear(); tableFotos.draw();
-		tableIEF.clear(); tableIEF.draw();
-		resetear();
-	}
-	
-	$('#dpto').change(function(){
-		var id = $(this).val();
-        if (id.length > 0) {
-          $.ajax({
-            data: { region: id },
-            url: URI + "cargarprov",
-            method: "POST",
-            dataType: "json",
-            beforeSend: function () {
-				$("#dist").html('<option value="">--Seleccione--</option>');
-				$("#prov").html('<option value="">Cargando...</option>');
-            },
-            success: function (data) {
-				var $html = '<option value="">--Seleccione--</option>';
-				$.each(data.lista, function (i, e) {
-					$html += '<option value="' + e.cod_pro + '">' + e.provincia + '</option>';
-				});
-				$("#prov").html($html);
-            }
-          });
-    
-        }
-    });
-	
-	$('#prov').change(function(){
-		var id = $(this).val();
-        var departamento = $("#dpto").val();
-        if (id.length > 0) {
-          $.ajax({
-            data: { region: departamento, provincia: id },
-            url: URI + "cargardis",
-            method: "POST",
-            dataType: "json",
-            beforeSend: function () {
-              $("#dist").html('<option value="">Cargando...</option>');
-            },
-            success: function (data) {
-				var $html = '<option value="">--Seleccione--</option>';
-				$.each(data.lista, function (i, e) {
-					$html += '<option value="' + e.cod_dis + '">' + e.distrito + '</option>';
-				});
-				$("#dist").html($html);
-            }
-          });
-    
-        }
-    });
-	$('#dist').change(function(){
+	/*$('#dist').change(function(){
 		var id = $(this).val();
         var dpto = $("#dpto").val();
 		var prov = $("#prov").val();
@@ -255,7 +215,7 @@ function eventos() {
 				}
 			});
         }
-    });
+    });*/
 	
 	function loadTables(id){
 		$.ajax({
@@ -284,6 +244,7 @@ function eventos() {
 					});
 					tableFotos.rows.add(json).draw();
 				}
+				resetear();
 			}
         });
 	}

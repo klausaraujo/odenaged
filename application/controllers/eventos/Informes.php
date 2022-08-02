@@ -22,21 +22,25 @@ class Informes extends CI_Controller
 		//echo $this->input->post('idevento');
 		$this->load->model("Informe_model");
 		$this->Informe_model->setIdEvento($this->input->post('idevento'));
+		$this->Informe_model->setUbigeo($this->input->post('ubigeo'));
 		$danio = $this->Informe_model->listaDanio();
 		$accion = $this->Informe_model->listaAccion();
 		$fotos = $this->Informe_model->listaFotos();
 		$ies = $this->Informe_model->listaIE();
+		$ieUB = $this->Informe_model->buscaIE();
 		
 		($danio->num_rows() > 0)? $danio = json_encode($danio->result()) : $danio = array();
 		($accion->num_rows() > 0)? $accion = json_encode($accion->result()) : $accion = array();
 		($fotos->num_rows() > 0)? $fotos = json_encode($fotos->result()) : $fotos = array();
 		($ies->num_rows() > 0)? $ies = json_encode($ies->result()) : $ies = array();
+		($ieUB->num_rows() > 0)? $ieUB = json_encode($ieUB->result()) : $ieUB = array();
 		
 		$data = array(
 			'danio' => $danio,
 			'accion' => $accion,
 			'fotos' => $fotos,
 			'ies' => $ies,
+			'iesUB' => $ieUB,
 			'url' => 'public/images/galerias_eventos/',
 			'status' => 200
 		);
@@ -131,11 +135,6 @@ class Informes extends CI_Controller
 		$ies = $this->Informe_model->buscaIE();
 		($ies->num_rows() > 0)? $ies = $ies->result() : $ies = array();
 		
-		$data = array(
-			'dpto' => $ubigeo,
-			'ies' => $ies
-		);
-		
-		echo json_encode($data);
+		return $ies;
 	}
 }

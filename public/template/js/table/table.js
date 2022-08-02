@@ -1,39 +1,17 @@
-function tablePersonalized(table, lista, titulo){
+function tablePersonalized(table, headersCols, data){
 	
-	let cols = []; let titles = []; let render = [];
+	let cols = [], titles = [], render = [], imagen = [], lista = [], j = 0;
 	
-	if(lista.length > 0){
-		let j = 1; let i = 0;
-		cols.push({data:null});
-		lista.forEach(function(col){
+	if(headersCols.length > 0){
+		headersCols.forEach(function(col){
 			for(const [key, value] of Object.entries(col)){
 				let pal = '';
-				if(j < 8 && i == 0){
-					//alert(key);
-					if(key !== 'idevento'){
-						cols.push({data:key});
-						key == 'fecnac'? pal = 'Fecha Nac.': key !== 'dni'? pal = key.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase()):pal = key.toUpperCase();
-						titles.push({title:pal,targets:j});
-						j++;
-					}
-				}				
+				cols.push({data:key});
+				value !== 'dni'? pal = value.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase()):pal = value.toUpperCase();
+				titles.push({title:pal,targets:j});
+				j++;
 			}
-			i++;
 		});
-		
-	}else{
-		if(titulo == 'evento'){
-			//colu = JSON.parse('[{"data":"dni"},{"data":"apellidos"},{"data":"nombres"},{"data":"fecnac"},{"data":"sexo"},{"data":"domicilio"},{"data":"correo"}]');
-			cols = [
-				{data:null},{data:'anio'},{data:'numero'},{data:'descripcion'},{data:'ubigeo'},{data:'fecha'}
-			];
-			titles = [
-				{title:'Acciones',targets:0},{title:'A&ntilde;o',targets:1},{title:'N&uacute;mero',targets:2},{title:'Descripcion',targets:3},
-				{title:'Ubigeo',targets:4},{title:'Fecha',targets:5}
-			]
-			
-		}if(titulo == 'mostrar'){
-		}
 	}
 	
 	render = [
@@ -80,7 +58,7 @@ function tablePersonalized(table, lista, titulo){
 	palabras.join(" ");*/
 
 	const dataTable = $(table).DataTable({
-		"data": lista,
+		"data": data,
 		/*"bPaginate":false,
 		"bInfo":false,
 		"bFilter":false,

@@ -24,6 +24,7 @@
 										<a class="nav-item nav-link font-sirese" id="nav-acciones-tab" data-toggle="tab" href="#nav-acciones" role="tab" aria-controls="nav-acciones" aria-selected="false">Registro de Acciones</a>
 										<a class="nav-item nav-link font-sirese" id="nav-ie-tab" data-toggle="tab" href="#nav-ie" role="tab" aria-controls="nav-ie" aria-selected="false">Registro de IE Afectadas</a>
 										<a class="nav-item nav-link font-sirese" id="nav-fotos-tab" data-toggle="tab" href="#nav-fotos" role="tab" aria-controls="nav-fotos" aria-selected="false">Galer&iacute;a de fotos</a>
+										<a class="nav-item nav-link font-sirese" id="nav-pruebas-tab" data-toggle="tab" href="#nav-pruebas" role="tab" aria-controls="nav-fotos" aria-selected="false">Pruebas</a>
 									</div>
 								</nav>
 							</div>
@@ -200,6 +201,10 @@
 										</div>
 									</div>
 								</div>
+								<!--<div class="tab-pane fade show active py-4" id="nav-pruebas" role="tabpanel" aria-labelledby="nav-pruebas-tab">
+									
+								
+								</div>-->
 							</div>
 						</div>
 					</div>
@@ -229,11 +234,6 @@
 										<div class="row">
 											<label for="dpto" class="col-sm-12">Departamento:</label>
 												<select class="form-control col-sm-11" name="dpto" id="dpto">
-													<option value="">-- Seleccione --</option>
-										<?php
-												foreach($dpto as $row):	?>
-													<option value="<?=$row->cod_dep;?>"><?=$row->departamento;?></option>
-											<?	endforeach;?>
 												</select>
 										</div>
 									</div>
@@ -241,7 +241,6 @@
 										<div class="row ml-3">
 											<label for="prov" class="col-sm-12">Provincia:</label>
 											<select class="form-control col-sm-11" name="prov" id="prov">
-												<option value="">-- Seleccione --</option>
 											</select>
 										</div>
 									</div>
@@ -249,7 +248,6 @@
 										<div class="row">
 											<label for="dist" class="col-sm-12">Distrito:</label>
 											<select class="form-control col-sm-11" name="dist" id="dist">
-												<option value="">-- Seleccione --</option>
 											</select>
 										</div>
 									</div>

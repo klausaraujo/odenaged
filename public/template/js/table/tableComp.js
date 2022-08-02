@@ -39,7 +39,7 @@ function tableComp(table, headers, data,img){
 				return btnEdit;
 				
 			}
-		}	
+		}
 	];
 	
 	if(img){
@@ -53,7 +53,15 @@ function tableComp(table, headers, data,img){
 					else
 						return '';
 				}
-			}	
+			}/*,
+			{
+				data: 'descripcion',
+				render: function (data, type, row) {
+					let input = '<input type="text" value="'+data+'" />';
+					return '<div class="justify-content-center" >'+input+'</div>';
+				}
+				
+			}*/
 		];
 	}
 	titles = render.concat(titles);

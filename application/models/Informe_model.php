@@ -64,7 +64,7 @@ class Informe_model extends CI_Model
         return $this->db->get();
     }
 	public function buscaIE(){
-		$this->db->select('ID,CEN_EDU,COD_MOD,CODLOCAL,NIV_MOD,D_NIV_MOD');
+		$this->db->select('ID,CEN_EDU,COD_MOD,CODLOCAL,NIV_MOD,D_NIV_MOD,D_DPTO,D_PROV,D_DIST');
         $this->db->from('iest_2020_all');
 		$this->db->where('CODGEO', $this->ubigeo);		
         return $this->db->get();

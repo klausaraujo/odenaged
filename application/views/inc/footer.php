@@ -77,16 +77,17 @@
 			const lista = JSON.parse('<?=$lista?>');
 			const URI = '<?=$url?>';
 			const path = '<?=$uri?>';
-			const table = tablePersonalized('#tablaEvento',lista,'evento');
 			//const danios = ;
 			//const acciones = ;
 			//const galeria = ;
 			const datos = [];
+			const headers = [{'anio_evento':'A&ntilde;o','numero_evento':'nro. evento','nivel':'nivel','tipo_evento':'tipo evento','ubigeo_descripcion':'ubigeo','estado':'estado'}];
 			const danio = [{'version':'version','tipo_danio':'tipo da&ntilde;o','cantidad':'cantidad'}];
 			const accion = [{'version':'version','tipo_accion':'tipo accion','descripcion':'descripcion','fecha':'fecha'}];
 			const foto = [{'version':'version','fotografia':'fotografia','descripcion':'descripcion'}];
 			const ie = [{'version':'version','CEN_EDU':'inst. educativa','descripcion':'descripcion','fecha':'fecha'}];
 			const ieUB = [{'CEN_EDU':'institucion educativa','COD_MOD':'cod. mod','CODLOCAL':'cod. local','D_NIV_MOD':'nivel'}];
+			const table = tablePersonalized('#tablaEvento',headers,lista);
 			const tableDanio = tableComp('#tableDanio',danio,datos);
 			const tableAccion = tableComp('#tableAccion',accion,datos);
 			const tableFotos = tableComp('#tableFotos',foto,datos,'foto');
