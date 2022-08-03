@@ -2170,7 +2170,7 @@ CREATE TABLE modulo  (
 	
 	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Registro de Eventos de Emergencias y Desastres','Módulo Emergencias','emergencias.png','eventos','1','fa fa-list-alt',1);
 	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Registro de Directorio Nacional','Módulo Directorio','directorio.png','#','1','fa fa-list-alt',2);
-	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Registro de Usuarios y Parámetros','Módulo Usuarios','seguridad.png','#','1','fa fa-wrench',3);
+	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Registro de Usuarios del Sistema y Parámetros Básicos de Configuración','Módulo Usuarios','seguridad.png','#','1','fa fa-wrench',3);
 
 CREATE TABLE modulo_rol  (	
 	idmodulorol smallint(4) NOT NULL AUTO_INCREMENT,
@@ -2200,7 +2200,7 @@ CREATE TABLE permiso  (
 
 	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Nuevo Registro','1',1,1);
 	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Editar Registro','1',2,1);
-
+	
 CREATE TABLE menu  (
   idmenu smallint(4) NOT NULL AUTO_INCREMENT,
   idmodulo smallint(4) NOT NULL,
@@ -2214,6 +2214,7 @@ CREATE TABLE menu  (
 
   INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Lista Eventos','0','eventos','fa fa-list');
 	INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Nuevo Registro','0','nuevo','fa fa-pencil-square-o');
+	INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Gestor de Reportes','1','#','fa fa-table');
 
 CREATE TABLE menu_detalle  (
   idmenudetalle smallint(4) NOT NULL AUTO_INCREMENT,
@@ -2226,6 +2227,8 @@ CREATE TABLE menu_detalle  (
   PRIMARY KEY (idmenudetalle),
 	FOREIGN KEY (idmenu) REFERENCES menu (idmenu) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
+	INSERT INTO menu_detalle (idmenu,descripcion,url,icono,orden) VALUES(3,'Consolidado','consolidado','fa fa-th-list',1);
+	INSERT INTO menu_detalle (idmenu,descripcion,url,icono,orden) VALUES(3,'Mapa de Eventos','mapas','fa fa-newspaper-o',2);
 
 CREATE TABLE permisos_menu  (
   idpermisosmenu smallint(4) NOT NULL AUTO_INCREMENT,
@@ -2238,6 +2241,10 @@ CREATE TABLE permisos_menu  (
 	
 	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(1,1);
 	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(2,1);
+	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(3,1);
+	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(1,2);
+	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(2,2);
+	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(3,2);
 	
 CREATE TABLE permisos_menu_detalle  (
   idpermisosmenudetalle smallint(4) NOT NULL AUTO_INCREMENT,
@@ -2248,6 +2255,11 @@ CREATE TABLE permisos_menu_detalle  (
 	FOREIGN KEY (idmenudetalle) REFERENCES menu_detalle (idmenudetalle) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (idusuario) REFERENCES usuarios (idusuario) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 	
+	Insert Into permisos_menu_detalle(idmenudetalle,idusuario) Values (1,1);
+	Insert Into permisos_menu_detalle(idmenudetalle,idusuario) Values (2,1);
+	Insert Into permisos_menu_detalle(idmenudetalle,idusuario) Values (1,2);
+	Insert Into permisos_menu_detalle(idmenudetalle,idusuario) Values (2,2);
+
 CREATE TABLE permisos_opcion  (
   idpermisoopcion smallint(4) NOT NULL AUTO_INCREMENT,
   idpermiso smallint(4) NOT NULL,
