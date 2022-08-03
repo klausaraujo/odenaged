@@ -89,7 +89,7 @@ function mapa(macc) {
 		// 3 seconds after the center of the map has changed, pan back to the marker.
 		//var c = map.getCenter();
 		//console.log(c);
-		map.setZoom(16);
+		//map.setZoom(16);
 		marker.setPosition(map.getCenter());
 		lat = marker.getPosition().lat();
 		lng = marker.getPosition().lng();

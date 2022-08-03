@@ -13,6 +13,8 @@ class Informe_model extends CI_Model
 	private $tipoAccion;
 	private $fechaHora;
 	private $idIES;
+	private $accion;
+	private $campo;
 	private $tabla;
 	
 	#Registro
@@ -26,6 +28,8 @@ class Informe_model extends CI_Model
 	public function setTipoAccion($data){ $this->tipoAccion = $this->db->escape_str($data); }
 	public function setFechaHora($data){ $this->fechaHora = $this->db->escape_str($data); }
 	public function setIdIES($data){ $this->idIES = $this->db->escape_str($data); }
+	public function setAccion($data){ $this->accion = $this->db->escape_str($data); }
+	public function setCampo($data){ $this->campo = $this->db->escape_str($data); }
 	public function setTabla($data){ $this->tabla = $this->db->escape_str($data); }
     
     public function listaDanio()
@@ -125,5 +129,14 @@ class Informe_model extends CI_Model
 			return $this->db->insert_id();
 		}else { return 0; }
 	}
+	public function existeAccion()
+	{
+        $this->db->select("1");
+        $this->db->from($this->tabla);
+        $this->db->where('idregistroevento',$this->idRegistroEvento);
+		$this->db->where($this->campo, $this->accion);
+        $rs =  $this->db->get();
+        return $rs->num_rows();
+    }
 	
 }

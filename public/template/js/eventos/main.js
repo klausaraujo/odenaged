@@ -40,12 +40,10 @@ function main(map) {
 		$('#message').switchClass('succes', 'warn');
 		$('#cargando').html('');
 		$("#message").html('');
-		resetForm();
+		//resetForm();
 		resetPreliminar();
 	}
-	function resetForm(){
-		$("#formEvento")[0].reset();$("#formEvento select").prop('selectedIndex',0);$("#afecta").prop('checked',false);
-	}
+	function resetForm(){ $("#formEvento")[0].reset();$("#formEvento select").prop('selectedIndex',0);$("#afecta").prop('checked',false); }
 	function resetPreliminar(){
 		$('#formInforme')[0].reset(); $('#formInforme select').each(function(){ $(this).prop('selectedIndex',0); });
 		tableDanio.clear(); tableDanio.draw();
@@ -284,13 +282,11 @@ function main(map) {
 		});
 	}
 	
-	function editarReg(edita, data){
-		$('#tipo').val('editar');
-		$('#idregistro').val(data);
+	function editarReg(edita, id){
 		$.ajax({
 		  type: 'POST',
 		  url: URI + 'editarEvento',
-		  data: {data: data, segmento: edita},
+		  data: { id: id },
 		  dataType: 'json',
 		  success: function (response) {
 			//if(!$('.sismo').css('display') == 'none' || $('.sismo').css('opacity') == 1) $('.sismo').hide();
@@ -300,8 +296,11 @@ function main(map) {
 				const { eventos } = response;
 				const { regiones : { prov } } = response;
 				const { regiones : { dtto } } = response;
+				resetForm();
+				$('#tipo').val(edita);
+				$('#idregistro').val(id);
 				//const { form } = response;
-				console.log(response);
+				//console.log(response);
 				$('#ctaevento').val(data.numero_evento);
 				//$('.ajaxForm').html(form);
 				$("#region option").each(function(){ if( $(this).val() == (data.ubigeo).substr(0,2) ){ $(this).prop("selected",true); } });
@@ -346,9 +345,9 @@ function main(map) {
 				$('#fuente').val(data.fuente_inicial);
 				if(data.afecta_sector == '1')$("#afecta").prop('checked',true);
 				
-				var opt = {lat: parseFloat(data.latitud), lng: parseFloat(data.longitud), zoom: 16};
-				//console.log(map.getZoom());
+				var opt = {lat: parseFloat(data.latitud), lng: parseFloat(data.longitud), zoom: parseInt(data.zoom)};
 				map.setCenter(opt);
+				//console.log(map.getZoom());
 				
 				ocultarElem(false);
 				if($('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 0) $('.ajaxMap').show();
@@ -404,7 +403,7 @@ function main(map) {
 		var data = [];
 		(table.row(this).child.isShown())? data = table.row(this).data() : data = table.row($(this).parents("tr")).data();
 		
-		if($(this).hasClass('actionEdit'))editarReg('editar',data.idregistroevento);
+		if($(this).hasClass('actionEdit')){editarReg('editar',data.idregistroevento);}
 		if($(this).hasClass('actionInforme')){
 			resetPreliminar();
 			/*if(!$('#nav-tab a:first').hasClass('active'))$('#nav-tab a:first').addClass('active');

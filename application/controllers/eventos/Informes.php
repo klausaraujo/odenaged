@@ -137,4 +137,24 @@ class Informes extends CI_Controller
 		
 		return $ies;
 	}
+	function existeAccion(){
+		$this->load->model("Informe_model");
+		$idEvt = $this->input->post('id');
+		$idaccion = $this->input->post('idaccion');
+		$accion = $this->input->post('accion');
+		
+		$this->Informe_model->setIdEvento($idEvt);
+		
+		if($accion == 'danios'){ 
+			$this->Informe_model->setTabla('evento_tipo_danio'); $this->Informe_model->setAccion($idaccion); $this->Informe_model->setCampo('idtipodanio');
+		}if($accion == 'acciones'){ 
+			$this->Informe_model->setTabla('tipo_accion_evento'); $this->Informe_model->setAccion($idaccion); $this->Informe_model->setCampo('idtipoaccion');
+		}if($accion == 'ies'){ 
+			$this->Informe_model->setTabla('iest_2020_all_evento'); $this->Informe_model->setAccion($idaccion); $this->Informe_model->setCampo('idiest');
+		}
+		
+		$count = $this->Informe_model->existeAccion();
+		if($count > 0) echo json_encode(500);
+		else echo json_encode(200);
+	}
 }

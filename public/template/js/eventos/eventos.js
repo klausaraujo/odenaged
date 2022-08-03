@@ -1,7 +1,9 @@
 function eventos() {
 	const fileLoad = document.getElementById('file-upload');
 	const formulario = document.getElementById('formPreliminar');
-		
+	var jSon = [];
+	var row = [];
+	
 	function showModal(event,title) {
         $("#myModalLabel").text(title);
 		$("#modalIE").modal("show");
@@ -23,13 +25,49 @@ function eventos() {
 		showModal(event,'Buscar Instituciones Educativas');
 	});
 	
+	function existeAccion(idaccion,tableAccion,tab,desc,campo){
+		let = id = $('#idregevento').val();
+		row = [];
+		$.ajax({
+			type: 'POST',
+			url: URI + 'existeAccion',
+			data: { id: id, idaccion: idaccion, accion: desc },
+			dataType: 'json',
+			success: function (response) {
+				if(response == 200){
+					let agregar = 1;
+					tableAccion.rows().data().each(function (value){ if(value[campo] == idaccion) agregar = 1;else{ row.push(value); agregar = 0;} });
+					if(agregar == 0){
+						row = row.concat(jSon);
+						tableAccion.clear();
+						tableAccion.rows.add(row).draw();
+					}else
+						alert('No se puede agregar la Acción Nuevamente');
+				}else{
+					alert('La acción ya esta Registrada');
+				}
+				$('#'+ tab +' .form-control').each(function(index, el){
+					//var elementType = $(this).prev().prop('nodeName');
+					//var elementType = this.previousSibling.nodeName;
+					//var is_element_input = $(this).prev().is("input");
+					
+					var elementType = $(this).prop('nodeName');
+					//var name = $(this).prop('name');
+					//alert(name + ' ' + $(this).get(0).type);
+					if($(this).get(0).type == 'text')$(this).val('');
+					if(elementType == 'SELECT')$(this).prop('selectedIndex',0);
+				});
+			}
+		});
+	}
+	
 	$('#btnDanio').on('click',function(evt){
-		var jSon = [{'idtipodanio':$('#tipodanio').val(),'tipo_danio':$('select[name="tipodanio"] option:selected').text(),'version':1,'cantidad':$('#cantidad').val()}];
-		var row = [];
-		tableDanio.rows().data().each(function (value) { row.push(value); });
-		row = row.concat(jSon);
-		tableDanio.clear();
-		tableDanio.rows.add(row).draw();
+		let = idaccion = $('#tipodanio :selected').val(); let desc = $('#cantidad').val();
+		if(!idaccion == 0 && !desc == ''){
+			jSon = [{'idtipodanio': idaccion,'tipo_danio':$('#tipodanio :selected').text(),'version':1,'cantidad':$('#cantidad').val()}];
+			existeAccion(idaccion,tableDanio,'nav-danios','danios','idtipodanio');
+		}else
+			alert('Los campos no pueden estar vacios');
 	});
 	
 	tableDanio.on('click', 'button', function(){
@@ -40,13 +78,13 @@ function eventos() {
 	});
 	
 	$('#btnAccion').on('click',function(evt){
-		var jSon = [{'idtipoaccion':$('#tipoaccion').val(),'version':1,'tipo_accion':$('select[name="tipoaccion"] option:selected').text(),'descripcion':$('#descripaccion').val(),
-					'fecha':$('#fechaaccion').val()+' '+$('#horaaccion').val()}];
-		var row = [];
-		tableAccion.rows().data().each(function (value) { row.push(value); });
-		row = row.concat(jSon);
-		tableAccion.clear();
-		tableAccion.rows.add(row).draw();
+		let = idaccion = $('#tipoaccion :selected').val(); let desc = $('#descripaccion').val();
+		if(!idaccion == 0 && !desc == ''){
+			jSon = [{'idtipoaccion': idaccion,'version':1,'tipo_accion':$('#tipoaccion :selected').text(),'descripcion':$('#descripaccion').val(),
+						'fecha':$('#fechaaccion').val()+' '+$('#horaaccion').val()}];
+			existeAccion(idaccion,tableAccion,'nav-acciones','acciones','idtipoaccion');
+		}else
+			alert('Los campos no pueden estar vacios');
 	});
 	
 	tableAccion.on('click', 'button', function(){
@@ -64,12 +102,12 @@ function eventos() {
 	});
 	
 	$('#btnIE').on('click',function(evt){
-		var jSon = [{'idiest':$('#idiest').val(),'version':1,'CEN_EDU':$('#institucion').val(),'descripcion':$('#descripie').val(),'fecha':$('#fechaie').val()}];
-		var row = [];
-		tableIEF.rows().data().each(function (value) { row.push(value); });
-		row = row.concat(jSon);
-		tableIEF.clear();
-		tableIEF.rows.add(row).draw();
+		let = idaccion = $('#idiest').val(); let desc = $('#descripie').val();
+		if(!idaccion == 0 && !desc == ''){
+			jSon = [{'idiest': idaccion,'version':1,'CEN_EDU':$('#institucion').val(),'descripcion':$('#descripie').val(),'fecha':$('#fechaie').val()}];
+			existeAccion(idaccion,tableIEF,'nav-ie','ies','idiest');
+		}else
+			alert('Los campos no pueden estar vacios');
 	});
 	
 	tableIEF.on('click', 'button', function(){
@@ -81,21 +119,22 @@ function eventos() {
 	
 	tableIEUbigeo.on('dblclick', 'tr', function(){
 		var data = tableIEUbigeo.row( this ).data();
-		console.log(data);
+		//console.log(data);
 		$('#idiest').val(data.ID);
 		$('#institucion').val(data.CEN_EDU);
-		resetIE();
+		$("#modalIE").modal("hide");
+		//resetIE();
 	});
 	
-	$('.close').on('click',function(){ resetIE(); });
+	$('.close').on('click',function(){ /*resetIE();*/ });
 	//$('#modalIE').on('hide.bs.modal', function (e) { resetIE(); });
 	
-	function resetIE(){
+	/*function resetIE(){
 		$('select').each(function(){ $(this).prop('selectedIndex',0); });
 		tableIEUbigeo.clear();
 		tableIEUbigeo.draw();
-		$("#modalIE").modal("hide");
-	}
+		
+	}*/
 	
 	$('#drop-files').on('click', function(){
 		$('#file-upload').trigger('click');

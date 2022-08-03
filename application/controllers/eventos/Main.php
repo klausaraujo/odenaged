@@ -54,7 +54,6 @@ class Main extends CI_Controller
 			if($this->input->post('tipo') == 'editar'){
 				$this->Evento_model->setId($this->input->post('idregistro'));
 				$this->coun = $this->input->post('ctaevento');
-				//echo $this->input->post('idregistro');
 				$this->editar();
 			}
 		}
@@ -147,9 +146,14 @@ class Main extends CI_Controller
 	
 	public function editar(){
 		$this->load->model("Evento_model");
+		
 		$id = $this->Evento_model->editar();
 		if ($id > 0){
-			$data = $this->guardarMapa($id);
+			$edita = $this->guardarMapa($id);
+			$data = array(
+				'status' => 200,
+				'data' => $edita
+			);
 		}else{
 			$data = array(
 				"status" => 500
@@ -164,11 +168,8 @@ class Main extends CI_Controller
 		$imag = $this->general->saveImageMap($this->path .'public/images/mapas_eventos/',$this->coun .'_gm.png',
 											$this->input->post('lat'),$this->input->post('lng'),$this->input->post('zoom'));
 		$resp_Mapa = '';
-		if($this->path)
-			$pa = $this->path;
 		
 		if(!$imag == ''){
-			$this->Evento_model->setId($id);
 			$this->Evento_model->setMapa($imag);
 			$resp_Mapa = $this->Evento_model->guardarMapa();
 		}
@@ -177,7 +178,7 @@ class Main extends CI_Controller
 			"img" => $imag,
 			'mapa' => $resp_Mapa,
 			//'segmento' => $this->uri->segment(2),
-			'path' => $pa
+			'path' => $this->path
         );
 		return $data;
 	}
@@ -204,35 +205,33 @@ class Main extends CI_Controller
 	public function editarEvento(){
 		$this->load->model('Evento_model');
 		
-		if($this->input->post('segmento') === 'editar'){
-			$this->Evento_model->setId($this->input->post('data'));
-			$data = $this->Evento_model->editarEvento();
+		$this->Evento_model->setId($this->input->post('id'));
+		$data = $this->Evento_model->editarEvento();
+		
+		if($data->num_rows() > 0){
+			$data = $data->row();
+			#Carga ubigeo del evento y regiones generales
+			$ubicacion = $this->ubicacion($data);
+			#Carga datos generales de los eventos
+			#$tipo = $this->Evento_model->tipoEvento(); $tipo->num_rows() > 0? $tipo = $tipo->result() : $tipo = array();
+			#$nivel = $this->Evento_model->cargaNivel(); $nivel->num_rows() > 0? $nivel = $nivel->result() : $nivel = array();
+			$this->Evento_model->setIdTipoEvt($data->idtipoevento);
+			$evento = $this->Evento_model->cargarEvento(); $evento->num_rows() > 0? $evento = $evento->result() : $evento = array();
 			
-			if($data->num_rows() > 0){
-				$data = $data->row();
-				#Carga ubigeo del evento y regiones generales
-				$ubicacion = $this->ubicacion($data);
-				#Carga datos generales de los eventos
-				#$tipo = $this->Evento_model->tipoEvento(); $tipo->num_rows() > 0? $tipo = $tipo->result() : $tipo = array();
-				#$nivel = $this->Evento_model->cargaNivel(); $nivel->num_rows() > 0? $nivel = $nivel->result() : $nivel = array();
-				$this->Evento_model->setIdTipoEvt($data->idtipoevento);
-				$evento = $this->Evento_model->cargarEvento(); $evento->num_rows() > 0? $evento = $evento->result() : $evento = array();
-				
-				$data = array(
-					'regiones' => $ubicacion,
-					#'tipoevento' => $tipo,
-					#'nivel' => $nivel,
-					'eventos' => $evento,
-					'data' => $data,
-					'status' => 200
-				);
-				
-				//$data =  array('form'=>$this->load->view('eventos/form-edit',$data,TRUE),'data'=>$data);
-			}else{
-				$data = array(
-					'status' => 500
-				);
-			}
+			$data = array(
+				'regiones' => $ubicacion,
+				#'tipoevento' => $tipo,
+				#'nivel' => $nivel,
+				'eventos' => $evento,
+				'data' => $data,
+				'status' => 200
+			);
+			
+			//$data =  array('form'=>$this->load->view('eventos/form-edit',$data,TRUE),'data'=>$data);
+		}else{
+			$data = array(
+				'status' => 500
+			);
 		}
 		
 		echo json_encode($data);
