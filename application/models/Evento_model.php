@@ -184,13 +184,5 @@ class Evento_model extends CI_Model
         $this->db->where("idregistroevento", $this->id);
 		if($this->db->update('registro_evento'))return 1;
         else { $error = $this->db->error(); return $error["code"];}
-		
-		/*$this->db->db_debug = FALSE;
-        $this->db->set('mapa_imagen', $this->mapa, TRUE);
-        $this->db->where("idregistroevento", $this->id);
-        $error = array();
-        if ($this->db->update('registro_evento'))
-            return 1;
-        else { $error = $this->db->error(); return $error["code"];}*/
 	}
 }
