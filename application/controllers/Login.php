@@ -96,6 +96,7 @@ class Login extends CI_Controller
             endforeach;
 
             $this->Usuario_model->setId($row->idusuario);
+			$zonas = $this->Usuario_model->listaUbigeos();
             /*$areas = $this->Usuario_model->areas();*/
 
             /*$area = array();

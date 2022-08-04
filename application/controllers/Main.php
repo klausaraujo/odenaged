@@ -73,8 +73,5 @@ class Main extends CI_Controller
 				$this->dom->generate("portrait", "informe", $html, "Informe");
 			}
 		}
-		/*$this->load->library("dom");
-		$html = $this->load->view('eventos/informe', null, true);
-        $this->dom->generate("portrait", "informe", $html, "Informe");*/
 	}
 }
