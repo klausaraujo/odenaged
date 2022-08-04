@@ -28,6 +28,7 @@ function eventos() {
 	function existeAccion(idaccion,tableAccion,tab,desc,campo){
 		let = id = $('#idregevento').val();
 		row = [];
+		if(tableAccion.rows().count() > 0){
 		$.ajax({
 			type: 'POST',
 			url: URI + 'existeAccion',
@@ -42,9 +43,9 @@ function eventos() {
 						tableAccion.clear();
 						tableAccion.rows.add(row).draw();
 					}else
-						alert('No se puede agregar la Acción Nuevamente');
+						alert('No se puede agregar el mismo ítem en el detalle');
 				}else{
-					alert('La acción ya esta Registrada');
+					alert('El Ítem seleccionado, ya esta registrado en el detalle');
 				}
 				$('#'+ tab +' .form-control').each(function(index, el){
 					//var elementType = $(this).prev().prop('nodeName');
@@ -59,6 +60,17 @@ function eventos() {
 				});
 			}
 		});
+	}else{
+		tableAccion.rows().data().each(function(value){row.push(value);});
+		row = row.concat(jSon);
+		tableAccion.clear();
+		tableAccion.rows.add(row).draw();
+		$('#'+ tab +' .form-control').each(function(index, el){
+			var elementType = $(this).prop('nodeName');
+			if($(this).get(0).type == 'text')$(this).val('');
+			if(elementType == 'SELECT')$(this).prop('selectedIndex',0);
+		});
+	}
 	}
 	
 	$('#btnDanio').on('click',function(evt){
