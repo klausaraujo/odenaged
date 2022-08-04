@@ -29,48 +29,48 @@ function eventos() {
 		let = id = $('#idregevento').val();
 		row = [];
 		if(tableAccion.rows().count() > 0){
-		$.ajax({
-			type: 'POST',
-			url: URI + 'existeAccion',
-			data: { id: id, idaccion: idaccion, accion: desc },
-			dataType: 'json',
-			success: function (response) {
-				if(response == 200){
-					let agregar = 1;
-					tableAccion.rows().data().each(function (value){ if(value[campo] == idaccion) agregar = 1;else{ row.push(value); agregar = 0;} });
-					if(agregar == 0){
-						row = row.concat(jSon);
-						tableAccion.clear();
-						tableAccion.rows.add(row).draw();
-					}else
-						alert('No se puede agregar el mismo ítem en el detalle');
-				}else{
-					alert('El Ítem seleccionado, ya esta registrado en el detalle');
+			$.ajax({
+				type: 'POST',
+				url: URI + 'existeAccion',
+				data: { id: id, idaccion: idaccion, accion: desc },
+				dataType: 'json',
+				success: function (response) {
+					if(response == 200){
+						let agregar = 1;
+						tableAccion.rows().data().each(function (value){ if(value[campo] == idaccion) agregar = 1;else{ row.push(value); agregar = 0;} });
+						if(agregar == 0){
+							row = row.concat(jSon);
+							tableAccion.clear();
+							tableAccion.rows.add(row).draw();
+						}else
+							alert('No se puede agregar el mismo ítem en el detalle');
+					}else{
+						alert('El Ítem seleccionado, ya esta registrado en el detalle');
+					}
+					$('#'+ tab +' .form-control').each(function(index, el){
+						//var elementType = $(this).prev().prop('nodeName');
+						//var elementType = this.previousSibling.nodeName;
+						//var is_element_input = $(this).prev().is("input");
+						
+						var elementType = $(this).prop('nodeName');
+						//var name = $(this).prop('name');
+						//alert(name + ' ' + $(this).get(0).type);
+						if($(this).get(0).type == 'text')$(this).val('');
+						if(elementType == 'SELECT')$(this).prop('selectedIndex',0);
+					});
 				}
-				$('#'+ tab +' .form-control').each(function(index, el){
-					//var elementType = $(this).prev().prop('nodeName');
-					//var elementType = this.previousSibling.nodeName;
-					//var is_element_input = $(this).prev().is("input");
-					
-					var elementType = $(this).prop('nodeName');
-					//var name = $(this).prop('name');
-					//alert(name + ' ' + $(this).get(0).type);
-					if($(this).get(0).type == 'text')$(this).val('');
-					if(elementType == 'SELECT')$(this).prop('selectedIndex',0);
-				});
-			}
-		});
-	}else{
-		tableAccion.rows().data().each(function(value){row.push(value);});
-		row = row.concat(jSon);
-		tableAccion.clear();
-		tableAccion.rows.add(row).draw();
-		$('#'+ tab +' .form-control').each(function(index, el){
-			var elementType = $(this).prop('nodeName');
-			if($(this).get(0).type == 'text')$(this).val('');
-			if(elementType == 'SELECT')$(this).prop('selectedIndex',0);
-		});
-	}
+			});
+		}else{
+			tableAccion.rows().data().each(function(value){row.push(value);});
+			row = row.concat(jSon);
+			tableAccion.clear();
+			tableAccion.rows.add(row).draw();
+			$('#'+ tab +' .form-control').each(function(index, el){
+				var elementType = $(this).prop('nodeName');
+				if($(this).get(0).type == 'text')$(this).val('');
+				if(elementType == 'SELECT')$(this).prop('selectedIndex',0);
+			});
+		}
 	}
 	
 	$('#btnDanio').on('click',function(evt){

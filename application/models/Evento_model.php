@@ -61,7 +61,16 @@ class Evento_model extends CI_Model
 		$this->db->select("idregistroevento,anio_evento,numero_evento,nivel,tipo_evento,ubigeo,ubigeo_descripcion,departamento,provincia,distrito,estado");
         $this->db->from("lista_general_eventos");
         return $this->db->get();
-    }	
+    }
+	public function listarEvento()
+	{
+		$this->db->select("*");
+        $this->db->from("lista_general_eventos");
+        $this->db->where('idregistroevento',$this->id);
+		$this->db->limit(1);
+		return $this->db->get();
+    }
+	
 	public function tipoEvento(){
 		$this->db->select("*");
         $this->db->from("tipo_evento");

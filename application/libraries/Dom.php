@@ -19,9 +19,12 @@ class Dom {
 
 	// Render the HTML as PDF
 	$dompdf->render();
+	
+	$pdf = $dompdf->output();
 
 	// Output the generated PDF to Browser
 	$dompdf->stream($nombre, array("Attachment" => false));
+	return $pdf;
  
  } 
 

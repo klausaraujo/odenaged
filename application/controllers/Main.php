@@ -19,6 +19,7 @@ class Main extends CI_Controller
 	
 	public function eventos()
     {
+		//$this->informe();
 		$this->load->model("Evento_model");
 		$this->load->model("Ubigeo_model");
 		$this->Ubigeo_model->setIdUser($this->session->userdata("idusuario"));
@@ -56,9 +57,24 @@ class Main extends CI_Controller
 		$this->load->view('main',$data);
     }
 	
-	public function informe($html){
-		$this->load->library("dom");
-		//$html = $this->load->view('eventos/dompdf', null, true);
-        $this->dom->generate("portrait", "informe", $html, "Informe");
+	public function informe(){
+		if ( $this->input->get('id') !== null){
+			$this->load->model("Evento_model");
+			$id = $this->input->get('id');
+			
+			$this->Evento_model->setId($id);
+			$evento = $this->Evento_model->listarEvento();
+			
+			if($evento->num_rows() > 0){
+				$this->load->library("dom");
+				$evento = $evento->row();
+				$data = array( 'evento' => $evento );
+				$html = $this->load->view('eventos/informe', $data, true);
+				$this->dom->generate("portrait", "informe", $html, "Informe");
+			}
+		}
+		/*$this->load->library("dom");
+		$html = $this->load->view('eventos/informe', null, true);
+        $this->dom->generate("portrait", "informe", $html, "Informe");*/
 	}
 }

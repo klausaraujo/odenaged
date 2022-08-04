@@ -397,6 +397,19 @@ function main(map) {
         });
 	}
 	
+	function muestraInforme(){
+		$.ajax({
+			type: 'POST',
+			url: URI + 'informe',
+			data: {},
+			dataType: 'json',
+			success: function (result, status, xhr) {
+				//const { data: { lista } } = response;
+				window.open(result, "_blank");
+			}
+		});
+	}
+	
 	table.on('click', 'button', function(){
 		//console.log(table.row($(this).parents("tr")).data());
 		//table.row($(this).parents("tr")).deselect();
@@ -413,5 +426,6 @@ function main(map) {
 			$('#idregevento').val(data.idregistroevento);
 			informe(data.idregistroevento,data.ubigeo,data.departamento,data.provincia,data.distrito);
 		}
+		if($(this).hasClass('actionReport')){/*muestraInforme();*/window.open('informe?id='+data.idregistroevento, "_blank");}
 	});
 }
