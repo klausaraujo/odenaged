@@ -157,4 +157,43 @@ class Informes extends CI_Controller
 		if($count > 0) echo json_encode(500);
 		else echo json_encode(200);
 	}
+	public function informe(){
+		if ( $this->input->get('id') !== null){
+			$id = $this->input->get('id');
+			
+			$this->load->model("Evento_model");
+			$this->load->model("Informe_model");
+			$this->Evento_model->setId($id);
+			$this->Informe_model->setIdEvento($id);
+			
+			$evento = $this->Evento_model->listarEvento();
+			$danios = $this->Informe_model->listaDanio();
+			$acciones = $this->Informe_model->listaAccion();
+			$fotos = $this->Informe_model->listaFotos();
+			$ies = $this->Informe_model->listaIE();
+			
+			($danios->num_rows() > 0)? $danios = $danios->result() : $danios = array();
+			($acciones->num_rows() > 0)? $acciones = $acciones->result() : $acciones = array();
+			($fotos->num_rows() > 0)? $fotos = $fotos->result() : $fotos = array();
+			($ies->num_rows() > 0)? $ies = $ies->result() : $ies = array();
+			
+			if($evento->num_rows() > 0){
+				$this->load->library("dom");
+				$evento = $evento->row();
+				$data = array(
+					'evento' => $evento,
+					'danios' => $danios,
+					'acciones' => $acciones,
+					'fotos' => $fotos,
+					'ies' => $ies
+				);
+				$html = $this->load->view('eventos/informe', $data, true);
+				$this->dom->generate("portrait", "informe", $html, "Informe");
+				/*foreach($danios as $row):
+					echo var_dump($row);
+					echo $row->ideventotipodanio;
+				endforeach;*/
+			}
+		}
+	}
 }

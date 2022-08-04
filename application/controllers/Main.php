@@ -16,7 +16,6 @@ class Main extends CI_Controller
     {
 		
     }
-	
 	public function eventos()
     {
 		//$this->informe();
@@ -56,22 +55,4 @@ class Main extends CI_Controller
 		//$this->load->view($this->uri->segment(1).'/main',$data);
 		$this->load->view('main',$data);
     }
-	
-	public function informe(){
-		if ( $this->input->get('id') !== null){
-			$this->load->model("Evento_model");
-			$id = $this->input->get('id');
-			
-			$this->Evento_model->setId($id);
-			$evento = $this->Evento_model->listarEvento();
-			
-			if($evento->num_rows() > 0){
-				$this->load->library("dom");
-				$evento = $evento->row();
-				$data = array( 'evento' => $evento );
-				$html = $this->load->view('eventos/informe', $data, true);
-				$this->dom->generate("portrait", "informe", $html, "Informe");
-			}
-		}
-	}
 }

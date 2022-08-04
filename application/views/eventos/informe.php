@@ -28,7 +28,7 @@
 			/** Reglas del contenido **/
 			#contenido{width:18cm;}
 			#footer{font-size: 10px;height: 50px;border-top:0.5px solid #AAA;width:20.5cm}
-			main{margin-top:2.3cm;margin-bottom:2.3cm}
+			main{margin-top:2.3cm;margin-bottom:2cm}
 			* { text-transform: uppercase; }
         </style>
     </head>
@@ -77,14 +77,14 @@
 				<tr><td colspan="12" >&nbsp;</td></tr>
 				<tr><td width="30pt" style="text-align:left">II.</td><td style="text-align:left" colspan="11">UBICACION DEL EVENTO</td></tr>
 				<tr><td colspan="12" >&nbsp;</td></tr>
-				<tr style="color:white">
+				<tr style="color:black">
 					<td width="30pt" colspan="2">
-					</td><td bgcolor=blue colspan="3">Region</td>
-					<td bgcolor=blue colspan="3">Provincia</td>
-					<td bgcolor=blue colspan="3">Distrito</td>
+					</td><td bgcolor="#DAF7A6" colspan="3">Region</td>
+					<td bgcolor="#DAF7A6" colspan="3">Provincia</td>
+					<td bgcolor="#DAF7A6" colspan="3">Distrito</td>
 					<td width="30pt"></td>
 				</tr>
-				<tr style="color:white">
+				<tr style="color:black">
 					<td width="30pt" colspan="2"></td>
 					<td bgcolor=lightblue colspan="3"><?=$evento->departamento?></td>
 					<td bgcolor=lightblue colspan="3"><?=$evento->provincia?></td>
@@ -102,11 +102,75 @@
 					<td colspan="8"><img src="<?=base_url()?>public/images/mapas_eventos/<?=$evento->mapa_imagen?>" width="600pt" height="250pt" /></td>
 				</tr>
 				<tr><td colspan="12" >&nbsp;</td></tr>
+				<?
+					if(!empty($danios)){
+						$i = 1;
+						foreach($danios as $row):
+							if($i === 1){
+				?>
 				<tr>
-					<td width="30pt" style="text-align:left">III.</td>
-					<td style="text-align:left" colspan="11">ACCIONES</td>
+					<td width="30pt" style="text-align:left">iii.</td>
+					<td style="text-align:left" colspan="9" bgcolor="#DAF7A6">da&ntilde;os:</td>
+					<td style="text-align:left">&nbsp;</td>
 				</tr>
+				<?			}		?>
+				<tr>
+					<td width="30pt" style="text-align:left">&nbsp;</td>
+					<td style="text-align:left" colspan="6">3.<?=$i?> <?=$row->tipo_danio;?></td>
+				</tr>
+				<?
+							$i ++;
+						endforeach;
+					}
+				?>
 				<tr><td colspan="12" >&nbsp;</td></tr>
+				<?
+					if(!empty($acciones)){
+						$i = 1;
+						foreach($acciones as $row):
+							if($i === 1){
+				?>
+				<tr>
+					<td width="30pt" style="text-align:left">iv.</td>
+					<td style="text-align:left" colspan="9" bgcolor="#DAF7A6">acciones:</td>
+					<td style="text-align:left">&nbsp;</td>
+				</tr>
+				<?			}		?>
+				<tr>
+					<td width="30pt" style="text-align:left">&nbsp;</td>
+					<td style="text-align:left" colspan="9">
+						4.<?=$i.'  '.$row->tipo_accion.' (fecha: '.$row->fecha.' hora: '.$row->hora.')'?>
+					</td>
+				</tr>
+				<?
+							$i ++;
+						endforeach;
+					}
+				?>
+				<tr><td colspan="12" >&nbsp;</td></tr>
+				<?
+					if(!empty($ies)){
+						$i = 1;
+						foreach($ies as $row):
+							if($i === 1){
+				?>
+				<tr>
+					<td width="30pt" style="text-align:left">v.</td>
+					<td style="text-align:left" colspan="9" bgcolor="#DAF7A6">instituciones educativas afectadas:</td>
+					<td style="text-align:left">&nbsp;</td>
+				</tr>
+				<?			}		?>
+				<tr>
+					<td width="30pt" style="text-align:left">&nbsp;</td>
+					<td style="text-align:left" colspan="9">
+						5.<?=$i.'  '.$row->CEN_EDU.' (fecha: '.$row->fecha.')'?>
+					</td>
+				</tr>
+				<?
+							$i ++;
+						endforeach;
+					}
+				?>
 			</table>
         </main>
     </body>
