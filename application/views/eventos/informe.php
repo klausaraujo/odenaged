@@ -43,7 +43,7 @@
 			<table id="footer" cellspacing="0" style="">
 				<tr>
 					<td style="padding-top: 5px;">
-					creado por: <?=$evento->usuario_registro?><br />actualizado por: <?=$evento->usuario_actualizacion?>
+					creado por: <?=$evento->usuario_registro?><br /> <?if($evento->usuario_actualizacion){?>actualizado por: <?=$evento->usuario_actualizacion;}?>
 					</td>
 											
 					<!--<td style="padding-top: 5px;">

@@ -48,7 +48,6 @@ class Main extends CI_Controller
 			if($this->input->post('tipo') == 'registrar'){
 				$this->coun = ($this->Evento_model->sumaEventos()) + 1;
 				$this->Evento_model->setCtaEvento($this->coun);
-				
 				$this->registrar();
 			}
 			if($this->input->post('tipo') == 'editar'){
@@ -134,6 +133,7 @@ class Main extends CI_Controller
 		$this->load->model("Evento_model");
 		$id = $this->Evento_model->registrar();
 		if ($id > 0){
+			$this->Evento_model->setId($id);
 			$data = $this->guardarMapa($id);
 		}else{
 			$data = array(

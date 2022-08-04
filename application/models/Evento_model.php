@@ -179,21 +179,10 @@ class Evento_model extends CI_Model
 		return $this->db->get();
 	}
 	public function guardarMapa(){
-		$data = array(
-			'mapa_imagen' => $this->mapa
-		);
-		
+		$this->db->db_debug = FALSE;
+		$this->db->set('mapa_imagen', $this->mapa, TRUE);
         $this->db->where("idregistroevento", $this->id);
-		$result = $this->db->update('registro_evento',$data);
-		if($result) return true;
-        else return false;
-		
-		/*$this->db->db_debug = FALSE;
-        $this->db->set('mapa_imagen', $this->mapa, TRUE);
-        $this->db->where("idregistroevento", $this->id);
-        $error = array();
-        if ($this->db->update('registro_evento'))
-            return 1;
-        else { $error = $this->db->error(); return $error["code"];}*/
+		if($this->db->update('registro_evento'))return 1;
+        else { $error = $this->db->error(); return $error["code"];}
 	}
 }
