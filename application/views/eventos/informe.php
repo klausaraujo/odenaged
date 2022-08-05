@@ -160,11 +160,7 @@
 						foreach($ies as $row):
 							if($i === 1){
 				?>
-				<tr>
-					<td width="30pt" style="text-align:left">v.</td>
-					<td style="text-align:left" colspan="9" bgcolor="#DAF7A6">instituciones educativas afectadas:</td>
-					<td style="text-align:left">&nbsp;</td>
-				</tr>
+				<tr style="text-align:left;font-weight: bold;"><td width="30pt">iv. </td><td colspan="9">instituciones educativas afectadas:</td><td>&nbsp;</td></tr>
 				<?			}		?>
 				<tr>
 					<td width="30pt" style="text-align:left">&nbsp;</td>
