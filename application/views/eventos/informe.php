@@ -28,6 +28,8 @@
 			/** Reglas del contenido **/
 			#contenido{width:18cm;}
 			#footer{font-size: 9px;height: 50px;border-top:0.5px solid #AAA;width:20.5cm}
+			table .acciones{border:2px solid burlywood; border-collapse: collapse}
+			.acciones td{border:2px solid burlywood; border-collapse: collapse}
 			main{margin-top:2.3cm;margin-bottom:2cm}
 			* { text-transform: uppercase; }
         </style>
@@ -90,6 +92,7 @@
 					<td bgcolor=lightblue colspan="3"><?=$evento->distrito?></td>
 					<td width="30pt"></td>
 				</tr>
+				<tr><td colspan="12" >&nbsp;</td></tr>
 				<tr>
 					<td width="30pt" style="text-align:center"></td>
 					<td style="text-align:center;font-weight: bold;" colspan="11">MAPA DE UBICACIÓN DEL EVENTO SEGUN COORDENADAS GEOREFERENCIALES</td>
@@ -97,7 +100,9 @@
 				
 				<tr>
 					<td width="30pt" colspan="2"></td>
-					<td colspan="8" style="text-align:center;"><img src="<?=base_url()?>public/images/mapas_eventos/<?=$evento->mapa_imagen?>" style="width:600px;height:250px;border:3px burlywood;border-style:solid;border-radius:15px" /></td>
+					<td colspan="8" style="text-align:center;">
+						<img src="<?=base_url()?>public/images/mapas_eventos/<?=$evento->mapa_imagen?>" style="width:600px;height:250px;border:3px burlywood;border-style:solid;border-radius:15px" />
+					</td>
 				</tr>
 				<tr><td colspan="12" >&nbsp;</td></tr>
 				<?
@@ -106,21 +111,23 @@
 						foreach($danios as $row):
 							if($i === 1){
 				?>
+				<tr style="text-align:left;font-weight: bold;"><td width="30pt">iii. </td><td colspan="9">da&ntilde;os:</td><td>&nbsp;</td></tr>
 				<tr>
-					<td width="30pt" style="text-align:left;font-weight: bold;">iii</td>
-					<td style="text-align:left" colspan="9" bgcolor="#DAF7A6">da&ntilde;os:</td>
-					<td style="text-align:left">&nbsp;</td>
-				</tr>
+					<td width="30pt">&nbsp;</td>
+					<td colspan="11">
+						<table cellspacing="0" cellpadding="1" align="center" style="text-align:center;" width="10cm" class="acciones">
+							<tr><th bgcolor="#DAF7A6" colspan="2">resumen de registro de da&ntilde;os</th></tr>
+							<tr style="font-weight: bold;"><td>item</td><td>cantidad</td></tr>
 				<?			}		?>
-				<tr>
-					<td width="30pt" style="text-align:left">&nbsp;</td>
-					<td style="text-align:left" colspan="6">3.<?=$i?> <?=$row->tipo_danio;?></td>
-				</tr>
+							<tr><td><?=$row->tipo_danio?></td><td><?=floatval($row->cantidad)?></td></tr>
 				<?
 							$i ++;
 						endforeach;
 					}
 				?>
+						</table>
+					</td>
+				</tr>
 				<tr><td colspan="12" >&nbsp;</td></tr>
 				<?
 					if(!empty($acciones)){
@@ -128,23 +135,24 @@
 						foreach($acciones as $row):
 							if($i === 1){
 				?>
-				<tr>
-					<td width="30pt" style="text-align:left">iv.</td>
-					<td style="text-align:left" colspan="9" bgcolor="#DAF7A6">acciones:</td>
-					<td style="text-align:left">&nbsp;</td>
-				</tr>
+				<tr style="text-align:left;font-weight: bold;"><td width="30pt">iv. </td><td colspan="9">registro de acciones:</td><td>&nbsp;</td></tr>
 				<?			}		?>
-				<tr>
-					<td width="30pt" style="text-align:left">&nbsp;</td>
-					<td style="text-align:left" colspan="9">
-						4.<?=$i.'  '.$row->tipo_accion.' (fecha: '.$row->fecha.' hora: '.$row->hora.')'?>
-					</td>
-				</tr>
 				<?
 							$i ++;
 						endforeach;
 					}
 				?>
+				<tr>
+					<td width="30pt">&nbsp;</td>
+					<td colspan="11">
+						<table cellspacing="0" cellpadding="1" align="center" style="text-align:center;" width="15cm" class="acciones">
+							<tr style="text-align:left;font-weight: bold;"><td bgcolor="#DAF7A6">&nbsp;4.
+							<?=$i.' '.$row->tipo_accion.' (fecha: '.substr($row->fecha,0,10).' hora: '.$row->hora.')'?></td></tr>
+							<tr align="left"><td style="text-align:justify;">&nbsp;<?=$row->descripcion?></td></tr>
+						</table>
+					</td>
+				</tr>
+				<tr><td colspan="12" >&nbsp;</td></tr>
 				<tr><td colspan="12" >&nbsp;</td></tr>
 				<?
 					if(!empty($ies)){
