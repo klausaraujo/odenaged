@@ -108,6 +108,7 @@
 				<?
 					if(!empty($danios)){
 						$i = 1;
+						$suma = 0;
 						foreach($danios as $row):
 							if($i === 1){
 				?>
@@ -119,12 +120,14 @@
 							<tr><th bgcolor="#DAF7A6" colspan="2">resumen de registro de da&ntilde;os</th></tr>
 							<tr style="font-weight: bold;"><td>item</td><td>cantidad</td></tr>
 				<?			}		?>
-							<tr><td><?=$row->tipo_danio?></td><td><?=floatval($row->cantidad)?></td></tr>
+							<tr><td><?=$row->tipo_danio?></td><td><?=$row->cantidad?></td></tr>
 				<?
+							$suma += floatval($row->cantidad);
 							$i ++;
 						endforeach;
 					}
 				?>
+							<tr bgcolor="#DAF7A6" style="font-weight: bold"><td>total afectados</td><td><?=$suma?></td></tr>
 						</table>
 					</td>
 				</tr>
