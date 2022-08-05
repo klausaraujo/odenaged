@@ -5,14 +5,14 @@
             /** Margenes de la pagina en 0 **/
             @page { margin: 0cm 0cm; }
 			/** Márgenes reales de cada página en el PDF **/
-			body { width:21cm; font-family: Helvetica; font-size: 0.8rem}
+			body { width:21.7cm; font-family: Helvetica; font-size: 0.8rem}
 			/** Reglas del encabezado **/
             header {
                 position: fixed;
                 top: 0cm;
                 left: 0cm;
                 right: 0cm;
-				width: 21cm;
+				width: 100%;
             }
 
             /** Reglas del pie de página **/
@@ -22,7 +22,7 @@
                 left: 0.5cm; 
                 right: 0cm;
                 height: 2cm;
-				width: 21cm;
+				width: 100%;
             }
 			
 			/** Reglas del contenido **/
@@ -66,7 +66,7 @@
 			</table>
         </footer>
 
-        <!-- Envuelva el contenido de su PDF dentro de una etiqueta principal -->
+        <!-- Etiqueta principal del pdf -->
         <main>
             <table id="contenido" cellspacing="1" cellpadding="1" align="center" style="text-align:center;">
 				<tr><td colspan="12" ><b>REPORTE DE SITUACIÓN PRELIMINAR N° <?=$evento->numero_evento?>-<?=$evento->anio_evento?>-COES EDUCACIÓN</b></td></tr>
