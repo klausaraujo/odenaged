@@ -27,7 +27,7 @@
 			
 			/** Reglas del contenido **/
 			#contenido{width:18cm;}
-			#footer{font-size: 10px;height: 50px;border-top:0.5px solid #AAA;width:20.5cm}
+			#footer{font-size: 9px;height: 50px;border-top:0.5px solid #AAA;width:20.5cm}
 			main{margin-top:2.3cm;margin-bottom:2cm}
 			* { text-transform: uppercase; }
         </style>
@@ -36,6 +36,7 @@
         <!-- Defina bloques de encabezado y pie de página antes de su contenido -->
         <header>
             <img src="<?=base_url()?>public/images/informes/header.png" width="100%" />
+			<hr style="border:2px burlywood;border-style:double;width:100%;">
         </header>
 
         <footer>
@@ -65,23 +66,21 @@
 
         <!-- Envuelva el contenido de su PDF dentro de una etiqueta principal -->
         <main>
-            <table id="contenido" cellspacing="2" cellpadding="3" align="center" style="text-align:center;">
-				<tr><td colspan="12" >REPORTE DE SITUACIÓN PRELIMINAR N° <?=$evento->numero_evento?>-<?=$evento->anio_evento?>-COES EDUCACIÓN</td></tr>
-				<tr><td colspan="12" >FECHA Y HORA: <?=$evento->fecha?> – <?=$evento->hora?> HORAS</td></tr>
+            <table id="contenido" cellspacing="1" cellpadding="1" align="center" style="text-align:center;">
+				<tr><td colspan="12" ><b>REPORTE DE SITUACIÓN PRELIMINAR N° <?=$evento->numero_evento?>-<?=$evento->anio_evento?>-COES EDUCACIÓN</b></td></tr>
+				<tr><td colspan="12" ><b>FECHA Y HORA: <?=$evento->fecha?> – <?=$evento->hora?> HORAS</b></td></tr>
 				<tr><td colspan="12" >&nbsp;</td></tr>
-				<tr><td width="30pt" style="text-align:left">I.</td><td style="text-align:left" colspan="11">HECHOS</td></tr>
-				<tr><td colspan="12" >&nbsp;</td></tr>
+				<tr><td width="30pt" style="text-align:left">I.</td><td style="text-align:left" colspan="11"><b>HECHOS</b></td></tr>
 				<tr>
 					<td width="30pt"></td>
 					<td style="text-align:justify" colspan="11"><?=$evento->descripcion?></td></tr>
 				<tr><td colspan="12" >&nbsp;</td></tr>
-				<tr><td width="30pt" style="text-align:left">II.</td><td style="text-align:left" colspan="11">UBICACION DEL EVENTO</td></tr>
-				<tr><td colspan="12" >&nbsp;</td></tr>
+				<tr><td width="30pt" style="text-align:left">II.</td><td style="text-align:left" colspan="11"><b>UBICACION DEL EVENTO</b></td></tr>
 				<tr style="color:black">
 					<td width="30pt" colspan="2">
-					</td><td bgcolor="#DAF7A6" colspan="3">Region</td>
-					<td bgcolor="#DAF7A6" colspan="3">Provincia</td>
-					<td bgcolor="#DAF7A6" colspan="3">Distrito</td>
+					</td><td bgcolor="#DAF7A6" colspan="3"><b>Región</b></td>
+					<td bgcolor="#DAF7A6" colspan="3"><b>Provincia</b></td>
+					<td bgcolor="#DAF7A6" colspan="3"><b>Distrito</b></td>
 					<td width="30pt"></td>
 				</tr>
 				<tr style="color:black">
@@ -91,15 +90,14 @@
 					<td bgcolor=lightblue colspan="3"><?=$evento->distrito?></td>
 					<td width="30pt"></td>
 				</tr>
-				<tr><td colspan="12" >&nbsp;</td></tr>
 				<tr>
-					<td width="30pt" style="text-align:left"></td>
-					<td style="text-align:left" colspan="11">MAPA DE UBICACION SEGUN COORDDENADAS</td>
+					<td width="30pt" style="text-align:center"></td>
+					<td style="text-align:center;font-weight: bold;" colspan="11">MAPA DE UBICACIÓN DEL EVENTO SEGUN COORDENADAS GEOREFERENCIALES</td>
 				</tr>
-				<tr><td colspan="12" >&nbsp;</td></tr>
+				
 				<tr>
 					<td width="30pt" colspan="2"></td>
-					<td colspan="8"><img src="<?=base_url()?>public/images/mapas_eventos/<?=$evento->mapa_imagen?>" width="600pt" height="250pt" /></td>
+					<td colspan="8" style="text-align:center;"><img src="<?=base_url()?>public/images/mapas_eventos/<?=$evento->mapa_imagen?>" style="width:600px;height:250px;border:3px burlywood;border-style:solid;border-radius:15px" /></td>
 				</tr>
 				<tr><td colspan="12" >&nbsp;</td></tr>
 				<?
@@ -109,7 +107,7 @@
 							if($i === 1){
 				?>
 				<tr>
-					<td width="30pt" style="text-align:left">iii.</td>
+					<td width="30pt" style="text-align:left;font-weight: bold;">iii</td>
 					<td style="text-align:left" colspan="9" bgcolor="#DAF7A6">da&ntilde;os:</td>
 					<td style="text-align:left">&nbsp;</td>
 				</tr>
