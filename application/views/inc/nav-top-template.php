@@ -22,11 +22,9 @@
          </div>
          <div class="collapse navbar-collapse" id="navbarSupportedContent" aria-hidden="true">
          <ul class="navbar-nav ml-auto navbar-list">
-         <li class="nav-item">
-            <h3 style="font-size:22px;" class="text-center">
-               Sistema Integrado de Registro de Eventos del Sector Educación
-            <h3>   
-         </li>      
+        <li class="nav-item" style="display:flex;justify-content:center;align-items:center">
+            <h5 style="font-size:1.3em;" class="text-center">Sistema Integrado de Registro de Eventos del Sector Educación</h5>
+         </li>
                <li class="nav-item iq-full-screen">
                   <a href="#" class="iq-waves-effect" id="btnFullscreen"><i class="ri-fullscreen-line font-sirese"></i></a>
                </li>

@@ -5,7 +5,7 @@
             /** Margenes de la pagina en 0 **/
             @page { margin: 0cm 0cm; }
 			/** Márgenes reales de cada página en el PDF **/
-			body { width:21.7cm; font-family: Helvetica; font-size: 0.8rem}
+			body { width:21.7cm; font-family: Helvetica; font-size: 0.8rem;margin-top:2.3cm;margin-bottom:2.3cm }
 			/** Reglas del encabezado **/
             header {
                 position: fixed;
@@ -30,7 +30,6 @@
 			#footer{font-size: 9px;height: 50px;border-top:0.5px solid #AAA;width:20.5cm}
 			table .acciones{border:2px solid burlywood; border-collapse: collapse}
 			.acciones td{border:2px solid burlywood; border-collapse: collapse}
-			main{margin-top:2.3cm;margin-bottom:2cm}
 			* { text-transform: uppercase; }
         </style>
     </head>
@@ -68,7 +67,7 @@
 
         <!-- Etiqueta principal del pdf -->
         <main>
-            <table id="contenido" cellspacing="1" cellpadding="1" align="center" style="text-align:center;">
+            <table id="contenido" cellspacing="0" cellpadding="1" align="center" style="text-align:center;">
 				<tr><td colspan="12" ><b>REPORTE DE SITUACIÓN PRELIMINAR N° <?=$evento->numero_evento?>-<?=$evento->anio_evento?>-COES EDUCACIÓN</b></td></tr>
 				<tr><td colspan="12" ><b>FECHA Y HORA: <?=$evento->fecha?> – <?=$evento->hora?> HORAS</b></td></tr>
 				<tr><td colspan="12" >&nbsp;</td></tr>
@@ -139,24 +138,27 @@
 							if($i === 1){
 				?>
 				<tr style="text-align:left;font-weight: bold;"><td width="30pt">iv. </td><td colspan="9">registro de acciones:</td><td>&nbsp;</td></tr>
+				
+						
 				<?			}		?>
-				<?
-							$i ++;
-						endforeach;
-					}
-				?>
 				<tr>
 					<td width="30pt">&nbsp;</td>
 					<td colspan="11">
-						<table cellspacing="0" cellpadding="1" align="center" style="text-align:center;" width="16cm" class="acciones">
+						<table cellpadding="1" align="center" style="text-align:center;margin:-2;padding:0" width="15cm" class="acciones">
 							<tr style="text-align:left;font-weight: bold;"><td bgcolor="#DAF7A6">&nbsp;4.
 							<?=$i.' '.$row->tipo_accion.' (fecha: '.substr($row->fecha,0,10).' hora: '.$row->hora.')'?></td></tr>
 							<tr align="left"><td style="text-align:justify;">&nbsp;<?=$row->descripcion?></td></tr>
 						</table>
 					</td>
 				</tr>
+				<?
+							$i ++;
+						endforeach;
+					}
+				?>
+						
+					
 				<tr><td colspan="12" >&nbsp;</td></tr>
-				
 				<?
 					if(!empty($ies)){
 						$i = 1;
