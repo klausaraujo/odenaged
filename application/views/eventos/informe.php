@@ -116,11 +116,11 @@
 				<tr>
 					<td width="30pt">&nbsp;</td>
 					<td colspan="11">
-						<table cellspacing="0" cellpadding="1" align="center" style="text-align:center;" width="10cm" class="acciones">
-							<tr><th bgcolor="#DAF7A6" colspan="2">resumen de registro de da&ntilde;os</th></tr>
-							<tr style="font-weight: bold;"><td>item</td><td>cantidad</td></tr>
+						<table cellspacing="0" cellpadding="1" align="center" style="text-align:center;" width="9cm" class="acciones">
+							<tr><th bgcolor="#DAF7A6" colspan="2">cuadro resumen de registro de da&ntilde;os</th></tr>
+							<tr style="font-weight: bold;"><td bgcolor="#DAF7A6">tipo de afectación</td><td bgcolor="#DAF7A6">cantidad</td></tr>
 				<?			}		?>
-							<tr><td><?=$row->tipo_danio?></td><td><?=$row->cantidad?></td></tr>
+							<tr><td style="text-align:left;"><?=$row->tipo_danio?></td><td><?=$row->cantidad?></td></tr>
 				<?
 							$suma += floatval($row->cantidad);
 							$i ++;
@@ -148,7 +148,7 @@
 				<tr>
 					<td width="30pt">&nbsp;</td>
 					<td colspan="11">
-						<table cellspacing="0" cellpadding="1" align="center" style="text-align:center;" width="15cm" class="acciones">
+						<table cellspacing="0" cellpadding="1" align="center" style="text-align:center;" width="16cm" class="acciones">
 							<tr style="text-align:left;font-weight: bold;"><td bgcolor="#DAF7A6">&nbsp;4.
 							<?=$i.' '.$row->tipo_accion.' (fecha: '.substr($row->fecha,0,10).' hora: '.$row->hora.')'?></td></tr>
 							<tr align="left"><td style="text-align:justify;">&nbsp;<?=$row->descripcion?></td></tr>
@@ -156,7 +156,7 @@
 					</td>
 				</tr>
 				<tr><td colspan="12" >&nbsp;</td></tr>
-				<tr><td colspan="12" >&nbsp;</td></tr>
+				
 				<?
 					if(!empty($ies)){
 						$i = 1;
