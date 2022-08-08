@@ -1,15 +1,18 @@
 function eventos() {
-	const fileLoad = document.getElementById('file-upload');
+	jQuery.event.props.push('dataTransfer');
 	const formulario = document.getElementById('formPreliminar');
-	var jSon = [];
-	var row = [];
+	var jSon = [], row = [], drop = $('#dragandrophandler'), fileSystem = $('#dragandrophandler input[type="file"]');
+	//alert(fileSystem);
 	
-	function showModal(event,title) {
-        $("#myModalLabel").text(title);
-		$("#modalIE").modal("show");
+	/*function showModal(event,title,modal) {
+        $('#'+ modal).text(title);
+		$('#'+modal).modal("show");
         event.stopPropagation();
         event.stopImmediatePropagation();
-    }
+    }*/
+	function cIMG() { $('#addModal').modal('hide'); $('.fileQueue').remove(); $('.agregar').html(''); }
+	$('#cierra').on('click', function(){ cIMG(); });
+	
 	function ocultar(){
 		if($('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 0) $('.ajaxTable').show();
 		if(!$('.ajaxPreliminar').css('display') == 'none' || $('.ajaxPreliminar').css('opacity') == 1) $('.ajaxPreliminar').hide();
@@ -20,10 +23,6 @@ function eventos() {
 		resetear();
 	}
 	function resetear(){ $('#formInforme')[0].reset(); $('#formInforme select').each(function(){ $(this).prop('selectedIndex',0); }); }
-	
-	$('#btnbuscaIE').on('click', function(){
-		showModal(event,'Buscar Instituciones Educativas');
-	});
 	
 	function existeAccion(idaccion,tableAccion,tab,desc,campo){
 		let = id = $('#idregevento').val();
@@ -72,6 +71,87 @@ function eventos() {
 			});
 		}
 	}
+	
+	$('body').on('click', 'input, button', function(){
+		if($(this).attr('value') == 'Agregar'){
+			$('.fileQueue').each(function(index, el){
+				let input = $(el).find('.descripcion input');
+				if(input.val() == ''){ alert('El campo descripciónn no puede quedar vacío'); return false; };
+				let name = $(this).find('.name b').html(), desc = $(this).find('.descripcion input').val(), src = $(this).find('.src input').val();
+				jSon = [{'version':1,'fotografia': name,'descripcion' : desc, 'foto' : src}];
+				//alert(name+'  '+desc+'  '+src);
+				var row = [];
+				tableFotos.rows().data().each(function (value) { row.push(value); });
+				row = row.concat(jSon);
+				tableFotos.clear();
+				tableFotos.rows.add(row).draw();
+				cIMG();
+			});
+		}
+		if($(this).attr('value') == 'Remover'){
+			$(this).parent().parent().remove();
+			let cuenta = document.getElementsByClassName('fileQueue');
+			if(cuenta.length > 0)$('.agregar').html('<input class="btn btn-sirese pull-right" type="button" value="Agregar" />');
+			else $('.agregar').html('');
+		}
+	});
+	
+	function imagen(files,evento){
+		let cont = $('#uploaderCont');
+		$.each(files, function(index, file) {
+			if (!file.type.match('image.*')) { alert('Solo pueden cargarse imagenes'); return false; }
+			let dataArray = [], fr = new FileReader(), name = '';
+			fr.onload = (function(file) {
+				return function(e){
+					e = e || window.event;
+					//console.log(e);
+					let src = e.target.result;
+					let html = '<div class="row fileQueue my-2" style="display:flex;justify-content:center;align-items:center" ><div class="col-sm-4 m-0 name">'+
+							'<b>'+name+'</b></div><div class="descripcion col-sm-4">'+
+							'<input type="text" class="form-control pull-right" placeholder="Descripci&oacute;n de la imagen" /></div><div class="remove col-sm-4">'+
+							'<input class="btn btn-sm btn-outline-danger pull-right" type="button" value="Remover" /></div><div class="src">'+
+							'<input type="hidden" class="col-sm-12" value="'+src+'"/></div></div>';
+					cont.append(html);
+					let cuenta = document.getElementsByClassName('fileQueue');
+					if(cuenta.length > 0)$('.agregar').html('<input class="btn btn-sirese pull-right" type="button" value="Agregar" />');
+					else $('.agregar').html('');
+					//console.log(e);
+					//$('#detalle').append('<input type="text" class="nombre" /><input type="text" class="descr" /><input type="text" class="src" />');
+					/*$('.fileQueue div.src').html('<input type="text" class="" value="'+src+'" />');
+					$('.fileQueue div.src').switchClass('src', 'imagen');*/
+					//alert($('.src input').prop('class'));
+					//$('.queueSrc').append('<input type="text" class="src" />');
+					//$('.hidd').append('<div class="hid"><input type="text" id="n" value="'+file.name+'" /><input type="text" id="src" value"'+file.result+'" /></div>');
+				}
+			})(files[index]);
+			if(evento == 'drop'){ fr.readAsDataURL(file.getAsFile()); name = file.getAsFile().name }else{ fr.readAsDataURL(file); name = file.name; }
+		});
+	}
+	
+	drop.bind('dragenter drop dragover dragleave', function(e){
+		e.preventDefault();
+		e.stopPropagation();
+		var e = e || window.event;
+		let tipo = e.type, files;
+		//console.log(e);
+		if(tipo == 'drop'){
+			e.target.classList.remove("active");
+			if (e.dataTransfer.items){ files = e.dataTransfer.items; e.dataTransfer.items.clear(); }
+			else{ files = e.dataTransfer.files; e.dataTransfer.clearData(); }
+			imagen(files,'drop');
+		}else if(tipo == 'dragenter'){ e.target.classList.add("active"); }
+		else if(tipo == 'dragleave'){ e.target.classList.remove("active"); }
+	});
+	
+	fileSystem.bind('change', function(e){
+		var e = e || window.event;
+		let files = e.target.files;
+		/*var clone = this.cloneNode(); clone.value = '';
+		this.parentNode.replaceChild(clone, this);*/
+		this.value = '';
+		imagen(files,'load');
+	});
+	
 	
 	$('#btnDanio').on('click',function(evt){
 		let = idaccion = $('#tipodanio :selected').val(); let desc = $('#cantidad').val();
@@ -139,7 +219,6 @@ function eventos() {
 	});
 	
 	$('.close').on('click',function(){ /*resetIE();*/ });
-	//$('#modalIE').on('hide.bs.modal', function (e) { resetIE(); });
 	
 	/*function resetIE(){
 		$('select').each(function(){ $(this).prop('selectedIndex',0); });
@@ -153,7 +232,7 @@ function eventos() {
 		//$('#file-upload').trigger('change');
 	});
 	
-	fileLoad.onchange = function (e) {
+	/*fileLoad.onchange = function (e) {
 		const file = fileLoad.files[0];
 		//var input =  e.srcElement;
 		//alert(file.name);
@@ -161,19 +240,19 @@ function eventos() {
 			if ( /\.(jpe?g|png|gif)$/i.test(file.name) ) {
 				var reader = new FileReader();
 				reader.addEventListener("load", function () {
-					/*console.log(this.result);
-					var divCol = document.createElement("div");
-					var filePreview = document.createElement('img');
-					var previewZone = document.getElementById('file-preview-zone');
+					//console.log(this.result);
+					//var divCol = document.createElement("div");
+					//var filePreview = document.createElement('img');
+					//var previewZone = document.getElementById('file-preview-zone');
 					
-					divCol.classList.add('col-sm-2');
-					filePreview.id = 'file-preview';
+					//divCol.classList.add('col-sm-2');
+					//filePreview.id = 'file-preview';
 					
-					filePreview.src = this.result;
-					filePreview.classList.add('img-fluid');
+					//filePreview.src = this.result;
+					//filePreview.classList.add('img-fluid');
 					
-					divCol.appendChild(filePreview);
-					previewZone.appendChild(divCol);*/
+					//divCol.appendChild(filePreview);
+					//previewZone.appendChild(divCol);
 					
 					var jSon = [{'version':1,'fotografia': file.name,'descripcion' : file.name, 'foto' : this.result}];
 					var row = [];
@@ -184,15 +263,15 @@ function eventos() {
 					
 				}, false);
 				
-				/*reader.onload = function (e) {
+				//reader.onload = function (e) {
 					//e.target.result contents the base64 data from the image uploaded
 					//console.log(e.target.result);
-				}*/
+				//}
 				
 				reader.readAsDataURL(file);
 			}
 		}
-    }
+    }*/
 	
 	$("#btnInforme").on('click', function(evt){
 		evt.preventDefault();

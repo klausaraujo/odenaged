@@ -5,7 +5,7 @@
             /** Margenes de la pagina en 0 **/
             @page { margin: 0cm 0cm; }
 			/** Márgenes reales de cada página en el PDF **/
-			body { width:21.7cm; font-family: Helvetica; font-size: 0.8rem;margin-top:2.3cm;margin-bottom:2.3cm }
+			body { width:21.7cm; font-family: Helvetica; font-size: 0.8rem;margin-top:2.3cm;margin-bottom:2.6cm }
 			/** Reglas del encabezado **/
             header {
                 position: fixed;
@@ -21,13 +21,13 @@
                 bottom: 0cm; 
                 left: 0.5cm; 
                 right: 0cm;
-                height: 2cm;
+                height: 2.3cm;
 				width: 100%;
             }
 			
 			/** Reglas del contenido **/
 			#contenido{width:18cm;}
-			#footer{font-size: 9px;height: 50px;border-top:0.5px solid #AAA;width:20.5cm}
+			#footer{font-size: 8px;height: 50px;border-top:0.5px solid #AAA;width:20.5cm;line-height:1em}
 			table .acciones{border:2px solid burlywood; border-collapse: collapse}
 			.acciones td{border:2px solid burlywood; border-collapse: collapse}
 			* { text-transform: uppercase; }
@@ -41,12 +41,25 @@
         </header>
 
         <footer>
-            <!--<img src="<?=base_url()?>public/images/informes/header.png" width="100%" />-->
-			<table id="footer" cellspacing="0" style="">
+			<table id="footer" cellspacing="1" style="">
 				<tr>
-					<td style="padding-top: 5px;">
-					creado por: <?=$evento->usuario_registro?><br /> <?if($evento->usuario_actualizacion){?>actualizado por: <?=$evento->usuario_actualizacion;}?>
+					<td style="padding: 3px;" rowspan="2">
+						<img src="<?=base_url()?>public/images/informes/footer.png" width="75px" />
 					</td>
+				</tr>
+				<tr style="padding-bottom:5px">
+					<td>
+						jefe del coes<br><br>coordinador coes<br><br>
+					</td>
+					<td colspan="3">
+						<span style="font-weight:bold">rosendo leoncio, serna rom&aacute;n</span><br>ministro de educaci&oacute;n<br>
+						<span style="font-weight:bold">carlos alberto, malpica coronado</span><br>jefe de la oficina de defensa nacional y de gestion del riesgo de desastres
+					</td>
+					<td colspan="2">
+						odenaged_informa@minedu.gob.pe<br>av. rep&uacute;blica de colombia nº 710 - san isidro<br>tel&eacute;fono	: 615-5854, 615-5800<br>
+						anexo	: 26760/26741<br>celular: 989183571 / 989183584
+					</td>
+					<td>&nbsp;</td>
 											
 					<!--<td style="padding-top: 5px;">
 					<a href="http://sireed.minsa.gob.pe/" target="_blank" style="margin-top:0px;">http://sireed.minsa.gob.pe</a>
@@ -62,6 +75,7 @@
 					 <p class="footer-margin">COE Salud: 611 9933</p>
 					</td>-->
 				</tr>
+				<tr></tr>
 			</table>
         </footer>
 
@@ -156,8 +170,6 @@
 						endforeach;
 					}
 				?>
-						
-					
 				<tr><td colspan="12" >&nbsp;</td></tr>
 				<?
 					if(!empty($ies)){
@@ -166,18 +178,40 @@
 							if($i === 1){
 				?>
 				<tr style="text-align:left;font-weight: bold;"><td width="30pt">iv. </td><td colspan="9">instituciones educativas afectadas:</td><td>&nbsp;</td></tr>
-				<?			}		?>
 				<tr>
-					<td width="30pt" style="text-align:left">&nbsp;</td>
-					<td style="text-align:left" colspan="9">
-						5.<?=$i.'  '.$row->CEN_EDU.' (fecha: '.$row->fecha.')'?>
-					</td>
-				</tr>
+					<td colspan="12">
+						<table cellspacing="0" cellpadding="1" align="center" style="text-align:center;" width="15cm" class="acciones">
+							<tr bgcolor="#DAF7A6"><th>item</th><th>c.modular</th><th>c.local</th><th>nivel</th><th>nombre i.e.</th><th>registro</th></tr>
+				<?			}		?>
+							<tr><td>4.<?=$i?></td><td><?=$row->COD_MOD?></td><td><?=$row->CODLOCAL?></td>
+							<td><?=$row->D_NIV_MOD?></td><td><?=$row->CEN_EDU?></td><td><?=$row->fecha?></td></tr>
 				<?
 							$i ++;
 						endforeach;
 					}
 				?>
+						</table>
+					</td>
+				</tr>
+				<tr><td colspan="12" >&nbsp;</td></tr>
+				<?
+					if(!empty($fotos)){
+						$i = 1;
+						foreach($fotos as $row):
+							if($i === 1){
+				?>
+				<tr style="text-align:left;font-weight: bold;"><td width="30pt">v. </td><td colspan="9">galer&iacute;a fotogr&aacute;fica:</td><td>&nbsp;</td></tr>
+				<?			}		?>
+							<tr><td colspan="10">fotograf&iacute;a <?=$i?></td></tr>
+							<tr><td colspan="10"><img src="<?=base_url()?>public/images/galerias_eventos/<?$row->fotografia?>" /></td></tr>
+							<tr><td colspan="10"><?=$row->descripcion?></td></tr>
+				<?
+							$i ++;
+						endforeach;
+					}
+				?>
+					</td>
+				</tr>
 			</table>
         </main>
     </body>

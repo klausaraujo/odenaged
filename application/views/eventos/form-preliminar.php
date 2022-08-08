@@ -24,7 +24,6 @@
 										<a class="nav-item nav-link font-sirese" id="nav-acciones-tab" data-toggle="tab" href="#nav-acciones" role="tab" aria-controls="nav-acciones" aria-selected="false">Registro de Acciones</a>
 										<a class="nav-item nav-link font-sirese" id="nav-ie-tab" data-toggle="tab" href="#nav-ie" role="tab" aria-controls="nav-ie" aria-selected="false">Registro de IE Afectadas</a>
 										<a class="nav-item nav-link font-sirese" id="nav-fotos-tab" data-toggle="tab" href="#nav-fotos" role="tab" aria-controls="nav-fotos" aria-selected="false">Galer&iacute;a de fotos</a>
-										<!--<a class="nav-item nav-link font-sirese" id="nav-pruebas-tab" data-toggle="tab" href="#nav-pruebas" role="tab" aria-controls="nav-fotos" aria-selected="false">Pruebas</a>-->
 									</div>
 								</nav>
 							</div>
@@ -157,7 +156,7 @@
 										<div class="col-sm-2">
 											<div class="row">
 												<label for="btnbuscaIE" class="col-sm-12">&nbsp;</label>
-												<button type="button" data-toggle="modal" class="btn btn-sirese mx-3" id="btnbuscaIE">Buscar IE</button>
+												<button type="button" data-toggle="modal" class="btn btn-sirese mx-3" id="btnbuscaIE" data-target="#modalIE">Busca IE</button>
 											</div>
 										</div>
 										<div class="col-sm-2">
@@ -179,20 +178,11 @@
 								
 								</div>
 								<div class="tab-pane fade py-4" id="nav-fotos" role="tabpanel" aria-labelledby="nav-fotos-tab">
-									<div class="row justify-content-center">
-										<div class="col-4 align-self-center" id="drop-files" ondragover="return false">
-											Arrastre Im&aacute;genes o click aqu&iacute;
-										</div><br>
-									</div>
-									<div id="uploaded-holder" class="container" >
-										<div id="dropped-files" class="row"></div>
-										<div id="extra-files">
-											<div class="number">0</div>
-											<div id="file-list"><ul></ul></div>
+									<div class="row">
+										<div class="col-sm-4">
+											<button type="button" data-toggle="modal" class="btn btn-sirese mx-3 pull-right" data-target="#addModal">Agregar Imagen</button>
 										</div>
 									</div>
-									<input id="file-upload" type="file" accept="image/*" style="display:none" />
-									<!--<div class="row"><button type="button" data-toggle="modal" class="btn btn-sirese pull-right" data-target="#addModal">Agregar Imagen</button></div>-->
 									<div class="row justify-content-center">
 										<div class="col-sm-8">
 											<div class="table-responsive">
@@ -201,10 +191,6 @@
 										</div>
 									</div>
 								</div>
-								<!--<div class="tab-pane fade show active py-4" id="nav-pruebas" role="tabpanel" aria-labelledby="nav-pruebas-tab">
-									
-								
-								</div>-->
 							</div>
 						</div>
 					</div>
@@ -217,7 +203,7 @@
 				<button class="btn btn-sirese" id="btnCancelPrel" name="btnCancelPrel">Cancelar</button>
 			</div>
 			
-			<div class="modal fade modal-fullscreen" id="modalIE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal fade" id="modalIE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 					<div id="loading" style="diaplay:none"><div id="loading-center"></div></div>
@@ -264,6 +250,42 @@
 						</div>
 							
 						<!--<div class="clearfix"></div>-->
+						<div class="modal-footer"></div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel">Cargar Imagen</h4>
+							<button type="button" id="cierra" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body" style="overflow: hidden;">
+							<div class="container my-2">
+								<div id="uploader">
+									<div class="container-fluid" id="uploaderCont">
+										<div class="row ddHandler">
+											<div class="col-12" id="dragandrophandler" ondragover="return false">
+												<svg class="bi bi-upload" width="1em" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+													<path fill-rule="evenodd" d="M.5 8a.5.5 0 01.5.5V12a1 1 0 001 1h12a1 1 0 001-1V8.5a.5.5 0 011 0V12a2 2 0 01-2 2H2a2 2 0 01-2-2V8.5A.5.5 0 01.5 8zM5 4.854a.5.5 0 00.707 0L8 2.56l2.293 2.293A.5.5 0 1011 4.146L8.354 1.5a.5.5 0 00-.708 0L5 4.146a.5.5 0 000 .708z" clip-rule="evenodd"></path>
+													<path fill-rule="evenodd" d="M8 2a.5.5 0 01.5.5v8a.5.5 0 01-1 0v-8A.5.5 0 018 2z" clip-rule="evenodd"></path>
+												</svg>
+												<span>Arrastre archivos Aqu&iacute; o 
+													<label>Seleccione Archivos<input value="buscar" type="file" style ="display:none" multiple /></label>
+												</span>												
+											</div>
+										</div>
+									</div>
+									<div class="row agregar my-3"></div>
+								</div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+
 						<div class="modal-footer"></div>
 					</div>
 				</div>

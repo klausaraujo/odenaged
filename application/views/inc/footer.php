@@ -66,26 +66,18 @@
 		<script src="<?=base_url()?>public/template/js/eventos/main.js"></script>
 		<script src="<?=base_url()?>public/template/js/table/tableComp.js"></script>
 		<script src="<?=base_url()?>public/template/js/table/tableIE.js"></script>
-		<script src="<?=base_url()?>public/template/js/dropzone/dropzone.js"></script>
+		<!--<script src="<?=base_url()?>public/template/js/dropzone/dropzone.js"></script>
+		<script src="<?=base_url()?>public/template/js/dropzone/5x5jqpi.min.js"></script>-->
 		<script>
-			/*const canDelete = "1";
-			const canEdit = "1";
-			const canIdioma = "1";
-			const canTracking = "1";
-			const canHistory = "1";*/
-			//const URI = "<?//=base_url()?>";
 			const lista = JSON.parse('<?=$lista?>');
 			const URI = '<?=$url?>';
 			const path = '<?=$uri?>';
-			//const danios = ;
-			//const acciones = ;
-			//const galeria = ;
 			const datos = [];
 			const headers = [{'anio_evento':'A&ntilde;o','numero_evento':'nro. evento','nivel':'nivel','tipo_evento':'tipo evento','ubigeo_descripcion':'ubigeo','estado':'estado'}];
-			const danio = [{'version':'version','tipo_danio':'tipo da&ntilde;o','cantidad':'cantidad'}];
-			const accion = [{'version':'version','tipo_accion':'tipo accion','descripcion':'descripcion','fecha':'fecha'}];
-			const foto = [{'version':'version','fotografia':'fotografia','descripcion':'descripcion'}];
-			const ie = [{'version':'version','CEN_EDU':'inst. educativa','descripcion':'descripcion','fecha':'fecha'}];
+			const danio = [{'tipo_danio':'tipo da&ntilde;o','cantidad':'cantidad'}];
+			const accion = [{'tipo_accion':'tipo accion','descripcion':'descripcion','fecha':'fecha'}];
+			const foto = [{'fotografia':'fotografia','descripcion':'descripcion'}];
+			const ie = [{'CEN_EDU':'inst. educativa','descripcion':'descripcion','fecha':'fecha'}];
 			const ieUB = [{'CEN_EDU':'institucion educativa','COD_MOD':'cod. mod','CODLOCAL':'cod. local','D_NIV_MOD':'nivel'}];
 			const table = tablePersonalized('#tablaEvento',headers,lista);
 			const tableDanio = tableComp('#tableDanio',danio,datos);
@@ -99,7 +91,7 @@
 				$('.ajaxMap').hide();
 				main(mapa(opt));
 				eventos();
-				dropzone();
+				//dropzone();
 			//var macc = {lat: 42.1382114, lng: -71.5212585};
 				/*var map = new google.maps.Map(
 				document.getElementById('map'), {zoom: 15, center: macc});
@@ -114,5 +106,11 @@
 			mapa(opt);*/
 			}
 			function mayus(e){e.value = e.value.toUpperCase();}
+			/*$(function(){
+				$("#uploader").initUploader({
+                    //selectOpts:{one:'jquery',two:'script',three:'net'},
+                    showDescription: true,
+                });
+            });*/
 		</script>
 <?	}	?>
