@@ -105,7 +105,7 @@ function eventos() {
 					e = e || window.event;
 					//console.log(e);
 					let src = e.target.result;
-					ddHandler.css('background-image','url("'+ src.replace(/(\r\n|\n|\r)/gm,'') +'")');
+					//ddHandler.css('background-image','url("'+ src.replace(/(\r\n|\n|\r)/gm,'') +'")');
 					let html = '<div class="row fileQueue my-2" style="display:flex;justify-content:center;align-items:center" ><div class="col-sm-4 m-0 name">'+
 							'<b>'+name+'</b></div><div class="descripcion col-sm-4">'+
 							'<input type="text" class="form-control pull-right" placeholder="Descripci&oacute;n de la imagen" /></div><div class="remove col-sm-4">'+

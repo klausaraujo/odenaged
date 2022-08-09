@@ -142,6 +142,7 @@ $uAct = $evento->usuario_actualizacion;
 					if(!empty($acciones)){
 						$i = 1;
 						foreach($acciones as $row):
+							$fecha = date("d/m/Y", strtotime($row->fecha));
 							if($i === 1){
 				?>
 				<tr style="text-align:left;font-weight: bold;"><td width="30pt">iv. </td><td colspan="9">registro de acciones:</td><td>&nbsp;</td></tr>
@@ -153,7 +154,7 @@ $uAct = $evento->usuario_actualizacion;
 					<td colspan="11">
 						<table cellpadding="1" align="center" style="text-align:center;margin:-2;padding:0" width="15cm" class="acciones">
 							<tr style="text-align:left;font-weight: bold;"><td bgcolor="#DAF7A6">&nbsp;4.
-							<?=$i.' '.$row->tipo_accion.' (fecha: '.substr($row->fecha,0,10).' hora: '.$row->hora.')'?></td></tr>
+							<?=$i.' '.$row->tipo_accion.' (fecha: '.$fecha.' hora: '.$row->hora.')'?></td></tr>
 							<tr align="left"><td style="text-align:justify;">&nbsp;<?=$row->descripcion?></td></tr>
 						</table>
 					</td>
@@ -168,6 +169,7 @@ $uAct = $evento->usuario_actualizacion;
 					if(!empty($ies)){
 						$i = 1;
 						foreach($ies as $row):
+							$fecha = date("d/m/Y", strtotime($row->fecha));
 							if($i === 1){
 				?>
 				<tr style="text-align:left;font-weight: bold;"><td width="30pt">iv. </td><td colspan="9">instituciones educativas afectadas:</td><td>&nbsp;</td></tr>
@@ -177,7 +179,7 @@ $uAct = $evento->usuario_actualizacion;
 							<tr bgcolor="#DAF7A6"><th>item</th><th>c.modular</th><th>c.local</th><th>nivel</th><th>nombre i.e.</th><th>registro</th></tr>
 				<?			}		?>
 							<tr><td>4.<?=$i?></td><td><?=$row->COD_MOD?></td><td><?=$row->CODLOCAL?></td>
-							<td><?=$row->D_NIV_MOD?></td><td><?=$row->CEN_EDU?></td><td><?=substr($row->fecha,0,10)?></td></tr>
+							<td><?=$row->D_NIV_MOD?></td><td><?=$row->CEN_EDU?></td><td><?=$fecha?></td></tr>
 				<?
 							$i ++;
 						endforeach;
