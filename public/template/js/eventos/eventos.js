@@ -1,7 +1,7 @@
 function eventos() {
 	jQuery.event.props.push('dataTransfer');
-	const formulario = document.getElementById('formPreliminar');
-	var jSon = [], row = [], drop = $('#dragandrophandler'), fileSystem = $('#dragandrophandler input[type="file"]');
+	const formulario = document.getElementById('formPreliminar'), contImagen = $('#uploaderCont'), drop = $('#dragandrophandler');
+	var jSon = [], row = [], fileSystem = $('#dragandrophandler input[type="file"]');
 	//alert(fileSystem);
 	
 	/*function showModal(event,title,modal) {
@@ -96,8 +96,7 @@ function eventos() {
 		}
 	});
 	
-	function imagen(files,evento){
-		let cont = $('#uploaderCont');
+	function imagen(files){
 		$.each(files, function(index, file) {
 			if (!file.type.match('image.*')) { alert('Solo pueden cargarse imagenes'); return false; }
 			let dataArray = [], fr = new FileReader(), name = '';
@@ -111,7 +110,7 @@ function eventos() {
 							'<input type="text" class="form-control pull-right" placeholder="Descripci&oacute;n de la imagen" /></div><div class="remove col-sm-4">'+
 							'<input class="btn btn-sm btn-outline-danger pull-right" type="button" value="Remover" /></div><div class="src">'+
 							'<input type="hidden" class="col-sm-12" value="'+src+'"/></div></div>';
-					cont.append(html);
+					contImagen.append(html);
 					let cuenta = document.getElementsByClassName('fileQueue');
 					if(cuenta.length > 0)$('.agregar').html('<input class="btn btn-sirese pull-right" type="button" value="Agregar" />');
 					else $('.agregar').html('');
@@ -139,8 +138,7 @@ function eventos() {
 			/*if (e.dataTransfer.items){ files = e.dataTransfer.items; e.dataTransfer.items.clear(); }
 			else{ files = e.dataTransfer.files; e.dataTransfer.clearData(); }*/
 			files = e.dataTransfer.files; e.dataTransfer.clearData();
-			console.log(files);
-			imagen(files,'drop');
+			imagen(files);
 		}else if(tipo == 'dragenter'){ e.target.classList.add("active"); }
 		else if(tipo == 'dragleave'){ e.target.classList.remove("active"); }
 	});
@@ -150,11 +148,11 @@ function eventos() {
 		//console.log(e);
 		//console.log(this);
 		let files = e.target.files;
-		console.log(files);
-		var clone = this.cloneNode(); clone.value = '';
+		//console.log(files);
+		/*var clone = this.cloneNode(); clone.value = '';
 		this.parentNode.replaceChild(clone, this);
-		this.value = '';
-		imagen(files,'load');
+		this.value = '';*/
+		imagen(files);
 	});
 	
 	
