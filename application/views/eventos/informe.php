@@ -1,3 +1,8 @@
+<?
+set_time_limit(60);
+$uReg = $evento->usuario_registro;
+$uAct = $evento->usuario_actualizacion;
+?>
 <html>
     <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -30,6 +35,8 @@
 			#footer{font-size: 8px;height: 50px;border-top:0.5px solid #AAA;width:20.5cm;line-height:1em}
 			table .acciones{border:2px solid burlywood; border-collapse: collapse}
 			.acciones td{border:2px solid burlywood; border-collapse: collapse}
+			table .fotos{width:16cm;margin-bottom:20px}
+			.galeria{margin:auto;width:254px;}
 			* { text-transform: uppercase; }
         </style>
     </head>
@@ -43,11 +50,9 @@
         <footer>
 			<table id="footer" cellspacing="1" style="">
 				<tr>
-					<td style="padding: 3px;" rowspan="2">
-						<img src="<?=base_url()?>public/images/informes/footer.png" width="75px" />
+					<td style="padding: 3px;" rowspan="">
+						<img src="<?=base_url()?>public/images/informes/footer.png" width="70px" />
 					</td>
-				</tr>
-				<tr style="padding-bottom:5px">
 					<td>
 						jefe del coes<br><br>coordinador coes<br><br>
 					</td>
@@ -59,7 +64,9 @@
 						odenaged_informa@minedu.gob.pe<br>av. rep&uacute;blica de colombia nº 710 - san isidro<br>tel&eacute;fono	: 615-5854, 615-5800<br>
 						anexo	: 26760/26741<br>celular: 989183571 / 989183584
 					</td>
-					<td>&nbsp;</td>
+					<td colspan="2">registrado por: <br><span style="font-weight:bold"><?=$uReg?></span><br>
+					actualizado por: <br><span style="font-weight:bold"><?=$uAct?></span>
+					</td>
 											
 					<!--<td style="padding-top: 5px;">
 					<a href="http://sireed.minsa.gob.pe/" target="_blank" style="margin-top:0px;">http://sireed.minsa.gob.pe</a>
@@ -75,7 +82,6 @@
 					 <p class="footer-margin">COE Salud: 611 9933</p>
 					</td>-->
 				</tr>
-				<tr></tr>
 			</table>
         </footer>
 
@@ -184,7 +190,7 @@
 							<tr bgcolor="#DAF7A6"><th>item</th><th>c.modular</th><th>c.local</th><th>nivel</th><th>nombre i.e.</th><th>registro</th></tr>
 				<?			}		?>
 							<tr><td>4.<?=$i?></td><td><?=$row->COD_MOD?></td><td><?=$row->CODLOCAL?></td>
-							<td><?=$row->D_NIV_MOD?></td><td><?=$row->CEN_EDU?></td><td><?=$row->fecha?></td></tr>
+							<td><?=$row->D_NIV_MOD?></td><td><?=$row->CEN_EDU?></td><td><?=substr($row->fecha,0,10)?></td></tr>
 				<?
 							$i ++;
 						endforeach;
@@ -194,25 +200,33 @@
 					</td>
 				</tr>
 				<tr><td colspan="12" >&nbsp;</td></tr>
-				<?
-					if(!empty($fotos)){
-						$i = 1;
-						foreach($fotos as $row):
-							if($i === 1){
-				?>
+				<? if(!empty($fotos)){ ?>
 				<tr style="text-align:left;font-weight: bold;"><td width="30pt">v. </td><td colspan="9">galer&iacute;a fotogr&aacute;fica:</td><td>&nbsp;</td></tr>
-				<?			}		?>
-							<tr><td colspan="10">fotograf&iacute;a <?=$i?></td></tr>
-							<tr><td colspan="10"><img src="<?=base_url()?>public/images/galerias_eventos/<?$row->fotografia?>" /></td></tr>
-							<tr><td colspan="10"><?=$row->descripcion?></td></tr>
-				<?
-							$i ++;
-						endforeach;
-					}
-				?>
+				<?}?>
+				<!--<tr>
+					<td colspan="12">
+				<?	/*$i = 1; foreach($fotos as $row): ?>
+					<table cellspacing="0" cellpadding="1" align="center" style="text-align:center;" class="fotos">
+						<tr><td>fotograf&iacute;a <?=$i?></td></tr>
+						<tr><td><img src="<?=base_url()?>public/images/galerias_eventos/<?=$row->fotografia?>" width="200px" height="200px"/></td></tr>
+						<tr><td><?=$row->descripcion?></td></tr>
+					</table>
+				<?	$i ++; endforeach;*/ ?>
 					</td>
-				</tr>
+				</tr>-->
 			</table>
+			<br>
+			<?php $n=1; foreach($fotos as $row): ?>
+			<div class="row">
+				<div class="col-md-12"></div>
+				<div class="col-md-12 text-center galeria">
+					<p align="center" class="my-2">fotograf&iacute;a <?=$n?></p>
+					<img src="<?=base_url()?>public/images/galerias_eventos/<?=$row->fotografia?>" border="0" width="250" />
+					<p align="center" class="my-2"><?=$row->descripcion?></p>
+				</div>
+			</div>
+		    <br />
+			<?php $n++; endforeach; ?>
         </main>
     </body>
 </html>

@@ -145,10 +145,12 @@ function eventos() {
 	
 	fileSystem.bind('change', function(e){
 		var e = e || window.event;
+		console.log(e);
+		console.log(this);
 		let files = e.target.files;
 		/*var clone = this.cloneNode(); clone.value = '';
 		this.parentNode.replaceChild(clone, this);*/
-		this.value = '';
+		//this.value = '';
 		imagen(files,'load');
 	});
 	
