@@ -275,7 +275,7 @@
 													<path fill-rule="evenodd" d="M8 2a.5.5 0 01.5.5v8a.5.5 0 01-1 0v-8A.5.5 0 018 2z" clip-rule="evenodd"></path>
 												</svg>
 												<span>Arrastre archivos Aqu&iacute; o 
-													<label>Seleccione Archivos<input value="buscar" type="file" style ="display:none" multiple /></label>
+													<label>Seleccione Archivos<input id="buscar" type="file" style ="display:none" multiple /></label>
 												</span>												
 											</div>
 										</div>

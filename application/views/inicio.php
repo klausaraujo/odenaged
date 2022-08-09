@@ -33,7 +33,7 @@
 			?>
 				<div class="col-xl-12 col-md-12">
 					<div class="ajaxForm" style="display:none"><?php $this->load->view("eventos/form-new"); ?></div>
-					<div class="ajaxTable">
+					<div class="ajaxTable mb-4">
 						<div class="card m-b-30 pb-35">
 							 <div class="card-body">
 								<h4 class="mt-0 m-b-15 header-title">Listado General de Eventos Registrados</h4>

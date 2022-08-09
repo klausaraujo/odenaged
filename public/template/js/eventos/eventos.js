@@ -76,7 +76,7 @@ function eventos() {
 		if($(this).attr('value') == 'Agregar'){
 			$('.fileQueue').each(function(index, el){
 				let input = $(el).find('.descripcion input');
-				if(input.val() == ''){ alert('El campo descripciónn no puede quedar vacío'); return false; };
+				if(input.val() == ''){ alert('El campo descripción no puede quedar vacío'); return false; };
 				let name = $(this).find('.name b').html(), desc = $(this).find('.descripcion input').val(), src = $(this).find('.src input').val();
 				jSon = [{'version':1,'fotografia': name,'descripcion' : desc, 'foto' : src}];
 				//alert(name+'  '+desc+'  '+src);
@@ -124,7 +124,7 @@ function eventos() {
 					//$('.hidd').append('<div class="hid"><input type="text" id="n" value="'+file.name+'" /><input type="text" id="src" value"'+file.result+'" /></div>');
 				}
 			})(files[index]);
-			if(evento == 'drop'){ fr.readAsDataURL(file.getAsFile()); name = file.getAsFile().name }else{ fr.readAsDataURL(file); name = file.name; }
+			fr.readAsDataURL(file); name = file.name;
 		});
 	}
 	
@@ -133,11 +133,13 @@ function eventos() {
 		e.stopPropagation();
 		var e = e || window.event;
 		let tipo = e.type, files;
-		//console.log(e);
 		if(tipo == 'drop'){
+			//console.log(e);
 			e.target.classList.remove("active");
-			if (e.dataTransfer.items){ files = e.dataTransfer.items; e.dataTransfer.items.clear(); }
-			else{ files = e.dataTransfer.files; e.dataTransfer.clearData(); }
+			/*if (e.dataTransfer.items){ files = e.dataTransfer.items; e.dataTransfer.items.clear(); }
+			else{ files = e.dataTransfer.files; e.dataTransfer.clearData(); }*/
+			files = e.dataTransfer.files; e.dataTransfer.clearData();
+			console.log(files);
 			imagen(files,'drop');
 		}else if(tipo == 'dragenter'){ e.target.classList.add("active"); }
 		else if(tipo == 'dragleave'){ e.target.classList.remove("active"); }
@@ -145,12 +147,13 @@ function eventos() {
 	
 	fileSystem.bind('change', function(e){
 		var e = e || window.event;
-		console.log(e);
-		console.log(this);
+		//console.log(e);
+		//console.log(this);
 		let files = e.target.files;
-		/*var clone = this.cloneNode(); clone.value = '';
-		this.parentNode.replaceChild(clone, this);*/
-		//this.value = '';
+		console.log(files);
+		var clone = this.cloneNode(); clone.value = '';
+		this.parentNode.replaceChild(clone, this);
+		this.value = '';
 		imagen(files,'load');
 	});
 	
