@@ -67,20 +67,7 @@ $uAct = $evento->usuario_actualizacion;
 					<td colspan="2">registrado por: <br><span style="font-weight:bold"><?=$uReg?></span><br>
 					actualizado por: <br><span style="font-weight:bold"><?=$uAct?></span>
 					</td>
-											
-					<!--<td style="padding-top: 5px;">
-					<a href="http://sireed.minsa.gob.pe/" target="_blank" style="margin-top:0px;">http://sireed.minsa.gob.pe</a>
-					<p class="footer-margin">coesalud@minsa.gob.pe</p>
-					</td>
-					<td style="vertical-align: top;margin-top:0;padding-top: 5px;">
-						<div class="vertical"></div>
-					</td>
-					<td style="padding-left: 10px;padding-top: 5px;">
-					 <p class="footer-margin" style="margin-top:0px;">Av. San Felipe N&deg; 1116</p>
-					 <p class="footer-margin">Jesús María - Lima 11, Per&uacute;</p>
-					 <p class="footer-margin">Telf. (511) 611 9930</p>
-					 <p class="footer-margin">COE Salud: 611 9933</p>
-					</td>-->
+				
 				</tr>
 			</table>
         </footer>
@@ -221,7 +208,7 @@ $uAct = $evento->usuario_actualizacion;
 				<div class="col-md-12"></div>
 				<div class="col-md-12 text-center galeria">
 					<p align="center" class="my-2">fotograf&iacute;a <?=$n?></p>
-					<img src="<?=base_url()?>public/images/galerias_eventos/<?=$row->fotografia?>" border="0" width="250" />
+					<img src="<?=base_url()?>public/images/galerias_eventos/<?=$row->fotografia?>" border="0" width="300" style="border:2px burlywood;border-style:solid;border-radius:10px"/>
 					<p align="center" class="my-2"><?=$row->descripcion?></p>
 				</div>
 			</div>
