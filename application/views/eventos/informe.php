@@ -36,7 +36,7 @@ $uAct = $evento->usuario_actualizacion;
 			table .acciones{border:2px solid burlywood; border-collapse: collapse}
 			.acciones td{border:2px solid burlywood; border-collapse: collapse}
 			table .fotos{width:16cm;margin-bottom:20px}
-			.galeria{margin:auto;width:254px;}
+			.galeria{margin:auto;width:304px;}
 			* { text-transform: uppercase; }
         </style>
     </head>
