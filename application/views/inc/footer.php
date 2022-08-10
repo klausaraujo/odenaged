@@ -57,8 +57,14 @@
 <script src="<?=base_url()?>public/template/js/table/datatable/pdfmake.min.js"></script>
 <script src="<?=base_url()?>public/template/js/table/datatable/vfs_fonts.js"></script>
 <script src="<?=base_url()?>public/template/js/table/table.js"></script>
+<?	if($this->uri->segment(1) === 'usuario'){	?>
+		<script src="<?=base_url()?>public/template/js/usuarios/perfil.js"></script>
+		<script>
+			const URI = '<?=$this->config->item('path_url')?>';
+			perfil(URI);
+		</script>
 
-<?	if(isset($eventos)){	?>
+<?	}if($this->uri->segment(1) === 'eventos'){	?>
 		<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=<?='AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc'?>&libraries=places&v=weekly" async></script>
 		<script src="<?=base_url()?>public/template/js/mapa/map.js"></script>

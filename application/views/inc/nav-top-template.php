@@ -58,7 +58,7 @@
                            <h5 class="mb-0 text-white line-height">Hola: <?=$this->session->userdata("nombre")?> <?=$this->session->userdata("apellido")?></h5>
                            <span class="text-white font-size-12">Disponible</span>
                         </div>
-                        <a href="#" class="iq-sub-card iq-bg-primary-hover">
+                        <a href="<?=base_url()?>usuario/perfil" class="iq-sub-card iq-bg-primary-hover">
                            <div class="media align-items-center">
                               <div class="rounded iq-card-icon iq-bg-primary">
                                  <i class="ri-file-user-line"></i>

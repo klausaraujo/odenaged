@@ -47,9 +47,7 @@ class Main extends CI_Controller
 			'accion' => $tipoaccion,
 			'dpto' => $dpto,
 			'url' => $this->config->item('path_url'),
-			'uri' => base_url(),
-			//'pdf' => $pdf,
-			'eventos' => 'eventos'
+			'uri' => base_url()
 		);
 		
 		//$this->load->view($this->uri->segment(1).'/main',$data);
