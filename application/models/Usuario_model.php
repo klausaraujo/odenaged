@@ -6,7 +6,6 @@ class Usuario_model extends CI_Model
     private $id;
     private $usuario;
     private $password;
-    private $passPIA;
     private $idrol;
     private $Anio_Ejecucion;
     private $Codigo_Usuario;
@@ -22,86 +21,22 @@ class Usuario_model extends CI_Model
     private $codigo_Sub_Centro_Costos;
     private $avatar;
     private $activo;
-    public function setAnio_Ejecucion($data)
-    {
-        $this->Anio_Ejecucion = $this->db->escape_str($data);
-    }
-    public function setId($data)
-    {
-        $this->id = $this->db->escape_str($data);
-    }
-    public function setactivo($data)
-    {
-        $this->activo = $this->db->escape_str($data);
-    } 
-    public function setUsuario($data)
-    {
-        $this->usuario = $this->db->escape_str($data);
-    }
-    public function setPassword($data)
-    {
-        $this->password = $this->db->escape_str($data);
-    }
-    public function setPassPIA($data)
-    {
-        $this->passPIA = $this->db->escape_str($data);
-    }
-    public function setIdRol($data)
-    {
-        $this->idrol = $this->db->escape_str($data);
-    }
-    public function setCodigo_Usuario($data)
-    {
-        $this->Codigo_Usuario = $this->db->escape_str($data);
-    }
-    public function setDNI($data)
-    {
-        $this->DNI = $this->db->escape_str($data);
-    }
-    public function setApellidos($data)
-    {
-        $this->Apellidos = $this->db->escape_str($data);
-    }
-    public function setNombres($data)
-    {
-        $this->Nombres = $this->db->escape_str($data);
-    }
-    public function setCodigo_Perfil($data)
-    {
-        $this->Codigo_Perfil = $this->db->escape_str($data);
-    }
-    public function setCodigo_Region($data)
-    {
-        $this->Codigo_Region = $this->db->escape_str($data);
-    }
-    public function setCodigo_Sector($data)
-    {
-        $this->Codigo_Sector = $this->db->escape_str($data);
-    }
-    public function setCodigo_Pliego($data)
-    {
-        $this->Codigo_Pliego = $this->db->escape_str($data);
-    }
-    public function setCodigo_Ejecutora($data)
-    {
-        $this->Codigo_Ejecutora = $this->db->escape_str($data);
-    }
-    public function setCodigo_Centro_Costos($data)
-    {
-        $this->Codigo_Centro_Costos = $this->db->escape_str($data);
-    }
-    public function setCodigo_Sub_Centro_Costos($data)
-    {
-        $this->Codigo_Sub_Centro_Costos = $this->db->escape_str($data);
-    }
-    public function setAvatar($data)
-    {
-        $this->avatar = $this->db->escape_str($data);
-    }
-    public function __construct()
-    {
-        parent::__construct();
-    }
+	
+    public function setAnio_Ejecucion($data){ $this->Anio_Ejecucion = $this->db->escape_str($data); }
+    public function setId($data){ $this->id = $this->db->escape_str($data); }
+    public function setactivo($data){ $this->activo = $this->db->escape_str($data); }
+    public function setUsuario($data){ $this->usuario = $this->db->escape_str($data); }
+    public function setPassword($data){ $this->password = $this->db->escape_str($data); }
+    public function setIdRol($data){ $this->idrol = $this->db->escape_str($data); }
+    public function setDNI($data){ $this->DNI = $this->db->escape_str($data); }
+    public function setApellidos($data){ $this->Apellidos = $this->db->escape_str($data); }
+    public function setNombres($data){ $this->Nombres = $this->db->escape_str($data); }
+    public function setCodigo_Perfil($data){ $this->Codigo_Perfil = $this->db->escape_str($data); }
+    public function setCodigo_Region($data){ $this->Codigo_Region = $this->db->escape_str($data); }
+    public function setAvatar($data){ $this->avatar = $this->db->escape_str($data); }
+	
+    public function __construct() { parent::__construct(); }
+	
     public function iniciar()
     {
         $this->db->select('usuarios.idusuario,usuarios.usuario,usuarios.avatar,usuarios.apellidos apellido,usuarios.nombres nombre,usuarios.idperfil idrol,usuarios.activo');
@@ -145,5 +80,24 @@ class Usuario_model extends CI_Model
         $this->db->from("usuarios_ubigeo");
 		$this->db->where("idusuario", $this->idusuario);
         return $this->db->get();
+    }
+	public function validar_password()
+    {
+        $this->db->select('passwd');
+        $this->db->from('usuarios');
+        $this->db->where("idusuario", $this->id);
+        $pass = $this->db->get();
+        $pass = $pass->row();
+        if(sha1($this->password) == $pass->passwd) return 1;
+        else return 0;
+    }
+	public function password()
+    {
+        $this->db->db_debug = FALSE;
+        $this->db->set("passwd", sha1($this->password), TRUE);
+        $this->db->where("idusuario", $this->id);
+        $error = array();
+        if ($this->db->update('usuarios')) return 1;
+        else { $error = $this->db->error(); return $error["code"]; }
     }
 }

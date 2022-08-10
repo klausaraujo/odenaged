@@ -269,6 +269,8 @@
 								<div id="uploader">
 									<div class="container-fluid" id="uploaderCont">
 										<div class="row ddHandler">
+											<div class="col-12 vista"><img /></div>
+											<div class="col-12 vista"><label>Seleccione Archivos<input id="buscar" type="file" style ="display:none" multiple /></label></div>
 											<div class="col-12" id="dragandrophandler" ondragover="return false">
 												<svg class="bi bi-upload" width="1em" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
 													<path fill-rule="evenodd" d="M.5 8a.5.5 0 01.5.5V12a1 1 0 001 1h12a1 1 0 001-1V8.5a.5.5 0 011 0V12a2 2 0 01-2 2H2a2 2 0 01-2-2V8.5A.5.5 0 01.5 8zM5 4.854a.5.5 0 00.707 0L8 2.56l2.293 2.293A.5.5 0 1011 4.146L8.354 1.5a.5.5 0 00-.708 0L5 4.146a.5.5 0 000 .708z" clip-rule="evenodd"></path>
@@ -276,7 +278,7 @@
 												</svg>
 												<span>Arrastre archivos Aqu&iacute; o 
 													<label>Seleccione Archivos<input id="buscar" type="file" style ="display:none" multiple /></label>
-												</span>												
+												</span>
 											</div>
 										</div>
 									</div>

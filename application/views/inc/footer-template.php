@@ -1,4 +1,4 @@
-<div>
+<div class="mt-4">
 	<footer class="bg-white iq-footer">
 	   <div class="container-fluid">
 	      <div class="row">
