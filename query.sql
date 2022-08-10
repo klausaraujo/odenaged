@@ -2744,7 +2744,7 @@ as
 	evento.zoom,
 	evento.mapa_imagen,
 	evento.activo
- from registro_evento as evento inner join ubigeo as ubigeo on ubigeo.ubigeo=evento.ubigeo inner join nivel on nivel.idnivel = evento.idnivel inner join evento as eventos on eventos.idevento = evento.idevento inner join tipo_evento on tipo_evento.idtipoevento=eventos.idtipoevento inner join usuarios on usuarios.idusuario=evento.idusuario_registro inner join estado_evento on estado_evento.idestado = evento.idestado left join usuarios as usuarios_a on usuarios_a.idusuario=evento.idusuario_actualizacion left join usuarios as usuarios_an on usuarios_an.idusuario=evento.idusuario_anulacion left join usuarios as usuarios_c on usuarios_c.idusuario=evento.idusuario_anulacion;
+from registro_evento as evento inner join ubigeo as ubigeo on ubigeo.ubigeo=evento.ubigeo inner join nivel on nivel.idnivel = evento.idnivel inner join evento as eventos on eventos.idevento = evento.idevento inner join tipo_evento on tipo_evento.idtipoevento=eventos.idtipoevento inner join usuarios on usuarios.idusuario=evento.idusuario_registro inner join estado_evento on estado_evento.idestado = evento.idestado left join usuarios as usuarios_a on usuarios_a.idusuario=evento.idusuario_actualizacion left join usuarios as usuarios_an on usuarios_an.idusuario=evento.idusuario_anulacion left join usuarios as usuarios_c on usuarios_c.idusuario=evento.idusuario_anulacion;
  
 
 
