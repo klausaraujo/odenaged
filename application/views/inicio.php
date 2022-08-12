@@ -68,14 +68,17 @@
 								</div>
 								<br>
 
-								<div class="table-responsive">
+								<div class="container-fluid">
+									<div class="mx-auto"><!--align-items-center text-center-->
 								   <table id="tablaEvento" class="table table-striped dt-responsive w-100 table-bordered display nowrap table-hover mb-0" style="width:100%">
 								   </table>
+								   </div>
 								</div>
 
 							</div>
 						</div>
 					</div>
 					<div class="ajaxPreliminar" style="display:none"><?php $this->load->view("eventos/form-preliminar"); ?></div>
+					<div class="ajaxComplementario" style="display:none"><?php $this->load->view("eventos/form-complementario"); ?></div>
 				</div>
 	<? 	} ?>

@@ -37,6 +37,7 @@ function main(map) {
 		if(!$('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 1) $('.ajaxMap').hide();
 		if(!$('.sismo').css('display') == 'none' || $('.sismo').css('opacity') == 1) $('.sismo').hide();
 		if(!$('.ajaxPreliminar').css('display') == 'none' || $('.ajaxPreliminar').css('opacity') == 1) $('.ajaxPreliminar').hide();
+		if(!$('.ajaxComplementario').css('display') == 'none' || $('.ajaxComplementario').css('opacity') == 1) $('.ajaxComplementario').hide();
 		$('#message').switchClass('succes', 'warn');
 		$('#cargando').html('');
 		$("#message").html('');
@@ -376,7 +377,7 @@ function main(map) {
 				tableDanio.clear(); if(danio.length > 0) tableDanio.rows.add(JSON.parse(danio)).draw();
 				tableAccion.clear(); if(accion.length > 0) tableAccion.rows.add(JSON.parse(accion)).draw();
 				tableIEF.clear(); if(ies.length > 0) tableIEF.rows.add(JSON.parse(ies)).draw();
-				$('#version').val(1);
+				$('#version').val(0);
 				tableFotos.clear();
 				if(fotos.length > 0){
 					let json = [];
@@ -414,5 +415,18 @@ function main(map) {
 			informe(data.idregistroevento,data.ubigeo,data.departamento,data.provincia,data.distrito);
 		}
 		if($(this).hasClass('actionReport')){/*muestraInforme();*/window.open('informe?id='+data.idregistroevento, "_blank");}
+		if($(this).hasClass('actionComp')){
+			console.log(data.idregistroevento);
+			console.log(data.evento);
+			console.log(data.tipo_evento);
+			console.log(data.ubigeo_descripcion);
+			$('#tipoEvtComp').val(data.tipo_evento);
+			$('#evtComp').val(data.evento);
+			$('#ubigeoComp').val(data.ubigeo_descripcion);
+			$('#idregevento').val(data.idregistroevento);
+			$('#fechaComp').val(data.fecha+' '+data.hora);
+			if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
+			if($('.ajaxComplementario').css('display') == 'none' || $('.ajaxComplementario').css('opacity') == 0) $('.ajaxComplementario').show();
+		}
 	});
 }

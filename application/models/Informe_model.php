@@ -60,7 +60,7 @@ class Informe_model extends CI_Model
     }
 	public function listaIE()
 	{
-		$this->db->select('ie.idiestevento,ie.idiest,ie.version,ie.descripcion,ie.fecha,ed.CEN_EDU,ed.COD_MOD,ed.CODLOCAL,ed.D_NIV_MOD');
+		$this->db->select('ie.idiestevento,ie.idiest,ie.version,ie.descripcion,DATE_FORMAT(ie.fecha, "%d/%m/%Y") fecha,ed.CEN_EDU,ed.COD_MOD,ed.CODLOCAL,ed.D_NIV_MOD');
         $this->db->from('iest_2020_all_evento ie');
 		$this->db->join('iest_2020_all ed','ie.idiest = ed.ID');
 		$this->db->where('ie.idregistroevento', $this->idRegistroEvento);

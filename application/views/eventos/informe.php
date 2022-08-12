@@ -75,20 +75,23 @@ $uAct = $evento->usuario_actualizacion;
         <!-- Etiqueta principal del pdf -->
         <main>
             <table id="contenido" cellspacing="0" cellpadding="1" align="center" style="text-align:center;">
-				<tr><td colspan="12" ><b>REPORTE DE SITUACIÓN PRELIMINAR N° <?=$evento->numero_evento?>-<?=$evento->anio_evento?>-COES EDUCACIÓN</b></td></tr>
-				<tr><td colspan="12" ><b>FECHA Y HORA: <?=$evento->fecha?> – <?=$evento->hora?> HORAS</b></td></tr>
+				<tr><td colspan="12" ><b>reporte situaci&oacute;n preliminar n° <?=$evento->numero_evento?>-<?=$evento->anio_evento?>-coes educaci&oacute;n</b></td></tr>
+				<tr><td colspan="12" >
+					<b><?=$evento->evento?> en el distrito <?=$evento->distrito?> provincia <?=$evento->provincia?> regi&oacute;n <?=$evento->departamento?></b>
+				</td></tr>
+				<tr><td colspan="12" ><b>fecha y hora: <?=$evento->fecha?> – <?=$evento->hora?> horas</b></td></tr>
 				<tr><td colspan="12" >&nbsp;</td></tr>
-				<tr><td width="30pt" style="text-align:left">I.</td><td style="text-align:left" colspan="11"><b>HECHOS</b></td></tr>
+				<tr><td width="30pt" style="text-align:left">I.</td><td style="text-align:left" colspan="11"><b>hechos</b></td></tr>
 				<tr>
 					<td width="30pt"></td>
 					<td style="text-align:justify" colspan="11"><?=$evento->descripcion?></td></tr>
 				<tr><td colspan="12" >&nbsp;</td></tr>
-				<tr><td width="30pt" style="text-align:left">II.</td><td style="text-align:left" colspan="11"><b>UBICACION DEL EVENTO</b></td></tr>
+				<tr><td width="30pt" style="text-align:left">II.</td><td style="text-align:left" colspan="11"><b>ubicaci&oacute;n del evento</b></td></tr>
 				<tr style="color:black">
 					<td width="30pt" colspan="2">
-					</td><td bgcolor="#DAF7A6" colspan="3"><b>Región</b></td>
-					<td bgcolor="#DAF7A6" colspan="3"><b>Provincia</b></td>
-					<td bgcolor="#DAF7A6" colspan="3"><b>Distrito</b></td>
+					</td><td bgcolor="#DAF7A6" colspan="3"><b>regi&oacute;n</b></td>
+					<td bgcolor="#DAF7A6" colspan="3"><b>provincia</b></td>
+					<td bgcolor="#DAF7A6" colspan="3"><b>distrito</b></td>
 					<td width="30pt"></td>
 				</tr>
 				<tr style="color:black">
@@ -101,7 +104,7 @@ $uAct = $evento->usuario_actualizacion;
 				<tr><td colspan="12" >&nbsp;</td></tr>
 				<tr>
 					<td width="30pt" style="text-align:center"></td>
-					<td style="text-align:center;font-weight: bold;" colspan="11">MAPA DE UBICACIÓN DEL EVENTO SEGUN COORDENADAS GEOREFERENCIALES</td>
+					<td style="text-align:center;font-weight: bold;" colspan="11">mapa de ubicaci&oacute;n del evento seg&uacute;n coordenadas georeferenciales</td>
 				</tr>
 				
 				<tr>

@@ -14,29 +14,8 @@ function tableIE(table, headersCols, data){
 			}
 		});
 	}
-		
-	//String JSON con su identificador
-	//json = {"data":[{"name":"Tiger Nikon","position":"system"}]};
-	//String JSON sin su identificador pero esperando mas datos [0],[1]...
-	//json = [{"name":"Tiger Nikon","position":"system"}];
-	//String JSON sin su identificador y solo una fila de datos
-	//json = {"name":"Tiger Nikon","position":"system"};
-	/*for(var i in cols){
-		{data:cols[i].data},
-	}
-	lista.length > 0 ? titles : titulos
-	titles = JSON.parse('[{"title":"DNI","targets": 0},{"title":"APELLIDOS","targets": 1},{"title":"NOMBRES","targets": 2}]');
-	console.log(cols[0].data);*/
-	/*Cambiar a mayusc la primera letra
-	palabras.map((palabra) => { 
-		return palabra[0].toUpperCase() + palabra.substring(1); 
-	}).join(" ");
-	for (let i = 0; i < palabras.length; i++) {
-		palabras[i] = palabras[i][0].toUpperCase() + palabras[i].substr(1);
-	}
-	palabras.join(" ");*/
 
-	const dataTable = $(table).DataTable({
+	const tabla = $(table).DataTable({
 		"data": data,
 		/*"bPaginate":false,
 		"bInfo":false,
@@ -55,5 +34,5 @@ function tableIE(table, headersCols, data){
 		"dom": '<"row mt-1"<"col-sm-6 float-left"l><"col-sm-6 float-right"f>>rtip',
 	});
 	
-	return dataTable;
+	return tabla;
 }

@@ -62,13 +62,19 @@ class Login extends CI_Controller
 					$this->Menu_model->setIdModulo($lrow->idmodulo);
                     $lista = $this->Menu_model->listaPermisos(); 
 					
-                    foreach ($lista->result() as $key=>$value) :
+                    foreach ($lista->result() as $menu) :
 
-                        $lMenu[$i][$key] = $value;                        
+                        $lMenu[$i]['idmenu'] = $menu->idmenu;                        
+						$lMenu[$i]['idmodulo'] = $menu->idmodulo;
+						$lMenu[$i]['descripcion'] = $menu->descripcion;
+						$lMenu[$i]['nivel'] = $menu->nivel;
+						$lMenu[$i]['url'] = $menu->url;
+						$lMenu[$i]['icono'] = $menu->icono;
+						$lMenu[$i]['activo'] = $menu->activo;
 
                         if ($key === 'nivel' && $value === 1) {
 
-                            /*$this->Menu_model->setId($mrow->idmenu);
+                        /*    $this->Menu_model->setId($mrow->idmenu);
                             $listaSubMenu = $this->Menu_model->listaSubMenuPermisos();
                             $lSubMenu = array();
                             $j = 0;
@@ -95,8 +101,8 @@ class Login extends CI_Controller
                 }
             endforeach;
 
-            $this->Usuario_model->setId($row->idusuario);
-			$zonas = $this->Usuario_model->listaUbigeos();
+            /*$this->Usuario_model->setId($row->idusuario);
+			$zonas = $this->Usuario_model->listaUbigeos();*/
             /*$areas = $this->Usuario_model->areas();*/
 
             /*$area = array();

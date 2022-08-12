@@ -78,7 +78,7 @@ function eventos() {
 				let input = $(el).find('.descripcion input');
 				if(input.val() == ''){ alert('El campo descripción no puede quedar vacío'); return false; };
 				let name = $(this).find('.name b').html(), desc = $(this).find('.descripcion input').val(), src = $(this).find('.src input').val();
-				jSon = [{'version':1,'fotografia': name,'descripcion' : desc, 'foto' : src}];
+				jSon = [{'version':1,'fotografia': name,'descripcion' : desc.toUpperCase(), 'foto' : src}];
 				//alert(name+'  '+desc+'  '+src);
 				var row = [];
 				tableFotos.rows().data().each(function (value) { row.push(value); });
@@ -108,9 +108,9 @@ function eventos() {
 					
 					let html = '<div class="row fileQueue my-2" style="display:flex;justify-content:center;align-items:center" ><div class="col-sm-4 m-0 name">'+
 							'<b>'+name+'</b></div><div class="descripcion col-sm-4">'+
-							'<input type="text" class="form-control pull-right" placeholder="Descripci&oacute;n de la imagen" /></div><div class="remove col-sm-4">'+
-							'<input class="btn btn-sm btn-outline-danger pull-right" type="button" value="Remover" /></div><div class="src">'+
-							'<input type="hidden" class="col-sm-12" value="'+src+'"/></div></div>';
+							'<input type="text" class="form-control pull-right" onKeyUp="mayus(this)" placeholder="Descripci&oacute;n de la imagen" />'+
+							'</div><div class="remove col-sm-4"><input class="btn btn-sm btn-outline-danger pull-right" type="button" value="Remover" />'+
+							'</div><div class="src"><input type="hidden" class="col-sm-12" value="'+src+'"/></div></div>';
 					contImagen.append(html);
 					let cuenta = document.getElementsByClassName('fileQueue');
 					if(cuenta.length > 0)$('.agregar').html('<input class="btn btn-sirese pull-right" type="button" value="Agregar" />');

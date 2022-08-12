@@ -1,28 +1,24 @@
-function tableComp(table, headers, data,img){
+function tableComp(table, headersCols, data,img){
 	
 	let cols = [], titles = [], render = [], imagen = [], lista = [], j = 1;
-	
-	if(data.length > 0) lista = data;
-	else lista = headers;
-	
-	cols.push({data:null});
-	
-	lista.forEach(function(col){
-		//console.log(col);
-		for(const [key, value] of Object.entries(col)){
-			let pal = '';
-			if(key !== 'idevento'){
+	cols.push({'acciones':''});
+	if(headersCols.length > 0){
+		headersCols.forEach(function(col){
+			//console.log(col);
+			for(const [key, value] of Object.entries(col)){
+				let pal = '';
 				cols.push({data:key});
-				key == 'fecnac'? pal = 'Fecha Nac.': key !== 'dni'? pal = key.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase()):pal = key.toUpperCase();
+				value !== 'dni'? pal = value.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase()):pal = value.toUpperCase();
 				titles.push({title:pal,targets:j});
 				j++;
 			}
-		}
-	});
+		});
+	}
 	
 	render = [
 		{
 			title: 'Acciones',
+			width: '20px',
 			targets: 0,
 			data: null,
 			render: function (data, type, row, meta) {
@@ -36,20 +32,20 @@ function tableComp(table, headers, data,img){
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>';
 				const btnHome = '<button class="btn btn-warning btn-circle btn-sm actionEvento" title="Complementarios" type="button"'+
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-home" aria-hidden="true"></i></button>';
-				return btnEdit;
+				return (img == 'complementario')?btnEdit : btnEdit+btnPdf;
 				
 			}
 		}
 	];
 	
-	if(img){
+	if(img == 'foto'){
 		imagen = [
 			{
 				data: 'foto',
 				render: function (data, type, row) {
 					let img = '<img src="'+data+'" alt="'+type+'" class="img-fluid" />';
 					if(data)
-						return '<div class="justify-content-center" style="width:35px;height:35px;margin:0">'+img+'</div>';
+						return '<div style="width:35px;height:35px;margin:0" class="mx-auto">'+img+'</div>';
 					else
 						return '';
 				}
@@ -89,16 +85,16 @@ function tableComp(table, headers, data,img){
 	}
 	palabras.join(" ");*/
 	
-	const dataTable = $(table).DataTable({
+	const tabla = $(table).DataTable({
 		"data": data,
 		/*"bPaginate":false,
 		"bInfo":false,
 		"bFilter":false,
-		"bScrollCollapse": false,
-		"bJQueryUI": false,*/
-		"bAutoWidth": true,
+		"bScrollCollapse": false,*/
+		"bJQueryUI": false,
+		"bAutoWidth": false,
 		"bDestroy": true,		
-		"responsive": true,
+		//"responsive": true,
 		"select": false,
 		"pageLength": "4",
 		//dom: 'Bfrt<"col-sm-12 inline"i> <"col-sm-12 inline"p>',
@@ -121,74 +117,8 @@ function tableComp(table, headers, data,img){
 			buttons: [
 				'copy','csv','excel','pdf','print'
 			]
-		}
-		/*"buttons": {
-			dom: {
-			  container: {
-				tag: 'div',
-				className: 'flexcontent'
-			  },
-			  buttonLiner: {
-				tag: null
-			  }
-			},
-			buttons: [{
-			  extend: 'copy',
-			  title: 'Lista General de Canillitas',
-			  exportOptions: { columns: [0, 1, 2, 3, 6] },
-			},
-			{
-			  extend: 'csv',
-			  title: 'Lista General de Canillitas',
-			  exportOptions: { columns: [0, 1, 2, 3, 6] },
-			},
-			{
-			  extend: 'excel',
-			  title: 'Lista General de Canillitas',
-			  exportOptions: { columns: [0, 1, 2, 3, 6] },
-			},
-			{
-			  extend: 'pdf',
-			  title: 'Lista General de Canillitas',
-			  orientation: 'landscape',
-			  exportOptions: { columns: [0, 1, 2, 3, 6] },
-			},
-			{
-			  extend: 'print',
-			  title: '',
-			  exportOptions: { columns: [0, 1, 2, 3, 6] },
-			  customize: function (win) {
-				$(win.document.body).addClass('white-bg');
-				$(win.document.body).css('font-size', '8px');
-
-				$(win.document.body).find('table')
-				  .addClass('compact')
-				  .css('font-size', '8px');
-
-				var css = '@page { size: landscape; }',
-				  head = win.document.head || win.document.getElementsByTagName('head')[0],
-				  style = win.document.createElement('style');
-
-				style.type = 'text/css';
-				style.media = 'print';
-
-				if (style.styleSheet) {
-				  style.styleSheet.cssText = css;
-				}
-				else {
-				  style.appendChild(win.document.createTextNode(css));
-				}
-
-				head.appendChild(style);
-			  }
-			},
-			{
-			  extend: 'pageLength',
-			  titleAttr: 'Registros a Mostrar',
-			  className: 'selectTable'
-			}]
 		}*/
 	});
 	
-	return dataTable;
+	return tabla;
 }

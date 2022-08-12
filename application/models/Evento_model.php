@@ -58,7 +58,7 @@ class Evento_model extends CI_Model
 	    
     public function listar()
 	{
-		$this->db->select("idregistroevento,anio_evento,numero_evento,nivel,tipo_evento,ubigeo,ubigeo_descripcion,departamento,provincia,distrito,estado");
+		$this->db->select('idregistroevento,anio_evento,numero_evento,nivel,tipo_evento,evento,ubigeo,ubigeo_descripcion,departamento,provincia,distrito,estado,fecha,hora');
         $this->db->from("lista_general_eventos");
         return $this->db->get();
     }

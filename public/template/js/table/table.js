@@ -17,9 +17,10 @@ function tablePersonalized(table, headersCols, data){
 	render = [
 		{
 			title: 'Acciones',
-				targets: 0,
-				data: null,
-				render: function (data, type, row, meta) {
+			width: '20px',
+			targets: 0,
+			data: null,
+			render: function (data, type, row, meta) {
 				const btnEdit = '<button class="btn btn-warning btn-circle btn-sm actionEdit" title="Editar Registro" type="button" '+
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>';
 				const btnPreliminar = '<button class="btn btn-warning btn-circle btn-sm actionInforme" title="Preliminar" type="button"'+
@@ -56,16 +57,22 @@ function tablePersonalized(table, headersCols, data){
 		palabras[i] = palabras[i][0].toUpperCase() + palabras[i].substr(1);
 	}
 	palabras.join(" ");*/
+	
+	/*#yourTable{
+    table-layout: fixed !important;
+    word-wrap:break-word;
+	}*/
+	
 
-	const dataTable = $(table).DataTable({
+	const tabla = $(table).DataTable({
 		"data": data,
 		/*"bPaginate":false,
 		"bInfo":false,
 		"bFilter":false,
 		"bScrollCollapse": false,*/
-		"bJQueryUI": false,
+		//"bJQueryUI": true,
 		"bAutoWidth": true,
-		"bDestroy": true,		
+		"bDestroy": true,
 		"responsive": true,
 		"select": false,
 		//"pageLength": "10",
@@ -157,5 +164,5 @@ function tablePersonalized(table, headersCols, data){
 		}*/
 	});
 	
-	return dataTable;
+	return tabla;
 }
