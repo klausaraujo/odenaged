@@ -423,7 +423,7 @@ function main(map) {
 			$('#tipoEvtComp').val(data.tipo_evento);
 			$('#evtComp').val(data.evento);
 			$('#ubigeoComp').val(data.ubigeo_descripcion);
-			$('#idregevento').val(data.idregistroevento);
+			$('#idregComp').val(data.idregistroevento);
 			$('#fechaComp').val(data.fecha+' '+data.hora);
 			if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
 			if($('.ajaxComplementario').css('display') == 'none' || $('.ajaxComplementario').css('opacity') == 0) $('.ajaxComplementario').show();

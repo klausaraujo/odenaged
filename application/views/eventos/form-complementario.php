@@ -5,7 +5,7 @@
 
 	<div class="container-fluid">
 		<form id="formComp" name="formComp" method="POST" action="" autocomplete="off" enctype="multipart/form-data">
-			<input type="text" id="idregevento" value="" />
+			<input type="hidden" id="idregComp" value="" />
 			<input type="hidden" id="version" value="" />
 			<div class="row">
 				<div class="col-sm-12">
