@@ -76,7 +76,7 @@
 		<!--<script src="<?=base_url()?>public/template/js/dropzone/dropzone.js"></script>
 		<script src="<?=base_url()?>public/template/js/dropzone/5x5jqpi.min.js"></script>-->
 		<script>
-			const lista = JSON.parse('<?=$lista?>');
+			const lista = JSON.parse('<?=$lista?>');/**/
 			const URI = '<?=$url?>';
 			const path = '<?=$uri?>';
 			const datos = [];

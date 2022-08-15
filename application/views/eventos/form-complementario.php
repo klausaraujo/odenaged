@@ -2,7 +2,7 @@
 .table th, td{text-align:center;align-items:center;justify-content:center}
 .table tr:first-child{width:40px}
 </style>
-
+<!---->
 		<div class="container-fluid">
 			<input type="hidden" id="idregComp" value="" />
 			<input type="hidden" id="ubigeoComp" value="" />

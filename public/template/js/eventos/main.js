@@ -419,6 +419,7 @@ function main(map) {
 		}
 		if($(this).hasClass('actionReport')){/*muestraInforme();*/window.open('informe?id='+data.idregistroevento, "_blank");}
 		if($(this).hasClass('actionComp')){
+			/**/
 			$('#tipoEvtComp').val(data.tipo_evento);
 			$('#evtComp').val(data.evento);
 			$('#ubdesComp').val(data.ubigeo_descripcion);

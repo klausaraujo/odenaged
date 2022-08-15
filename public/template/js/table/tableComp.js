@@ -57,7 +57,7 @@ function tableComp(table, headersCols, data,img){
 	}
 	titles = render.concat(titles);
 	if(img == 'foto'){ cols = cols.concat(imagen);titles = titles.concat([{title: 'Foto',targets: j}]); }
-	
+	/**/
 	//String JSON con su identificador
 	//json = {"data":[{"name":"Tiger Nikon","position":"system"}]};
 	//String JSON sin su identificador pero esperando mas datos [0],[1]...

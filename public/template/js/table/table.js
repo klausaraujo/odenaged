@@ -52,7 +52,7 @@ function tablePersonalized(table, headersCols, data, comp){
 	let botones = '<"row"<"col-sm-12 mb-2"B><"col-sm-6 float-left"l><"col-sm-6 float-right"f>>rtip';
 	if(comp == 'complementario'){ cols = cols.concat(activo);titles = titles.concat([{title: 'Estado',targets: j}]); botones = '<"row"<"col-sm-6 float-left py-2"l><"col-sm-6 float-right py-2"f>>rtip';}
 	
-	
+	/**/
 	//String JSON con su identificador
 	//json = {"data":[{"name":"Tiger Nikon","position":"system"}]};
 	//String JSON sin su identificador pero esperando mas datos [0],[1]...

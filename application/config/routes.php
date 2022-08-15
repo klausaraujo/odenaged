@@ -77,6 +77,6 @@ $route['informe'] = 'eventos/informes/informe';
 #Gestion de Usuarios
 $route['perfil'] = 'usuario/perfil';
 $route['pass'] = 'usuario/password';
-
+/**/
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

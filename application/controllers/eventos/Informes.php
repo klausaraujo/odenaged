@@ -316,7 +316,7 @@ class Informes extends CI_Controller
 			($ies->num_rows() > 0)? $ies = $ies->result() : $ies = array();
 			
 			if($evento->num_rows() > 0){
-				$this->load->library("dom");
+				#$this->load->library("dom");
 				$evento = $evento->row();
 				$data = array(
 					'evento' => $evento,
@@ -325,13 +325,14 @@ class Informes extends CI_Controller
 					'fotos' => $fotos,
 					'ies' => $ies
 				);
-				$html = $this->load->view('eventos/informe', $data, true);
-				$this->dom->generate("portrait", "informe", $html, "Informe");
-				/*foreach($danios as $row):
-					echo var_dump($row);
-					echo $row->ideventotipodanio;
-				endforeach;*/
+				#$html = $this->load->view('eventos/informe', $data, true);
+				#$this->dom->generate("portrait", "informe", $html, "Informe");
+				#foreach($danios as $row):
+				#	echo var_dump($row);
+				#	echo $row->ideventotipodanio;
+				#endforeach;
 			}
+			echo json_encode($data);/**/
 		}
 	}
 }

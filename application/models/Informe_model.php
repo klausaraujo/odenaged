@@ -69,7 +69,7 @@ class Informe_model extends CI_Model
 		$query = 'SELECT DISTINCT version,fecha_apertura,activo FROM '.$this->tabla.' WHERE idregistroevento='.$this->idRegistroEvento.'  AND version > 0';
 		return $this->db->query($query);
 	}
-	*/
+	*//**/
 	public function traeVersion(){
 		$data = array();$i = 0;
 		$this->db->distinct(); $this->db->select('version,fecha_apertura,fecha_cierre,activo'); $this->db->from('evento_tipo_danio'); $this->db->where('idregistroevento', $this->idRegistroEvento);

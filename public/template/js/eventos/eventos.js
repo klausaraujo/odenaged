@@ -20,7 +20,7 @@ function eventos() {
 		
 		resetear();
 	}
-	
+	/**/
 	function resetear(){
 		tableDanio.clear(); tableDanio.draw();
 		tableAccion.clear(); tableAccion.draw();

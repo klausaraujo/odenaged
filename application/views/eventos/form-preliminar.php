@@ -3,7 +3,7 @@
 .table tr:first-child{width:40px}
 </style>
 
-	<div class="container-fluid">
+	<div class="container-fluid"><!---->
 		<form id="formInforme" name="formInforme" method="POST" action="" autocomplete="off" enctype="multipart/form-data">
 			<input type="hidden" id="idregevento" value="" />
 			<input type="hidden" id="version" value="" />
