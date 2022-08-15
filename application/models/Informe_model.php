@@ -81,7 +81,7 @@ class Informe_model extends CI_Model
 	}
 	*//**/
 	public function traeVersion(){
-		$this->db->select('version,fecha_apertura,fecha_cierre,activo');
+		$this->db->select('idregistroevento,version,fecha_apertura,fecha_cierre,activo');
 		$this->db->from('evento_versiones');
 		$this->db->where('idregistroevento', $this->idRegistroEvento);
 		$this->db->where('version >', '0');

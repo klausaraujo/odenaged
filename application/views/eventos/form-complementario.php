@@ -4,12 +4,12 @@
 </style>
 <!---->
 		<div class="container-fluid">
-			<input type="text" id="idregComp" value="" />
-			<input type="text" id="ubigeoComp" value="" />
-			<input type="text" id="versionComp" value="" />
-			<input type="text" id="dptoComp" value="" />
-			<input type="text" id="provComp" value="" />
-			<input type="text" id="dttoComp" value="" />
+			<input type="hidden" id="idregComp" value="" />
+			<input type="hidden" id="ubigeoComp" value="" />
+			<input type="hidden" id="versionComp" value="" />
+			<input type="hidden" id="dptoComp" value="" />
+			<input type="hidden" id="provComp" value="" />
+			<input type="hidden" id="dttoComp" value="" />
 			<div class="row">
 				<div class="col-sm-12">
 				<? 
