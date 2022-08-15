@@ -90,7 +90,7 @@ function eventos() {
 		if($(this).hasClass('complementario')){
 			e.preventDefault();
 			e.stopPropagation();
-			complementario($('#idregComp').val(),$('#versionComp').val(),$('#ubigeoComp').val());
+			complementario($('#idregComp').val(),$('#versionComp').val(),$('#ubigeoComp').val(),'buscaComplementario');
 		}
 	});
 	
@@ -99,6 +99,7 @@ function eventos() {
 		if($(this).hasClass('actionDelete')){
 			if(tabComp.row(this).child.isShown()) tabComp.row(this).remove().draw();
 			else tabComp.row($(this).parents("tr")).remove().draw();
+			complementario(data.idregistroevento,data.version,'','borraComplementario');
 		}if($(this).hasClass('actionInforme')){
 			/*console.log( ($('#ubigeoComp').val()).substr(0,2) +'  '+ ($('#ubigeoComp').val()).substr(2,2) +' '+ ($('#ubigeoComp').val()).substr(4,2) );
 			console.log( $('#idregComp').val() +'  '+ $('#versionComp').val() );*/
@@ -108,11 +109,11 @@ function eventos() {
 		}if($(this).hasClass('actionReport')){window.open('informe?id='+data.idregistroevento+'&version='+data.version, "_blank");}
 	});
 	
-	function complementario(id,ver,ub){
-		//alert(id +' '+ ver +' '+ ub);
+	function complementario(id,ver,ub,control){
+		alert(id +' '+ ver +' '+ control);
 		$.ajax({
             data: { idevento: id, version: ver, ubigeo: ub },
-            url: URI + 'buscaComplementario',
+            url: URI + control,
             method: "POST",
             dataType: "json",
             beforeSend: function () {},

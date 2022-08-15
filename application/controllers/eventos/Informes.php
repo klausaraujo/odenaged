@@ -99,6 +99,10 @@ class Informes extends CI_Controller
 		echo json_encode(array('versiones' => $versiones,'max' => $ver));
 	}
 	
+	public function borraComplementario(){
+		
+	}
+	
 	public function traeVersion(){
 		$this->load->model("Informe_model");
 		$id = $this->input->post('idevento');

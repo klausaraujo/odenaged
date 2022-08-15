@@ -75,7 +75,7 @@ $uAct = $evento->usuario_actualizacion;
         <!-- Etiqueta principal del pdf -->
         <main>
             <table id="contenido" cellspacing="0" cellpadding="1" align="center" style="text-align:center;">
-				<tr><td colspan="12" ><b>reporte situaci&oacute;n preliminar n° <?=$evento->numero_evento?>-<?=$evento->anio_evento?>-coes educaci&oacute;n</b></td></tr>
+				<tr><td colspan="12" ><b>reporte situaci&oacute;n <?=($version == '0')? 'preliminar':'complementario'?> n° <?=$evento->numero_evento?>-<?=$evento->anio_evento?>-coes educaci&oacute;n</b></td></tr>
 				<tr><td colspan="12" >
 					<b><?=$evento->evento?> en el distrito <?=$evento->distrito?> provincia <?=$evento->provincia?> regi&oacute;n <?=$evento->departamento?></b>
 				</td></tr>
