@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS tipo_accion_evento;
 DROP TABLE IF EXISTS tipo_accion;
 DROP TABLE IF EXISTS evento_tipo_danio;
 DROP TABLE IF EXISTS tipo_danio;
+DROP TABLE IF EXISTS evento_versiones;
 DROP TABLE IF EXISTS registro_evento;
 DROP TABLE IF EXISTS evento;
 DROP TABLE IF EXISTS tipo_evento;
@@ -2527,6 +2528,20 @@ CREATE TABLE registro_evento (
 	FOREIGN KEY (idnivel) REFERENCES nivel (idnivel) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (idevento) REFERENCES evento (idevento) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (idestado) REFERENCES estado_evento (idestado) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+
+CREATE TABLE evento_versiones(
+	ideventoversion smallint(4) NOT NULL AUTO_INCREMENT,
+	idregistroevento smallint(4) NOT NULL,
+	version smallint(4) DEFAULT 0,
+	idusuario_apertura smallint(4),
+	fecha_apertura datetime,
+	idusuario_actualizacion smallint(4),
+	fecha_actualizacion datetime,
+	idusuario_cierre smallint(4),
+	fecha_cierre datetime,
+	activo char(1) DEFAULT '1',
+	PRIMARY KEY (ideventoversion),
+	FOREIGN KEY (idregistroevento) REFERENCES registro_evento (idregistroevento) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
 CREATE TABLE tipo_danio (
   idtipodanio smallint(4) NOT NULL AUTO_INCREMENT,
