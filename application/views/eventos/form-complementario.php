@@ -3,10 +3,10 @@
 .table tr:first-child{width:40px}
 </style>
 
-	<div class="container-fluid">
-		<form id="formComp" name="formComp" method="POST" action="" autocomplete="off" enctype="multipart/form-data">
+		<div class="container-fluid">
 			<input type="hidden" id="idregComp" value="" />
-			<input type="hidden" id="version" value="" />
+			<input type="hidden" id="ubigeoComp" value="" />
+			<input type="hidden" id="versionComp" value="" />
 			<div class="row">
 				<div class="col-sm-12">
 				<? 
@@ -26,29 +26,29 @@
 								<div class="col-sm-11 mx-auto">
 									<div class="row d-flex align-items-center">
 										<div class="col-sm-3"><label for="tipoEvtComp" class="col-sm-12">Tipo de Evento:</label></div>
-										<div class="col-sm-3"><input type="text" class="form-control col-sm-12" name="tipoEvtComp" id="tipoEvtComp" /></div>
+										<div class="col-sm-3"><input type="text" class="form-control col-sm-12" name="tipoEvtComp" id="tipoEvtComp" readonly /></div>
 										<div class="col-sm-1"></div>
 										<div class="col-sm-2"><label for="evtComp" class="col-sm-12">Evento:</label></div>
-										<div class="col-sm-3"><input type="text" class="form-control col-sm-12" name="evtComp" id="evtComp" /></div>
+										<div class="col-sm-3"><input type="text" class="form-control col-sm-12" name="evtComp" id="evtComp" readonly /></div>
 									</div>
 									<div class="row py-1"></div>
 									<div class="row d-flex align-items-center">
-										<div class="col-sm-3"><label for="ubigeoComp" class="col-sm-12">Ubigeo:</label></div>
-										<div class="col-sm-4"><input type="text" class="form-control col-sm-12" name="ubigeoComp" id="ubigeoComp" /></div>
+										<div class="col-sm-3"><label for="ubdesComp" class="col-sm-12">Ubigeo:</label></div>
+										<div class="col-sm-4"><input type="text" class="form-control col-sm-12" name="ubdesComp" id="ubdesComp" readonly /></div>
 										<div class="col-sm-2"><label for="" class="col-sm-12">&nbsp;</label></div>
-										<div class="col-sm-3"><button class="btn btn-sirese">Crear Version</button></div>
+										<div class="col-sm-3"><button class="btn btn-sirese complementario" id="btnCrearComp">Crear Version</button></div>
 									</div>
 									<div class="row py-1"></div>
 									<div class="row d-flex align-items-center">
 										<div class="col-sm-3"><label for="fechaComp" class="col-sm-12">Fecha y Hora:</label></div>
-										<div class="col-sm-4"><input type="text" class="form-control col-sm-12" name="fechaComp" id="fechaComp" /></div>
+										<div class="col-sm-4"><input type="text" class="form-control col-sm-12" name="fechaComp" id="fechaComp" readonly /></div>
 									</div>
 								</div>
 							</div>
 							<div class="row justify-content-center">
-								<div class="col-sm-12 mx-auto">
+								<div class="col-sm-10 mx-auto">
 									<div class="table-responsive">
-										<table id="tableComp" class="table table-striped dt-responsive table-bordered display nowrap table-hover px-0" style="width:100%"></table>
+										<table id="tableComp" class="table table-striped dt-responsive table-bordered display nowrap table-hover px-0"></table>
 									</div>
 								</div>
 							</div>
@@ -229,13 +229,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-12"><h5 id="cargando" class="succes"></h5></div>
-			<div class="col-sm-12"><h5 id="message" class="succes"></h5></div>
-			<div class="col-sm-12 mx-auto pb-3">
-				<button type="submit" class="btn btn-sirese mx-3" id="btnComp">Guardar</button>
-				<button class="btn btn-sirese" id="btnCancelComp" name="btnCancelComp">Cancelar</button>
-			</div>
-		</form>
+			<div class="col-sm-12 mx-auto pb-3"><button class="btn btn-sirese" id="btnCancelComp" name="btnCancelComp">Cancelar</button></div>
 		<?/*	<div class="modal fade" id="modalIE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">

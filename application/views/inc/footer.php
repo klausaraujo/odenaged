@@ -86,14 +86,14 @@
 			const foto = [{'fotografia':'fotografia','descripcion':'descripcion'}];
 			const ie = [{'CEN_EDU':'inst. educativa','descripcion':'descripcion','fecha':'fecha'}];
 			const ieUB = [{'CEN_EDU':'institucion educativa','COD_MOD':'cod. mod','CODLOCAL':'cod. local','D_NIV_MOD':'nivel'}];
-			const comp = [{'version':'version','apertura':'apertura','cierre':'cierre','estado':'estado'}];
+			const comp = [{null:'','version':'version','fecha_apertura':'fecha apertura','fecha_cierre':'fecha cierre'}];
 			const table = tablePersonalized('#tablaEvento',headers,lista);
 			const tableDanio = tableComp('#tableDanio',danio,datos);
 			const tableAccion = tableComp('#tableAccion',accion,datos);
 			const tableFotos = tableComp('#tableFotos',foto,datos,'foto');
 			const tableIEF = tableComp('#tableIE',ie,datos);
 			const tableIEUbigeo = tableIE('#tableIEUbigeo',ieUB,datos);
-			const tabComp = tableComp('#tableComp',comp,datos,'complementario');
+			const tabComp = tablePersonalized('#tableComp',comp,datos,'complementario');
 			
 			window.onload = function(){
 				var opt = {lat: 42.1382114, lng: -71.5212585,zoom: 16};

@@ -1,4 +1,4 @@
-function tablePersonalized(table, headersCols, data){
+function tablePersonalized(table, headersCols, data, comp){
 	
 	let cols = [], titles = [], render = [], imagen = [], lista = [], j = 0;
 	
@@ -21,6 +21,8 @@ function tablePersonalized(table, headersCols, data){
 			targets: 0,
 			data: null,
 			render: function (data, type, row, meta) {
+				const btnDel = '<button class="btn btn-warning btn-circle btn-sm actionDelete" title="Eliminar" '+
+						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-trash" aria-hidden="true"></i></button>';
 				const btnEdit = '<button class="btn btn-warning btn-circle btn-sm actionEdit" title="Editar Registro" type="button" '+
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>';
 				const btnPreliminar = '<button class="btn btn-warning btn-circle btn-sm actionInforme" title="Preliminar" type="button"'+
@@ -29,13 +31,27 @@ function tablePersonalized(table, headersCols, data){
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>';
 				const btnHome = '<button class="btn btn-warning btn-circle btn-sm actionComp" title="Complementarios" type="button"'+
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-home" aria-hidden="true"></i></button>';
-				return btnEdit+btnPreliminar+btnHome+btnPdf;
+				return (comp == 'complementario')? btnEdit+btnDel+btnPdf : btnEdit+btnPreliminar+btnHome+btnPdf;
 				
 				}
 		}	
 	];
+	if(comp == 'complementario'){
+		activo = [
+			{
+				data: 'activo',
+				render: function(data,type,row){
+					return (data == '1') ? 'Abierto' : 'Cerrado';
+				}
+			}
+		]
+	}
 	
 	titles = render.concat(titles);
+	
+	let botones = '<"row"<"col-sm-12 mb-2"B><"col-sm-6 float-left"l><"col-sm-6 float-right"f>>rtip';
+	if(comp == 'complementario'){ cols = cols.concat(activo);titles = titles.concat([{title: 'Estado',targets: j}]); botones = '<"row"<"col-sm-6 float-left py-2"l><"col-sm-6 float-right py-2"f>>rtip';}
+	
 	
 	//String JSON con su identificador
 	//json = {"data":[{"name":"Tiger Nikon","position":"system"}]};
@@ -81,7 +97,7 @@ function tablePersonalized(table, headersCols, data){
 		
 		"columns":cols,
 		"columnDefs":titles,
-		"dom": '<"row"<"col-sm-12 mb-2"B><"col-sm-6 float-left"l><"col-sm-6 float-right"f>>rtip',
+		"dom": botones,
 		"buttons": {
 			dom: {
 			  container: {

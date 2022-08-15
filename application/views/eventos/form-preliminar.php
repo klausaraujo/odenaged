@@ -7,7 +7,8 @@
 		<form id="formInforme" name="formInforme" method="POST" action="" autocomplete="off" enctype="multipart/form-data">
 			<input type="hidden" id="idregevento" value="" />
 			<input type="hidden" id="version" value="" />
-			<div class="row">                 
+			<input type="hidden" id="informe" value="" />
+			<div class="row">
 				<div class="col-sm-12">
 				<? 
 					$dtz = new DateTimeZone("America/Lima");
@@ -198,8 +199,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-12"><h5 id="cargando" class="succes"></h5></div>
-			<div class="col-sm-12"><h5 id="message" class="succes"></h5></div>
+			<div class="row justify-content-center mt-2" id="contentPrel"></div>
+			<div class="row justify-content-center mt-2"><h5 id="cargandoPrel" class="succes"></h5></div>
+			<div class="row justify-content-center mt-2"><h5 id="messagePrel" class="succes"></h5></div>
 			<div class="col-sm-12 mx-auto pb-3">
 				<button type="submit" class="btn btn-sirese mx-3" id="btnInforme">Guardar</button>
 				<button class="btn btn-sirese" id="btnCancelPrel" name="btnCancelPrel">Cancelar</button>
@@ -238,7 +240,6 @@
 										</div>
 									</div>
 								</div>
-								<div class="row justify-content-center mt-2" id="content"></div>
 								<div class="row justify-content-center">
 									<div class="col-sm-12">
 										<div class="table-responsive">

@@ -22,18 +22,13 @@ function tableComp(table, headersCols, data,img){
 			targets: 0,
 			data: null,
 			render: function (data, type, row, meta) {
-				const btnEdit = '<button class="btn btn-warning btn-circle btn-sm actionDelete" title="Eliminar" type="button" '+
+				const btnDel = '<button class="btn btn-warning btn-circle btn-sm actionDelete" title="Eliminar" '+
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-trash" aria-hidden="true"></i></button>';
-				const btnCargas = '<button class="btn btn-warning btn-circle btn-sm actionCargas" title="Registrar Cargas Familiares" type="button"'+
-						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-users" aria-hidden="true"></i></button>';
-				const btnEst = '<button class="btn btn-warning btn-circle btn-sm actionEstud" title="Registrar Estudios" type="button"'+
-						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-graduation-cap" aria-hidden="true"></i></button>';
-				const btnPdf = '<button class="btn btn-warning btn-circle btn-sm actionReport" title="Ver Reporte" type="button"'+
+				const btnEdit = '<button class="btn btn-warning btn-circle btn-sm actionEdit" title="Editar Registro" '+
+						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>';
+				const btnPdf = '<button class="btn btn-warning btn-circle btn-sm actionReport" title="Ver Reporte" '+
 						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>';
-				const btnHome = '<button class="btn btn-warning btn-circle btn-sm actionEvento" title="Complementarios" type="button"'+
-						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-home" aria-hidden="true"></i></button>';
-				return (img == 'complementario')?btnEdit : btnEdit+btnPdf;
-				
+				return (img == 'complementario')? btnEdit+btnDel+btnPdf : btnDel;
 			}
 		}
 	];
@@ -61,8 +56,7 @@ function tableComp(table, headersCols, data,img){
 		];
 	}
 	titles = render.concat(titles);
-	if(img){ cols = cols.concat(imagen);titles = titles.concat([{title: 'Foto',targets: j}]); }
-	
+	if(img == 'foto'){ cols = cols.concat(imagen);titles = titles.concat([{title: 'Foto',targets: j}]); }
 	
 	//String JSON con su identificador
 	//json = {"data":[{"name":"Tiger Nikon","position":"system"}]};
