@@ -27,9 +27,276 @@ DROP TABLE IF EXISTS modulo_rol;
 DROP TABLE IF EXISTS modulo;
 DROP TABLE IF EXISTS usuarios_ubigeo;
 DROP TABLE IF EXISTS usuarios;
+DROP TABLE IF EXISTS ugel;
+DROP TABLE IF EXISTS dre;
 DROP TABLE IF EXISTS perfil;
 DROP TABLE IF EXISTS ubigeo;
 DROP VIEW IF EXISTS lista_general_eventos;
+
+CREATE TABLE dre (
+iddre smallint(4) NOT NULL AUTO_INCREMENT,
+codigo_dre varchar(4) NOT NULL,
+nombre varchar(30) NOT NULL,
+activo char(1) DEFAULT '1',
+PRIMARY KEY (iddre)) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+
+insert into dre(iddre,codigo_dre,nombre) values (1,'0100','DRE AMAZONAS');
+insert into dre(iddre,codigo_dre,nombre) values (2,'0200','DRE ANCASH');
+insert into dre(iddre,codigo_dre,nombre) values (3,'0300','DRE APURÍMAC');
+insert into dre(iddre,codigo_dre,nombre) values (4,'0400','DRE AREQUIPA');
+insert into dre(iddre,codigo_dre,nombre) values (5,'0500','DRE AYACUCHO');
+insert into dre(iddre,codigo_dre,nombre) values (6,'0600','DRE CAJAMARCA');
+insert into dre(iddre,codigo_dre,nombre) values (7,'0701','DRE CALLAO');
+insert into dre(iddre,codigo_dre,nombre) values (8,'0800','DRE CUSCO');
+insert into dre(iddre,codigo_dre,nombre) values (9,'0900','DRE HUANCAVELICA');
+insert into dre(iddre,codigo_dre,nombre) values (10,'1000','DRE HUÁNUCO');
+insert into dre(iddre,codigo_dre,nombre) values (11,'1100','DRE ICA');
+insert into dre(iddre,codigo_dre,nombre) values (12,'1200','DRE JUNÍN');
+insert into dre(iddre,codigo_dre,nombre) values (13,'1300','DRE LA LIBERTAD');
+insert into dre(iddre,codigo_dre,nombre) values (14,'1400','DRE LAMBAYEQUE');
+insert into dre(iddre,codigo_dre,nombre) values (15,'1501','DRE LIMA METROPOLITANA');
+insert into dre(iddre,codigo_dre,nombre) values (16,'1502','DRE LIMA PROVINCIAS');
+insert into dre(iddre,codigo_dre,nombre) values (17,'1600','DRE LORETO');
+insert into dre(iddre,codigo_dre,nombre) values (18,'1700','DRE MADRE DE DIOS');
+insert into dre(iddre,codigo_dre,nombre) values (19,'1800','DRE MOQUEGUA');
+insert into dre(iddre,codigo_dre,nombre) values (20,'1900','DRE PASCO');
+insert into dre(iddre,codigo_dre,nombre) values (21,'2000','DRE PIURA');
+insert into dre(iddre,codigo_dre,nombre) values (22,'2100','DRE PUNO');
+insert into dre(iddre,codigo_dre,nombre) values (23,'2200','DRE SAN MARTÍN');
+insert into dre(iddre,codigo_dre,nombre) values (24,'2300','DRE TACNA');
+insert into dre(iddre,codigo_dre,nombre) values (25,'2400','DRE TUMBES');
+insert into dre(iddre,codigo_dre,nombre) values (26,'2500','DRE UCAYALI');
+
+CREATE TABLE ugel (
+idugel smallint(4) NOT NULL AUTO_INCREMENT,
+iddre smallint(4) NOT NULL,
+codigo_ugel varchar(6) NOT NULL,
+nombre varchar(30) NOT NULL,
+activo char(1) DEFAULT '1',
+PRIMARY KEY (idugel),
+FOREIGN KEY (iddre) REFERENCES dre (iddre) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(1,1,'010001','UGEL CHACHAPOYAS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(2,1,'010002','UGEL BAGUA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(3,1,'010003','UGEL BONGARÁ');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(4,1,'010004','UGEL CONDORCANQUI');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(5,1,'010005','UGEL LUYA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(6,1,'010006','UGEL RODRÍGUEZ DE MENDOZA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(7,1,'010007','UGEL UTCUBAMBA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(8,1,'010009','UGEL IBIR-IMAZA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(9,2,'020001','UGEL HUARAZ');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(10,2,'020002','UGEL AIJA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(11,2,'020003','UGEL ANTONIO RAYMONDI');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(12,2,'020004','UGEL ASUNCIÓN');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(13,2,'020005','UGEL BOLOGNESI');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(14,2,'020006','UGEL CARHUÁZ');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(15,2,'020007','UGEL CARLOS F. FITZCARRALD');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(16,2,'020008','UGEL CASMA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(17,2,'020009','UGEL CORONGO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(18,2,'020010','UGEL HUARI');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(19,2,'020011','UGEL HUARMEY');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(20,2,'020012','UGEL HUAYLAS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(21,2,'020013','UGEL MARISCAL LUZURIAGA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(22,2,'020014','UGEL OCROS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(23,2,'020015','UGEL PALLASCA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(24,2,'020016','UGEL POMABAMBA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(25,2,'020017','UGEL RECUAY');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(26,2,'020018','UGEL SANTA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(27,2,'020019','UGEL SIHUAS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(28,2,'020020','UGEL YUNGAY');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(29,3,'030001','UGEL ABANCAY');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(30,3,'030002','UGEL ANDAHUAYLAS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(31,3,'030003','UGEL ANTABAMBA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(32,3,'030004','UGEL AYMARAES');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(33,3,'030005','UGEL COTABAMBAS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(34,3,'030006','UGEL CHINCHEROS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(35,3,'030007','UGEL GRAU');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(36,3,'030008','UGEL HUANCARAMA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(37,4,'040001','UGEL AREQUIPA NORTE');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(38,4,'040002','UGEL AREQUIPA SUR');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(39,4,'040003','UGEL CAMANÁ');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(40,4,'040004','UGEL CARAVELI');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(41,4,'040005','UGEL CASTILLA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(42,4,'040006','UGEL CAYLLOMA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(43,4,'040007','UGEL CONDESUYOS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(44,4,'040008','UGEL ISLAY');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(45,4,'040009','UGEL LA UNIÓN');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(46,4,'040010','UGEL LA JOYA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(47,5,'050001','UGEL HUAMANGA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(48,5,'050002','UGEL CANGALLO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(49,5,'050003','UGEL HUANCASANCOS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(50,5,'050004','UGEL HUANTA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(51,5,'050005','UGEL LA MAR');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(52,5,'050006','UGEL LUCANAS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(53,5,'050007','UGEL PARINACOCHAS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(54,5,'050008','UGEL PAUCAR DEL SARASARA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(55,5,'050009','UGEL SUCRE');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(56,5,'050010','UGEL VÍCTOR FAJARDO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(57,5,'050011','UGEL VILCASHUAMÁN');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(58,6,'060001','UGEL CAJAMARCA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(59,6,'060002','UGEL CAJABAMBA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(60,6,'060003','UGEL CELENDÍN');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(61,6,'060004','UGEL CHOTA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(62,6,'060005','UGEL CONTUMAZÁ');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(63,6,'060006','UGEL CUTERVO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(64,6,'060007','UGEL HUALGAYOC');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(65,6,'060008','UGEL JAÉN');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(66,6,'060009','UGEL SAN IGNACIO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(67,6,'060010','UGEL SAN MARCOS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(68,6,'060011','UGEL SAN MIGUEL');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(69,6,'060012','UGEL SAN PABLO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(70,6,'060013','UGEL SANTA CRUZ');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(71,7,'070102','UGEL VENTANILLA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(72,8,'080001','UGEL CUSCO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(73,8,'080002','UGEL ACOMAYO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(74,8,'080003','UGEL ANTA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(75,8,'080004','UGEL CALCA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(76,8,'080005','UGEL CANAS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(77,8,'080006','UGEL CANCHIS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(78,8,'080007','UGEL CHUMBIVILCAS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(79,8,'080008','UGEL ESPINAR');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(80,8,'080009','UGEL LA CONVENCIÓN');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(81,8,'080010','UGEL PARURO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(82,8,'080011','UGEL PAUCARTAMBO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(83,8,'080012','UGEL QUISPICANCHI');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(84,8,'080013','UGEL URUBAMBA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(85,8,'080014','UGEL PICHARI-KIMBIRI-VILLA VIRGEN');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(86,9,'090001','UGEL HUANCAVELICA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(87,9,'090002','UGEL ACOBAMBA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(88,9,'090003','UGEL ANGARAES');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(89,9,'090004','UGEL CASTROVIRREYNA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(90,9,'090005','UGEL CHURCAMPA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(91,9,'090006','UGEL HUAYTARÁ');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(92,9,'090007','UGEL TAYACAJA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(93,9,'090009','UGEL SURCUBAMBA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(94,10,'100001','UGEL HUÁNUCO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(95,10,'100002','UGEL AMBO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(96,10,'100003','UGEL DOS DE MAYO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(97,10,'100004','UGEL LAURICOCHA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(98,10,'100005','UGEL YAROWILCA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(99,10,'100006','UGEL HUACAYBAMBA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(100,10,'100007','UGEL HUAMALÍES');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(101,10,'100008','UGEL LEONCIO PRADO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(102,10,'100009','UGEL MARAÑÓN');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(103,10,'100010','UGEL PACHITEA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(104,10,'100011','UGEL PUERTO INCA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(105,11,'110001','UGEL ICA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(106,11,'110002','UGEL CHINCHA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(107,11,'110003','UGEL NAZCA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(108,11,'110004','UGEL PALPA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(109,11,'110005','UGEL PISCO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(110,12,'120001','UGEL HUANCAYO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(111,12,'120002','UGEL CHUPACA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(112,12,'120003','UGEL CONCEPCIÓN');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(113,12,'120004','UGEL CHANCHAMAYO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(114,12,'120005','UGEL JAUJA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(115,12,'120006','UGEL JUNÍN');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(116,12,'120007','UGEL SATIPO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(117,12,'120008','UGEL TARMA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(118,12,'120009','UGEL YAULI');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(119,12,'120010','UGEL PANGOA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(120,12,'120011','UGEL PICHANAKI');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(121,12,'120012','UGEL RIO TAMBO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(122,12,'120014','UGEL RIO ENE - MANTARO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(123,13,'130002','UGEL VIRÚ');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(124,13,'130003','UGEL ASCOPE');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(125,13,'130004','UGEL BOLIVAR');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(126,13,'130005','UGEL CHEPÉN');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(127,13,'130006','UGEL JULCÁN');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(128,13,'130007','UGEL OTUZCO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(129,13,'130008','UGEL PACASMAYO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(130,13,'130009','UGEL PATAZ');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(131,13,'130010','UGEL SÁNCHEZ CARRIÓN');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(132,13,'130011','UGEL SANTIAGO DE CHUCO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(133,13,'130012','UGEL GRAN CHIMÚ');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(134,13,'130014','UGEL 01 EL PORVENIR');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(135,13,'130015','UGEL 02 LA ESPERANZA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(136,13,'130016','UGEL 03 TRUJILLO NOR OESTE');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(137,13,'130017','UGEL 04 TRUJILLO SUR ESTE');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(138,14,'140001','UGEL CHICLAYO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(139,14,'140002','UGEL FERREÑAFE');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(140,14,'140003','UGEL LAMBAYEQUE');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(141,15,'150102','UGEL 01 SAN JUAN DE MIRAFLORES');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(142,15,'150103','UGEL 02 RÍMAC');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(143,15,'150104','UGEL 03 BREÑA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(144,15,'150105','UGEL 04 COMAS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(145,15,'150106','UGEL 05 SAN JUAN DE LURIGANCHO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(146,15,'150107','UGEL 06 ATE');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(147,15,'150108','UGEL 07 SAN BORJA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(148,16,'150201','UGEL 08 CAÑETE');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(149,16,'150202','UGEL 09 HUAURA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(150,16,'150203','UGEL 10 HUARAL');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(151,16,'150204','UGEL 11 CAJATAMBO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(152,16,'150205','UGEL 12 CANTA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(153,16,'150206','UGEL 13 YAUYOS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(154,16,'150207','UGEL 14 OYÓN');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(155,16,'150208','UGEL 15 HUAROCHIRÍ');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(156,16,'150209','UGEL 16 BARRANCA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(157,17,'160001','UGEL MAYNAS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(158,17,'160002','UGEL ALTO AMAZONAS-YURIMAGUAS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(159,17,'160003','UGEL ALTO AMAZONAS-SAN LORENZO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(160,17,'160004','UGEL LORETO - NAUTA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(161,17,'160005','UGEL RAMÓN CASTILLA-CABALLOCOCHA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(162,17,'160006','UGEL REQUENA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(163,17,'160007','UGEL UCAYALI-CONTAMANA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(164,17,'160008','UGEL PUTUMAYO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(165,18,'170001','UGEL TAMBOPATA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(166,18,'170002','UGEL MANU');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(167,18,'170003','UGEL TAHUAMANU');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(168,19,'180001','UGEL MARISCAL NIETO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(169,19,'180002','UGEL GENERAL SÁNCHEZ CERRO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(170,19,'180003','UGEL ILO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(171,20,'190001','UGEL PASCO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(172,20,'190002','UGEL DANIEL ALCIDES CARRIÓN');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(173,20,'190003','UGEL OXAPAMPA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(174,21,'200001','UGEL PIURA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(175,21,'200002','UGEL TAMBOGRANDE');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(176,21,'200003','UGEL LA UNIÓN');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(177,21,'200004','UGEL SECHURA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(178,21,'200005','UGEL AYABACA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(179,21,'200006','UGEL HUANCABAMBA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(180,21,'200007','UGEL CHULUCANAS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(181,21,'200008','UGEL MORROPÓN');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(182,21,'200009','UGEL PAITA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(183,21,'200010','UGEL SULLANA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(184,21,'200011','UGEL TALARA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(185,21,'200012','UGEL HUARMACA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(186,22,'210001','UGEL PUNO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(187,22,'210002','UGEL AZÁNGARO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(188,22,'210003','UGEL CARABAYA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(189,22,'210004','UGEL EL COLLAO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(190,22,'210005','UGEL CHUCUITO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(191,22,'210006','UGEL HUANCANÉ');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(192,22,'210007','UGEL SAN ANTONIO DE PUTINA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(193,22,'210008','UGEL MOHO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(194,22,'210009','UGEL LAMPA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(195,22,'210010','UGEL MELGAR');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(196,22,'210011','UGEL SAN ROMÁN');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(197,22,'210012','UGEL SANDIA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(198,22,'210013','UGEL YUNGUYO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(199,22,'210014','UGEL CRUCERO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(200,23,'220001','UGEL MOYOBAMBA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(201,23,'220002','UGEL BELLAVISTA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(202,23,'220003','UGEL HUALLAGA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(203,23,'220004','UGEL LAMAS');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(204,23,'220005','UGEL EL DORADO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(205,23,'220006','UGEL MARISCAL CÁCERES');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(206,23,'220007','UGEL PICOTA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(207,23,'220008','UGEL RIOJA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(208,23,'220009','UGEL SAN MARTÍN');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(209,23,'220010','UGEL TOCACHE');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(210,24,'230001','UGEL TACNA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(211,24,'230002','UGEL JORGE BASADRE');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(212,24,'230003','UGEL TARATA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(213,24,'230004','UGEL CANDARAVE');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(214,25,'240001','UGEL TUMBES');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(215,25,'240002','UGEL CONTRALMIRANTE VILLAR');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(216,25,'240003','UGEL ZARUMILLA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(217,26,'250001','UGEL CORONEL PORTILLO');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(218,26,'250002','UGEL ATALAYA');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(219,26,'250003','UGEL PADRE ABAD');
+insert into ugel (idugel,iddre,codigo_ugel,nombre) values(220,26,'250004','UGEL PURUS');
 
 CREATE TABLE perfil  (
 idperfil smallint(4) NOT NULL AUTO_INCREMENT,
@@ -2175,12 +2442,12 @@ CREATE TABLE modulo  (
 
 CREATE TABLE modulo_rol  (	
 	idmodulorol smallint(4) NOT NULL AUTO_INCREMENT,
-  idmodulo smallint(4) NOT NULL,
-  idperfil smallint(4) NOT NULL,
-  activo char(1) DEFAULT '1',
-  PRIMARY KEY (idmodulorol),
+	idmodulo smallint(4) NOT NULL,
+	idperfil smallint(4) NOT NULL,
+	activo char(1) DEFAULT '1',
+	PRIMARY KEY (idmodulorol),
 	FOREIGN KEY (idmodulo) REFERENCES modulo (idmodulo) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (idperfil) REFERENCES perfil (idperfil) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+	FOREIGN KEY (idperfil) REFERENCES perfil (idperfil) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
   INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(1,1,'1');
 	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(2,1,'1');
