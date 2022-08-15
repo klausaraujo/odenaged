@@ -4,6 +4,7 @@ if (! defined('BASEPATH'))
 class Informe_model extends CI_Model
 {
 	private $idRegistroEvento;
+	private $activo;
 	private $ubigeo;
 	private $nombImg;
 	private $version;
@@ -25,6 +26,7 @@ class Informe_model extends CI_Model
 	
 	#Registro
 	public function setIdEvento($data){ $this->idRegistroEvento = $this->db->escape_str($data); }
+	public function setActivo($data){ $this->activo = $this->db->escape_str($data); }
 	public function setUbigeo($data){ $this->ubigeo = $this->db->escape_str($data); }
 	public function setImg($data){ $this->nombImg = $this->db->escape_str($data); }
 	public function setVersion($data){ $this->version = $this->db->escape_str($data); }
@@ -49,27 +51,27 @@ class Informe_model extends CI_Model
 				$this->tabla.' WHERE idregistroevento='.$this->idRegistroEvento.' AND version='.$this->version;
 		$this->db->query($query);
 	}
-	public function actAcciones(){
+	public function actClonacion(){
 		$this->db->db_debug = FALSE;
 		$data = array( 'idusuario_apertura' => $this->uRegistro, 'fecha_apertura' => $this->fRegistro );
 		$this->db->where('idregistroevento', $this->idRegistroEvento);
 		$this->db->where('version', $this->version +1);
 		return $this->db->update( $this->tabla, $data );
 	}
-	public function cerrarAcciones(){
+	public function actAcciones(){
 		$this->db->db_debug = FALSE;
-		/*$data = array( 'idusuario_actualizacion' => $this->uRegistro, 'fecha_actualizacion' => $this->fRegistro,'fecha_cierre' => $this->fRegistro,
-					'idusuario_cierre' => $this->uRegistro, 'activo' => 0 );*/
-		$data = array( 'idusuario_cierre' => $this->uRegistro, 'fecha_cierre' => $this->fRegistro, 'activo' => 0 );
+		$data = array( 'idusuario_actualizacion' =>$this->uRegistro,'fecha_actualizacion' => $this->fRegistro, 'idusuario_cierre' => $this->uActualiza,
+						'fecha_cierre' => $this->fActualiza, 'activo' => $this->activo );
 		$this->db->where('idregistroevento', $this->idRegistroEvento);
 		$this->db->where('version', $this->version);
 		return  $this->db->update( $this->tabla, $data );
 	}
-	public function cerrarVersion(){
+	/*public function actVersion(){
 		$this->db->db_debug = FALSE;
-		/*$data = array( 'idusuario_actualizacion' => $this->uRegistro, 'fecha_actualizacion' => $this->fRegistro,'fecha_cierre' => $this->fRegistro,
-					'idusuario_cierre' => $this->uRegistro, 'activo' => 0 );*/
-		$data = array( 'idusuario_cierre' => $this->uRegistro, 'fecha_cierre' => $this->fRegistro, 'activo' => 0 );
+		#$data = array( 'idusuario_actualizacion' => $this->uRegistro, 'fecha_actualizacion' => $this->fRegistro,'fecha_cierre' => $this->fRegistro,
+		#			'idusuario_cierre' => $this->uRegistro, 'activo' => 0 );
+		$data = array( 'idusuario_actualizacion' =>$this->uRegistro,'fecha_actualizacion' => $this->fRegistro,'idusuario_cierre' => $this->uActualiza,
+						'fecha_cierre' => $this->fActualiza, 'activo' => $this->activo );
 		$this->db->where('idregistroevento', $this->idRegistroEvento);
 		$this->db->where('version', $this->version);
 		return  $this->db->update( 'evento_versiones', $data );
@@ -109,6 +111,14 @@ class Informe_model extends CI_Model
 			return $this->db->insert_id();
 		}else { return 0; }
 	}
+	public function traeEstadoVersion(){
+		$this->db->select('activo');
+		$this->db->from('evento_versiones');
+		$this->db->where('idregistroevento', $this->idRegistroEvento);
+		$this->db->where('version', $this->version);
+		$this->db->limit(1);
+		return $this->db->get();
+	}
 	public function maxVersion(){
 		$this->db->select('MAX(version) maximo');
 		$this->db->from('evento_versiones');
@@ -119,7 +129,7 @@ class Informe_model extends CI_Model
 	}
 	public function listaDanio()
 	{
-		$this->db->select('da.ideventotipodanio,da.version,da.idtipodanio,da.cantidad,da.activo,da.idusuario_apertura,da.fecha_apertura,td.tipo_danio');
+		$this->db->select('da.ideventotipodanio,da.version,da.idtipodanio,da.cantidad,da.idusuario_apertura,da.fecha_apertura,da.activo,td.tipo_danio');
         $this->db->from('evento_tipo_danio da');
 		$this->db->join('tipo_danio td','td.idtipodanio = da.idtipodanio');
 		$this->db->where('da.idregistroevento', $this->idRegistroEvento);
@@ -128,7 +138,7 @@ class Informe_model extends CI_Model
     }
 	public function listaAccion()
 	{
-		$this->db->select('ap.idtipoaccionevento,ap.version,ap.idtipoaccion,ap.descripcion,ap.fecha,DATE_FORMAT(ap.fecha,"%H:%i:%s") hora,ap.idusuario_apertura,ap.fecha_apertura,ta.tipo_accion');
+		$this->db->select('ap.idtipoaccionevento,ap.version,ap.idtipoaccion,ap.descripcion,ap.fecha,DATE_FORMAT(ap.fecha,"%H:%i:%s") hora,ap.idusuario_apertura,ap.fecha_apertura,ap.activo,ta.tipo_accion');
         $this->db->from('tipo_accion_evento ap');
 		$this->db->join('tipo_accion ta','ap.idtipoaccion = ta.idtipoaccion');
 		$this->db->where('ap.idregistroevento', $this->idRegistroEvento);
@@ -137,7 +147,7 @@ class Informe_model extends CI_Model
     }
 	public function listaFotos()
 	{
-		$this->db->select('idgaleria,version,fotografia,descripcion,idusuario_apertura,fecha_apertura');
+		$this->db->select('idgaleria,version,fotografia,descripcion,idusuario_apertura,fecha_apertura,activo');
         $this->db->from('galeria_evento');
 		$this->db->where('idregistroevento', $this->idRegistroEvento);
 		$this->db->where('version', $this->version);
@@ -145,7 +155,7 @@ class Informe_model extends CI_Model
     }
 	public function listaIE()
 	{
-		$this->db->select('ie.idiestevento,ie.idiest,ie.version,ie.descripcion,DATE_FORMAT(ie.fecha, "%Y-%m-%d") fecha,ie.idusuario_apertura,ie.fecha_apertura,ed.CEN_EDU,ed.COD_MOD,ed.CODLOCAL,ed.D_NIV_MOD');
+		$this->db->select('ie.idiestevento,ie.idiest,ie.version,ie.descripcion,DATE_FORMAT(ie.fecha, "%Y-%m-%d") fecha,ie.idusuario_apertura,ie.fecha_apertura,ie.activo,ed.CEN_EDU,ed.COD_MOD,ed.CODLOCAL,ed.D_NIV_MOD');
         $this->db->from('iest_2020_all_evento ie');
 		$this->db->join('iest_2020_all ed','ie.idiest = ed.ID');
 		$this->db->where('ie.idregistroevento', $this->idRegistroEvento);
@@ -158,11 +168,11 @@ class Informe_model extends CI_Model
 		$this->db->where('CODGEO', $this->ubigeo);		
         return $this->db->get();
 	}
-	public function borraPreliminar(){
+	public function borraAccionesEvento(){
 		//$consulta = $this->db->query('DELETE FROM galeria_evento WHERE version='.$this->version);
 		$this->db->where('version', $this->version);
 		$this->db->where('idregistroevento', $this->idRegistroEvento);
-		return $this->db->delete($this->tabla);;
+		return $this->db->delete($this->tabla);
 	}
 	public function registrarFotos(){		
 		$data = array(

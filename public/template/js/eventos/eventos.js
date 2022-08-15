@@ -110,7 +110,7 @@ function eventos() {
 	});
 	
 	function complementario(id,ver,ub,control){
-		alert(id +' '+ ver +' '+ control);
+		//alert(id +' '+ ver +' '+ control);
 		$.ajax({
             data: { idevento: id, version: ver, ubigeo: ub },
             url: URI + control,
@@ -143,6 +143,18 @@ function eventos() {
 				const { ies } = data;
 				const { url } = data;
 				const { iesUB } = data;
+				const { activo } = data;
+				//console.log(activo.activo);
+				$('#formInforme button').each(function(i,e){
+					//if($(this).prop('id') !== 'btnCancelPrel') $(this).text('Retornar');
+					if(activo.activo == '0'){
+						var el = $(this).prop('nodeName');
+						if(el == 'BUTTON'){ if($(this).prop('id') !== 'btnCancelPrel') $(this).prop('disabled',true); }
+						//console.log($(this).prop('disabled'));
+					
+					}else{ if($(this).prop('disabled')) $(this).prop('disabled',false); }
+				});
+				
 				tableDanio.clear(); if(danio.length > 0) tableDanio.rows.add(JSON.parse(danio)).draw();
 				tableAccion.clear(); if(accion.length > 0) tableAccion.rows.add(JSON.parse(accion)).draw();
 				tableIEF.clear(); if(ies.length > 0) tableIEF.rows.add(JSON.parse(ies)).draw();

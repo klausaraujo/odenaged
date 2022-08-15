@@ -22,13 +22,11 @@ function tableComp(table, headersCols, data,img){
 			targets: 0,
 			data: null,
 			render: function (data, type, row, meta) {
-				const btnDel = '<button class="btn btn-warning btn-circle btn-sm actionDelete" title="Eliminar" '+
-						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-trash" aria-hidden="true"></i></button>';
-				const btnEdit = '<button class="btn btn-warning btn-circle btn-sm actionEdit" title="Editar Registro" '+
-						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>';
-				const btnPdf = '<button class="btn btn-warning btn-circle btn-sm actionReport" title="Ver Reporte" '+
-						'style="margin-right:5px;padding:1px;padding-left:3px""><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>';
-				return (img == 'complementario')? btnEdit+btnDel+btnPdf : btnDel;
+				const btnDel = (data.activo == '0')?'<button class="btn btn-warning btn-circle btn-sm actionDelete" title="Eliminar" '+
+						'style="margin-right:5px;padding:1px;padding-left:3px" disabled ><i class="fa fa-trash" aria-hidden="true"></i></button>':
+						'<button class="btn btn-warning btn-circle btn-sm actionDelete" title="Eliminar" '+
+						'style="margin-right:5px;padding:1px;padding-left:3px" ><i class="fa fa-trash" aria-hidden="true"></i></button>';
+				return btnDel;
 			}
 		}
 	];

@@ -40,6 +40,8 @@ class Informes extends CI_Controller
 		($fotos->num_rows() > 0)? $fotos = json_encode($fotos->result()) : $fotos = array();
 		($ies->num_rows() > 0)? $ies = json_encode($ies->result()) : $ies = array();
 		($ieUB->num_rows() > 0)? $ieUB = json_encode($ieUB->result()) : $ieUB = array();
+		$activo = $this->Informe_model->traeEstadoVersion();
+		$activo = ($activo->num_rows() > 0) ? $activo->row() : 1;
 		
 		$data = array(
 			'danio' => $danio,
@@ -48,6 +50,7 @@ class Informes extends CI_Controller
 			'ies' => $ies,
 			'iesUB' => $ieUB,
 			'url' => 'public/images/galerias_eventos/',
+			'activo' => $activo,
 			'status' => 200
 		);
 		echo json_encode($data);
@@ -57,38 +60,43 @@ class Informes extends CI_Controller
 		$this->load->model("Informe_model");
 		$id = $this->input->post('idevento');
 		$ver = $this->input->post('version');
+		$us = $this->session->userdata('idusuario');
 		
 		$this->Informe_model->setIdEvento($id);
 		$this->Informe_model->setVersion($ver);
-		$this->Informe_model->setUsuarioReg($this->session->userdata('idusuario'));
+		$this->Informe_model->setUsuarioReg($us);
 		$this->Informe_model->setFechaReg($this->fecha);
+		$this->Informe_model->setUsuarioAct($us);
+		$this->Informe_model->setFechaAct($this->fecha);
+		$this->Informe_model->setActivo(0);
 		
 		$this->Informe_model->setTabla('evento_tipo_danio');
 		$this->Informe_model->setCamposClonar('version,idtipodanio,idregistroevento,cantidad,activo');
 		$this->Informe_model->setCampos('version + 1,idtipodanio,idregistroevento,cantidad,activo');
 		$dan = $this->Informe_model->clonarAcciones();
+		$dan = $this->Informe_model->actClonacion();
 		$dan = $this->Informe_model->actAcciones();
-		$dan = $this->Informe_model->cerrarAcciones();
 		$this->Informe_model->setTabla('tipo_accion_evento');
 		$this->Informe_model->setCamposClonar('version,idtipoaccion,idregistroevento,descripcion,fecha,activo');
 		$this->Informe_model->setCampos('version + 1,idtipoaccion,idregistroevento,descripcion,fecha,activo');
 		$acc = $this->Informe_model->clonarAcciones();
+		$acc = $this->Informe_model->actClonacion();
 		$acc = $this->Informe_model->actAcciones();
-		$acc = $this->Informe_model->cerrarAcciones();
 		$this->Informe_model->setTabla('iest_2020_all_evento');
 		$this->Informe_model->setCamposClonar('version,idiest,idregistroevento,descripcion,fecha,activo');
 		$this->Informe_model->setCampos('version + 1,idiest,idregistroevento,descripcion,fecha,activo');
 		$acc = $this->Informe_model->clonarAcciones();
+		$acc = $this->Informe_model->actClonacion();
 		$acc = $this->Informe_model->actAcciones();
-		$acc = $this->Informe_model->cerrarAcciones();
 		$this->Informe_model->setTabla('galeria_evento');
 		$this->Informe_model->setCamposClonar('version,idregistroevento,fotografia,descripcion,activo');
 		$this->Informe_model->setCampos('version + 1,idregistroevento,fotografia,descripcion,activo');
 		$ie = $this->Informe_model->clonarAcciones();
+		$ie = $this->Informe_model->actClonacion();
 		$ie = $this->Informe_model->actAcciones();
-		$ie = $this->Informe_model->cerrarAcciones();
 		
-		$this->Informe_model->cerrarVersion();
+		$this->Informe_model->setTabla('evento_versiones');
+		$this->Informe_model->actAcciones();
 		
 		$ver += 1;
 		$this->Informe_model->setVersion($ver);
@@ -100,7 +108,48 @@ class Informes extends CI_Controller
 	}
 	
 	public function borraComplementario(){
+		$this->load->model("Informe_model");
+		$id = $this->input->post('idevento');
+		$ver = $this->input->post('version');
 		
+		$this->Informe_model->setIdEvento($id);
+		$this->Informe_model->setVersion($ver);
+		$us = $this->session->userdata('idusuario');
+		
+		$this->Informe_model->setTabla('evento_versiones');
+		$this->Informe_model->borraAccionesEvento();
+		$this->Informe_model->setTabla('evento_tipo_danio');
+		$this->Informe_model->borraAccionesEvento();
+		$this->Informe_model->setTabla('tipo_accion_evento');
+		$this->Informe_model->borraAccionesEvento();
+		$this->Informe_model->setTabla('galeria_evento');
+		$this->Informe_model->borraAccionesEvento();
+		$this->Informe_model->setTabla('iest_2020_all_evento');
+		$this->Informe_model->borraAccionesEvento();
+		
+		#Activar y actualizar acciones y version anterior a la que se esta borrando
+		$this->Informe_model->setVersion($ver - 1);
+		$this->Informe_model->setUsuarioReg($us);
+		$this->Informe_model->setFechaReg($this->fecha);
+		$this->Informe_model->setUsuarioAct(null);
+		$this->Informe_model->setFechaAct(null);
+		$this->Informe_model->setActivo(1);
+		
+		$this->Informe_model->setTabla('evento_tipo_danio');
+		$this->Informe_model->actAcciones();
+		$this->Informe_model->setTabla('tipo_accion_evento');
+		$this->Informe_model->actAcciones();
+		$this->Informe_model->setTabla('galeria_evento');
+		$this->Informe_model->actAcciones();
+		$this->Informe_model->setTabla('iest_2020_all_evento');
+		$this->Informe_model->actAcciones();
+		$this->Informe_model->setTabla('evento_versiones');
+		$this->Informe_model->actAcciones();
+		
+		$versiones = $this->Informe_model->traeVersion();
+		$versiones = ($versiones->num_rows() > 0) ? $versiones->result() : array();
+		
+		echo json_encode(array('versiones' => $versiones,'max' => $ver - 1));
 	}
 	
 	public function traeVersion(){
@@ -118,9 +167,10 @@ class Informes extends CI_Controller
 	
 	function registrar(){
 		$this->load->model("Informe_model");
+		$us = $this->session->userdata('idusuario');
 		$this->Informe_model->setIdEvento($this->input->post('id'));
 		$this->Informe_model->setVersion($this->input->post('version'));
-		$this->Informe_model->setUsuarioReg($this->session->userdata('idusuario'));
+		$this->Informe_model->setUsuarioReg($us);
 		$this->Informe_model->setFechaReg($this->fecha);
 		$this->Informe_model->setFechaAct(null);
 		$this->Informe_model->setUsuarioAct(null);
@@ -136,7 +186,7 @@ class Informes extends CI_Controller
 			
 			# Guardar Fotos
 			$this->Informe_model->setTabla('galeria_evento');
-			$del = $this->Informe_model->borraPreliminar();
+			$del = $this->Informe_model->borraAccionesEvento();
 			
 			$this->load->library('general');
 			$ubi = $this->path.'public/images/galerias_eventos/';
@@ -158,10 +208,10 @@ class Informes extends CI_Controller
 					if(isset($row->idusuario_apertura)){
 						$this->Informe_model->setUsuarioReg($row->idusuario_apertura);
 						$this->Informe_model->setFechaReg($row->fecha_apertura);
-						$this->Informe_model->setUsuarioAct($this->session->userdata('idusuario'));
+						$this->Informe_model->setUsuarioAct($us);
 						$this->Informe_model->setFechaAct($this->fecha);
 					}else{
-						$this->Informe_model->setUsuarioReg($this->session->userdata('idusuario'));
+						$this->Informe_model->setUsuarioReg($us);
 						$this->Informe_model->setFechaReg($this->fecha);
 					}
 					$id = $this->Informe_model->registrarFotos();
@@ -170,7 +220,7 @@ class Informes extends CI_Controller
 			
 			# Guardar Daños
 			$this->Informe_model->setTabla('evento_tipo_danio');
-			$this->Informe_model->borraPreliminar();
+			$this->Informe_model->borraAccionesEvento();
 			
 			foreach($danios as $row){
 				$this->Informe_model->setUsuarioAct(null);
@@ -181,10 +231,10 @@ class Informes extends CI_Controller
 				if(isset($row->idusuario_apertura)){
 					$this->Informe_model->setUsuarioReg($row->idusuario_apertura);
 					$this->Informe_model->setFechaReg($row->fecha_apertura);
-					$this->Informe_model->setUsuarioAct($this->session->userdata('idusuario'));
+					$this->Informe_model->setUsuarioAct($us);
 					$this->Informe_model->setFechaAct($this->fecha);
 				}else{
-					$this->Informe_model->setUsuarioReg($this->session->userdata('idusuario'));
+					$this->Informe_model->setUsuarioReg($us);
 					$this->Informe_model->setFechaReg($this->fecha);
 				}
 				$id = $this->Informe_model->registrarDanios();
@@ -192,7 +242,7 @@ class Informes extends CI_Controller
 			
 			# Guardar Acciones
 			$this->Informe_model->setTabla('tipo_accion_evento');
-			$this->Informe_model->borraPreliminar();
+			$this->Informe_model->borraAccionesEvento();
 			$dtz = new DateTimeZone("America/Lima");
 			
 			foreach($acciones as $row){
@@ -206,10 +256,10 @@ class Informes extends CI_Controller
 				if(isset($row->idusuario_apertura)){
 					$this->Informe_model->setUsuarioReg($row->idusuario_apertura);
 					$this->Informe_model->setFechaReg($row->fecha_apertura);
-					$this->Informe_model->setUsuarioAct($this->session->userdata('idusuario'));
+					$this->Informe_model->setUsuarioAct($us);
 					$this->Informe_model->setFechaAct($this->fecha);
 				}else{
-					$this->Informe_model->setUsuarioReg($this->session->userdata('idusuario'));
+					$this->Informe_model->setUsuarioReg($us);
 					$this->Informe_model->setFechaReg($this->fecha);
 				}
 				$id = $this->Informe_model->registrarAcciones();
@@ -217,7 +267,7 @@ class Informes extends CI_Controller
 			
 			# Guardar IES
 			$this->Informe_model->setTabla('iest_2020_all_evento');
-			$this->Informe_model->borraPreliminar();
+			$this->Informe_model->borraAccionesEvento();
 			
 			foreach($ies as $row){
 				$this->Informe_model->setUsuarioAct(null);
@@ -230,10 +280,10 @@ class Informes extends CI_Controller
 				if(isset($row->idusuario_apertura)){
 					$this->Informe_model->setUsuarioReg($row->idusuario_apertura);
 					$this->Informe_model->setFechaReg($row->fecha_apertura);
-					$this->Informe_model->setUsuarioAct($this->session->userdata('idusuario'));
+					$this->Informe_model->setUsuarioAct($us);
 					$this->Informe_model->setFechaAct($this->fecha);
 				}else{
-					$this->Informe_model->setUsuarioReg($this->session->userdata('idusuario'));
+					$this->Informe_model->setUsuarioReg($us);
 					$this->Informe_model->setFechaReg($this->fecha);
 				}
 				$id = $this->Informe_model->registrarIES();

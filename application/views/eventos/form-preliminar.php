@@ -204,7 +204,7 @@
 			<div class="row justify-content-center mt-2"><h5 id="messagePrel" class="succes"></h5></div>
 			<div class="col-sm-12 mx-auto pb-3">
 				<button type="submit" class="btn btn-sirese mx-3" id="btnInforme">Guardar</button>
-				<button class="btn btn-sirese" id="btnCancelPrel" name="btnCancelPrel">Cancelar</button>
+				<button class="btn btn-sirese" id="btnCancelPrel" name="btnCancelPrel">Retornar</button>
 			</div>
 			
 			<div class="modal fade" id="modalIE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
