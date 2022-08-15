@@ -67,6 +67,8 @@ $route['editarEvento'] = 'eventos/main/editarEvento';
 
 #Informes
 $route['buscaPreliminar'] = 'eventos/informes/preliminar';
+$route['buscaComplementario'] = 'eventos/informes/complementario';
+$route['buscaVersion'] = 'eventos/informes/traeVersion';
 $route['buscaIE'] = 'eventos/informes/buscaIE';
 $route['registraInforme'] = 'eventos/informes/registrar';
 $route['existeAccion'] = 'eventos/informes/existeAccion';

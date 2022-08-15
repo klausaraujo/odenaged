@@ -45,6 +45,7 @@ function main(map) {
 		resetPreliminar();
 	}
 	function resetForm(){ $("#formEvento")[0].reset();$("#formEvento select").prop('selectedIndex',0);$("#afecta").prop('checked',false); }
+	
 	function resetPreliminar(){
 		$('#formInforme')[0].reset(); $('#formInforme select').each(function(){ $(this).prop('selectedIndex',0); });
 		tableDanio.clear(); tableDanio.draw();
@@ -138,7 +139,7 @@ function main(map) {
 					$("#message").hide(); $('#cargando').show();
 				},
 				success: function (data) {
-					console.log(data);
+					//console.log(data);
 					var $message = "";
 					//$('#message').switchClass('succes', 'warn');
 					
@@ -359,9 +360,9 @@ function main(map) {
 		});
 	}
 	
-	function informe(id,ubigeo,dpto,pro,dis){
+	function informe(id,ubigeo,dpto,pro,dis,v){
 		$.ajax({
-            data: { idevento: id, ubigeo: ubigeo },
+            data: { idevento: id, ubigeo: ubigeo, version: v },
             url: URI + "buscaPreliminar",
             method: "POST",
             dataType: "json",
@@ -383,7 +384,8 @@ function main(map) {
 					let json = [];
 					let row = JSON.parse(fotos);
 					row.forEach(function(col){
-						json.push({'version':col.version,'fotografia':col.fotografia,'descripcion':col.descripcion,'foto':path+url+col.fotografia});
+						json.push({ 'version':col.version,'fotografia':col.fotografia,'descripcion':col.descripcion,'foto':path+url+col.fotografia,
+							'idusuario_apertura':col.idusuario_apertura,'fecha_apertura':col.fecha_apertura });
 					});
 					tableFotos.rows.add(json).draw();
 				}
@@ -412,21 +414,35 @@ function main(map) {
 			$("#nav-tab a:first").tab('show');*/
 			//$('#nav-tab:visible:first a').tab('show');
 			$('#idregevento').val(data.idregistroevento);
-			informe(data.idregistroevento,data.ubigeo,data.departamento,data.provincia,data.distrito);
+			$('#version').val(0);
+			informe(data.idregistroevento,data.ubigeo,data.departamento,data.provincia,data.distrito,0);
 		}
 		if($(this).hasClass('actionReport')){/*muestraInforme();*/window.open('informe?id='+data.idregistroevento, "_blank");}
 		if($(this).hasClass('actionComp')){
-			console.log(data.idregistroevento);
-			console.log(data.evento);
-			console.log(data.tipo_evento);
-			console.log(data.ubigeo_descripcion);
 			$('#tipoEvtComp').val(data.tipo_evento);
 			$('#evtComp').val(data.evento);
-			$('#ubigeoComp').val(data.ubigeo_descripcion);
-			$('#idregComp').val(data.idregistroevento);
+			$('#ubdesComp').val(data.ubigeo_descripcion);
 			$('#fechaComp').val(data.fecha+' '+data.hora);
-			if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
-			if($('.ajaxComplementario').css('display') == 'none' || $('.ajaxComplementario').css('opacity') == 0) $('.ajaxComplementario').show();
+			$('#idregComp').val(data.idregistroevento);
+			$('#ubigeoComp').val(data.ubigeo);
+			$.ajax({
+				data: { idevento: data.idregistroevento },
+				url: URI + "buscaVersion",
+				method: "POST",
+				dataType: "json",
+				beforeSend: function () {},
+				success: function (data) {
+					const { 0: { acciones } } = data;
+					const { version } = data;
+					
+					$('#versionComp').val(version);
+					tabComp.clear(); if(acciones.length > 0) tabComp.rows.add(acciones).draw(); else tabComp.draw();
+				}
+			});
+			setTimeout(function () {
+				if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
+				if($('.ajaxComplementario').css('display') == 'none' || $('.ajaxComplementario').css('opacity') == 0) $('.ajaxComplementario').show();
+			}, 500);
 		}
 	});
 }

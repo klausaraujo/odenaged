@@ -14,71 +14,58 @@ function eventos() {
 	$('#cierra').on('click', function(){ cIMG(); });
 	
 	function ocultar(){
-		if($('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 0) $('.ajaxTable').show();
+		if(!$('.ajaxComplementario').css('display') == 'none' || $('.ajaxComplementario').css('opacity') == 1) $('.ajaxComplementario').hide();
 		if(!$('.ajaxPreliminar').css('display') == 'none' || $('.ajaxPreliminar').css('opacity') == 1) $('.ajaxPreliminar').hide();
+		if($('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 0) $('.ajaxTable').show();
+		
+		resetear();
+	}
+	
+	function resetear(){
 		tableDanio.clear(); tableDanio.draw();
 		tableAccion.clear(); tableAccion.draw();
 		tableFotos.clear(); tableFotos.draw();
 		tableIEF.clear(); tableIEF.draw();
+		
+		$('#formInforme')[0].reset(); $('#formInforme select').each(function(){ $(this).prop('selectedIndex',0); });
+	}
+	
+	function hidePreliminar(){
+		if(!$('.ajaxPreliminar').css('display') == 'none' || $('.ajaxPreliminar').css('opacity') == 1) $('.ajaxPreliminar').hide();
+		if($('.ajaxComplementario').css('display') == 'none' || $('.ajaxComplementario').css('opacity') == 0) $('.ajaxComplementario').show();
 		resetear();
 	}
-	function resetear(){ $('#formInforme')[0].reset(); $('#formInforme select').each(function(){ $(this).prop('selectedIndex',0); }); }
 	
 	function existeAccion(idaccion,tableAccion,tab,desc,campo){
-		let = id = $('#idregevento').val();
-		row = [];
+		let row = [], igual = null;
+		//alert(idaccion);
 		if(tableAccion.rows().count() > 0){
-			$.ajax({
-				type: 'POST',
-				url: URI + 'existeAccion',
-				data: { id: id, idaccion: idaccion, accion: desc },
-				dataType: 'json',
-				success: function (response) {
-					if(response == 200){
-						let agregar = 1;
-						tableAccion.rows().data().each(function (value){ if(value[campo] == idaccion) agregar = 1;else{ row.push(value); agregar = 0;} });
-						if(agregar == 0){
-							row = row.concat(jSon);
-							tableAccion.clear();
-							tableAccion.rows.add(row).draw();
-						}else
-							alert('No se puede agregar el mismo ítem en el detalle');
-					}else{
-						alert('El Ítem seleccionado, ya esta registrado en el detalle');
-					}
-					$('#'+ tab +' .form-control').each(function(index, el){
-						//var elementType = $(this).prev().prop('nodeName');
-						//var elementType = this.previousSibling.nodeName;
-						//var is_element_input = $(this).prev().is("input");
-						
-						var elementType = $(this).prop('nodeName');
-						//var name = $(this).prop('name');
-						//alert(name + ' ' + $(this).get(0).type);
-						if($(this).get(0).type == 'text')$(this).val('');
-						if(elementType == 'SELECT')$(this).prop('selectedIndex',0);
-					});
-				}
+			tableAccion.rows().data().each(function (value){
+				if(value[campo] == idaccion)
+					igual = value[campo];
 			});
-		}else{
+		}
+		if(!igual){
 			tableAccion.rows().data().each(function(value){row.push(value);});
 			row = row.concat(jSon);
 			tableAccion.clear();
 			tableAccion.rows.add(row).draw();
-			$('#'+ tab +' .form-control').each(function(index, el){
-				var elementType = $(this).prop('nodeName');
-				if($(this).get(0).type == 'text')$(this).val('');
-				if(elementType == 'SELECT')$(this).prop('selectedIndex',0);
-			});
-		}
+		}else
+			alert('No se puede agregar el mismo ítem en el detalle');
+		
+		$('#'+ tab +' .form-control').each(function(index, el){
+			var elementType = $(this).prop('nodeName');
+			if($(this).get(0).type == 'text')$(this).val('');
+			if(elementType == 'SELECT')$(this).prop('selectedIndex',0);
+		});
 	}
 	
-	$('body').on('click', 'input, button', function(){
+	$('body').on('click', 'input, button', function(e){
 		if($(this).attr('value') == 'Agregar'){
 			$('.fileQueue').each(function(index, el){
-				let input = $(el).find('.descripcion input');
+				let input = $(el).find('.descripcion input'); name = $(this).find('.name b').html(), desc = $(this).find('.descripcion input').val(), src = $(this).find('.src input').val();
 				if(input.val() == ''){ alert('El campo descripción no puede quedar vacío'); return false; };
-				let name = $(this).find('.name b').html(), desc = $(this).find('.descripcion input').val(), src = $(this).find('.src input').val();
-				jSon = [{'version':1,'fotografia': name,'descripcion' : desc.toUpperCase(), 'foto' : src}];
+				jSon = [{ 'fotografia': name,'descripcion' : desc, 'foto' : src }];
 				//alert(name+'  '+desc+'  '+src);
 				var row = [];
 				tableFotos.rows().data().each(function (value) { row.push(value); });
@@ -94,7 +81,93 @@ function eventos() {
 			if(cuenta.length > 0)$('.agregar').html('<input class="btn btn-sirese pull-right" type="button" value="Agregar" />');
 			else $('.agregar').html('');
 		}
+		if($(this).hasClass('tableBorrar')){
+			alert('remover');
+		}
+		if($(this).hasClass('tableReporte')){
+			alert('reporte');
+		}
+		if($(this).hasClass('complementario')){
+			e.preventDefault();
+			e.stopPropagation();
+			complementario($('#idregComp').val(),$('#versionComp').val(),$('#ubigeoComp').val());
+		}
 	});
+	
+	tabComp.on('click', 'button', function(){
+		if($(this).hasClass('actionDelete')){
+			if(tabComp.row(this).child.isShown()) tabComp.row(this).remove().draw();
+			else tabComp.row($(this).parents("tr")).remove().draw();
+		}if($(this).hasClass('actionEdit')){
+			/*console.log( ($('#ubigeoComp').val()).substr(0,2) +'  '+ ($('#ubigeoComp').val()).substr(2,2) +' '+ ($('#ubigeoComp').val()).substr(4,2) );
+			console.log( $('#idregComp').val() +'  '+ $('#versionComp').val() );*/
+			resetear();
+			informeComp( $('#idregComp').val(),$('#ubigeoComp').val(),($('#ubigeoComp').val()).substr(0,2),
+					($('#ubigeoComp').val()).substr(2,2),($('#ubigeoComp').val()).substr(4,2),$('#versionComp').val() );
+		}
+	});
+	
+	function complementario(id,ver,ub){
+		//alert(id +' '+ ver +' '+ ub);
+		$.ajax({
+            data: { idevento: id, version: ver, ubigeo: ub },
+            url: URI + 'buscaComplementario',
+            method: "POST",
+            dataType: "json",
+            beforeSend: function () {},
+            success: function (data) {
+				//console.log(data);
+				const { 0: { acciones } } = data;
+				const { version } = data;
+				
+				$('#versionComp').val(version);
+				tabComp.clear(); if(acciones.length > 0) tabComp.rows.add(acciones).draw(); else tabComp.draw();
+			}
+        });
+	}
+	
+	function informeComp(id,ubigeo,dpto,pro,dis,ver){
+		$.ajax({
+            data: { idevento: id, ubigeo: ubigeo, version: ver },
+            url: URI + "buscaPreliminar",
+            method: "POST",
+            dataType: "json",
+            beforeSend: function () {},
+            success: function (data) {
+				//console.log(data);
+				const { danio } = data;
+				const { accion } = data;
+				const { fotos } = data;
+				const { ies } = data;
+				const { url } = data;
+				const { iesUB } = data;
+				tableDanio.clear(); if(danio.length > 0) tableDanio.rows.add(JSON.parse(danio)).draw();
+				tableAccion.clear(); if(accion.length > 0) tableAccion.rows.add(JSON.parse(accion)).draw();
+				tableIEF.clear(); if(ies.length > 0) tableIEF.rows.add(JSON.parse(ies)).draw();
+				$('#version').val(ver);
+				$('#idregevento').val(id);
+				$('#informe').val('complementario');
+				tableFotos.clear();
+				if(fotos.length > 0){
+					let json = [];
+					let row = JSON.parse(fotos);
+					row.forEach(function(col){
+						json.push({ 'version':col.version,'fotografia':col.fotografia,'descripcion':col.descripcion,'foto':path+url+col.fotografia,
+							'idusuario_apertura':col.idusuario_apertura,'fecha_apertura':col.fecha_apertura });
+					});
+					tableFotos.rows.add(json).draw();
+				}
+				tableIEUbigeo.clear(); if(iesUB.length > 0) tableIEUbigeo.rows.add(JSON.parse(iesUB)).draw();
+				$('#dpto').html('<option " selected>' + dpto + '</option>');
+				$('#prov').html('<option " selected>' + pro + '</option>');
+				$('#dist').html('<option " selected>' + dis + '</option>');
+				//console.log(iesUB);
+				if(!$('.ajaxComplementario').css('display') == 'none' || $('.ajaxComplementario').css('opacity') == 1) $('.ajaxComplementario').hide();
+				if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
+				if($('.ajaxPreliminar').css('display') == 'none' || $('.ajaxPreliminar').css('opacity') == 0) $('.ajaxPreliminar').show();
+			}
+        });
+	}
 	
 	function imagen(files){
 		$.each(files, function(index, file) {
@@ -158,14 +231,14 @@ function eventos() {
 	
 	
 	$('#btnDanio').on('click',function(evt){
-		let = idaccion = $('#tipodanio :selected').val(); let desc = $('#cantidad').val();
+		let idaccion = $('#tipodanio :selected').val(), desc = $('#cantidad').val();
 		if(!idaccion == 0 && !desc == ''){
-			jSon = [{'idtipodanio': idaccion,'tipo_danio':$('#tipodanio :selected').text(),'version':1,'cantidad':$('#cantidad').val()}];
+			jSon = [{'idtipodanio': idaccion,'tipo_danio':$('#tipodanio :selected').text(),'cantidad':$('#cantidad').val()}];
 			existeAccion(idaccion,tableDanio,'nav-danios','danios','idtipodanio');
 		}else
 			alert('Los campos no pueden estar vacios');
 	});
-	
+		
 	tableDanio.on('click', 'button', function(){
 		if($(this).hasClass('actionDelete')){
 			if(tableDanio.row(this).child.isShown()) tableDanio.row(this).remove().draw();
@@ -174,9 +247,9 @@ function eventos() {
 	});
 	
 	$('#btnAccion').on('click',function(evt){
-		let = idaccion = $('#tipoaccion :selected').val(); let desc = $('#descripaccion').val();
+		let idaccion = $('#tipoaccion :selected').val(), desc = $('#descripaccion').val();
 		if(!idaccion == 0 && !desc == ''){
-			jSon = [{'idtipoaccion': idaccion,'version':1,'tipo_accion':$('#tipoaccion :selected').text(),'descripcion':$('#descripaccion').val(),
+			jSon = [{'idtipoaccion': idaccion,'tipo_accion':$('#tipoaccion :selected').text(),'descripcion':$('#descripaccion').val(),
 						'fecha':$('#fechaaccion').val()+' '+$('#horaaccion').val()}];
 			existeAccion(idaccion,tableAccion,'nav-acciones','acciones','idtipoaccion');
 		}else
@@ -198,9 +271,9 @@ function eventos() {
 	});
 	
 	$('#btnIE').on('click',function(evt){
-		let = idaccion = $('#idiest').val(); let desc = $('#descripie').val();
+		let idaccion = $('#idiest').val(), desc = $('#descripie').val();
 		if(!idaccion == 0 && !desc == ''){
-			jSon = [{'idiest': idaccion,'version':1,'CEN_EDU':$('#institucion').val(),'descripcion':$('#descripie').val(),'fecha':$('#fechaie').val()}];
+			jSon = [{'idiest': idaccion,'CEN_EDU':$('#institucion').val(),'descripcion':$('#descripie').val(),'fecha':$('#fechaie').val()}];
 			existeAccion(idaccion,tableIEF,'nav-ie','ies','idiest');
 		}else
 			alert('Los campos no pueden estar vacios');
@@ -279,52 +352,72 @@ function eventos() {
 	
 	$("#btnInforme").on('click', function(evt){
 		evt.preventDefault();
-		let fotos = [], accion = [], danio = [], ie = [], i = 0, id = $('#idregevento').val();
+		let fotos = [], accion = [], danio = [], ie = [], i = 0, id = $('#idregevento').val(), version = $('#version').val();
 		//var formData = new FormData();
 		tableFotos.rows().data().each(function (value) {
-			fotos.push({ version:value.version,fotografia:value.fotografia,descripcion:value.descripcion,foto:value.foto });
+			if(value.idusuario_apertura){
+				//console.log(value.idusuario_apertura); console.log(value.fecha_apertura);
+				fotos.push({ fotografia:value.fotografia,descripcion:value.descripcion,foto:value.foto,idusuario_apertura:value.idusuario_apertura,fecha_apertura:value.fecha_apertura });
+			}else
+				fotos.push({ fotografia:value.fotografia,descripcion:value.descripcion,foto:value.foto });
 		});
 		tableDanio.rows().data().each(function (value) {
-			danio.push({ idtipodanio:value.idtipodanio,version:value.version,tipodanio:value.tipo_danio,cantidad:value.cantidad });
+			if(value.idusuario_apertura){
+				//console.log(value.idusuario_apertura); console.log(value.fecha_apertura);
+				danio.push({ idtipodanio:value.idtipodanio,tipodanio:value.tipo_danio,cantidad:value.cantidad,idusuario_apertura:value.idusuario_apertura,fecha_apertura:value.fecha_apertura });
+			}else
+				danio.push({ idtipodanio:value.idtipodanio,tipodanio:value.tipo_danio,cantidad:value.cantidad });
 		});
 		tableAccion.rows().data().each(function (value) {
-			accion.push({ idtipoaccion:value.idtipoaccion,version:value.version,tipoaccion:value.tipo_accion,descripcion:value.descripcion,fecha:value.fecha });
+			if(value.idusuario_apertura){
+				//console.log(value.idusuario_apertura); console.log(value.fecha_apertura);
+				accion.push({ idtipoaccion:value.idtipoaccion,tipoaccion:value.tipo_accion,descripcion:value.descripcion,fecha:value.fecha,idusuario_apertura:value.idusuario_apertura,fecha_apertura:value.fecha_apertura });
+			}else
+				accion.push({ idtipoaccion:value.idtipoaccion,tipoaccion:value.tipo_accion,descripcion:value.descripcion,fecha:value.fecha });
+			
 		});
 		tableIEF.rows().data().each(function (value) {
-			ie.push({ idiest:value.idiest,version:value.version,descripcion:value.descripcion,fecha:value.fecha });
+			if(value.idusuario_apertura){
+				//console.log(value.idusuario_apertura); console.log(value.fecha_apertura);
+				ie.push({ idiest:value.idiest,descripcion:value.descripcion,fecha:value.fecha,idusuario_apertura:value.idusuario_apertura,fecha_apertura:value.fecha_apertura });
+			}else
+				ie.push({ idiest:value.idiest,descripcion:value.descripcion,fecha:value.fecha });
+			
 		});
 		fotos = JSON.stringify(fotos); danio = JSON.stringify(danio); accion = JSON.stringify(accion); ie = JSON.stringify(ie);
 		
 		$.ajax({
-            data: { id:id,version:$('#version').val(),fotos:fotos,danio:danio,accion:accion,ies:ie },
+            data: { id:id,version:version,fotos:fotos,danio:danio,accion:accion,ies:ie },
             url: URI + "registraInforme",
             method: "POST",
             dataType: "json",
             beforeSend: function () {
-				
+				$('#contentPrel').html('<div class="loading"><img src="'+path+'public/template/images/loader.gif" alt="loading" /><br/>Cargando...</div>');
             },
             success: function (data) {
 				//loadTables(id);
-				if (parseInt(data.status) == 200){ $('#message').switchClass('warn', 'succes'); $message = 'Acciones Registradas'; }
+				$('#contentPrel').fadeIn(1000).html('');
+				if (parseInt(data.status) == 200){ $('#messagePrel').switchClass('warn', 'succes'); $message = 'Acciones Registradas'; }
 				else { $message = 'No se pudo registrar las Acciones'; }
-					
-				setTimeout(function () { $('#cargando').hide(); $("#message").html($message); $("#message").show() }, 300);
+				
+				setTimeout(function () { $('#cargandoPrel').hide(); $("#messagePrel").html($message); $("#messagePrel").show() }, 300);
 				if (parseInt(data.status) == 200){
 					setTimeout(function () {
-						ocultar();
+						$('#messagePrel').html('');
+						if($('#informe').val() == 'complementario'){ hidePreliminar(); }else ocultar();
 					}, 1000);
 				}
 			}
 		}).fail( function( jqXHR, textStatus, errorThrown ) {
 			// Un callback .fail()
-			setTimeout(function () { $('#cargando').hide(); $("#message").html(/*jqXHR + ",  " +*/ textStatus.toUpperCase() + ":  " + errorThrown); $("#message").show()}, 500);
+			$('#contentPrel').fadeIn(1000).html('');
+			$('#messagePrel').switchClass('succes', 'warn');
+			setTimeout(function () { $('#cargandoPrel').hide(); $("#messagePrel").html(/*jqXHR + ",  " +*/ textStatus.toUpperCase() + ":  " + errorThrown); $("#messagePrel").show()}, 500);
 		});
 	});
 	
-	$("#btnCancelPrel").on('click', function(evt){
-		evt.preventDefault();
-		ocultar();
-	});
+	$("#btnCancelPrel").on('click', function(evt){ evt.preventDefault(); if($('#informe').val() == 'complementario') hidePreliminar(); else ocultar(); });
+	$("#btnCancelComp").on('click', function(evt){ evt.preventDefault(); ocultar(); });
 	
 	/*$('#dist').change(function(){
 		var id = $(this).val();
@@ -359,7 +452,7 @@ function eventos() {
             dataType: "json",
             beforeSend: function () {},
             success: function (data) {
-				console.log(data);
+				//console.log(data);
 				const { danio } = data;
 				const { accion } = data;
 				const { fotos } = data;
@@ -379,6 +472,20 @@ function eventos() {
 					tableFotos.rows.add(json).draw();
 				}
 				resetear();
+			}
+        });
+	}
+	function loadTableComp(id,version){
+		$.ajax({
+            data: { idevento: id },
+            url: URI + "tablaComplementario",
+            method: "POST",
+            dataType: "json",
+            beforeSend: function () {},
+            success: function (data) {
+				//console.log(data);
+				/*tabComp.clear(); if(danio.length > 0) tableDanio.rows.add(JSON.parse(danio)).draw();
+				resetear();*/
 			}
         });
 	}
