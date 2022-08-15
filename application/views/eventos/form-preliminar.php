@@ -5,9 +5,9 @@
 
 	<div class="container-fluid"><!---->
 		<form id="formInforme" name="formInforme" method="POST" action="" autocomplete="off" enctype="multipart/form-data">
-			<input type="hidden" id="idregevento" value="" />
-			<input type="hidden" id="version" value="" />
-			<input type="hidden" id="informe" value="" />
+			<input type="text" id="idregevento" value="" />
+			<input type="text" id="version" value="" />
+			<input type="text" id="informe" value="" />
 			<div class="row">
 				<div class="col-sm-12">
 				<? 

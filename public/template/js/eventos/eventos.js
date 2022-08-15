@@ -102,8 +102,9 @@ function eventos() {
 			/*console.log( ($('#ubigeoComp').val()).substr(0,2) +'  '+ ($('#ubigeoComp').val()).substr(2,2) +' '+ ($('#ubigeoComp').val()).substr(4,2) );
 			console.log( $('#idregComp').val() +'  '+ $('#versionComp').val() );*/
 			resetear();
-			informeComp( $('#idregComp').val(),$('#ubigeoComp').val(),($('#ubigeoComp').val()).substr(0,2),
-					($('#ubigeoComp').val()).substr(2,2),($('#ubigeoComp').val()).substr(4,2),$('#versionComp').val() );
+			var data = (tabComp.row(this).child.isShown())? tabComp.row(this).data() : tabComp.row($(this).parents("tr")).data();
+			$('#formInforme .iq-header-title h4').html('Datos Complementarios de la Emergencia');
+			informeComp( $('#idregComp').val(),$('#ubigeoComp').val(),$('#dptoComp').val(),$('#provComp').val(),$('#dttoComp').val(),data.version );
 		}
 	});
 	
@@ -117,11 +118,11 @@ function eventos() {
             beforeSend: function () {},
             success: function (data) {
 				//console.log(data);
-				const { 0: { acciones } } = data;
-				const { version } = data;
+				const { versiones } = data;
+				const { max } = data;
 				
-				$('#versionComp').val(version);
-				tabComp.clear(); if(acciones.length > 0) tabComp.rows.add(acciones).draw(); else tabComp.draw();
+				$('#versionComp').val(max);
+				tabComp.clear(); if(versiones.length > 0) tabComp.rows.add(versiones).draw(); else tabComp.draw();
 			}
         });
 	}

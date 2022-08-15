@@ -360,9 +360,9 @@ function main(map) {
 		});
 	}
 	
-	function informe(id,ubigeo,dpto,pro,dis,v){
+	function informe(id,ub,dpto,pro,dis,v){
 		$.ajax({
-            data: { idevento: id, ubigeo: ubigeo, version: v },
+            data: { idevento: id, ubigeo: ub, version: v },
             url: URI + "buscaPreliminar",
             method: "POST",
             dataType: "json",
@@ -378,7 +378,6 @@ function main(map) {
 				tableDanio.clear(); if(danio.length > 0) tableDanio.rows.add(JSON.parse(danio)).draw();
 				tableAccion.clear(); if(accion.length > 0) tableAccion.rows.add(JSON.parse(accion)).draw();
 				tableIEF.clear(); if(ies.length > 0) tableIEF.rows.add(JSON.parse(ies)).draw();
-				$('#version').val(0);
 				tableFotos.clear();
 				if(fotos.length > 0){
 					let json = [];
@@ -409,6 +408,7 @@ function main(map) {
 		if($(this).hasClass('actionEdit')){editarReg('editar',data.idregistroevento);}
 		if($(this).hasClass('actionInforme')){
 			resetPreliminar();
+			$('#formInforme .iq-header-title h4').html('Datos Preliminares de la Emergencia');
 			/*if(!$('#nav-tab a:first').hasClass('active'))$('#nav-tab a:first').addClass('active');
 			$('#nav-danios').show();
 			$("#nav-tab a:first").tab('show');*/
@@ -417,15 +417,17 @@ function main(map) {
 			$('#version').val(0);
 			informe(data.idregistroevento,data.ubigeo,data.departamento,data.provincia,data.distrito,0);
 		}
-		if($(this).hasClass('actionReport')){/*muestraInforme();*/window.open('informe?id='+data.idregistroevento, "_blank");}
+		if($(this).hasClass('actionReport')){window.open('informe?id='+data.idregistroevento+'&version=0', "_blank");}
 		if($(this).hasClass('actionComp')){
-			/**/
 			$('#tipoEvtComp').val(data.tipo_evento);
 			$('#evtComp').val(data.evento);
 			$('#ubdesComp').val(data.ubigeo_descripcion);
 			$('#fechaComp').val(data.fecha+' '+data.hora);
 			$('#idregComp').val(data.idregistroevento);
 			$('#ubigeoComp').val(data.ubigeo);
+			$('#dptoComp').val(data.departamento);
+			$('#provComp').val(data.provincia);
+			$('#dttoComp').val(data.distrito);
 			$.ajax({
 				data: { idevento: data.idregistroevento },
 				url: URI + "buscaVersion",
@@ -433,11 +435,12 @@ function main(map) {
 				dataType: "json",
 				beforeSend: function () {},
 				success: function (data) {
-					const { 0: { acciones } } = data;
-					const { version } = data;
+					console.log(data);
+					const { versiones } = data;
+					const { max } = data;
 					
-					$('#versionComp').val(version);
-					tabComp.clear(); if(acciones.length > 0) tabComp.rows.add(acciones).draw(); else tabComp.draw();
+					$('#versionComp').val(max);
+					tabComp.clear(); if(versiones.length > 0) tabComp.rows.add(versiones).draw(); else tabComp.draw();
 				}
 			});
 			setTimeout(function () {

@@ -48,21 +48,31 @@ class Informe_model extends CI_Model
 		$query = 'INSERT INTO '.$this->tabla.' ('.$this->camposClonar.') SELECT '.$this->campos.' FROM '.
 				$this->tabla.' WHERE idregistroevento='.$this->idRegistroEvento.' AND version='.$this->version;
 		$this->db->query($query);
-		
+	}
+	public function actAcciones(){
 		$this->db->db_debug = FALSE;
 		$data = array( 'idusuario_apertura' => $this->uRegistro, 'fecha_apertura' => $this->fRegistro );
 		$this->db->where('idregistroevento', $this->idRegistroEvento);
-		$this->db->where('version', $this->version + 1);
+		$this->db->where('version', $this->version +1);
 		return $this->db->update( $this->tabla, $data );
 	}
-	public function cierraAcciones(){
+	public function cerrarAcciones(){
 		$this->db->db_debug = FALSE;
 		/*$data = array( 'idusuario_actualizacion' => $this->uRegistro, 'fecha_actualizacion' => $this->fRegistro,'fecha_cierre' => $this->fRegistro,
 					'idusuario_cierre' => $this->uRegistro, 'activo' => 0 );*/
-		$data = array( 'fecha_cierre' => $this->fRegistro,'idusuario_cierre' => $this->uRegistro, 'activo' => 0 );
+		$data = array( 'idusuario_cierre' => $this->uRegistro, 'fecha_cierre' => $this->fRegistro, 'activo' => 0 );
 		$this->db->where('idregistroevento', $this->idRegistroEvento);
 		$this->db->where('version', $this->version);
 		return  $this->db->update( $this->tabla, $data );
+	}
+	public function cerrarVersion(){
+		$this->db->db_debug = FALSE;
+		/*$data = array( 'idusuario_actualizacion' => $this->uRegistro, 'fecha_actualizacion' => $this->fRegistro,'fecha_cierre' => $this->fRegistro,
+					'idusuario_cierre' => $this->uRegistro, 'activo' => 0 );*/
+		$data = array( 'idusuario_cierre' => $this->uRegistro, 'fecha_cierre' => $this->fRegistro, 'activo' => 0 );
+		$this->db->where('idregistroevento', $this->idRegistroEvento);
+		$this->db->where('version', $this->version);
+		return  $this->db->update( 'evento_versiones', $data );
 	}
 	/*
 	public function traeComplementario(){
@@ -71,18 +81,41 @@ class Informe_model extends CI_Model
 	}
 	*//**/
 	public function traeVersion(){
-		$data = array();$i = 0;
-		$this->db->distinct(); $this->db->select('version,fecha_apertura,fecha_cierre,activo'); $this->db->from('evento_tipo_danio'); $this->db->where('idregistroevento', $this->idRegistroEvento);
-		$this->db->where('version >', '0'); $this->db->order_by("version", "DESC"); $data[$i] = $this->db->get(); $i++;
-		$this->db->distinct();$this->db->select('version,fecha_apertura,fecha_cierre,activo'); $this->db->from('tipo_accion_evento'); $this->db->where('idregistroevento', $this->idRegistroEvento);
-		$this->db->where('version >', '0'); $this->db->order_by("version", "DESC"); $data[$i] = $this->db->get(); $i++;
-		$this->db->distinct(); $this->db->select('version,fecha_apertura,fecha_cierre,activo'); $this->db->from('galeria_evento'); $this->db->where('idregistroevento', $this->idRegistroEvento);
-		$this->db->where('version >', '0'); $this->db->order_by("version", "DESC"); $data[$i] = $this->db->get(); $i++;
-		$this->db->distinct(); $this->db->select('version,fecha_apertura,fecha_cierre,activo'); $this->db->from('iest_2020_all_evento'); $this->db->where('idregistroevento', $this->idRegistroEvento);
-		$this->db->where('version >', '0'); $this->db->order_by("version", "DESC"); $data[$i] = $this->db->get(); $i++;
-		
-		$max = max($data[0]->num_rows(),$data[1]->num_rows(),$data[2]->num_rows(),$data[3]->num_rows());
-		return array('version'=>$max,'data'=>$data);
+		$this->db->select('version,fecha_apertura,fecha_cierre,activo');
+		$this->db->from('evento_versiones');
+		$this->db->where('idregistroevento', $this->idRegistroEvento);
+		$this->db->where('version >', '0');
+		$this->db->order_by("version", "DESC");
+		return $this->db->get();
+	}
+	public function existeVersion(){
+		$this->db->select('version');
+		$this->db->from('evento_versiones');
+		$this->db->where('idregistroevento', $this->idRegistroEvento);
+		$this->db->where('version', $this->version);
+		$this->db->limit(1);
+		$result = $this->db->get();
+		return $result->num_rows();
+	}
+	public function agregarVersion(){
+		$data = array(
+			'idregistroevento' => $this->idRegistroEvento,
+			'version' => $this->version,
+			'idusuario_apertura' => $this->uRegistro,
+			'fecha_apertura' => $this->fRegistro,
+			'activo' => 1,
+		);
+		if($this->db->insert('evento_versiones', $data)) {
+			return $this->db->insert_id();
+		}else { return 0; }
+	}
+	public function maxVersion(){
+		$this->db->select('MAX(version) maximo');
+		$this->db->from('evento_versiones');
+		$this->db->where('idregistroevento', $this->idRegistroEvento);
+		$result = $this->db->get();
+		if($result->num_rows() > 0) return $result->row();
+		else return 0;
 	}
 	public function listaDanio()
 	{

@@ -1,7 +1,7 @@
 function tablePersonalized(table, headersCols, data, comp){
 	
 	let cols = [], titles = [], render = [], imagen = [], lista = [], j = 0;
-	
+	cols.push({data:null});j++;
 	if(headersCols.length > 0){
 		headersCols.forEach(function(col){
 			for(const [key, value] of Object.entries(col)){
@@ -49,10 +49,13 @@ function tablePersonalized(table, headersCols, data, comp){
 	
 	titles = render.concat(titles);
 	
-	let botones = '<"row"<"col-sm-12 mb-2"B><"col-sm-6 float-left"l><"col-sm-6 float-right"f>>rtip';
-	if(comp == 'complementario'){ cols = cols.concat(activo);titles = titles.concat([{title: 'Estado',targets: j}]); botones = '<"row"<"col-sm-6 float-left py-2"l><"col-sm-6 float-right py-2"f>>rtip';}
+	let botones = '<"row"<"col-sm-12 mb-2"B><"col-sm-6 float-left"l><"col-sm-6 float-right"f>rt>ip';
+	if(comp == 'complementario'){
+		cols = cols.concat(activo);titles = titles.concat([{title: 'Estado',targets: j}]);
+		botones = '<"row"<"col-sm-6 float-left"l><"col-sm-6 float-right"f>rt>ip';
+	}
 	
-	/**/
+	
 	//String JSON con su identificador
 	//json = {"data":[{"name":"Tiger Nikon","position":"system"}]};
 	//String JSON sin su identificador pero esperando mas datos [0],[1]...
