@@ -72,13 +72,14 @@ function eventos() {
 				row = row.concat(jSon);
 				tableFotos.clear();
 				tableFotos.rows.add(row).draw();
+				drop.css('background-image','url("")');
 				cIMG();
 			});
 		}
 		if($(this).attr('value') == 'Remover'){
 			$(this).parent().parent().remove();
 			let cuenta = document.getElementsByClassName('fileQueue');
-			if(cuenta.length > 0)$('.agregar').html('<input class="btn btn-sirese pull-right" type="button" value="Agregar" />');
+			if(cuenta.length > 0){$('.agregar').html('<input class="btn btn-sirese pull-right" type="button" value="Agregar" />'); drop.css('background-image','url("")');}
 			else $('.agregar').html('');
 		}
 		if($(this).hasClass('tableBorrar')){
@@ -192,7 +193,7 @@ function eventos() {
 					e = e || window.event;
 					//console.log(e);
 					let src = e.target.result;
-					
+					drop.css('background-image','url('+src+')');
 					let html = '<div class="row fileQueue my-2" style="display:flex;justify-content:center;align-items:center" ><div class="col-sm-4 m-0 name">'+
 							'<b>'+name+'</b></div><div class="descripcion col-sm-4">'+
 							'<input type="text" class="form-control pull-right" onKeyUp="mayus(this)" placeholder="Descripci&oacute;n de la imagen" />'+

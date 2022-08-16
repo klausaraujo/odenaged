@@ -31,7 +31,8 @@
 		/*Cargador de Archivos Dropzone*/
 		#uploader{padding:1em;position:relative}
 		#uploader #uploaderCont #dragandrophandler{flex-direction:column;background:#ebebeb;height:30vh;min-height:180px;
-								border:1px solid #c8c8c8;display:flex;align-items:center;justify-content:center;transition:all 400ms}
+								border:1px solid #c8c8c8;display:flex;align-items:center;justify-content:center;transition:all 400ms;
+								background-repeat: no-repeat; background-position: center; background-size: auto 95%}
 		#uploader #uploaderCont #dragandrophandler>*{transition:all 400ms}
 		#uploader #uploaderCont #dragandrophandler svg{width:100px;height:3.3em;opacity:0.12;margin-bottom:7px}
 		#uploader #uploaderCont #dragandrophandler label{margin-left:5px;color:#007bff;cursor:pointer}

@@ -86,7 +86,7 @@
 			const foto = [{'fotografia':'fotografia','descripcion':'descripcion'}];
 			const ie = [{'CEN_EDU':'inst. educativa','descripcion':'descripcion','fecha':'fecha'}];
 			const ieUB = [{'CEN_EDU':'institucion educativa','COD_MOD':'cod. mod','CODLOCAL':'cod. local','D_NIV_MOD':'nivel'}];
-			const comp = [{'version':'version','fecha_apertura':'fecha apertura','fecha_cierre':'fecha cierre'}];
+			const comp = [{'version':'version','fecha_apertura':'fecha apertura'}];
 			const table = tablePersonalized('#tablaEvento',headers,lista);
 			const tableDanio = tableComp('#tableDanio',danio,datos);
 			const tableAccion = tableComp('#tableAccion',accion,datos);

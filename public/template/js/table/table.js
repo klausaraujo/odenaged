@@ -41,6 +41,13 @@ function tablePersonalized(table, headersCols, data, comp){
 	if(comp == 'complementario'){
 		activo = [
 			{
+				data: 'fecha_cierre',
+				render: function(data,type,row){
+					let fecha = (data) ? data.split("-") : 0;
+					return ( parseInt(fecha[0]) > 0 ) ? data : '';
+				}
+			},
+			{
 				data: 'activo',
 				render: function(data,type,row){
 					return (data == '1') ? 'Abierto' : 'Cerrado';
@@ -53,7 +60,7 @@ function tablePersonalized(table, headersCols, data, comp){
 	
 	let botones = '<"row"<"col-sm-12 mb-2"B><"col-sm-6 float-left"l><"col-sm-6 float-right"f>rt>ip';
 	if(comp == 'complementario'){
-		cols = cols.concat(activo);titles = titles.concat([{title: 'Estado',targets: j}]);
+		cols = cols.concat(activo);titles = titles.concat([{title: 'Fecha Cierre',targets: j},{title: 'Estado',targets: j + 1}]);
 		botones = '<"row"<"col-sm-6 float-left"l><"col-sm-6 float-right"f>rt>ip';
 	}
 	

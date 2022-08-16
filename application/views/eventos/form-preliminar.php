@@ -1,6 +1,7 @@
 <style>
 .table th, td{text-align:center;align-items:center;justify-content:center}
-.table tr:first-child{width:40px}
+.table td{text-align:left}
+.table td.sorting_1{text-align:center;align-items:center;justify-content:center;width:30px}
 </style>
 
 	<div class="container-fluid"><!---->
