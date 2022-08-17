@@ -53,47 +53,40 @@ class Login extends CI_Controller
             $listaModulo = $this->Usuario_model->listaModulo();
 			//$menus = $this->Usuario_model->listaMenu();
 			
-			$lMenu = array(); $i = 0;
+			$lMenu = array(); $i = 0; $lSubMenu = array();
 			
 			$this->Menu_model->setIdUsuario($row->idusuario);
             #$permisosOpcion = $this->Menu_model->listaPermisosOpcion();
             foreach ($listaModulo->result() as $lrow) :
 				if ($lrow->activo == 1) {
+					
 					$this->Menu_model->setIdModulo($lrow->idmodulo);
                     $lista = $this->Menu_model->listaPermisos(); 
 					
                     foreach ($lista->result() as $menu) :
 
-                        $lMenu[$i]['idmenu'] = $menu->idmenu;                        
+                        $lMenu[$i]['idmenu'] = $menu->idmenu;
 						$lMenu[$i]['idmodulo'] = $menu->idmodulo;
 						$lMenu[$i]['descripcion'] = $menu->descripcion;
 						$lMenu[$i]['nivel'] = $menu->nivel;
 						$lMenu[$i]['url'] = $menu->url;
 						$lMenu[$i]['icono'] = $menu->icono;
 						$lMenu[$i]['activo'] = $menu->activo;
-
-                        if ($key === 'nivel' && $value === 1) {
-
-                        /*    $this->Menu_model->setId($mrow->idmenu);
-                            $listaSubMenu = $this->Menu_model->listaSubMenuPermisos();
-                            $lSubMenu = array();
-                            $j = 0;
-                            foreach ($listaSubMenu->result() as $srow) :
-                                $lSubMenu[$j]["idmenudetalle"] = $srow->idmenudetalle;
-                                $lSubMenu[$j]["descripcion"] = $srow->descripcion;
-                                $lSubMenu[$j]["url"] = $srow->url;
-                                $lSubMenu[$j]["icono"] = $srow->icono;
-                                $j ++;
-
-                            endforeach;
-
-                            if(count($lSubMenu)>0) $lMenu[$i]["submenu"] = $lSubMenu;*/
-                        }
 						
-						/*if(count($lMenu)>0){
-							$menu[$j] = $lMenu;
-							$j++;
-						}*/
+						if ($menu->nivel === '1') {
+							$j = 0;
+							$this->Menu_model->setId($menu->idmenu);
+							$subM = $lista = $this->Menu_model->listaSubMenuPermisos();
+							
+							foreach ($subM->result() as $srow) :
+                                $lSubMenu[$j]['idmenudetalle'] = $srow->idmenudetalle;
+                                $lSubMenu[$j]['descripcion'] = $srow->descripcion;
+                                $lSubMenu[$j]['url'] = $srow->url;
+                                $lSubMenu[$j]['icono'] = $srow->icono;
+								$lSubMenu[$j]['activo'] = $srow->activo;
+                                $j ++;
+							endforeach;
+                        }
 						
                         $i ++;
 
@@ -137,6 +130,7 @@ class Login extends CI_Controller
             $this->session->set_userdata("avatar", $row->avatar);
             $this->session->set_userdata("modulos", $listaModulo->result());
             $this->session->set_userdata("menu", $lMenu);
+			$this->session->set_userdata("submenu", $lSubMenu);
             /*$token = JWT::encode(array("usuario"=>sha1($row->idusuario),"modulos"=>$listaModulo->result()),getenv("SECRET_SERVER_KEY"));
             $this->session->set_userdata("token", $token);*/
 

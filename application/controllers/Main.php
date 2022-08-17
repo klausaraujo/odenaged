@@ -4,11 +4,15 @@ if (! defined("BASEPATH"))
 
 class Main extends CI_Controller
 {
+	private $usuario;
 
     public function __construct()
     {
         parent::__construct();
-		if (!$this->session->userdata("usuario"))
+		
+		$this->usuario = $this->session->userdata("usuario");
+		
+		if (!$this->usuario)
 			header("location:" . base_url() . "login");
     }
 
@@ -21,7 +25,7 @@ class Main extends CI_Controller
 		//$this->informe();
 		$this->load->model("Evento_model");
 		$this->load->model("Ubigeo_model");
-		$this->Ubigeo_model->setIdUser($this->session->userdata("idusuario"));
+		$this->Ubigeo_model->setIdUser($this->usuario);
 		
 		$tipoevento = $this->Evento_model->tipoEvento();
 		$nivel = $this->Evento_model->cargaNivel();
@@ -53,4 +57,10 @@ class Main extends CI_Controller
 		//$this->load->view($this->uri->segment(1).'/main',$data);
 		$this->load->view('main',$data);
     }
+	public function uploadIMG(){
+		$foto = $_FILES["file"];
+		
+		
+		echo json_encode(filesize($foto["tmp_name"]);
+	}
 }

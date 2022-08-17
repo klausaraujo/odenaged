@@ -65,7 +65,7 @@ class Usuario_model extends CI_Model
         $this->db->where("idperfil", $this->idrol);
         $this->db->order_by("orden", "asc");
         return $this->db->get();
-    }
+    }/*
     public function lista()
     {
         $this->db->select("u.idusuario,u.dni,u.avatar,u.apellidos,u.nombres,u.usuario,u.passwd,u.idperfil,u.activo,p.descripcion");
@@ -80,7 +80,7 @@ class Usuario_model extends CI_Model
         $this->db->from("usuarios_ubigeo");
 		$this->db->where("idusuario", $this->idusuario);
         return $this->db->get();
-    }
+    }*/
 	public function validar_password()
     {
         $this->db->select('passwd');

@@ -19,13 +19,7 @@
    <link rel="stylesheet" href="<?=base_url()?>public/template/css/style.css">
    <!-- Responsive CSS -->
    <link rel="stylesheet" href="<?=base_url()?>public/template/css/responsive.css">
-   <!-- Data table CSS -->
-   <!-- <link href="<?=base_url()?>public/css/datatables.min.css" rel="stylesheet" type="text/css"> -->
-
-   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" />
-   <link rel="stylesheet" type="text/css"
-      href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" />
-
+   <!-- Dropzone CSS -->
    <link rel="stylesheet" href="<?=base_url()?>public/css/dropzone.css" />
 
    <?php
@@ -141,17 +135,7 @@
          
          <?php $message = $this->session->flashdata('mensajeSuccess'); ?>
 
-         <div id="pageMessages">
-            
-         </div>
-         <!--<div class="hide alert alert-success" style="display: none"><span></span></div>
-         <div class="hide alert alert-danger" style="display: none"><span></span></div>-->
-
-            <div class="row">
-               <div class="col-lg-12">
-                  <?php //echo "<pre>"; echo $lista; echo '<br>'.$pacientes;//echo "<pre>"; echo var_dump($lista); ?>
-               </div>
-            </div>
+         <div id="pageMessages"></div>
 
             <div class="row">
                <div class="col-lg-12">
@@ -179,17 +163,13 @@
                                  <div class="col-md-12">
                                     <div class="profile-img-edit">
                                        <?php if(strlen($imagen)>0){ ?>
-                                       <img class="profile-pic" src="<?=base_url()?>public/images/perfil/<?=$imagen?>"
-                                          alt="profile-pic">
+										<img class="profile-pic img-fluid" src="<?=base_url()?>public/images/perfil/<?=$imagen?>" alt="profile-pic">
                                        <?php }else{ ?>
-                                       <img class="profile-pic" src="<?=base_url()?>public/images/perfil/user.jpg"
-                                          alt="profile-pic">
+										<img class="profile-pic img-fluid" src="<?=base_url()?>public/images/perfil/user.jpg" alt="profile-pic">
                                        <?php } ?>
-
-                                       <div class="p-image">
-                                          <i class="ri-pencil-line upload-button"></i>
-                                          <input class="file-upload" type="file" accept="image/*" />
-                                       </div>
+										<div class="p-image">
+											<i class="ri-pencil-line upload-button"></i><input class="file-upload" type="file" accept="image/*" />
+										</div>
                                     </div>
                                  </div>
                               </div>
@@ -227,16 +207,11 @@
                   </div>
                </div>
             </div>
-
-
          </div>
-
 
          <!-- Footer -->
          <?php $this->load->view("inc/footer-template");?>
          <!-- Footer END -->
-         <script src="<?=base_url()?>public/js/moment.min.js"></script>
-         <script src="<?=base_url()?>public/js/locale.es.js"></script>
       </div>
    </div>
 

@@ -1,4 +1,50 @@
 function perfil(URI){
+	let upload = $('.upload-button'), file = $('.file-upload'), contSrc = $(".profile-pic");
+	
+	upload.bind('click',function(e){ file.trigger('click'); });
+	
+	file.bind('change',function(){
+		var e = e || window.event;
+		let files = e.target.files;
+		if(files.length > 0)
+			contSrc.attr( 'src', URL.createObjectURL(files[0]));
+		let imagenes = cargaImg(files);
+		console.log(imagenes);
+		//uploadImagenes(imagenes,'uploadIMG');
+	});
+	
+	function cargaImg(files){
+		let name = '', data = [];
+		$.each(files, function(index, file) {
+			if (!file.type.match('image.*')) { alert('Solo pueden cargarse imagenes'); return false; }
+			let fr = new FileReader();
+			fr.onload = (function(file) {
+				return function(e){
+					e = e || window.event;
+					let src = e.target.result;
+					data.push({'img':name,'src':src});
+				}
+			})(files[index]);
+			fr.readAsDataURL(file); name = file.name;
+		});
+		return data;
+	}
+	
+	function uploadImagenes(file,control){
+		let formData = new FormData();
+		formData.append("file", file);
+		$.ajax({
+			data: formData,
+			url: URI + control,
+			method: "POST",
+			dataType: "json",
+			beforeSend: function () {},
+			success: function (data) {
+				console.log(data);
+			}
+		});
+	}
+	
 	$(document).ready(function () {
 		//alert(URI);
 		$("#formPassword").validate({

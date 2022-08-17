@@ -1,7 +1,7 @@
 function main(map) {
 	
 	$(document).ready(function () {
-		$('#menu1').addClass('active');
+		//$('#menu1').addClass('active');
 		
 		$('.iq-menu li #linkAjax').each(function() {
 			$(this).on('click',function(evt) {

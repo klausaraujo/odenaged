@@ -44,48 +44,52 @@
 						
 						$lMenu = $this->session->userdata("menu");
 						$lMod = $this->session->userdata("modulos");
-						//$idusuario = $this->session->userdata("idusuario");
+						$submenu = $this->session->userdata("submenu");
+						
 						$idModulo = "";
 						foreach($lMod as $row): if($row->url === $this->uri->segment(1)) $idModulo = $row->idmodulo; endforeach;
-						//echo $idModulo;
-						//echo var_dump($lMenu);
-						//echo $this->uri->segment(1);
-						/*echo $idModulo;
-						$i=0;
-						foreach($lMenu as $row):
-							echo var_dump($row['idmodulo']);
-						endforeach;
-						foreach($lMenu as $row=>$value):
-							echo var_dump($value[$i]);
-							$i++;
-						endforeach;
-						$i=0;*/
 						
 						if(!empty($lMenu)){
 							foreach($lMenu as $row):
 								if($row['idmodulo'] === $idModulo){
 						?>
                             <li id="menu<?=$row['idmenu']?>">
-                            <?php if($row['nivel'] == 0){ ?>
-                                <a href="#" rel="<?=$row['url']?>" id="linkAjax">
+                        <?php if($row['nivel'] === '0'){ ?>
+								<?php if($row['activo'] === '1'){ ?>
+								<a href="#" rel="<?=$row['url']?>" id="linkAjax">
                                     <div class="pull-left">
                                         <i class="<?=$row['icono']?> mr-20"></i>
                                         <span class="right-nav-text"><?=$row['descripcion']?></span>
                                     </div>
                                     <div class="clearfix"></div>
                                 </a>
-                            <?php }else{ ?>
+								<?php }else{ ?>	
+								<span class="disable">
+									<div class="pull-left">
+                                        <i class="<?=$row['icono']?> mr-20"></i>
+                                        <span class="right-nav-text"><?=$row['descripcion']?></span>
+                                    </div>
+                                    <div class="clearfix"></div>
+								</span>
+								<?php }							
+							}else{ ?>
                                 <a href="javascript:void(0);" data-toggle="collapse" data-target="#sub_<?=$row['idmenu']?>">
                                     <div class="pull-left">
                                         <i class="<?=$row['icono']?>  mr-20"></i>
                                         <span class="right-nav-text"><?=$row['descripcion']?></span>
                                     </div>
-                                    <div class="pull-right">
-                                       
-                                    </div>
                                     <div class="clearfix"></div>
                                 </a>
-                            <?php }if($row['nivel'] == 1){ } ?>
+								<?if($row['nivel'] === '1'){?>
+									<div class="">
+										<ul id="sub_<?=$row["idmenu"]?>" class="collapse collapse-level-1 pb-1 pl-1">
+										<?php foreach($submenu as $srow): ?>
+											<li><a href="<?=base_url()?><?=$srow->url?>"><?=$srow->descripcion?></a></li>
+										<?php endforeach; ?> 
+										</ul>
+									</div>
+								<?}?>
+                            <?php } ?>
 							</li>
                         <?php
 								}
@@ -93,9 +97,8 @@
 						}
 					}
 				  ?>
-
-					</ul>
-				</nav>
+				</ul>
+			</nav>
             <div class="p-3"></div>
         </div>
     </div>
