@@ -283,7 +283,7 @@ a:hover { text-decoration: none; color: #02818f; }
 .iq-sidebar-menu .iq-menu li ul { padding-left: 0px; }
 .iq-sidebar-menu .iq-menu li ul.iq-submenu-data {padding-left: 30px;}
 .iq-sidebar-menu .iq-menu li ul li a { color: #777D74; padding: 12px 15px; }
-.iq-sidebar-menu .iq-menu li ul a:hover { color: #089bab; text-decoration: none; background: transparent; }
+.iq-sidebar-menu .iq-menu li ul a:hover { color: #e33d3d/*#089bab*/; text-decoration: none; background: transparent; }
 
 /*---------Sidebar Dark---------------*/
 .iq-sidebar.sidebar-dark, .iq-sidebar.sidebar-dark .iq-sidebar-logo { background: #151b21; color: #ffffff; }

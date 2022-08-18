@@ -100,4 +100,13 @@ class Usuario_model extends CI_Model
         if ($this->db->update('usuarios')) return 1;
         else { $error = $this->db->error(); return $error["code"]; }
     }
+	public function avatar()
+    {
+        $this->db->db_debug = FALSE;
+        $this->db->set("avatar", $this->avatar, TRUE);
+        $this->db->where("idusuario", $this->id);
+        $error = array();
+        if ($this->db->update('usuarios')) return 1;
+        else { $error = $this->db->error(); return $error["code"]; }
+    }
 }

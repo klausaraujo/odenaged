@@ -9,7 +9,7 @@
    <meta name="author" content="<?=AUTOR?>">
 
    <!-- Favicon -->
-   <link rel="shortcut icon" href="<?=base_url()?>public/images/favicon.jpg">
+   <link rel="shortcut icon" href="<?=base_url()?>public/template/images/favicon.jpg">
    <link rel="icon" href="<?=base_url()?>public/images/favicon.jpg" type="image/x-icon">
    <!-- Bootstrap CSS -->
    <link rel="stylesheet" href="<?=base_url()?>public/template/css/bootstrap.min.css">
@@ -163,9 +163,9 @@
                                  <div class="col-md-12">
                                     <div class="profile-img-edit">
                                        <?php if(strlen($imagen)>0){ ?>
-										<img class="profile-pic img-fluid" src="<?=base_url()?>public/images/perfil/<?=$imagen?>" alt="profile-pic">
+										<img class="profile-pic img-fluid" src="<?=base_url()?>public/images/perfil_usuarios/<?=$imagen?>" alt="profile-pic">
                                        <?php }else{ ?>
-										<img class="profile-pic img-fluid" src="<?=base_url()?>public/images/perfil/user.jpg" alt="profile-pic">
+										<img class="profile-pic img-fluid" src="<?=base_url()?>public/images/perfil_usuarios/user.jpg" alt="profile-pic">
                                        <?php } ?>
 										<div class="p-image">
 											<i class="ri-pencil-line upload-button"></i><input class="file-upload" type="file" accept="image/*" />

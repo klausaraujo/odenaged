@@ -49,6 +49,13 @@
 						$idModulo = "";
 						foreach($lMod as $row): if($row->url === $this->uri->segment(1)) $idModulo = $row->idmodulo; endforeach;
 						
+						/*$var = new \stdClass;
+						$var->nombre = 'nombre';
+						$var->apellido = 'apellido';
+						echo var_dump($var);
+						echo var_dump($lMenu);
+						echo var_dump($submenu);*/
+						
 						if(!empty($lMenu)){
 							foreach($lMenu as $row):
 								if($row['idmodulo'] === $idModulo){
@@ -84,7 +91,9 @@
 									<div class="">
 										<ul id="sub_<?=$row["idmenu"]?>" class="collapse collapse-level-1 pb-1 pl-1">
 										<?php foreach($submenu as $srow): ?>
-											<li><a href="<?=base_url()?><?=$srow->url?>"><?=$srow->descripcion?></a></li>
+											<li>
+												<a href="<?=base_url()?><?=$srow['url']?>"><i class="<?=$srow['icono']?>  mr-20"></i><?=$srow['descripcion']?></a>
+											</li>
 										<?php endforeach; ?> 
 										</ul>
 									</div>

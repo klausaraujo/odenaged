@@ -5,36 +5,28 @@ function perfil(URI){
 	
 	file.bind('change',function(){
 		var e = e || window.event;
-		let files = e.target.files;
-		if(files.length > 0)
+		let files = e.target.files; //todos los archivos si el load tiene opcion multiple, si no solo trae uno
+		if(files.length > 0){
 			contSrc.attr( 'src', URL.createObjectURL(files[0]));
-		let imagenes = cargaImg(files);
-		console.log(imagenes);
-		//uploadImagenes(imagenes,'uploadIMG');
+			cargaImg(files[0],resultado);
+		}
 	});
 	
-	function cargaImg(files){
-		let name = '', data = [];
-		$.each(files, function(index, file) {
-			if (!file.type.match('image.*')) { alert('Solo pueden cargarse imagenes'); return false; }
-			let fr = new FileReader();
-			fr.onload = (function(file) {
-				return function(e){
-					e = e || window.event;
-					let src = e.target.result;
-					data.push({'img':name,'src':src});
-				}
-			})(files[index]);
-			fr.readAsDataURL(file); name = file.name;
-		});
-		return data;
+	function resultado(src){ uploadImagenes(src,'uploadIMG'); }
+	
+	function cargaImg(file,callback){
+		if (!file.type.match('image.*')) { alert('Solo pueden cargarse imagenes'); return false; }
+		let fr = new FileReader();
+		fr.addEventListener("load", function (e) {
+			e = e || window.event;
+			callback(e.target.result);
+		}, false);
+		fr.readAsDataURL(file); //name = file.name;
 	}
 	
 	function uploadImagenes(file,control){
-		let formData = new FormData();
-		formData.append("file", file);
 		$.ajax({
-			data: formData,
+			data: {src:file},
 			url: URI + control,
 			method: "POST",
 			dataType: "json",
