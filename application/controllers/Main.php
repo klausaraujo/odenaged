@@ -59,8 +59,6 @@ class Main extends CI_Controller
     }
 	public function uploadIMG(){
 		$foto = $_FILES["file"];
-		
-		
-		echo json_encode(filesize($foto["tmp_name"]);
+		echo json_encode(filesize($foto["tmp_name"]));
 	}
 }
