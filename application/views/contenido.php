@@ -31,9 +31,9 @@
 									<div class="col-md-12">
 										<div class="profile-img-edit">
                                        <?php if(strlen($imagen)>0){ ?>
-											<img class="profile-pic" src="<?=base_url()?>public/template/images/perfil/<?=$imagen?>" alt="profile-pic">
+											<img class="profile-pic" src="<?=base_url()?>public/images/perfil_usuarios/<?=$imagen?>" alt="profile-pic">
                                        <?php }else{ ?>
-											<img class="profile-pic" src="<?=base_url()?>public/template/images/perfil/user.jpg" alt="profile-pic">
+											<img class="profile-pic" src="<?=base_url()?>public/images/perfil_usuarios/user.jpg" alt="profile-pic">
                                        <?php } ?>
 
 											<div class="p-image bg-sirese">

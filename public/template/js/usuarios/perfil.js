@@ -7,7 +7,9 @@ function perfil(URI){
 		var e = e || window.event;
 		let files = e.target.files; //todos los archivos si el load tiene opcion multiple, si no solo trae uno
 		if(files.length > 0){
-			contSrc.attr( 'src', URL.createObjectURL(files[0]));
+			let img = URL.createObjectURL(files[0]);
+			contSrc.attr( 'src', img );
+			$('.top-avatar').attr( 'src', img );
 			cargaImg(files[0],resultado);
 		}
 	});

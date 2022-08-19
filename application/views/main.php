@@ -39,9 +39,7 @@ if (!isset($_SESSION['usuario'])) {
 				
 				<div class="row">
 					<?	if($this->uri->segment(2) == '')$this->load->view("inicio"); 
-						else{
-							$this->load->view("contenido");
-						}  	
+						else $this->load->view("contenido");
 					?>
 				</div>
 			</div>

@@ -4,12 +4,16 @@ if (! defined("BASEPATH"))
 
 class Usuario extends CI_Controller
 {
-
+	private $path;
+	private $usuario;
+	
     public function __construct()
     {
         parent::__construct();
-		if (!$this->session->userdata("usuario"))
-			header("location:" . base_url() . "login");
+		$this->usuario = $this->session->userdata("idusuario");
+		if (!$this->usuario) header("location:" . base_url() . "login");
+		
+		$this->path = $_SERVER["DOCUMENT_ROOT"].'/odenaged/';
     }
 
     public function index()
@@ -18,8 +22,31 @@ class Usuario extends CI_Controller
     }
 	public function perfil()
     {   
+		
         $this->load->view('main');
     }
+	public function uploadIMG(){
+		$this->load->library('general');
+		$this->load->model("Usuario_model");
+		$src = $this->input->post('src'); $img = ''; $status = 500; $msg = '';
+		$ubi = $this->path.'public/images/perfil_usuarios/';
+		
+		if(base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $src),true)){
+			$img = $this->general->saveImage($ubi,$src);
+			if(!$img == ''){
+				$this->Usuario_model->setId($this->usuario);
+				$this->Usuario_model->setAvatar($img);
+				$resp = $this->Usuario_model->avatar();
+				if($resp === 1){
+					$msg = 'Se actualizó exitosamente';
+					$status = 200;
+					$this->session->set_userdata("avatar", $img);
+				}else
+					$msg = $resp;
+			}
+		}
+		echo json_encode('upload  '.$status.'  '.$resp.'  '.$this->usuario.'  '.$img);
+	}
 	public function password()
     {
         $this->load->model("Usuario_model");

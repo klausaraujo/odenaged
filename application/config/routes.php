@@ -55,7 +55,6 @@ $route['login'] = 'login/login';
 $route['doLogin'] = 'login/doLogin';
 $route['curl'] = 'main/curl';
 $route['eventos'] = 'main/eventos';
-$route['uploadIMG'] = 'main/uploadIMG';
 
 #Formularios de Registro y edicion de Eventos
 $route['cargarEvento'] = 'eventos/main/cargarEvento';
@@ -78,6 +77,7 @@ $route['informe'] = 'eventos/informes/informe';
 
 #Gestion de Usuarios
 $route['perfil'] = 'usuario/perfil';
+$route['uploadIMG'] = 'usuario/uploadIMG';
 $route['pass'] = 'usuario/password';
 /**/
 $route['404_override'] = '';
