@@ -58,11 +58,12 @@
 <script src="<?=base_url()?>public/template/js/table/datatable/vfs_fonts.js"></script>
 <script src="<?=base_url()?>public/template/js/table/table.js"></script>
 
-<?	if($this->uri->segment(1) === 'usuario'){	?>
-		<script src="<?=base_url()?>public/template/js/usuarios/perfil.js"></script>
+<?	if($this->uri->segment(1) === 'usuario' || $this->uri->segment(1) === 'usuarios'){	?>
+		<script src="<?=base_url()?>public/template/js/usuarios/main.js"></script>
 		<script>
 			const URI = '<?=$this->config->item('path_url')?>';
-			perfil(URI);
+			const listaUsuarios = JSON.parse('<?=$data?>');
+			main(URI);
 		</script>
 
 <?	}if($this->uri->segment(1) === 'eventos'){	?>

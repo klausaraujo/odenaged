@@ -55,6 +55,7 @@ $route['login'] = 'login/login';
 $route['doLogin'] = 'login/doLogin';
 $route['curl'] = 'main/curl';
 $route['eventos'] = 'main/eventos';
+$route['usuarios'] = 'main/usuarios';
 
 #Formularios de Registro y edicion de Eventos
 $route['cargarEvento'] = 'eventos/main/cargarEvento';

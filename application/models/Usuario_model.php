@@ -65,15 +65,15 @@ class Usuario_model extends CI_Model
         $this->db->where("idperfil", $this->idrol);
         $this->db->order_by("orden", "asc");
         return $this->db->get();
-    }/*
+    }
     public function lista()
     {
-        $this->db->select("u.idusuario,u.dni,u.avatar,u.apellidos,u.nombres,u.usuario,u.passwd,u.idperfil,u.activo,p.descripcion");
+        $this->db->select("u.idusuario,u.dni,u.avatar,u.apellidos,u.nombres,u.usuario,u.passwd,u.idperfil,u.activo,p.perfil");
         $this->db->from("usuarios u");
         $this->db->join("perfil p", "u.idperfil=p.idperfil");
         $this->db->group_by("u.idusuario,u.dni,u.avatar,u.apellidos,u.nombres,u.usuario,u.passwd,u.idperfil,u.activo");
         return $this->db->get();
-    }
+    }/*
 	public function listaUbigeos()
     {
         $this->db->select("cod_dep,cod_pro");

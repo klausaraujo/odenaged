@@ -1,4 +1,4 @@
-function perfil(URI){
+function main(URI){
 	let upload = $('.upload-button'), file = $('.file-upload'), contSrc = $(".profile-pic");
 	
 	upload.bind('click',function(e){ file.trigger('click'); });
@@ -40,7 +40,12 @@ function perfil(URI){
 	}
 	
 	$(document).ready(function () {
-		//alert(URI);
+		if($('#tablaUsuarios')){
+			const headers = [{'idusuario':'id usuario','dni':'dni','avatar':'avatar','apellidos':'apellidos','nombres':'nombres','usuario':'usuario','perfil':'perfil','activo':'estado'}];
+			const tablaUsuarios = tablePersonalized('#tablaUsuarios',headers,listaUsuarios);
+		}
+			
+		
 		$("#formPassword").validate({
 			rules: {
 				old_password: { required: true },

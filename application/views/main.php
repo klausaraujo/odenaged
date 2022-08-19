@@ -38,8 +38,11 @@ if (!isset($_SESSION['usuario'])) {
 				?>
 				
 				<div class="row">
-					<?	if($this->uri->segment(2) == '')$this->load->view("inicio"); 
-						else $this->load->view("contenido");
+					<?	
+						if($this->uri->segment(1) == '') $this->load->view("modulos");
+						if($this->uri->segment(1) == 'eventos') $this->load->view("eventos/eventos");
+						if($this->uri->segment(1) == 'usuarios') $this->load->view("usuarios/usuarios");
+						if($this->uri->segment(2) == 'perfil')$this->load->view('usuarios/perfil');
 					?>
 				</div>
 			</div>

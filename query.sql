@@ -2694,7 +2694,6 @@ CREATE TABLE usuarios_ugel  (
 	insert into usuarios_ugel(idusuario,idugel) values(1,218);
 	insert into usuarios_ugel(idusuario,idugel) values(1,219);
 	insert into usuarios_ugel(idusuario,idugel) values(1,220);
-
 	insert into usuarios_ugel(idusuario,idugel) values(2,1);
 
 

@@ -54,4 +54,17 @@ class Main extends CI_Controller
 		//$this->load->view($this->uri->segment(1).'/main',$data);
 		$this->load->view('main',$data);
     }
+	public function usuarios(){
+		$this->load->model("Usuario_model");
+		$status = 200;
+		$listaUsers = $this->Usuario_model->lista();
+		$listaUsers = ( $listaUsers->num_rows() > 0 )? json_encode($listaUsers->result()) : array();
+		$data = array(
+			'data' => $listaUsers,
+			'status' => $status
+		);
+		
+		$this->load->view('main',$data);
+		//echo json_encode('usuarios');
+	}
 }
