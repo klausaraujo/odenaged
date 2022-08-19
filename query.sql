@@ -2752,9 +2752,11 @@ CREATE TABLE menu  (
   PRIMARY KEY (idmenu),
 	FOREIGN KEY (idmodulo) REFERENCES modulo (idmodulo) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
-  INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Lista Eventos','0','eventos','fa fa-list');
+	INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Lista Eventos','0','eventos','fa fa-list');
 	INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Nuevo Registro','0','nuevo','fa fa-pencil-square-o');
 	INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Gestor de Reportes','1','#','fa fa-table');
+	
+	INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(3,'Nuevo Registro','0','nuevousuario','fa fa-pencil-square-o');
 
 CREATE TABLE menu_detalle  (
   idmenudetalle smallint(4) NOT NULL AUTO_INCREMENT,
@@ -2782,6 +2784,7 @@ CREATE TABLE permisos_menu  (
 	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(1,1);
 	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(2,1);
 	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(3,1);
+	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(4,1);
 	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(1,2);
 	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(2,2);
 	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(3,2);
