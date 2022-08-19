@@ -37,35 +37,36 @@ CREATE TABLE dre (
 iddre smallint(4) NOT NULL AUTO_INCREMENT,
 codigo_dre varchar(4) NOT NULL,
 nombre varchar(30) NOT NULL,
+codigo_region varchar(2) NOT NULL,
 activo char(1) DEFAULT '1',
 PRIMARY KEY (iddre)) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
-insert into dre(iddre,codigo_dre,nombre) values (1,'0100','DRE AMAZONAS');
-insert into dre(iddre,codigo_dre,nombre) values (2,'0200','DRE ANCASH');
-insert into dre(iddre,codigo_dre,nombre) values (3,'0300','DRE APURÍMAC');
-insert into dre(iddre,codigo_dre,nombre) values (4,'0400','DRE AREQUIPA');
-insert into dre(iddre,codigo_dre,nombre) values (5,'0500','DRE AYACUCHO');
-insert into dre(iddre,codigo_dre,nombre) values (6,'0600','DRE CAJAMARCA');
-insert into dre(iddre,codigo_dre,nombre) values (7,'0701','DRE CALLAO');
-insert into dre(iddre,codigo_dre,nombre) values (8,'0800','DRE CUSCO');
-insert into dre(iddre,codigo_dre,nombre) values (9,'0900','DRE HUANCAVELICA');
-insert into dre(iddre,codigo_dre,nombre) values (10,'1000','DRE HUÁNUCO');
-insert into dre(iddre,codigo_dre,nombre) values (11,'1100','DRE ICA');
-insert into dre(iddre,codigo_dre,nombre) values (12,'1200','DRE JUNÍN');
-insert into dre(iddre,codigo_dre,nombre) values (13,'1300','DRE LA LIBERTAD');
-insert into dre(iddre,codigo_dre,nombre) values (14,'1400','DRE LAMBAYEQUE');
-insert into dre(iddre,codigo_dre,nombre) values (15,'1501','DRE LIMA METROPOLITANA');
-insert into dre(iddre,codigo_dre,nombre) values (16,'1502','DRE LIMA PROVINCIAS');
-insert into dre(iddre,codigo_dre,nombre) values (17,'1600','DRE LORETO');
-insert into dre(iddre,codigo_dre,nombre) values (18,'1700','DRE MADRE DE DIOS');
-insert into dre(iddre,codigo_dre,nombre) values (19,'1800','DRE MOQUEGUA');
-insert into dre(iddre,codigo_dre,nombre) values (20,'1900','DRE PASCO');
-insert into dre(iddre,codigo_dre,nombre) values (21,'2000','DRE PIURA');
-insert into dre(iddre,codigo_dre,nombre) values (22,'2100','DRE PUNO');
-insert into dre(iddre,codigo_dre,nombre) values (23,'2200','DRE SAN MARTÍN');
-insert into dre(iddre,codigo_dre,nombre) values (24,'2300','DRE TACNA');
-insert into dre(iddre,codigo_dre,nombre) values (25,'2400','DRE TUMBES');
-insert into dre(iddre,codigo_dre,nombre) values (26,'2500','DRE UCAYALI');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (1,'0100','DRE AMAZONAS','01');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (2,'0200','DRE ANCASH','02');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (3,'0300','DRE APURÍMAC','03');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (4,'0400','GRE AREQUIPA','04');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (5,'0500','DRE AYACUCHO','05');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (6,'0600','DRE CAJAMARCA','06');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (7,'0701','DRE CALLAO','07');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (8,'0800','DRE CUSCO','08');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (9,'0900','DRE HUANCAVELICA','09');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (10,'1000','DRE HUÁNUCO','10');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (11,'1100','DRE ICA','11');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (12,'1200','DRE JUNÍN','12');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (13,'1300','GRE LA LIBERTAD','13');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (14,'1400','GRE LAMBAYEQUE','14');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (15,'1501','DRE LIMA METROPOLITANA','15');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (16,'1502','DRE LIMA PROVINCIAS','15');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (17,'1600','DRE LORETO','16');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (18,'1700','DRE MADRE DE DIOS','17');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (19,'1800','GRE MOQUEGUA','18');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (20,'1900','DRE PASCO','19');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (21,'2000','DRE PIURA','20');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (22,'2100','DRE PUNO','21');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (23,'2200','DRE SAN MARTÍN','22');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (24,'2300','DRE TACNA','23');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (25,'2400','DRE TUMBES','24');
+insert into dre(iddre,codigo_dre,nombre,codigo_region) values (26,'2500','DRE UCAYALI','25');
 
 CREATE TABLE ugel (
 idugel smallint(4) NOT NULL AUTO_INCREMENT,
@@ -2437,8 +2438,8 @@ CREATE TABLE modulo  (
   PRIMARY KEY (idmodulo)) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 	
 	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Registro de Eventos de Emergencias y Desastres','Módulo Emergencias','emergencias.png','eventos','1','fa fa-list-alt',1);
-	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Registro de Directorio Nacional','Módulo Directorio','directorio.png','#','1','fa fa-list-alt',2);
-	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Registro de Usuarios del Sistema y Parámetros Básicos de Configuración','Módulo Usuarios','seguridad.png','#','1','fa fa-wrench',3);
+	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Registro de Directorio Nacional','Módulo Directorio','directorio.png','directorio','1','fa fa-list-alt',2);
+	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Registro de Usuarios del Sistema y Parámetros Básicos de Configuración','Módulo Usuarios','seguridad.png','usuarios','1','fa fa-wrench',3);
 
 CREATE TABLE modulo_rol  (	
 	idmodulorol smallint(4) NOT NULL AUTO_INCREMENT,

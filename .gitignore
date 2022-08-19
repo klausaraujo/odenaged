@@ -33,3 +33,4 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /public/images/galerias_eventos/*.png
 /public/images/mapas_eventos/*.png
 /public/images/informes/*.png
+/public/images/perfil_usuarios/*.png
