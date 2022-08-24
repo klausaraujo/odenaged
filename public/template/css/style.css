@@ -73,7 +73,6 @@ NOTE: This file contains the styling for responsive Template.
 .disable { font-size: 14px; white-space: nowrap; display: block; color: #AAAAAA/*9C9C9C*/; position: relative; padding: 15px; line-height: 17px; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; overflow: hidden; border-radius: 15px; text-transform: capitalize; }
 .disable i { font-size: 20px; margin-right: 10px; vertical-align: middle; width: 20px; display: inline-block; float: left; }
 .disable span { white-space: nowrap; padding: 0; display: inline-block; float: left; -webkit-transition: all 0.3s ease-out 0s; -moz-transition: all 0.3s ease-out 0s; -ms-transition: all 0.3s ease-out 0s; -o-transition: all 0.3s ease-out 0s; transition: all 0.3s ease-out 0s; transition: none; }
-li.active>.disable, li.main-active>.disable { color: #e33d3d; background-color: #ffffff; text-decoration: none; transition: none; }
 
 /* Definition Lists */
 dl dd { margin-bottom: 15px; }

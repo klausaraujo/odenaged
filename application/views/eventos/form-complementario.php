@@ -60,5 +60,5 @@
 				</div>
 			</div>
 			<div class="col-sm-12 mx-auto pb-3"><button class="btn btn-sirese" id="btnCancelComp" name="btnCancelComp">Retornar</button></div>
-	</div>
+		</div>
 	

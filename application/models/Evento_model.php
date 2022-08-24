@@ -55,12 +55,22 @@ class Evento_model extends CI_Model
 	public function setMagnitud($data){ $this->magnitud = $this->db->escape_str($data); }
 	public function setIntensidad($data){ $this->intensidad = $this->db->escape_str($data); }
 	public function setReferencia($data){ $this->referencia = $this->db->escape_str($data); }
-	    
+	
+	public function listarEv()
+	{
+		$this->db->select('idregistroevento,anio_evento,numero_evento,nivel,tipo_evento,evento,ubigeo,ubigeo_descripcion,departamento,provincia,distrito,estado,fecha,hora,mes');
+        $this->db->from("lista_general_eventos");
+		$this->db->join('mes','idmes = CAST(SUBSTR(fecha,4,2) AS UNSIGNED)');
+		$this->db->where('SUBSTR(ubigeo,1,4)',$this->ubigeo);
+		//$this->db->limit(1);
+        return $this->db->get();
+    }
     public function listar()
 	{
-		$this->db->select('idregistroevento,anio_evento,numero_evento,nivel,tipo_evento,evento,ubigeo,ubigeo_descripcion,departamento,provincia,distrito,estado,fecha,hora');
+		$this->db->select('idregistroevento,anio_evento,numero_evento,nivel,tipo_evento,evento,ubigeo,ubigeo_descripcion,departamento,provincia,distrito,estado,fecha,hora,mes');
         $this->db->from("lista_general_eventos");
-		$this->db->limit(1);
+		$this->db->join('mes','idmes = CAST(SUBSTR(fecha,4,2) AS UNSIGNED)');
+		//$this->db->limit(1);
         return $this->db->get();
     }
 	public function listarEvento()

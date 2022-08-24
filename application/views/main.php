@@ -38,7 +38,7 @@ if (!isset($_SESSION['usuario'])) {
 				?>
 				
 				<div class="row">
-					<?	
+					<?
 						if($this->uri->segment(1) == '') $this->load->view("modulos");
 						if($this->uri->segment(1) == 'eventos') $this->load->view("eventos/eventos");
 						if($this->uri->segment(1) == 'usuarios') $this->load->view("usuarios/usuarios");

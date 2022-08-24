@@ -29,6 +29,8 @@ class Login extends CI_Controller
      
         $this->load->model("Usuario_model");
         $this->load->model("Menu_model");
+		$this->load->model("Ubigeo_model");
+		
         $usuario = $this->input->post("usuario");
         $pass = $this->input->post("key");
 
@@ -93,10 +95,41 @@ class Login extends CI_Controller
                     endforeach;
                 }
             endforeach;
-
-            /*$this->Usuario_model->setId($row->idusuario);
-			$zonas = $this->Usuario_model->listaUbigeos();*/
-            /*$areas = $this->Usuario_model->areas();*/
+			
+			#Trae el ubigeo del usuario
+            $this->Ubigeo_model->setIdUser($row->idusuario);
+			$dptos = $this->Ubigeo_model->dptos(); $ubigeo = (Object)[]; $i = 0; $j = 0;
+			
+			if( $dptos->num_rows() > 0 ){
+				$dptos = $dptos->result();
+				foreach($dptos as $dpto):
+					if($i === 0){
+						$this->Ubigeo_model->setIdDpto($dpto->cod_dep);
+						$ubigeo->cod_dep = $dpto->cod_dep;
+						$prov = $this->Ubigeo_model->prov();
+						if( $prov->num_rows() > 0 ){
+							$prov = $prov->result();
+							foreach($prov as $pro):
+								if($j === 0){
+									$this->Ubigeo_model->setIdProv($pro->cod_pro);
+									$ubigeo->cod_pro = $pro->cod_pro;
+									$dttos = $this->Ubigeo_model->dttos();
+									$dttos = ($dttos->num_rows() > 0)? $dttos->result() : array();
+									$j++;
+								}
+							endforeach;
+							
+						}else $pro = array();
+						
+						$ubigeo->dptos = $dptos;
+						$ubigeo->prov = $prov;
+						$ubigeo->dttos = $dttos;
+						$i++;
+					}
+				endforeach;
+			
+			}else $dptos = array();
+			/*$areas = $this->Usuario_model->areas();*/
 
             /*$area = array();
 
@@ -131,6 +164,7 @@ class Login extends CI_Controller
             $this->session->set_userdata("modulos", $listaModulo->result());
             $this->session->set_userdata("menu", $lMenu);
 			$this->session->set_userdata("submenu", $lSubMenu);
+			$this->session->set_userdata('ubigeo', $ubigeo);
             /*$token = JWT::encode(array("usuario"=>sha1($row->idusuario),"modulos"=>$listaModulo->result()),getenv("SECRET_SERVER_KEY"));
             $this->session->set_userdata("token", $token);*/
 

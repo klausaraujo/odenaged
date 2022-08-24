@@ -4,13 +4,13 @@ if (! defined("BASEPATH"))
 
 class Main extends CI_Controller
 {
-	private $usuario;
+	private $idusuario;
 
     public function __construct()
     {
         parent::__construct();
-		$this->usuario = $this->session->userdata("idusuario");
-		if (!$this->usuario) header("location:" . base_url() . "login");
+		$this->idusuario = $this->session->userdata("idusuario");
+		if (!$this->idusuario) header("location:" . base_url() . "login");
 	}
 
     public function index()
@@ -21,23 +21,32 @@ class Main extends CI_Controller
     {
 		//$this->informe();
 		$this->load->model("Evento_model");
-		$this->load->model("Ubigeo_model");
-		$this->Ubigeo_model->setIdUser($this->usuario);
+		$zonas = $this->session->userdata('ubigeo');
+		$ubis = array(); $i = 0;
+		
+		foreach($zonas->dptos as $drow):
+			$dep = $drow->cod_dep;
+			foreach($zonas->prov as $prow):
+				$ubigeo = $drow->cod_dep.$prow->cod_pro;
+				$this->Evento_model->setUbigeo($ubigeo);
+				$temp = $this->Evento_model->listarEv();
+				if($temp->num_rows() > 0){ $ubis[$i] = $temp->result(); $i++; }
+			endforeach;
+		endforeach;
+		
+		
 		
 		$tipoevento = $this->Evento_model->tipoEvento();
 		$nivel = $this->Evento_model->cargaNivel();
 		$listar = $this->Evento_model->listar();
 		$tipodanio = $this->Evento_model->tipoDanio();
 		$tipoaccion = $this->Evento_model->tipoAccion();
-		$dpto = $this->Ubigeo_model->dptos();
-		//$ubigeo = $this->Ubigeo_model->ubigeo();
 		
 		($tipoevento->num_rows() > 0)? $tipoevento = $tipoevento->result() : $tipoevento = array();
 		($nivel->num_rows() > 0)? $nivel = $nivel->result() : $nivel = array();
         ($listar->num_rows() > 0)? $listar = $listar->result() : $listar = array();
 		($tipodanio->num_rows() > 0)? $tipodanio = $tipodanio->result() : $tipodanio = array();
 		($tipoaccion->num_rows() > 0)? $tipoaccion = $tipoaccion->result() : $tipoaccion = array();
-		($dpto->num_rows() > 0)? $dpto = $dpto->result() : $dpto = array();
 		//$pdf = $this->informe($this->load->view('eventos/dompdf.php',NULL,TRUE));
 		
 		$data = array(
@@ -46,25 +55,38 @@ class Main extends CI_Controller
 			'lista' => json_encode($listar),
 			'danio' => $tipodanio,
 			'accion' => $tipoaccion,
-			'dpto' => $dpto,
 			'url' => $this->config->item('path_url'),
-			'uri' => base_url()
+			'uri' => base_url(),
+			'ubi' => json_encode($ubis)
 		);
 		
 		//$this->load->view($this->uri->segment(1).'/main',$data);
 		$this->load->view('main',$data);
     }
 	public function usuarios(){
+		$status = 500; $i = 0; $j = 0; $prov; $dttos; $ubigeo = (Object)[];
+		
 		$this->load->model("Usuario_model");
-		$status = 200;
+		$this->Usuario_model->setId($this->idusuario);
+		
 		$listaUsers = $this->Usuario_model->lista();
-		$listaUsers = ( $listaUsers->num_rows() > 0 )? json_encode($listaUsers->result()) : array();
+		$perfiles = $this->Usuario_model->perfiles();
+		
+		if( $listaUsers->num_rows() > 0 ){ $listaUsers = json_encode($listaUsers->result()); $status = 200; }else{ $listaUsers = array(); }
+		$perfiles = ( $perfiles->num_rows() > 0 )? $perfiles->result() : array();
+		
 		$data = array(
 			'data' => $listaUsers,
-			'status' => $status
+			'status' => $status,
+			'perfil' => $perfiles
 		);
 		
 		$this->load->view('main',$data);
-		//echo json_encode('usuarios');
+	}
+	public function curl(){
+		$this->load->library('general');
+		$tipo = $this->input->post('type'); $doc = $this->input->post('dni');
+		$resp = $this->general->curl($tipo, $doc);
+		echo $resp;
 	}
 }

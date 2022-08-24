@@ -21,26 +21,26 @@
                         if($this->uri->segment(1)=="") {
 							$listaModulos = $this->session->userdata("modulos");
 							foreach($listaModulos as $row): ?>
-                           <li class="<?php echo $this->uri->segment(1)==$row->url ? "active main-active": ""; ?>">
-                           <?php  if($row->activo>0){ ?>
-                             
-                              <a href="<?=base_url()?><?=$row->url?>" class="iq-waves-effect">
-                                 <i class="<?=$row->mini?>"></i>
-                                 <span><?=$row->menu?></span>
-                              </a>
-                           <?php 
-                           }else{
-                           ?>
-                              <a href="javascript:;" class="disabled" style="color: #CCC!important">
-                              <div class="pull-left disabled"><i class="<?=$row->mini?> mr-20"></i>
-                              <span class="right-nav-text"></span></div><?=$row->menu?></a>
-                           <?php 
-                           }
-                           ?>
-                           </li>
-                     <?php endforeach;
-					 
-					} else {
+                        <li class="<?php echo $this->uri->segment(1)==$row->url ? "active main-active": ""; ?>">
+                    <?php  	if($row->activo > 0){ ?>
+					
+							<a href="<?=base_url()?><?=$row->url?>" class="iq-waves-effect">
+                                <i class="<?=$row->mini?>"></i>
+                                <span><?=$row->menu?></span>
+                            </a>
+					
+                    <?php 	}else{ ?>
+							<span class="disable">
+								<div class="pull-left">
+                                    <i class="<?=$row->mini?> mr-20"></i>
+                                    <span class="right-nav-text"><?=$row->menu?></span>
+                                </div>
+								<div class="clearfix"></div>
+							</span>
+                    <?php } ?>
+                        </li>
+                    <?php 	endforeach;
+						}else{
 						
 						$lMenu = $this->session->userdata("menu");
 						$lMod = $this->session->userdata("modulos");

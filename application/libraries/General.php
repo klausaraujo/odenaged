@@ -47,15 +47,13 @@ class General {
 	}
 	
 	#Funcion para conectarse a la api de la RENIEC
-	public function curl()
+	public function curl($tipo,$doc)
     {
-        $tipo_documento = $this->input->post("type");
-        $documento = $this->input->post("dni");
         $api = "http://mpi.minsa.gob.pe/api/v1/ciudadano/ver/";
         $token = "Bearer d90f5ad5d9c64268a00efaa4bd62a2a0";
         $handler = curl_init();
 
-        curl_setopt($handler, CURLOPT_URL,  $api. $tipo_documento . "/" . $documento . "/");
+        curl_setopt($handler, CURLOPT_URL,  $api.$tipo."/".$doc."/");
         curl_setopt($handler, CURLOPT_HEADER, false);
         curl_setopt($handler, CURLOPT_HTTPHEADER, array(
             "Authorization: " . $token,
@@ -67,7 +65,7 @@ class General {
 
         curl_close($handler);
 
-        echo $data;
+        return $data;
     }
 
 }

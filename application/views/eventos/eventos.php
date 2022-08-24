@@ -1,3 +1,8 @@
+<?
+$anio = $this->session->userdata('anio');
+$mes = $this->session->userdata('mes');
+?>
+
 		<div class="col-xl-12 col-md-12">
 			<div class="ajaxForm" style="display:none"><?php $this->load->view("eventos/form-new"); ?></div>
 			<div class="ajaxTable">
@@ -6,30 +11,23 @@
 						<h4 class="mt-0 m-b-15 header-title">Listado General de Eventos Registrados</h4>
 						<br>
 						<div class="row ml-1">
-							<label for="mes" class="col-sm-12">Aplicar Filtros por A&ntilde;o y mes del Evento:</label>
+							<label for="filtros" class="col-sm-12">Aplicar Filtros por A&ntilde;o y mes del Evento:</label>
 							<select class="form-control col-sm-2 mx-2" name="anio" id="anio">
-								<option value="">-- Seleccione --</option>
-								<?
-								foreach($this->session->userdata("anio") as $row):
-									if($row->anio == strftime('%Y'))
-										echo '<option value="'.$row->idanio.'" selected >'.$row->anio.'</option>';
-									else
-										echo '<option value="'.$row->idanio.'">'.$row->anio.'</option>';
-								endforeach;
-								?>
+							<?if(!empty($anio)){
+								foreach($anio as $row):?>
+									<option value="<?=$row->anio?>" <?=($row->anio == strftime('%Y'))? 'selected': ''?> ><?=$row->anio?></option>;
+							<? 	endforeach;
+							  }else{ echo '<option value="">-- Seleccione --</option>'; }
+							?>
 							</select>
 							<select class="form-control col-sm-2 mx-2" name="mes" id="mes">
-								<option value="">-- Seleccione --</option>
-								<?
-									foreach($this->session->userdata("mes") as $row):
-										if(intval($row->idmes) == date('n'))
-											echo '<option value="'.$row->idmes.'" selected >'.$row->mes.'</option>';
-										else
-											echo '<option value="'.$row->idmes.'">'.$row->mes.'</option>';
-									endforeach;
-								?>
+							<?if(!empty($mes)){
+								foreach($mes as $row):?>
+									<option value="<?=$row->mes?>" <?=(intval($row->idmes) == date('n'))? 'selected': ''?> ><?=$row->mes?></option>;
+							<? 	endforeach;
+							  }else{ echo '<option value="">-- Seleccione --</option>'; }
+							?>
 							</select>
-								
 						</div>
 						<br>
 						<div class="container-fluid">

@@ -44,7 +44,7 @@ class Menu_model extends CI_Model
         return $this->db->get();
     }
     public function listaPermisosOpcion(){
-        $this->db->select("idpermisoopcion,idpermiso,idusuario,Activo");
+        $this->db->select("idpermisoopcion,idpermiso,idusuario,activo");
         $this->db->from("permisos_opcion");
         $this->db->where("idusuario", $this->idusuario);
         $this->db->where("Activo", "1");

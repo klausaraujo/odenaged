@@ -10,6 +10,7 @@
 					$dt = new DateTime("now", $dtz);
 					$fechaActual = $dt->format("Y-m-d");
 					$hora = $dt->format("H:i:s");
+					$ubigeo = $this->session->userdata('ubigeo');
 					//$fechaActual = str_replace("-","/",$fechaActual);
 					//echo $fechaActual;
 				?>
@@ -150,28 +151,42 @@
 									<div class="col-sm-4">
 										<div class="row">
 											<label for="region" class="col-sm-12">Departamento:</label>
-											<select class="form-control col-sm-10" name="region" id="region">
-												<option value="">-- Seleccione --</option>
+											<select class="form-control col-sm-10 region" name="region" id="region">
 									<?php
-											foreach($dpto as $row):	?>
-												<option value="<?=$row->cod_dep;?>"><?=$row->departamento;?></option>
-										<?	endforeach;?>
+											if(!empty($ubigeo->dptos)){
+											foreach($ubigeo->dptos as $row):	?>
+												<option value="<?=$row->cod_dep;?>" <?=($row->cod_dep === $ubigeo->cod_dep)? 'selected' : '';?> ><?=$row->departamento;?></option>
+									<?		endforeach; }else{	?>
+												<option value="">-- Seleccione --</option>
+									<? 		}	?>
 											</select>
 										</div>
 									</div>
 									<div class="col-sm-4">
 										<div class="row">
 											<label for="provincia" class="col-sm-12">Provincia:</label>
-											<select class="form-control col-sm-10" name="provincia" id="provincia">
+											<select class="form-control col-sm-10 provincia" name="provincia" id="provincia">
+									<?php
+											if(!empty($ubigeo->prov)){
+												foreach($ubigeo->prov as $row):	?>
+													<option value="<?=$row->cod_pro;?>" <?=($row->cod_pro === $ubigeo->cod_pro)? 'selected' : '';?> ><?=$row->provincia;?></option>
+									<?		endforeach; }else{	?>
 												<option value="">-- Seleccione --</option>
+									<? 		}	?>
 											</select>
 										</div>
 									</div>
 									<div class="col-sm-4">
 										<div class="row">
 											<label for="distrito" class="col-sm-12">Distrito:</label>
-											<select class="form-control col-sm-10" name="distrito" id="distrito">
+											<select class="form-control col-sm-10 distrito" name="distrito" id="distrito">
 												<option value="">-- Seleccione --</option>
+									<?php
+											if(!empty($ubigeo->dttos)){
+												foreach($ubigeo->dttos as $row):	?>
+													<option value="<?=$row->cod_dis;?>"><?=$row->distrito;?></option>
+									<?		endforeach;
+											}	?>
 											</select>
 										</div>
 									</div>
