@@ -114,7 +114,7 @@ function eventos() {
 		//alert(id +' '+ ver +' '+ control);
 		$.ajax({
             data: { idevento: id, version: ver, ubigeo: ub },
-            url: URI + control,
+            url: path + control,
             method: "POST",
             dataType: "json",
             beforeSend: function () {},
@@ -132,7 +132,7 @@ function eventos() {
 	function informeComp(id,ubigeo,dpto,pro,dis,ver){
 		$.ajax({
             data: { idevento: id, ubigeo: ubigeo, version: ver },
-            url: URI + "buscaPreliminar",
+            url: path + "buscaPreliminar",
             method: "POST",
             dataType: "json",
             beforeSend: function () {},
@@ -167,7 +167,7 @@ function eventos() {
 					let json = [];
 					let row = JSON.parse(fotos);
 					row.forEach(function(col){
-						json.push({ 'version':col.version,'fotografia':col.fotografia,'descripcion':col.descripcion,'foto':path+url+col.fotografia,
+						json.push({ 'version':col.version,'fotografia':col.fotografia,'descripcion':col.descripcion,'foto':URI+url+col.fotografia,
 							'idusuario_apertura':col.idusuario_apertura,'fecha_apertura':col.fecha_apertura });
 					});
 					tableFotos.rows.add(json).draw();
@@ -403,11 +403,11 @@ function eventos() {
 		
 		$.ajax({
             data: { id:id,version:version,fotos:fotos,danio:danio,accion:accion,ies:ie },
-            url: URI + "registraInforme",
+            url: path + "registraInforme",
             method: "POST",
             dataType: "json",
             beforeSend: function () {
-				$('#contentPrel').html('<div class="loading"><img src="'+path+'public/template/images/loader.gif" alt="loading" /><br/>Cargando...</div>');
+				$('#contentPrel').html('<div class="loading"><img src="'+URI+'public/template/images/loader.gif" alt="loading" /><br/>Cargando...</div>');
             },
             success: function (data) {
 				//loadTables(id);
@@ -462,7 +462,7 @@ function eventos() {
 	function loadTables(id){
 		$.ajax({
             data: { idevento: id },
-            url: URI + "buscaPreliminar",
+            url: path + "buscaPreliminar",
             method: "POST",
             dataType: "json",
             beforeSend: function () {},
@@ -482,7 +482,7 @@ function eventos() {
 					let json = [];
 					let row = JSON.parse(fotos);
 					row.forEach(function(col){
-						json.push({'version':col.version,'fotografia':col.fotografia,'descripcion':col.descripcion,'foto':path+url+col.fotografia});
+						json.push({'version':col.version,'fotografia':col.fotografia,'descripcion':col.descripcion,'foto':URI+url+col.fotografia});
 					});
 					tableFotos.rows.add(json).draw();
 				}
@@ -493,7 +493,7 @@ function eventos() {
 	function loadTableComp(id,version){
 		$.ajax({
             data: { idevento: id },
-            url: URI + "tablaComplementario",
+            url: path + "tablaComplementario",
             method: "POST",
             dataType: "json",
             beforeSend: function () {},

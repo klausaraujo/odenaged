@@ -13,7 +13,6 @@ function tablePersonalized(table, headersCols, data, comp){
 			}
 		});
 	}
-	
 	render = [
 		{
 			title: 'Acciones',
@@ -38,6 +37,10 @@ function tablePersonalized(table, headersCols, data, comp){
 			}
 		}	
 	];
+	
+	titles = render.concat(titles);
+	let botones = '<"row"<"col-sm-12 mb-2"B><"col-sm-6 float-left"l><"col-sm-6 float-right"f>rt>ip';
+	
 	if(comp == 'complementario'){
 		activo = [
 			{
@@ -54,16 +57,22 @@ function tablePersonalized(table, headersCols, data, comp){
 				}
 			}
 		]
-	}
-	
-	titles = render.concat(titles);
-	
-	let botones = '<"row"<"col-sm-12 mb-2"B><"col-sm-6 float-left"l><"col-sm-6 float-right"f>rt>ip';
-	if(comp == 'complementario'){
+		
 		cols = cols.concat(activo);titles = titles.concat([{title: 'Fecha Cierre',targets: j},{title: 'Estado',targets: j + 1}]);
 		botones = '<"row"<"col-sm-6 float-left"l><"col-sm-6 float-right"f>rt>ip';
+		
+	}else{
+		mes = [
+			{
+				data: 'mes',
+				render: function(data,type,row){
+					return (data)? data : '';
+				}
+			}
+		];
+		cols = cols.concat(mes);
+		titles.push({title: 'Mes', targets: [j],/* visible: false*/});
 	}
-	
 	
 	//String JSON con su identificador
 	//json = {"data":[{"name":"Tiger Nikon","position":"system"}]};
@@ -106,7 +115,6 @@ function tablePersonalized(table, headersCols, data, comp){
 		//"pageLength": "10",
 		//dom: 'Bfrt<"col-sm-12 inline"i> <"col-sm-12 inline"p>',
 		lengthMenu: [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'Todas']],
-		
 		"columns":cols,
 		"columnDefs":titles,
 		"dom": botones,
@@ -123,6 +131,19 @@ function tablePersonalized(table, headersCols, data, comp){
 			buttons: [
 				'copy','csv','excel','pdf','print'
 			]
+		},
+		initComplete: function(){
+			/*if(!comp){
+				let tab = this;
+				this.api().columns().every( function () {
+					let col = this;
+					if(col.dataSrc() == 'anio_evento'){ col.search($("#anio").val()).draw(); }
+					if(col.dataSrc() == 'mes'){ col.search($("#mes").val()).draw(); }
+					$('#anio').on('change', function(){ col.search($(this).val()).draw(); });
+					$('#mes').on('change', function(){ col.search($(this).val()).draw(); });
+				});
+			}*/
+			if(typeof comp === 'undefined'){ this.api().search($("#anio").val()).draw(); this.api().search($("#mes").val()).draw(); }
 		}
 		/*"buttons": {
 			dom: {

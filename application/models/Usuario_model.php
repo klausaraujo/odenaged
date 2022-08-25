@@ -12,13 +12,8 @@ class Usuario_model extends CI_Model
     private $DNI;
     private $Apellidos;
     private $Nombres;
-    private $Codigo_Perfil;
-    private $Codigo_Region;
-    private $Codigo_Sector;
-    private $Codigo_Pliego;
-    private $Codigo_Ejecutora;
-    private $codigo_Centro_Costos;
-    private $codigo_Sub_Centro_Costos;
+	private $idDpto;
+	private $idProv;
     private $avatar;
     private $activo;
 	
@@ -73,14 +68,7 @@ class Usuario_model extends CI_Model
         $this->db->join("perfil p", "u.idperfil=p.idperfil");
         $this->db->group_by("u.idusuario,u.dni,u.avatar,u.apellidos,u.nombres,u.usuario,u.passwd,u.idperfil,u.activo");
         return $this->db->get();
-    }/*
-	public function listaUbigeos()
-    {
-        $this->db->select("cod_dep,cod_pro");
-        $this->db->from("usuarios_ubigeo");
-		$this->db->where("idusuario", $this->idusuario);
-        return $this->db->get();
-    }*/
+    }
 	public function validar_password()
     {
         $this->db->select('passwd');
@@ -109,4 +97,10 @@ class Usuario_model extends CI_Model
         if ($this->db->update('usuarios')) return 1;
         else { $error = $this->db->error(); return $error["code"]; }
     }
+	public function perfiles(){
+		$this->db->select('idperfil,perfil');
+		$this->db->from('perfil');
+		$this->db->where("activo", '1');
+		return $this->db->get();
+	}
 }

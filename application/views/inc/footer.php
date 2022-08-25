@@ -13,7 +13,10 @@
 <script src="<?=base_url()?>public/template/js/jquery.validate.min.js"></script>
 
 <script>
-    var languageDatatable = {
+	const URI = '<?=base_url()?>';
+	const path = '<?=$this->config->item('path_url')?>';
+    
+	var languageDatatable = {
     "sProcessing":     "Procesando...",
     "sLengthMenu":     "Mostrar _MENU_ registros",
     "sZeroRecords":    "No se encontraron resultados",
@@ -51,6 +54,7 @@
     }
 };
 </script>
+<script src="<?=base_url()?>public/template/js/main.js"></script>
 <!-- JS DataTable -->
 <script src="<?=base_url()?>public/template/js/table/datatable/datatables.min.js"></script>
 <script src="<?=base_url()?>public/template/js/table/datatable/jszip.min.js"></script>
@@ -61,9 +65,8 @@
 <?	if($this->uri->segment(1) === 'usuario' || $this->uri->segment(1) === 'usuarios'){	?>
 		<script src="<?=base_url()?>public/template/js/usuarios/main.js"></script>
 		<script>
-			const URI = '<?=$this->config->item('path_url')?>';
 			const listaUsuarios = JSON.parse('<?=$data?>');
-			main(URI);
+			main();
 		</script>
 
 <?	}if($this->uri->segment(1) === 'eventos'){	?>
@@ -77,9 +80,7 @@
 		<!--<script src="<?=base_url()?>public/template/js/dropzone/dropzone.js"></script>
 		<script src="<?=base_url()?>public/template/js/dropzone/5x5jqpi.min.js"></script>-->
 		<script>
-			const lista = JSON.parse('<?=$lista?>');/**/
-			const URI = '<?=$url?>';
-			const path = '<?=$uri?>';
+			const lista = JSON.parse('<?=$ubi?>');
 			const datos = [];
 			const headers = [{'anio_evento':'A&ntilde;o','numero_evento':'nro. evento','nivel':'nivel','tipo_evento':'tipo evento','evento':'evento','ubigeo_descripcion':'ubigeo','estado':'estado'}];
 			const danio = [{'tipo_danio':'tipo de da&ntilde;o','cantidad':'cantidad'}];
@@ -88,16 +89,16 @@
 			const ie = [{'CEN_EDU':'inst. educativa','descripcion':'descripcion','fecha':'fecha'}];
 			const ieUB = [{'CEN_EDU':'institucion educativa','COD_MOD':'cod. mod','CODLOCAL':'cod. local','D_NIV_MOD':'nivel'}];
 			const comp = [{'version':'version','fecha_apertura':'fecha apertura'}];
-			const table = tablePersonalized('#tablaEvento',headers,lista);
+			const table = tablePersonalized('#tablaEvento',headers,lista[0]);
 			const tableDanio = tableComp('#tableDanio',danio,datos);
 			const tableAccion = tableComp('#tableAccion',accion,datos);
 			const tableFotos = tableComp('#tableFotos',foto,datos,'foto');
 			const tableIEF = tableComp('#tableIE',ie,datos);
 			const tableIEUbigeo = tableIE('#tableIEUbigeo',ieUB,datos);
 			const tabComp = tablePersonalized('#tableComp',comp,datos,'complementario');
-			
 			window.onload = function(){
 				var opt = {lat: 42.1382114, lng: -71.5212585,zoom: 16};
+				//table.column(1).visible(false); //Ocultar columna dinamicamente
 				$('.ajaxMap').hide();
 				main(mapa(opt));
 				eventos();

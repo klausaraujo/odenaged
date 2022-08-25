@@ -133,13 +133,12 @@ $uAct = $evento->usuario_actualizacion;
 				<?
 							$suma += floatval($row->cantidad);
 							$i ++;
-						endforeach;
-					}
-				?>
+						endforeach;	?>
 							<tr bgcolor="#DAF7A6" style="font-weight: bold"><td>total afectados</td><td><?=$suma?></td></tr>
 						</table>
 					</td>
 				</tr>
+				<?	}	?>
 				<tr><td colspan="12" >&nbsp;</td></tr>
 				<?
 					if(!empty($acciones)){
@@ -185,12 +184,11 @@ $uAct = $evento->usuario_actualizacion;
 							<td><?=$row->D_NIV_MOD?></td><td><?=$row->CEN_EDU?></td><td><?=$fecha?></td></tr>
 				<?
 							$i ++;
-						endforeach;
-					}
-				?>
+						endforeach;	?>
 						</table>
 					</td>
 				</tr>
+				<?	}	?>
 				<tr><td colspan="12" >&nbsp;</td></tr>
 				<? if(!empty($fotos)){ ?>
 				<tr style="text-align:left;font-weight: bold;"><td width="30pt">v. </td><td colspan="9">galer&iacute;a fotogr&aacute;fica:</td><td>&nbsp;</td></tr>
@@ -208,7 +206,7 @@ $uAct = $evento->usuario_actualizacion;
 				</tr>-->
 			</table>
 			<br>
-			<?php $n=1; foreach($fotos as $row): ?>
+			<?php $n=1; if(!empty($fotos)){ foreach($fotos as $row): ?>
 			<div class="row">
 				<div class="col-md-12"></div>
 				<div class="col-md-12 text-center galeria">
@@ -218,7 +216,7 @@ $uAct = $evento->usuario_actualizacion;
 				</div>
 			</div>
 		    <br />
-			<?php $n++; endforeach; ?>
+			<?php $n++; endforeach; } ?>
         </main>
     </body>
 </html>

@@ -19,6 +19,9 @@ function main(map) {
 		});
 	});
 	
+	$('#anio').on('change', function(){ table.search($(this).val()).draw(); });
+	$('#mes').on('change', function(){ table.search($(this).val()).draw(); });
+	
 	function ocultarElem(on){
 		$('html, body').animate({ scrollTop: 0 }, 'fast');
 		$('.error').each(function(){ let herm = $(this).prev(); if(herm.attr('name')){ $('#'+$(herm).attr('name')+'-error').remove(); } });
@@ -26,10 +29,10 @@ function main(map) {
 			loadData();
 			if(!$('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 1) $('.ajaxForm').hide();
 			if($('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 0) $('.ajaxTable').show();
-			if($('#menu2').hasClass('active')){
+			/*if($('#menu2').hasClass('active')){
 				$('#menu2').removeClass('active');
 				$('#menu1').addClass('active');
-			}
+			}*/
 		}else{
 			if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
 			if($('.ajaxForm').css('display') == 'none' || $('.ajaxForm').css('opacity') == 0) $('.ajaxForm').show();
@@ -128,7 +131,7 @@ function main(map) {
 			formData.append("file", document.getElementById("file")); */
 			$.ajax({
 				data: formData,
-				url: URI + 'registrarEvento',
+				url: path + 'registrarEvento',
 				method: "POST",
 				dataType: "json",
 				cache: false,
@@ -166,7 +169,7 @@ function main(map) {
         if (id.length > 0) {
           $.ajax({
             data: { tipo: id },
-            url: URI + "cargarEvento",
+            url: path + "cargarEvento",
             method: "POST",
             dataType: "json",
             beforeSend: function () {
@@ -184,55 +187,6 @@ function main(map) {
         }
     });
 	
-	$('#region').change(function(){
-		var id = $(this).val();
-        if (id.length > 0) {
-          $.ajax({
-            data: { region: id },
-            url: URI + "cargarprov",
-            method: "POST",
-            dataType: "json",
-            beforeSend: function () {
-				$("#distrito").html('<option value="">--Seleccione--</option>');
-				$("#provincia").html('<option value="">Cargando...</option>');
-            },
-            success: function (data) {
-				//console.log(data);
-				var $html = '<option value="">--Seleccione--</option>';
-				$.each(data.lista, function (i, e) {
-					$html += '<option value="' + e.cod_pro + '">' + e.provincia + '</option>';
-				});
-				$("#provincia").html($html);
-            }
-          });
-    
-        }
-    });
-	
-	$('#provincia').change(function(){
-		var id = $(this).val();
-        var departamento = $("#region").val();
-        if (id.length > 0) {
-          $.ajax({
-            data: { region: departamento, provincia: id },
-            url: URI + "cargardis",
-            method: "POST",
-            dataType: "json",
-            beforeSend: function () {
-              $("#distrito").html('<option value="">Cargando...</option>');
-            },
-            success: function (data) {
-				//console.log(data);
-				var $html = '<option value="">--Seleccione--</option>';
-				$.each(data.lista, function (i, e) {
-					$html += '<option value="' + e.cod_dis + '">' + e.distrito + '</option>';
-				});
-				$("#distrito").html($html);
-            }
-          });
-    
-        }
-    });
 	$('#distrito').change(function(){
 		var id = $(this).val();
         var dpto = $("#region").val();
@@ -240,7 +194,7 @@ function main(map) {
         if (id.length > 0) {
           $.ajax({
             data: { dpto: dpto, prov: prov, dtto: id },
-            url: URI + "cargarLatLng",
+            url: path + "cargarLatLng",
             method: "POST",
             dataType: "json",
             beforeSend: function () {
@@ -271,7 +225,7 @@ function main(map) {
 	function loadData() {
 		$.ajax({
 		  type: 'POST',
-		  url: URI + 'eventosListar',
+		  url: path + 'eventosListar',
 		  data: {},
 		  dataType: 'json',
 		  success: function (response) {
@@ -287,7 +241,7 @@ function main(map) {
 	function editarReg(edita, id){
 		$.ajax({
 		  type: 'POST',
-		  url: URI + 'editarEvento',
+		  url: path + 'editarEvento',
 		  data: { id: id },
 		  dataType: 'json',
 		  success: function (response) {
@@ -363,7 +317,7 @@ function main(map) {
 	function informe(id,ub,dpto,pro,dis,v){
 		$.ajax({
             data: { idevento: id, ubigeo: ub, version: v },
-            url: URI + "buscaPreliminar",
+            url: path + "buscaPreliminar",
             method: "POST",
             dataType: "json",
             beforeSend: function () {},
@@ -395,7 +349,7 @@ function main(map) {
 					let json = [];
 					let row = JSON.parse(fotos);
 					row.forEach(function(col){
-						json.push({ 'version':col.version,'fotografia':col.fotografia,'descripcion':col.descripcion,'foto':path+url+col.fotografia,
+						json.push({ 'version':col.version,'fotografia':col.fotografia,'descripcion':col.descripcion,'foto':URI+url+col.fotografia,
 							'idusuario_apertura':col.idusuario_apertura,'fecha_apertura':col.fecha_apertura });
 					});
 					tableFotos.rows.add(json).draw();
@@ -421,6 +375,7 @@ function main(map) {
 		if($(this).hasClass('actionInforme')){
 			resetPreliminar();
 			$('#formInforme .iq-header-title h4').html('Datos Preliminares de la Emergencia');
+			$('#informe').val('');
 			/*if(!$('#nav-tab a:first').hasClass('active'))$('#nav-tab a:first').addClass('active');
 			$('#nav-danios').show();
 			$("#nav-tab a:first").tab('show');*/
@@ -442,7 +397,7 @@ function main(map) {
 			$('#dttoComp').val(data.distrito);
 			$.ajax({
 				data: { idevento: data.idregistroevento },
-				url: URI + "buscaVersion",
+				url: path + "buscaVersion",
 				method: "POST",
 				dataType: "json",
 				beforeSend: function () {},

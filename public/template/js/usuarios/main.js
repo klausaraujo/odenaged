@@ -1,7 +1,49 @@
-function main(URI){
-	let upload = $('.upload-button'), file = $('.file-upload'), contSrc = $(".profile-pic");
+function main(){
+	let upload = $('.upload-button'), file = $('.file-upload'), contSrc = $(".profile-pic"), curl = $('.btn_curl');
+	
+	$('.iq-menu li #linkAjax').each(function() {
+		$(this).on('click',function(evt) {
+			var rel= $(this).attr('rel');
+			evt.preventDefault();
+			if( rel == 'nuevousuario' ){ resetForm(); ocultar(true); alert('nuevousuario'); }
+		});
+	});
+	
+	function ocultar(on){
+		$('html, body').animate({ scrollTop: 0 }, 'fast');
+		if(on){
+			if(!$('.tablaUsuario').css('display') == 'none' || $('.tablaUsuario').css('opacity') == 1) $('.tablaUsuario').hide();
+			if($('.nuevoAjax').css('display') == 'none' || $('.nuevoAjax').css('opacity') == 0) $('.nuevoAjax').show();
+			$('.tituloUsers h4').html('Registrar Nuevo Usuario');
+		}else{
+			if(!$('.nuevoAjax').css('display') == 'none' || $('.nuevoAjax').css('opacity') == 1) $('.nuevoAjax').hide();
+			if($('.tablaUsuario').css('display') == 'none' || $('.tablaUsuario').css('opacity') == 0) $('.tablaUsuario').show();
+			$('.tituloUsers h4').html('Gesti&oacute;n de Usuarios');
+			$('.active').removeClass('active');
+		}
+	}
+	
+	function resetForm(){ $("#formUsuarios")[0].reset();$("#formUsuarios select").prop('selectedIndex',0); }
 	
 	upload.bind('click',function(e){ file.trigger('click'); });
+	
+	curl.bind('click',function(){
+		$.ajax({
+			data: {type: '01',dni: $('#dni').val()},
+			url: path + 'curl',
+			method: "POST",
+			dataType: "json",
+			beforeSend: function () { curl.html('<i class="fa fa-spinner fa-pulse"></i>'); },
+			success: function (data) {
+				curl.html('<i class="fa fa-search aria-hidden="true"></i>');
+				$('#apellidos').val(data.data.attributes.apellido_paterno+' '+data.data.attributes.apellido_materno);
+				$('#nombres').val(data.data.attributes.nombres);
+			}
+		}).fail( function( jqXHR, textStatus, errorThrown ) {//Tambien se activa si da error
+			curl.html('<i class="fa fa-search aria-hidden="true"></i>');
+			alert(jqXHR + ",  " + textStatus + ",  " + errorThrown);
+		});
+	});
 	
 	file.bind('change',function(){
 		var e = e || window.event;
@@ -29,7 +71,7 @@ function main(URI){
 	function uploadImagenes(file,control){
 		$.ajax({
 			data: {src:file},
-			url: URI + control,
+			url: path + control,
 			method: "POST",
 			dataType: "json",
 			beforeSend: function () {},
@@ -44,7 +86,6 @@ function main(URI){
 			const headers = [{'idusuario':'id usuario','dni':'dni','avatar':'avatar','apellidos':'apellidos','nombres':'nombres','usuario':'usuario','perfil':'perfil','activo':'estado'}];
 			const tablaUsuarios = tablePersonalized('#tablaUsuarios',headers,listaUsuarios);
 		}
-			
 		
 		$("#formPassword").validate({
 			rules: {
@@ -62,7 +103,7 @@ function main(URI){
 
 				$.ajax({
 					data: $("#formPassword").serialize(),
-					url: URI + "pass",
+					url: path + "pass",
 					method: "POST",
 					dataType: "json",
 					beforeSend: function () {
