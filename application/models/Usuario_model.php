@@ -6,16 +6,18 @@ class Usuario_model extends CI_Model
     private $id;
     private $usuario;
     private $password;
+	private $idperfil;
     private $idrol;
     private $Anio_Ejecucion;
     private $Codigo_Usuario;
-    private $DNI;
-    private $Apellidos;
-    private $Nombres;
+    private $dni;
+    private $apellidos;
+    private $nombres;
 	private $idDpto;
 	private $idProv;
     private $avatar;
     private $activo;
+	private $provincia;
 	
     public function setAnio_Ejecucion($data){ $this->Anio_Ejecucion = $this->db->escape_str($data); }
     public function setId($data){ $this->id = $this->db->escape_str($data); }
@@ -23,11 +25,12 @@ class Usuario_model extends CI_Model
     public function setUsuario($data){ $this->usuario = $this->db->escape_str($data); }
     public function setPassword($data){ $this->password = $this->db->escape_str($data); }
     public function setIdRol($data){ $this->idrol = $this->db->escape_str($data); }
-    public function setDNI($data){ $this->DNI = $this->db->escape_str($data); }
-    public function setApellidos($data){ $this->Apellidos = $this->db->escape_str($data); }
-    public function setNombres($data){ $this->Nombres = $this->db->escape_str($data); }
-    public function setCodigo_Perfil($data){ $this->Codigo_Perfil = $this->db->escape_str($data); }
-    public function setCodigo_Region($data){ $this->Codigo_Region = $this->db->escape_str($data); }
+    public function setDNI($data){ $this->dni = $this->db->escape_str($data); }
+    public function setApellidos($data){ $this->apellidos = $this->db->escape_str($data); }
+    public function setNombres($data){ $this->nombres = $this->db->escape_str($data); }
+    public function setPerfil($data){ $this->idperfil = $this->db->escape_str($data); }
+    public function setRegion($data){ $this->Codigo_Region = $this->db->escape_str($data); }
+	public function setProvincia($data){ $this->provincia = $this->db->escape_str($data); }
     public function setAvatar($data){ $this->avatar = $this->db->escape_str($data); }
 	
     public function __construct() { parent::__construct(); }
@@ -103,4 +106,52 @@ class Usuario_model extends CI_Model
 		$this->db->where("activo", '1');
 		return $this->db->get();
 	}
+	public function existe()
+    {
+        $this->db->select("COUNT(1) total");
+        $this->db->from("usuarios");
+        $this->db->where("usuario", $this->usuario);
+        $result = $this->db->get();
+        $row = $result->row();
+
+        if ($row->total > 0)
+            return true;
+        else
+            return false;
+    }
+    public function registrar()
+    {
+        $data = array(
+            "dni" => $this->dni,
+			"avatar" => "user.jpg",
+            "apellidos" => strtoupper($this->apellidos),
+            "nombres" => strtoupper($this->nombres),
+			'usuario' => $this->usuario,
+			"passwd" => sha1('123456'),
+            "idperfil" => $this->idperfil,
+            "activo" => "1"
+        );
+        if ($this->db->insert('usuarios', $data))
+            return true;
+        else
+            return false;
+    }
+    public function actualizar()
+    {
+        $this->db->db_debug = FALSE;
+        $this->db->set("DNI", $this->DNI, TRUE);
+        $this->db->set("Apellidos", strtoupper($this->Apellidos), TRUE);
+        $this->db->set("Nombres", strtoupper($this->Nombres), TRUE);
+        $this->db->set("Usuario", $this->usuario, TRUE);
+        $this->db->set("Codigo_Perfil", $this->Codigo_Perfil, TRUE);
+        $this->db->set("Codigo_Region", $this->Codigo_Region, TRUE);
+        $this->db->where("Codigo_Usuario", $this->Codigo_Usuario);
+        $error = array();
+        if ($this->db->update('usuarios'))
+            return 1;
+        else {
+            $error = $this->db->error();
+            return $error["code"];
+        }
+    }
 }

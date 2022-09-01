@@ -16,11 +16,11 @@ if (!isset($_SESSION['usuario'])) {
 			<div id="content-page" class="content-page">
 			<?php $this->load->view("inc/nav-top-template"); ?>
 			<div class="container-fluid">
-				<div class="row">
+				<!--<div class="row">
 					<div class="col-lg-12">
 					  <?php //echo "<pre>"; echo $lista; echo '<br>'.$pacientes;//echo "<pre>"; echo var_dump($lista); ?>
 					</div>
-				</div>
+				</div>-->
 				<?
 				/*	
 					año en el servidor  = strftime('%Y')
@@ -40,9 +40,10 @@ if (!isset($_SESSION['usuario'])) {
 				<div class="row">
 					<?
 						if($this->uri->segment(1) == '') $this->load->view("modulos");
-						if($this->uri->segment(1) == 'eventos') $this->load->view("eventos/eventos");
-						if($this->uri->segment(1) == 'usuarios') $this->load->view("usuarios/usuarios");
-						if($this->uri->segment(2) == 'perfil')$this->load->view('usuarios/perfil');
+						if($this->uri->segment(1) === 'regusuario') $this->load->view('usuarios/usuarios');
+						if($this->uri->segment(1) === 'eventos') $this->load->view("eventos/eventos");
+						if($this->uri->segment(1) === 'usuarios') $this->load->view("usuarios/usuarios");
+						if($this->uri->segment(2) === 'perfil')$this->load->view('usuarios/perfil');
 					?>
 				</div>
 			</div>

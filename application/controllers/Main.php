@@ -34,8 +34,6 @@ class Main extends CI_Controller
 			endforeach;
 		endforeach;
 		
-		
-		
 		$tipoevento = $this->Evento_model->tipoEvento();
 		$nivel = $this->Evento_model->cargaNivel();
 		$listar = $this->Evento_model->listar();
@@ -72,7 +70,7 @@ class Main extends CI_Controller
 		$listaUsers = $this->Usuario_model->lista();
 		$perfiles = $this->Usuario_model->perfiles();
 		
-		if( $listaUsers->num_rows() > 0 ){ $listaUsers = json_encode($listaUsers->result()); $status = 200; }else{ $listaUsers = array(); }
+		$listaUsers = ( $listaUsers->num_rows() > 0 )? $listaUsers->result() : array();
 		$perfiles = ( $perfiles->num_rows() > 0 )? $perfiles->result() : array();
 		
 		$data = array(
@@ -80,7 +78,6 @@ class Main extends CI_Controller
 			'status' => $status,
 			'perfil' => $perfiles
 		);
-		
 		$this->load->view('main',$data);
 	}
 	public function curl(){

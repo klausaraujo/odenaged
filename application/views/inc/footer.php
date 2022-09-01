@@ -15,7 +15,7 @@
 <script>
 	const URI = '<?=base_url()?>';
 	const path = '<?=$this->config->item('path_url')?>';
-    
+	
 	var languageDatatable = {
     "sProcessing":     "Procesando...",
     "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -56,20 +56,26 @@
 </script>
 <script src="<?=base_url()?>public/template/js/main.js"></script>
 <!-- JS DataTable -->
-<script src="<?=base_url()?>public/template/js/table/datatable/datatables.min.js"></script>
-<script src="<?=base_url()?>public/template/js/table/datatable/jszip.min.js"></script>
-<script src="<?=base_url()?>public/template/js/table/datatable/pdfmake.min.js"></script>
-<script src="<?=base_url()?>public/template/js/table/datatable/vfs_fonts.js"></script>
-<script src="<?=base_url()?>public/template/js/table/table.js"></script>
 
 <?	if($this->uri->segment(1) === 'usuario' || $this->uri->segment(1) === 'usuarios'){	?>
-		<script src="<?=base_url()?>public/template/js/usuarios/main.js"></script>
-		<script>
-			const listaUsuarios = JSON.parse('<?=$data?>');
-			main();
-		</script>
+	<script src="<?=base_url()?>public/template/js/table/datatable/datatables.min.js"></script>
+	<script src="<?=base_url()?>public/template/css/treeview/simTree.js"></script>
+	<script src="<?=base_url()?>public/template/js/usuarios/main.js"></script>
+	<script>
+		/*const listaUsuarios = eval('<?=json_encode($data)?>');
+		console.log(listaUsuarios);*/
+		window.onload = ()=> {
+			if(!$('.msg').css('display') == 'none' || $('.nuevoAjax').css('opacity') == 1){ setTimeout(function () { $('.msg').hide('slow'); }, 3000 ) };
+		}
+		main();
+	</script>
 
 <?	}if($this->uri->segment(1) === 'eventos'){	?>
+		<script src="<?=base_url()?>public/template/js/table/datatable/datatables.min.js"></script>
+		<script src="<?=base_url()?>public/template/js/table/datatable/jszip.min.js"></script>
+		<script src="<?=base_url()?>public/template/js/table/datatable/pdfmake.min.js"></script>
+		<script src="<?=base_url()?>public/template/js/table/datatable/vfs_fonts.js"></script>
+		<script src="<?=base_url()?>public/template/js/table/table.js"></script>
 		<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=<?='AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc'?>&libraries=places&v=weekly" async></script>
 		<script src="<?=base_url()?>public/template/js/mapa/map.js"></script>

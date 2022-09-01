@@ -21,8 +21,7 @@ class Usuario extends CI_Controller
 		
     }
 	public function perfil()
-    {   
-		
+    {
         $this->load->view('main');
     }
 	public function uploadIMG(){

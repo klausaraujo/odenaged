@@ -56,6 +56,7 @@ $route['doLogin'] = 'login/doLogin';
 $route['curl'] = 'main/curl';
 $route['eventos'] = 'main/eventos';
 $route['usuarios'] = 'main/usuarios';
+$route['regusuario'] = 'usuarios/main/registrar';
 
 #Formularios de Registro y edicion de Eventos
 $route['cargarEvento'] = 'eventos/main/cargarEvento';
@@ -80,6 +81,7 @@ $route['informe'] = 'eventos/informes/informe';
 $route['perfil'] = 'usuario/perfil';
 $route['uploadIMG'] = 'usuario/uploadIMG';
 $route['pass'] = 'usuario/password';
+$route['buscaUGEL'] = 'usuarios/main/buscaRegionPermiso';
 /**/
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

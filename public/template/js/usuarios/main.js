@@ -1,12 +1,32 @@
 function main(){
 	let upload = $('.upload-button'), file = $('.file-upload'), contSrc = $(".profile-pic"), curl = $('.btn_curl');
-	
-	$('.iq-menu li #linkAjax').each(function() {
-		$(this).on('click',function(evt) {
-			var rel= $(this).attr('rel');
-			evt.preventDefault();
-			if( rel == 'nuevousuario' ){ resetForm(); ocultar(true); alert('nuevousuario'); }
-		});
+		
+	$('body').on('click', 'input, button, a', function(e){
+		var elementType = $(this).prop('nodeName');
+		if(elementType == 'A'){ 
+			var rel= $(this).attr('rel'); if( rel === 'nuevousuario' ){ resetForm(); ocultar(true); }
+		}else if(elementType == 'BUTTON'){
+			//
+				//$('#permisosModal').modal();
+			if($(this).attr('name') === 'btnCancelar'){
+				let evt = e || e.target;
+				evt.preventDefault();
+				resetForm();
+				ocultar(false);
+			}
+			if($(this).hasClass('actionPermisos')){
+				$.ajax({
+					data: {data:'data'},
+					url: path + 'buscaUGEL',
+					method: "POST",
+					dataType: "json",
+					beforeSend: function () { },
+					success: function (data) {
+						console.log(data);
+					}
+				});
+			}
+		}
 	});
 	
 	function ocultar(on){
@@ -25,24 +45,89 @@ function main(){
 	
 	function resetForm(){ $("#formUsuarios")[0].reset();$("#formUsuarios select").prop('selectedIndex',0); }
 	
+	$("#formUsuarios").validate({
+		rules: {
+			usuario: { required: function () { if ($("#usuario").css("display") != "none") return true; else return false; } },
+			dni: { required: function () { if ($("#dni").css("display") != "none") return true; else return false; } },
+			apellidos: { required: function () { if ($("#nivelevento").css("display") != "none") return true; else return false; } },
+			nombres: { required: function () { if ($("#fechaevento").css("display") != "none") return true; else return false; } },
+		},
+		messages: {
+			usuario: { required : "Campo Requerido" },
+			dni: { required : "Campo Requerido" },
+			apellidos: { required : "Campo Requerido" },
+			nombres: { required : "Campo Requerido" },
+		},
+		errorPlacement: function (error, element) {
+			if (element.attr("name") == "dni") {
+				error.insertAfter(".group-dni");
+			}else error.insertAfter(element);
+		},
+		/*submitHandler: function (form, event) {
+			event.preventDefault();
+			var formData = new FormData(document.querySelector('form'));
+			/*formData.set('afecta',$("#afecta").is(':checked')? 1 : 0);
+			formData.set('anio',($("#fechaevento").val()).substring(0,4));
+			formData.set('ubigeo',$("#region").val() + $("#provincia").val() + $("#distrito").val());
+			
+			$.ajax({
+				data: formData,
+				url: path + 'regusuario',
+				method: "POST",
+				dataType: "json",
+				cache: false,
+				contentType: false,
+				processData: false,
+				beforeSend: function () {
+					/*$("#cargando").html("<i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i>");/*fa-spinner,fa-circle-o-notch,fa-refresh,fa-cog,fa-spinner fa-pulse
+					$("#message").hide(); $('#cargando').show();
+				},
+				success: function (data) {
+					console.log(data);
+					/*var $message = "";
+					//$('#message').switchClass('succes', 'warn');
+					
+					if (parseInt(data.status) == 200){ $('#message').switchClass('warn', 'succes'); $message = 'Evento registrado exitosamente'; }
+					else { $message = 'No se pudo registrar el Evento'; }
+					
+					setTimeout(function () { $('#cargando').hide(); $("#message").html($message); $("#message").show() }, 300);
+					if (parseInt(data.status) == 200){
+						setTimeout(function () {
+							ocultarElem(true);
+						}, 1000);
+					}
+				}
+			}).fail( function( jqXHR, textStatus, errorThrown ) {
+				// Un callback .fail()
+				//setTimeout(function () { $('#cargando').hide(); $("#message").html(/*jqXHR + ",  " + textStatus.toUpperCase() + ":  " + errorThrown); $("#message").show()}, 500);
+				console.log(data);
+			});
+		}*/
+	});
+	
 	upload.bind('click',function(e){ file.trigger('click'); });
 	
 	curl.bind('click',function(){
-		$.ajax({
-			data: {type: '01',dni: $('#dni').val()},
-			url: path + 'curl',
-			method: "POST",
-			dataType: "json",
-			beforeSend: function () { curl.html('<i class="fa fa-spinner fa-pulse"></i>'); },
-			success: function (data) {
-				curl.html('<i class="fa fa-search aria-hidden="true"></i>');
-				$('#apellidos').val(data.data.attributes.apellido_paterno+' '+data.data.attributes.apellido_materno);
-				$('#nombres').val(data.data.attributes.nombres);
-			}
-		}).fail( function( jqXHR, textStatus, errorThrown ) {//Tambien se activa si da error
-			curl.html('<i class="fa fa-search aria-hidden="true"></i>');
-			alert(jqXHR + ",  " + textStatus + ",  " + errorThrown);
-		});
+		let dni = $('#dni').val();
+		if(dni !== ''){
+			if(dni.length === 8){
+				$.ajax({
+					data: {type: '01',dni: $('#dni').val()},
+					url: path + 'curl',
+					method: "POST",
+					dataType: "json",
+					beforeSend: function () { curl.html('<i class="fa fa-spinner fa-pulse"></i>'); },
+					success: function (data) {
+						curl.html('<i class="fa fa-search aria-hidden="true"></i>');
+						$('#apellidos').val(data.data.attributes.apellido_paterno+' '+data.data.attributes.apellido_materno);
+						$('#nombres').val(data.data.attributes.nombres);
+					}
+				}).fail( function( jqXHR, textStatus, errorThrown ) {//Tambien se activa si da error
+					curl.html('<i class="fa fa-search aria-hidden="true"></i>');
+					alert(jqXHR + ",  " + textStatus + ",  " + errorThrown);
+				});
+			}else{ alert('Debe ingresar un DNI válido'); $('#dni').focus(); }
+		}else{ alert('Debe ingresar un DNI'); $('#dni').focus(); }
 	});
 	
 	file.bind('change',function(){
@@ -82,10 +167,7 @@ function main(){
 	}
 	
 	$(document).ready(function () {
-		if($('#tablaUsuarios')){
-			const headers = [{'idusuario':'id usuario','dni':'dni','avatar':'avatar','apellidos':'apellidos','nombres':'nombres','usuario':'usuario','perfil':'perfil','activo':'estado'}];
-			const tablaUsuarios = tablePersonalized('#tablaUsuarios',headers,listaUsuarios);
-		}
+		if($('#tablaUsuarios')){ const tablaUsuarios = $('#tablaUsuarios').DataTable(); }
 		
 		$("#formPassword").validate({
 			rules: {

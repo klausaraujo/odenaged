@@ -1,41 +1,64 @@
-		<div class="container-fluid">
+<?
+$sombrabtn = 'box-shadow: 2px 2px 0px 0px rgba(142, 173, 255,5)';
+$btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1 py-0" title="Asignar Permisos" style="'.$sombrabtn.'"
+				data-toggle="modal" data-target="#permisosModal"><i class="fa fa-lock" aria-hidden="true"></i></button>';
+?>	
+
+	<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-12">
-				<? 
-					$dtz = new DateTimeZone("America/Lima");
-					$dt = new DateTime("now", $dtz);
-					$fechaActual = $dt->format("Y-m-d");
-					$hora = $dt->format("H:i:s");
-					//$fechaActual = str_replace("-","/",$fechaActual);
-					//echo $fechaActual;
-					$ubigeo = $this->session->userdata('ubigeo');					
-				?>
 					<div class="iq-card px-3">
 						<div class="iq-card-header d-flex justify-content-between">
 							<div class="iq-header-title tituloUsers"><h4>Gesti&oacute;n de Usuarios</h4></div>
 						</div>
-						<div class="iq-card-body">
+						<div class="iq-card-body pt-1">
 							<div class="row justify-content-center py-2 tablaUsuario">
+								<?if($this->session->flashdata('claseMsg')){?><div class="col-sm-4 border border-<?=$this->session->flashdata('claseMsg'); ?> rounded alert alert-dismissible fade show py-0 
+											text-center msg text-<?=$this->session->flashdata('claseMsg'); ?>" role="alert">
+									<strong class="mx-auto text-center"><?=$this->session->flashdata('flashSuccess'); ?></strong>
+									<button type="button" class="close py-0" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true" class="text-<?=$this->session->flashdata('claseMsg'); ?>">&times;</span>
+									</button>
+								</div><?}?>
 								<div class="col-sm-12">
 									<div class="table-responsive">
-										<table id="tablaUsuarios" class="table table-striped dt-responsive table-bordered display nowrap table-hover px-0 mx-auto" style="100%"></table>
+										<table id="tablaUsuarios" class="table dt-responsive table-bordered display nowrap table-hover px-0 mx-auto" style="100%">
+											<thead class="text-center"><tr><th>Acciones</th><th>Id Usuario</th><th>DNI</th><th>Avatar</th><th>Apellidos</th>
+													<th>Nombres</th><th>Usuario</th><th>Perfil</th><th>Estado</th></tr>
+											</thead>
+											<tbody>
+											<? 	foreach($data as $row): ?>
+											<tr>
+												<td class="text-center"><?=$btn_permisos?></td>
+												<td><?=$row->idusuario?></td>
+												<td><?=$row->dni?></td>
+												<td><?=$row->avatar?></td>
+												<td><?=$row->apellidos?></td>
+												<td><?=$row->nombres?></td>
+												<td><?=$row->usuario?></td>
+												<td><?=$row->perfil?></td>
+												<td><?=($row->activo === '1')? 'ACTIVO' : 'INACTIVO'?></td>
+											</tr>
+											<?	endforeach; ?>
+											</tbody>
+										</table>
 									</div>
 								</div>
 							</div>
 							<div class="row nuevoAjax" style="display:none">
-								<form id="formUsuarios" name="formUsuarios" class="col-12" method="POST" action="" autocomplete="off" enctype="multipart/form-data">
+								<form id="formUsuarios" name="formUsuarios" class="col-12" method="POST" action="<?=base_url()?>regusuario" autocomplete="off" enctype="multipart/form-data">
 									<div >
 										<div class="row mx-auto">
 											<div class="col-md-4">
 												<div class="form-group">
 													<label class="">Usuario</label>
-													<input type="text" class="form-control text-lowercase" name="Usuario" autocomplete="off"/>
+													<input type="text" class="form-control text-lowercase" name="usuario" autocomplete="off"/>
 												</div>
 											</div>
 											<div class="col-md-4">
 												<div class="form-group">
 													<label class="">DNI</label>
-													<div class="input-group">
+													<div class="input-group group-dni">
 														<input type="text" class="form-control" maxlength="8" minlength="8" name="dni" id="dni" autocomplete="off">
 														<span class="input-group-btn col-sm-2">
 															<button type="button" class="btn btn-info btn_curl"><i class="fa fa-search" aria-hidden="true"></i></button>
@@ -62,43 +85,11 @@
 											<div class="col-md-4">
 												<div class="form-group">
 													<label class="">Perfil</label>
-													<select name="Codigo_Perfil" class="form-control">
+													<select name="codPerfil" class="form-control">
 														<option value="">--Seleccione--</option>
 											<?		foreach($perfil as $row):	?>
 														<option value="<?=$row->idperfil;?>" ><?=$row->perfil;?></option>
 											<?		endforeach;	?>
-													</select>
-												</div>
-											</div>
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="">Regi&oacute;n</label>
-													<select name="region" class="form-control region">
-											<?php	
-												if(!empty($ubigeo->dptos)){
-													foreach($ubigeo->dptos as $row):	?>
-														<option value="<?=$row->cod_dep;?>" <?=($row->cod_dep === $ubigeo->cod_dep)? 'selected': '';?> ><?=$row->departamento;?></option>
-											<?		endforeach;
-												}else{	?>
-														<option value="">-- Seleccione --</option>
-											<? 	}	?>
-													</select>
-												</div>
-											</div>
-										</div>
-										<div class="row mx-auto">
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="">Provincia</label>
-													<select name="provincia" id="provincia" class="form-control provincia">
-											<?php
-												if(!empty($ubigeo->prov)){
-													foreach($ubigeo->prov as $row):	?>
-														<option value="<?=$row->cod_pro;?>" <?=($row->cod_pro === $ubigeo->cod_pro)? 'selected': '';?> ><?=$row->provincia;?></option>
-											<?		endforeach;
-												}else{	?>
-												<option value="">-- Seleccione --</option>
-											<? 	}	?>
 													</select>
 												</div>
 											</div>
@@ -125,23 +116,24 @@
 				<input type="hidden" id="hIdUsuario" value="" />
                 <div class="modal-content">
                     <div class="modal-header">
-						<h5 class="modal-title">Otorgar Permisos</h5>
+						<h6 class="modal-title">Otorgar Permisos</h6>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
 						<div class="row col-sm-12">
 							<div class="container">
-								<div class="row permUsuario">
-									<div class="col-sm-4 col-xs-12">
-										<h3>Permisos Registro de Usuarios</h3>
-										<?php /*foreach($permisos->result() as $row):
-												if($row->tipo=="1" and $row->idmodulo=="6"){ ?>
-										<div class="col-xs-12">
-											<div class="checkbox checkbox-primary">
-											<input type="checkbox" class="menuPermiso" id="chkPermiso<?=$row->idpermiso?>"
-												value="<?=$row->idpermiso?>" /><label for="chkPermiso<?=$row->idpermiso?>"><?=$row->descripcion?></label></div>
+								<div class="row">
+									<nav>
+										<div class="nav nav-tabs" id="nav-tab" role="tablist">
+											<a class="nav-item nav-link active" id="nav-regiones-tab" data-toggle="tab" href="#nav-regiones" role="tab" aria-controls="nav-regiones" aria-selected="true">Asignar Regiones</a>
+											<!--<a class="nav-item nav-link font-sirese" id="nav-acciones-tab" data-toggle="tab" href="#nav-acciones" role="tab" aria-controls="nav-acciones" aria-selected="false">Registro de Acciones</a>
+											<a class="nav-item nav-link font-sirese" id="nav-ie-tab" data-toggle="tab" href="#nav-ie" role="tab" aria-controls="nav-ie" aria-selected="false">Registro de IE Afectadas</a>
+											<a class="nav-item nav-link font-sirese" id="nav-fotos-tab" data-toggle="tab" href="#nav-fotos" role="tab" aria-controls="nav-fotos" aria-selected="false">Galer&iacute;a de fotos</a>-->
 										</div>
-										<?php } endforeach; */?>
+									</nav>
+								</div>
+								<div class="tab-content" id="nav-tabContent">
+									<div class="tab-pane fade show active py-4" id="nav-regiones" role="tabpanel" aria-labelledby="nav-regiones-tab">
 									</div>
 								</div>
 							</div>
