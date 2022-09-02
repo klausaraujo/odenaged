@@ -30,7 +30,11 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /tests/tests/
 /tests/results/
 
-/public/images/galerias_eventos/
-/public/images/mapas_eventos/
-/public/images/informes/
-/public/images/perfil_usuarios/
+/public/images/galerias_eventos/*.png
+/public/images/mapas_eventos/*.png
+/public/images/informes/*.png
+/public/images/perfil_usuarios/*.png
+public/images/galerias_eventos/*.png
+public/images/mapas_eventos/*.png
+public/images/informes/*.png
+public/images/perfil_usuarios/*.png
