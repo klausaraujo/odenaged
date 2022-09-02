@@ -81,7 +81,8 @@ $route['informe'] = 'eventos/informes/informe';
 $route['perfil'] = 'usuario/perfil';
 $route['uploadIMG'] = 'usuario/uploadIMG';
 $route['pass'] = 'usuario/password';
-$route['buscaUGEL'] = 'usuarios/main/buscaRegionPermiso';
+$route['buscaRegion'] = 'usuarios/main/buscaRegiones';
+$route['buscaDRE'] = 'usuarios/main/buscaDRE';
 /**/
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

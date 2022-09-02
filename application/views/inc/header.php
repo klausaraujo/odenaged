@@ -29,7 +29,7 @@
 	</style>
 	<?}?>
 	<?if($this->uri->segment(1) === 'usuarios'){?>
-	<link rel="stylesheet" href="<?=base_url()?>public/template/css/treeview/simTree.css" type="text/css">
+	<link rel="stylesheet" href="<?=base_url()?>public/template/js/treeview/style.css" type="text/css">
 	<link rel="stylesheet" href="<?=base_url()?>public/template/js/table/datatable/datatables.min.css" type="text/css">
 	<?}?>
 </head>

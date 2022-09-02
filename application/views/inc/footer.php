@@ -59,7 +59,7 @@
 
 <?	if($this->uri->segment(1) === 'usuario' || $this->uri->segment(1) === 'usuarios'){	?>
 	<script src="<?=base_url()?>public/template/js/table/datatable/datatables.min.js"></script>
-	<script src="<?=base_url()?>public/template/css/treeview/simTree.js"></script>
+	<script src="<?=base_url()?>public/template/js/treeview/tree.js"></script>
 	<script src="<?=base_url()?>public/template/js/usuarios/main.js"></script>
 	<script>
 		/*const listaUsuarios = eval('<?=json_encode($data)?>');

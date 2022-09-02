@@ -8,12 +8,16 @@ class Ubigeo_model extends CI_Model
 	private $idDtto;
 	private $ubigeo;
 	private $idUser;
+	private $iddre;
+	private $idugel;
 	
     public function setIdUser($data){ $this->idUser = $this->db->escape_str($data); }
 	public function setIdDpto($data){ $this->idDpto = $this->db->escape_str($data); }
     public function setIdProv($data){ $this->idProv = $this->db->escape_str($data); }
 	public function setIdDtto($data){ $this->idDtto = $this->db->escape_str($data); }
 	public function setUbigeo($data){$this->ubigeo = $this->db->escape_str($data);}
+	public function setIdDre($data){$this->iddre = $this->db->escape_str($data);}
+	public function setIdUgel($data){$this->idugel = $this->db->escape_str($data);}
     
     public function dptos(){
         $this->db->distinct();
@@ -46,6 +50,35 @@ class Ubigeo_model extends CI_Model
 		$this->db->select("latitud,longitud");
         $this->db->from("lista_ubigeo");
 		$this->db->where("ubigeo", $this->ubigeo);
+		return $this->db->get();
+	}
+	public function zonasRegion(){
+		$this->db->select('cod_dep,departamento');
+		$this->db->from('lista_departamentos');
+		$this->db->order_by('cod_dep', 'asc');
+		return $this->db->get();
+	}
+	public function zonasDRE(){
+		$this->db->select('iddre,codigo_dre,nombre,codigo_region');
+		$this->db->from('dre');
+		$this->db->where('codigo_region', $this->idDpto);
+		$this->db->order_by('codigo_region', 'asc');
+		return $this->db->get();
+	}
+	public function zonasUGEL(){
+		$this->db->select('idugel,iddre,codigo_ugel,nombre');
+		$this->db->from('ugel');
+		$this->db->where('iddre', $this->iddre);
+		$this->db->order_by('iddre', 'asc');
+		return $this->db->get();
+	}
+	public function zonasPro(){
+		$this->db->distinct();
+		$this->db->select('cod_pro,provincia');
+		$this->db->from('lista_provincias');
+		$this->db->where('cod_dep', $this->idDpto);
+		$this->db->where('cod_pro', $this->idProv);
+		$this->db->limit(1);
 		return $this->db->get();
 	}
 }

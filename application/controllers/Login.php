@@ -116,7 +116,7 @@ class Login extends CI_Controller
 								}
 							endforeach;
 							
-						}else $pro = array();
+						}else $prov = array();
 						
 						$ubigeo->dptos = $dptos;
 						$ubigeo->prov = $prov;

@@ -1,7 +1,7 @@
 <?
 $sombrabtn = 'box-shadow: 2px 2px 0px 0px rgba(142, 173, 255,5)';
-$btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1 py-0" title="Asignar Permisos" style="'.$sombrabtn.'"
-				data-toggle="modal" data-target="#permisosModal"><i class="fa fa-lock" aria-hidden="true"></i></button>';
+$btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1 py-0" title="Asignar Permisos" 
+				style="'.$sombrabtn.'" ><i class="fa fa-lock" aria-hidden="true"></i></button>';
 ?>	
 
 	<div class="container-fluid">
@@ -112,7 +112,7 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 		</div>
 		
 		<div class="modal fade" id="permisosModal" tabindex="-1" role="dialog" aria-labelledby="activateModal">
-            <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-dialog modal-lg" role="document">
 				<input type="hidden" id="hIdUsuario" value="" />
                 <div class="modal-content">
                     <div class="modal-header">
@@ -123,6 +123,7 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 						<div class="row col-sm-12">
 							<div class="container">
 								<div class="row">
+								<i class="collap colap"></i>
 									<nav>
 										<div class="nav nav-tabs" id="nav-tab" role="tablist">
 											<a class="nav-item nav-link active" id="nav-regiones-tab" data-toggle="tab" href="#nav-regiones" role="tab" aria-controls="nav-regiones" aria-selected="true">Asignar Regiones</a>
@@ -134,6 +135,7 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 								</div>
 								<div class="tab-content" id="nav-tabContent">
 									<div class="tab-pane fade show active py-4" id="nav-regiones" role="tabpanel" aria-labelledby="nav-regiones-tab">
+										<div id="jstree" class="row"></div>
 									</div>
 								</div>
 							</div>

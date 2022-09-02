@@ -1,32 +1,51 @@
 function main(){
 	let upload = $('.upload-button'), file = $('.file-upload'), contSrc = $(".profile-pic"), curl = $('.btn_curl');
 		
-	$('body').on('click', 'input, button, a', function(e){
+	//function quitaFolder(){ $('.jstree-themeicon').attr('class',''); }
+	
+	$('body').on('click dblclick', 'input, button, a, i', function(e){
 		var elementType = $(this).prop('nodeName');
-		if(elementType == 'A'){ 
-			var rel= $(this).attr('rel'); if( rel === 'nuevousuario' ){ resetForm(); ocultar(true); }
-		}else if(elementType == 'BUTTON'){
-			//
-				//$('#permisosModal').modal();
-			if($(this).attr('name') === 'btnCancelar'){
-				let evt = e || e.target;
-				evt.preventDefault();
-				resetForm();
-				ocultar(false);
-			}
-			if($(this).hasClass('actionPermisos')){
-				$.ajax({
-					data: {data:'data'},
-					url: path + 'buscaUGEL',
-					method: "POST",
-					dataType: "json",
-					beforeSend: function () { },
-					success: function (data) {
-						console.log(data);
-					}
+		if($(this).attr('rel') && $(this).attr('rel') === 'nuevousuario'){ resetForm(); ocultar(true); }
+		if($(this).attr('name') === 'btnCancelar'){ let evt = e || e.target; evt.preventDefault(); resetForm(); ocultar(false); }
+		if($(this).hasClass('actionPermisos')){
+			$.ajax({
+				type: 'POST',
+				url: path + 'buscaRegion',
+				data: {},
+				dataType: 'json',
+				success: function (data) {
+					console.log(data);
+					const { tree } = data;
+					const { sub } = data;
+					console.log(sub);
+					$('#jstree').html(tree);
+					jtree();
+					$('#permisosModal').modal('show');
+				}
+			}).fail( function( jqXHR, textStatus, errorThrown ) {//Tambien se activa si da error
+					//curl.html('<i class="fa fa-search aria-hidden="true"></i>');
+					alert(jqXHR + ",  " + textStatus + ",  " + errorThrown);
 				});
-			}
 		}
+		if($(this).hasClass('loading')){
+			let el = $(this).closest('li'), id = el.attr('id');
+			$.ajax({
+				type: 'POST',
+				url: path + 'buscaDRE',
+				data: {idregion:id},
+				dataType: 'json',
+				success: function (data) {
+					//console.log(data);
+					const { tree } = data;
+					el.find('.niveles').remove();
+					el.append(tree);
+					console.log(el);
+				}
+			}).fail( function( jqXHR, textStatus, errorThrown ) {//Tambien se activa si da error
+				alert(jqXHR + ",  " + textStatus + ",  " + errorThrown);
+			});
+		};
+		//if($(this).hasClass('jstree-icon') || $(this).hasClass('jstree-anchor')){ if($("#jstree").find('.jstree-themeicon')) quitaFolder(); }
 	});
 	
 	function ocultar(on){
