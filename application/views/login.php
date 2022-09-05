@@ -4,7 +4,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title>Centro de Operaciones de Emergencias Sectorial MINEDU</title>
-      <link rel="shortcut icon" type="image/png" href="<?=base_url()?>public/images/favicon.jpg"/>
+      <link rel="shortcut icon" type="image/png" href="<?=base_url()?>public/template/images/favicon.jpg"/>
       <link rel="stylesheet" href="<?=base_url()?>public/template/css/bootstrap.min.css">
       <link rel="stylesheet" href="<?=base_url()?>public/template/css/typography.css">
       <link rel="stylesheet" href="<?=base_url()?>public/template/css/style.css">
