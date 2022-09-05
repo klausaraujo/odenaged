@@ -13,7 +13,7 @@
 <script src="<?=base_url()?>public/template/js/jquery.validate.min.js"></script>
 
 <script>
-	const URI = '<?=base_url()?>';
+	const URI = '<?=base_url()?>';/**/
 	const path = '<?=$this->config->item('path_url')?>';
 	
 	var languageDatatable = {
