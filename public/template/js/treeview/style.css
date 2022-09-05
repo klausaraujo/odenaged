@@ -4,9 +4,9 @@
   cursor: pointer;
   float: left;
   padding:0;
-  margin-left: 3px;
+  margin: 3px;
   background: url("checktree_icon.png") no-repeat;
-  /*border-radius:5px;*/
+  border-radius:3px;
 }
 .loading {
   width: 16px;
@@ -14,16 +14,19 @@
   cursor: pointer;
   float: left;
   padding:0;
-  margin-left: 3px;
+  margin: 3px;
   background: url("loading.gif") no-repeat;
   background-position: 0 0px;
   /*border-radius:5px;*/
 }
-.unchecked { background-position: 0 -2px; }
+.jstreecont { border-radius: 15px; box-shadow: 5px 3px 10px 3px #000; padding: 25px; margin: auto; background-color: gainsboro; color: #000/*firebrick*/;height: 500px;overflow-y:scroll; }
+.unchecked { background-position: -1px -2px; }
 .checked { background-position: -16px -2px; }
 .mid-checked { background-position: -32px -2px; }
 .exp { width: 14px; background-position: 0 -20px; }/* + */
 .colap { width: 14px; background-position: -14px -20px; }/* - */
-.root li { list-style:none; }
-.root li ul {position:relative; top:10px; left: 50px; float:left; margin-bottom:25px;}
+.root { margin: 0; padding: 0 }
+.root li { list-style:none; margin-bottom:5px; }
+.root li ul {/*position:relative;*/top:50px; left: 10px; /*float:left;*/ }
+.root a { padding: 0; margin-left: 1em; border-bottom: dotted #089bab 2px; }
 /*.niveles { display:none }*/

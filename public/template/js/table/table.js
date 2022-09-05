@@ -1,4 +1,4 @@
-function tablePersonalized(table, headersCols, data, comp){
+function tablePersonalized(table, headersCols, data, comp){/**/
 	
 	console.log(comp);
 	let cols = [], titles = [], render = [], imagen = [], lista = [], j = 0;
@@ -144,7 +144,7 @@ function tablePersonalized(table, headersCols, data, comp){
 					$('#mes').on('change', function(){ col.search($(this).val()).draw(); });
 				});
 			}*/
-			if(comp === 'undefined'){ this.api().search($("#anio").val()).draw(); this.api().search($("#mes").val()).draw(); }
+			if(comp !== 'complementario'){ this.api().search($("#anio").val()).draw(); this.api().search($("#mes").val()).draw(); }
 		}
 		/*"buttons": {
 			dom: {

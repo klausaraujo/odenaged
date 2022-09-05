@@ -1,4 +1,4 @@
-function tableIE(table, headersCols, data){
+function tableIE(table, headersCols, data){/**/
 	
 	let cols = [], titles = [], render = [], imagen = [], lista = [], j = 0;
 	

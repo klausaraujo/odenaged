@@ -121,7 +121,7 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
                     </div>
                     <div class="modal-body">
 						<div class="row col-sm-12">
-							<div class="container">
+							<div class="container jtree">
 								<div class="row">
 								<i class="collap colap"></i>
 									<nav>
@@ -135,7 +135,7 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 								</div>
 								<div class="tab-content" id="nav-tabContent">
 									<div class="tab-pane fade show active py-4" id="nav-regiones" role="tabpanel" aria-labelledby="nav-regiones-tab">
-										<div id="jstree" class="row"></div>
+										<div id="jstree" class="jstreecont col-sm-9"></div>
 									</div>
 								</div>
 							</div>

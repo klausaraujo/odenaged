@@ -56,10 +56,10 @@ class Main extends CI_Controller
 		
 		if($reg->num_rows() > 0){
 			$reg = $reg->result();
-			$tree .= '<ul class="root col-sm-12">';
+			$tree .= '<ul class="row root">';
 			foreach($reg as $row):
-				$tree .= "<li id='".$row->cod_dep."' class='row' ><i class='collapsible exp'></i><a href='#' class='col-sm-10' ><i class='checkbox unchecked mr-2'>
-						</i>".$row->departamento.'</a></li>';
+				$tree .= '<li id="'.$row->cod_dep.'" class="col-sm-12 dep"><i data-tree="DRE" class="collapsible exp"></i>
+						<i class="checkbox unchecked"></i>'.$row->departamento.'</li>';
 				
 				/*$this->Ubigeo_model->setIdDpto($row->cod_dep);
 				$tempDRE = $this->Ubigeo_model->zonasDRE();
@@ -93,30 +93,42 @@ class Main extends CI_Controller
 			
 		}
 		
-		$data = array(
-            'status' => 200,
-			'tree' => $tree,
-			'sub' => $sub
-        );
+		$data = array( 'tree' => $tree );
 
         echo json_encode($data);
 	}
 	public function buscaDRE(){
 		$this->load->model("Ubigeo_model");
-		$region = $this->input->post('idregion'); $tree = ''; $dat = 0;
-		$this->Ubigeo_model->setIdDpto($region);
-		$dre = $this->Ubigeo_model->zonasDRE();
-		if($dre->num_rows() > 0){ $dre = $dre->result(); $tree .= '<ul class="niveles col-sm-12">'; $dat++; }else $dre = array();
-		foreach($dre as $row):
-			$tree .= "<li id='".$row->codigo_dre."' class='row'><i class='collapsible exp'></i><a href='#' class='col-sm-10' ><i class='checkbox unchecked mr-2'>
-					</i>".$row->codigo_dre.' - '.$row->nombre.'</a></li>';
-		endforeach;
+		$id = $this->input->post('id'); $datatree = $this->input->post('tree'); $check = $this->input->post('check'); $zonas = null; $tree = '';
+		$check = ($check === '1')? 'checked' : 'unchecked'; $pro = '';
 		
-		$tree .= ($dat > 0)? '</ul>' : '';
+		if($datatree === 'DRE'){ $this->Ubigeo_model->setIdDpto($id); $zonas = $this->Ubigeo_model->zonasDRE(); }
+		else if($datatree === 'UGEL'){ $this->Ubigeo_model->setIdDre($id); $zonas = $this->Ubigeo_model->zonasUGEL(); }
+		else if($datatree === 'PROV'){ $this->Ubigeo_model->setIdUgel($id); $zonas = $this->Ubigeo_model->ubigeoUgel(); }
 		
-		$data = array(
-			'tree' => $tree
-		);
+		if(!$zonas == null && $zonas->num_rows() > 0){
+			$zonas = $zonas->result(); $tree .= '<ul class="niveles row">';
+			
+			foreach($zonas as $row):
+				
+				if($datatree === 'DRE'){ $data = 'UGEL'; $idzona = $row->iddre; $lia = $row->codigo_dre.' - '.$row->nombre; }
+				elseif($datatree === 'UGEL'){ $data = 'PROV'; $idzona = $row->idugel; $lia = $row->codigo_ugel.' - '.$row->nombre; }
+				
+				if($datatree === 'PROV'){
+					if(!$pro == $row->provincia){
+						$pro = $row->provincia; $data = 'DIS'; $idzona = $row->cod_pro; $lia = $row->provincia;
+						$tree .= '<li id="'.$idzona.'" class="col-sm-12"><i class="checkbox '.$check.'"></i>'.$lia.'</li>';
+					}
+				}else{
+					$tree .= '<li id="'.$idzona.'" class="col-sm-12"><i data-tree="'.$data.'" class="collapsible exp"></i><i class="checkbox '.$check.'"></i>'.$lia.'</li>';
+				}
+			endforeach;
+			
+			$tree .= '</ul>';
+		
+		}else{ $zonas = array(); }
+		
+		$data = array( 'tree' => $tree );
 		
 		echo json_encode($data);
 	}

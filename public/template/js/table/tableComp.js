@@ -1,4 +1,4 @@
-function tableComp(table, headersCols, data,img){
+function tableComp(table, headersCols, data,img){/**/
 	
 	let cols = [], titles = [], render = [], imagen = [], lista = [], j = 1;
 	cols.push({'acciones':''});

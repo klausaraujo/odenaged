@@ -78,7 +78,15 @@ class Ubigeo_model extends CI_Model
 		$this->db->from('lista_provincias');
 		$this->db->where('cod_dep', $this->idDpto);
 		$this->db->where('cod_pro', $this->idProv);
-		$this->db->limit(1);
+		//$this->db->limit(1);
+		return $this->db->get();
+	}
+	public function ubigeoUgel(){
+		$this->db->distinct();
+		$this->db->select('ug.idubigeo,lp.cod_pro,lp.provincia');
+		$this->db->from('ubigeo_dre_ugel ug');
+		$this->db->join('ubigeo lp','ug.idubigeo=lp.idubigeo');
+		$this->db->where('idugel', $this->idugel);
 		return $this->db->get();
 	}
 }

@@ -63,7 +63,7 @@ NOTE: This file contains the styling for responsive Template.
 /*--------------------------------------------------------------------
                             General
 ---------------------------------------------------------------------*/
-*::-moz-selection { background-color: #e33d3d; color: white; text-shadow: none; }
+*::-moz-selection { background-color: #e33d3d; color: white; text-shadow: none; }/**/
 ::-moz-selection { background-color: #e33d3d; color: white; text-shadow: none; }
 ::selection { background: #e33d3d; color: #fff; text-shadow: none; }
 .btn-sirese{ background: -moz-linear-gradient(left, #e33d3d, #FF0000);background: -o-linear-gradient(left, #e33d3d, #FF0000);background: linear-gradient(to right, #e33d3d, #FF0000); color: white; }
