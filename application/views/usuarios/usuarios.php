@@ -120,7 +120,7 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-						<input type="text" id="idusuarioPermiso" />
+						<input type="hidden" id="idusuarioPermiso" />
 						<div class="row col-sm-12">
 							<div class="container jtree">
 								<div class="row">
