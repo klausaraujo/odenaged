@@ -127,7 +127,7 @@ class Usuario_model extends CI_Model
             "apellidos" => strtoupper($this->apellidos),
             "nombres" => strtoupper($this->nombres),
 			'usuario' => $this->usuario,
-			"passwd" => sha1('123456'),
+			"passwd" => sha1($this->dni),
             "idperfil" => $this->idperfil,
             "activo" => "1"
         );

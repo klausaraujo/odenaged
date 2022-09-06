@@ -1,8 +1,8 @@
 function eventos() {
+	
 	jQuery.event.props.push('dataTransfer');
 	const formulario = document.getElementById('formPreliminar'), contImagen = $('#uploaderCont'), drop = $('#dragandrophandler');
-	var jSon = [], row = [], fileSystem = $('#dragandrophandler input[type="file"]');
-	//alert(fileSystem);
+	let jSon = [], row = [], fileSystem = $('#dragandrophandler input[type="file"]');
 	
 	/*function showModal(event,title,modal) {
         $('#'+ modal).text(title);
@@ -10,6 +10,7 @@ function eventos() {
         event.stopPropagation();
         event.stopImmediatePropagation();
     }*/
+	
 	function cIMG() { $('#addModal').modal('hide'); $('.fileQueue').remove(); $('.agregar').html(''); }
 	$('#cierra').on('click', function(){ cIMG(); });
 	

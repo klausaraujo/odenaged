@@ -173,7 +173,7 @@ function main(){
 	}
 	
 	$(document).ready(function () {
-		if($('#tablaUsuarios')){ const tablaUsuarios = $('#tablaUsuarios').DataTable(); }
+		if($('#tablaUsuarios')){ const tablaUsuarios = $('#tablaUsuarios').DataTable(); tablaUsuarios.columns(1).visible(false);console.log($(tablaUsuarios.data()[1][3]))}
 		
 		$("#formPassword").validate({
 			rules: {

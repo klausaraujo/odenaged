@@ -1,6 +1,7 @@
 <?
 $anio = $this->session->userdata('anio');
 $mes = $this->session->userdata('mes');
+if(null !== $zonas){
 ?>
 
 		<div class="col-xl-12 col-md-12">
@@ -31,8 +32,10 @@ $mes = $this->session->userdata('mes');
 						</div>
 						<br>
 						<div class="container-fluid">
-							<div class="mx-auto"><!--align-items-center text-center-->
-								<table id="tablaEvento" class="table table-striped dt-responsive w-100 table-bordered display nowrap table-hover mb-0" style="width:100%"></table>
+							<div class="row">
+								<div class="col-sm-12 mx-auto" style="overflow-x:scroll"><!--align-items-center text-center-->
+									<table id="tablaEvento" class="table table-striped dt-responsive table-bordered display nowrap table-hover mb-0"></table>
+								</div>
 							</div>
 						</div>
 						</div>
@@ -41,3 +44,4 @@ $mes = $this->session->userdata('mes');
 			<div class="ajaxPreliminar" style="display:none"><?php $this->load->view("eventos/form-preliminar"); ?></div>
 			<div class="ajaxComplementario" style="display:none"><?php $this->load->view("eventos/form-complementario"); ?></div>
 		</div>
+<? } ?>

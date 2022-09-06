@@ -124,8 +124,8 @@ class Login extends CI_Controller
 						$i++;
 					}
 				endforeach;
-			
-			}else $dptos = array();
+				$this->session->set_userdata('ubigeo', $ubigeo);
+			}
 			/*$areas = $this->Usuario_model->areas();*/
 
             /*$area = array();
@@ -161,7 +161,6 @@ class Login extends CI_Controller
             $this->session->set_userdata("modulos", $listaModulo->result());
             $this->session->set_userdata("menu", $lMenu);
 			$this->session->set_userdata("submenu", $lSubMenu);
-			$this->session->set_userdata('ubigeo', $ubigeo);
             /*$token = JWT::encode(array("usuario"=>sha1($row->idusuario),"modulos"=>$listaModulo->result()),getenv("SECRET_SERVER_KEY"));
             $this->session->set_userdata("token", $token);*/
 

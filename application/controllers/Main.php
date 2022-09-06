@@ -22,40 +22,42 @@ class Main extends CI_Controller
 		//$this->informe();
 		$this->load->model("Evento_model");
 		$zonas = $this->session->userdata('ubigeo');
-		$ubis = array(); $i = 0;
-		
-		foreach($zonas->dptos as $drow):
-			$dep = $drow->cod_dep;
-			foreach($zonas->prov as $prow):
-				$ubigeo = $drow->cod_dep.$prow->cod_pro;
-				$this->Evento_model->setUbigeo($ubigeo);
-				$temp = $this->Evento_model->listarEv();
-				if($temp->num_rows() > 0){ $ubis[$i] = $temp->result(); $i++; }
+		$ubis = array(); $i = 0; $tipoevento = null; $nivel = null; $tipodanio = null; $tipoaccion = null;
+		if(null !== $zonas){
+			foreach($zonas->dptos as $drow):
+				$dep = $drow->cod_dep;
+				foreach($zonas->prov as $prow):
+					$ubigeo = $drow->cod_dep.$prow->cod_pro;
+					$this->Evento_model->setUbigeo($ubigeo);
+					$temp = $this->Evento_model->listarEv();
+					if($temp->num_rows() > 0){ $ubis[$i] = $temp->result(); $i++; }
+				endforeach;
 			endforeach;
-		endforeach;
-		
-		$tipoevento = $this->Evento_model->tipoEvento();
-		$nivel = $this->Evento_model->cargaNivel();
-		$listar = $this->Evento_model->listar();
-		$tipodanio = $this->Evento_model->tipoDanio();
-		$tipoaccion = $this->Evento_model->tipoAccion();
-		
-		($tipoevento->num_rows() > 0)? $tipoevento = $tipoevento->result() : $tipoevento = array();
-		($nivel->num_rows() > 0)? $nivel = $nivel->result() : $nivel = array();
-        ($listar->num_rows() > 0)? $listar = $listar->result() : $listar = array();
-		($tipodanio->num_rows() > 0)? $tipodanio = $tipodanio->result() : $tipodanio = array();
-		($tipoaccion->num_rows() > 0)? $tipoaccion = $tipoaccion->result() : $tipoaccion = array();
-		//$pdf = $this->informe($this->load->view('eventos/dompdf.php',NULL,TRUE));
+			
+			$tipoevento = $this->Evento_model->tipoEvento();
+			$nivel = $this->Evento_model->cargaNivel();
+			//$listar = $this->Evento_model->listar();
+			$tipodanio = $this->Evento_model->tipoDanio();
+			$tipoaccion = $this->Evento_model->tipoAccion();
+			
+			($tipoevento->num_rows() > 0)? $tipoevento = $tipoevento->result() : $tipoevento = array();
+			($nivel->num_rows() > 0)? $nivel = $nivel->result() : $nivel = array();
+			//($listar->num_rows() > 0)? $listar = $listar->result() : $listar = array();
+			($tipodanio->num_rows() > 0)? $tipodanio = $tipodanio->result() : $tipodanio = array();
+			($tipoaccion->num_rows() > 0)? $tipoaccion = $tipoaccion->result() : $tipoaccion = array();
+			//$pdf = $this->informe($this->load->view('eventos/dompdf.php',NULL,TRUE));
+		}
 		
 		$data = array(
 			'tipoevento' => $tipoevento,
 			'nivel' => $nivel,
-			'lista' => json_encode($listar),
+			//'lista' => json_encode($listar),
 			'danio' => $tipodanio,
 			'accion' => $tipoaccion,
 			'url' => $this->config->item('path_url'),
 			'uri' => base_url(),
-			'ubi' => json_encode($ubis)
+			'ubi' => $ubis,
+			'zonas' => $zonas
 		);
 		
 		//$this->load->view($this->uri->segment(1).'/main',$data);

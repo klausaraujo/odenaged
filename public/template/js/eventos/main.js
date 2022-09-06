@@ -1,27 +1,8 @@
 function main(map) {
 	
-	$(document).ready(function () {
-		//$('#menu1').addClass('active');
-		//table.search($("#anio").val()).draw(); table.search($("#mes").val()).draw();
-		$('.iq-menu li #linkAjax').each(function() {
-			$(this).on('click',function(evt) {
-				var rel= $(this).attr('rel');
-				evt.preventDefault();
-				if(rel == 'nuevo'){
-					resetForm();
-					$('#tipo').val('registrar');
-					ocultarElem(false);
-				}else if(rel !== 'nuevo' && rel != null){
-					ocultarElem(true);
-					resetForm();
-				}
-			});
-		});
-	});
-	
 	$('#anio').on('change', function(){ table.search($(this).val()).draw(); });
 	$('#mes').on('change', function(){ table.search($(this).val()).draw(); });
-	if(comp === 'undefined'){ this.api().search($("#anio").val()).draw(); this.api().search($("#mes").val()).draw(); }
+	//if(comp === 'undefined'){ this.api().search($("#anio").val()).draw(); this.api().search($("#mes").val()).draw(); }
 	
 	function ocultarElem(on){
 		$('html, body').animate({ scrollTop: 0 }, 'fast');
@@ -416,5 +397,22 @@ function main(map) {
 				if($('.ajaxComplementario').css('display') == 'none' || $('.ajaxComplementario').css('opacity') == 0) $('.ajaxComplementario').show();
 			}, 500);
 		}
+	});
+	
+	$(document).ready(function () {
+		$('.iq-menu li #linkAjax').each(function() {
+			$(this).on('click',function(evt) {
+				var rel= $(this).attr('rel');
+				evt.preventDefault();
+				if(rel == 'nuevo'){
+					resetForm();
+					$('#tipo').val('registrar');
+					ocultarElem(false);
+				}else if(rel !== 'nuevo' && rel != null){
+					ocultarElem(true);
+					resetForm();
+				}
+			});
+		});
 	});
 }

@@ -23,16 +23,16 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 								<div class="col-sm-12">
 									<div class="table-responsive">
 										<table id="tablaUsuarios" class="table dt-responsive table-bordered display nowrap table-hover px-0 mx-auto" style="100%">
-											<thead class="text-center"><tr><th>Acciones</th><th>Id Usuario</th><th>DNI</th><th>Avatar</th><th>Apellidos</th>
+											<thead class="text-center"><tr><th>Acciones</th><th style="visibility:collapse; display:none;">Id</th><th>DNI</th><th>Avatar</th><th>Apellidos</th>
 													<th>Nombres</th><th>Usuario</th><th>Perfil</th><th>Estado</th></tr>
 											</thead>
 											<tbody>
 											<? 	foreach($data as $row): ?>
 											<tr>
 												<td class="text-center"><?=$btn_permisos?></td>
-												<td><?=$row->idusuario?></td>
+												<td style="visibility:collapse; display:none;"><?=$row->idusuario?></td>
 												<td><?=$row->dni?></td>
-												<td><?=$row->avatar?></td>
+												<td><img style="display:block;margin:auto" width="36px" src="<?=base_url()?>public/images/perfil_usuarios/<?=$row->avatar?>"></td>
 												<td><?=$row->apellidos?></td>
 												<td><?=$row->nombres?></td>
 												<td><?=$row->usuario?></td>
