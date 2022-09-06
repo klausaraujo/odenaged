@@ -1,24 +1,12 @@
 function main(){
-	let upload = $('.upload-button'), file = $('.file-upload'), contSrc = $(".profile-pic"), curl = $('.btn_curl');
-		
+	let upload = $('.upload-button'), file = $('.file-upload'), contSrc = $(".profile-pic"), curl = $('.btn_curl'), tablaUsuarios;
 	//function quitaFolder(){ $('.jstree-themeicon').attr('class',''); }
 	
 	$('body').on('click dblclick', 'input, button, a, i', function(e){
 		var elementType = $(this).prop('nodeName');
 		if($(this).attr('rel') && $(this).attr('rel') === 'nuevousuario'){ resetForm(); ocultar(true); }
 		else if($(this).attr('name') === 'btnCancelar'){ let evt = e || e.target; evt.preventDefault(); resetForm(); ocultar(false); }
-		else if($(this).hasClass('actionPermisos')){
-			$.ajax({
-				type: 'POST',
-				url: path + 'buscaRegion',
-				data: {},
-				dataType: 'json',
-				success: function (data) {
-					const { tree } = data; $('#jstree').html(tree); jtree(); $('#permisosModal').modal('show');
-				}
-			}).fail( function( jqXHR, textStatus, errorThrown ) { alert(jqXHR + ",  " + textStatus + ",  " + errorThrown); });
-		
-		}else if($(this).hasClass('loading')){
+		else if($(this).hasClass('loading')){
 			let ul = $(this).closest('li').children('ul');
 			if(ul.length === 0){
 				let el = $(this).closest('li'), id = el.attr('id'), tree = $(this).attr('data-tree'), p = $(this), chek = $(this).next();
@@ -50,6 +38,47 @@ function main(){
 	}
 	
 	function resetForm(){ $("#formUsuarios")[0].reset();$("#formUsuarios select").prop('selectedIndex',0); }
+	
+	$('#btnPermisos').bind('click', function(e){
+		/*let evt = e || e.target;
+		evt.preventDefault();*/
+		let dep = $('.dep').children('.checkbox'), dre = $('.dre').children('.checkbox'), ugel = $('.ugel').children('.checkbox'), prov = $('.prov').children('.checkbox');
+		let dptos = [], dres = [], ugels = [], provs = [], i = 0, idusuario = $('#idusuarioPermiso').val();
+		
+		if(dep.length > 0){ dep.each(function(){ if($(this).hasClass('checked') || $(this).hasClass('mid-checked')){ dptos[i] = $(this).attr('data-check'); i++; } }); }
+		if(dre.length > 0){ i= 0; dre.each(function(){ if($(this).hasClass('checked') || $(this).hasClass('mid-checked')){ dres[i] = $(this).attr('data-check'); i++; } }); }
+		if(ugel.length > 0){ i= 0; ugel.each(function(){ if($(this).hasClass('checked') || $(this).hasClass('mid-checked')){ ugels[i] = $(this).attr('data-check'); i++; } }); }
+		if(prov.length > 0){ i= 0; prov.each(function(){ if($(this).hasClass('checked') || $(this).hasClass('mid-checked')){ provs[i] = $(this).attr('data-check'); i++; } }); }
+		
+		console.log(dptos+'  '+dres+'  '+ugels+'  '+provs);
+		
+		if(dptos.length > 0 || dres.length > 0 || ugels.length > 0 || provs.length > 0){
+			dptos = JSON.stringify(dptos); dres = JSON.stringify(dres); ugels = JSON.stringify(ugels); provs = JSON.stringify(provs);
+			$.ajax({
+				type: 'POST',
+				url: path + 'permisos',
+				data: {dptos:dptos,dres:dres,ugels:ugels,provs:provs,idusuario:idusuario},
+				dataType: 'json',
+				success: function (data) {
+					console.log(data);
+				}
+			}).fail( function( jqXHR, textStatus, errorThrown ) { alert(jqXHR + ",  " + textStatus + ",  " + errorThrown); });
+		}
+	});
+	
+	$('#permisosModal').on('show.bs.modal',function(e){
+		let evt = e || e.target, boton = $(evt.relatedTarget), tab = boton.closest('table').attr('id');
+		let idusuario = $('#'+tab).dataTable().api().row($(boton).parents("tr")).data()[1];
+		//console.log());
+		//console.log(tab.row($(boton).parents("tr")).data());
+		$.ajax({
+			type: 'POST',
+			url: path + 'buscaRegion',
+			data: {idusuario:idusuario},
+			dataType: 'json',
+			success: function (data) { const { tree } = data; $('#jstree').html(tree); $('#idusuarioPermiso').val(idusuario); $('#jstree').animate({ scrollTop: 0 }, 'fast'); }
+		}).fail( function( jqXHR, textStatus, errorThrown ) { alert(jqXHR + ",  " + textStatus + ",  " + errorThrown); });
+	});
 	
 	$("#formUsuarios").validate({
 		rules: {
@@ -173,7 +202,7 @@ function main(){
 	}
 	
 	$(document).ready(function () {
-		if($('#tablaUsuarios')){ const tablaUsuarios = $('#tablaUsuarios').DataTable(); tablaUsuarios.columns(1).visible(false);console.log($(tablaUsuarios.data()[1][3]))}
+		if($('#tablaUsuarios')){ tablaUsuarios = $('#tablaUsuarios').DataTable(); tablaUsuarios.columns(1).visible(false);/*console.log($(tablaUsuarios.data()[1][3]))*/}
 		
 		$("#formPassword").validate({
 			rules: {

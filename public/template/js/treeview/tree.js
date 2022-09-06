@@ -1,5 +1,5 @@
-function jtree(){
-	$('.jtree').on('click', 'i', function(){
+$(document).ready(function(){
+	$('#jstree').on('click', 'i', function(){
 		let li1 = $(this).closest('li'), ul = li1.children('ul');
 		
 		/*Boton de expandir y contraer*/
@@ -31,5 +31,7 @@ function jtree(){
 			if(li1.children('ul').length > 0) remAdd(li1.find('.checkbox.checked'),'checkbox unchecked');
 			if($(this).parents('.dep').find('.checked').length == 0) remAdd($(this).parents('.dep').find('.checkbox'),'checkbox unchecked');
 		}
-	}); function remAdd(el,clase){ el.prop('class',clase); }
-}
+	});
+});
+
+function remAdd(el,clase){ el.prop('class',clase); }

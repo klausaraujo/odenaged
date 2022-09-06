@@ -18,7 +18,6 @@ function eventos() {
 		if(!$('.ajaxComplementario').css('display') == 'none' || $('.ajaxComplementario').css('opacity') == 1) $('.ajaxComplementario').hide();
 		if(!$('.ajaxPreliminar').css('display') == 'none' || $('.ajaxPreliminar').css('opacity') == 1) $('.ajaxPreliminar').hide();
 		if($('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 0) $('.ajaxTable').show();
-		
 		resetear();
 	}
 	/**/

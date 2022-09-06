@@ -83,6 +83,7 @@ $route['uploadIMG'] = 'usuario/uploadIMG';
 $route['pass'] = 'usuario/password';
 $route['buscaRegion'] = 'usuarios/main/buscaRegiones';
 $route['buscaDRE'] = 'usuarios/main/buscaDRE';
+$route['permisos'] = 'usuarios/main/permisos';
 /**/
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

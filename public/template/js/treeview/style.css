@@ -22,7 +22,7 @@
 .jstreecont { border-radius: 15px;box-shadow:5px 3px 10px 3px #000;padding:25px;margin:auto;background-color:aliceblue/*seashell*/;color:#000/*firebrick*/;height:500px;overflow-y:scroll; }
 .unchecked { background-position: -2px -2px; }
 .checked { background-position: -18px -2px; }
-.mid-checked { background-position: -32px -2px; }
+.mid-checked { background-position: -34px -2px; }
 .exp { background-position: 0 -20px; }/* + */
 .colap { background-position: -14px -20px; }/* - */
 .root { margin: 0; padding: 0 }

@@ -59,43 +59,13 @@ class Main extends CI_Controller
 			$tree .= '<ul class="row root">';
 			foreach($reg as $row):
 				$tree .= '<li id="'.$row->cod_dep.'" class="col-sm-12 dep"><i data-tree="DRE" class="collapsible exp"></i>
-						<i class="checkbox unchecked"></i>'.$row->departamento.'</li>';
-				
-				/*$this->Ubigeo_model->setIdDpto($row->cod_dep);
-				$tempDRE = $this->Ubigeo_model->zonasDRE();
-				
-				if($tempDRE->num_rows() > 0){ $tree .= '<ul>'; $tempDRE = $tempDRE->result(); }else $tempDRE = array();
-				
-				foreach($tempDRE as $drow):
-					$tree .= "<li id='".$drow->codigo_dre."' ><a href='#'>".$drow->codigo_dre.' - '.$drow->nombre.'</a>';
-					
-					$this->Ubigeo_model->setIdDre($drow->iddre);
-					$tempUGEL = $this->Ubigeo_model->zonasUGEL(); if($tempUGEL->num_rows() > 0){ $tempUGEL = $tempUGEL->result(); $tree .= '<ul>'; }
-					
-					foreach($tempUGEL as $urow):
-						$tree .= "<li id='".$urow->idugel."' ><a href='#'>".$urow->codigo_ugel.' - '.$urow->nombre.'</a>';
-						$this->Ubigeo_model->setIdProv(substr($urow->codigo_ugel,4,2));
-						$tempPro = $this->Ubigeo_model->zonasPro(); if($tempPro->num_rows() > 0){ $tempPro = $tempPro->result();}else $tempPro = array();
-						foreach($tempPro as $prow):
-							$tree .= "<ul><li id='".$prow->cod_pro."' ><a href='#'>".$prow->provincia.'</a></li></ul>';
-							$sub[$i] = $prow;
-							$i++;
-						endforeach;
-					endforeach;
-					
-					$tree .= '</li></ul>';
-				endforeach;
-				
-				$tree .= '</li></ul>';*/
+						<i class="checkbox unchecked" data-check="'.$row->cod_dep.'"></i>'.$row->departamento.'</li>';
 			endforeach;
 			
 			$tree .= '</ul>';
-			
 		}
-		
 		$data = array( 'tree' => $tree );
-
-        echo json_encode($data);
+		echo json_encode($data);
 	}
 	public function buscaDRE(){
 		$this->load->model("Ubigeo_model");
@@ -111,24 +81,41 @@ class Main extends CI_Controller
 			
 			foreach($zonas as $row):
 				
-				if($datatree === 'DRE'){ $data = 'UGEL'; $idzona = $row->iddre; $lia = $row->codigo_dre.' - '.$row->nombre; }
-				elseif($datatree === 'UGEL'){ $data = 'PROV'; $idzona = $row->idugel; $lia = $row->codigo_ugel.' - '.$row->nombre; }
+				if($datatree === 'DRE'){ $data = 'UGEL'; $idzona = $row->iddre; $lia = $row->codigo_dre.' - '.$row->nombre; $li = 'dre'; }
+				elseif($datatree === 'UGEL'){ $data = 'PROV'; $idzona = $row->idugel; $lia = $row->codigo_ugel.' - '.$row->nombre; $li = 'ugel'; }
 				
 				if($datatree === 'PROV'){
 					if(!$pro == $row->provincia){
 						$pro = $row->provincia; $data = 'DIS'; $idzona = $row->cod_pro; $lia = $row->provincia;
-						$tree .= '<li id="'.$idzona.'" class="col-sm-12"><i class="checkbox '.$check.'"></i>'.$lia.'</li>';
+						$tree .= '<li id="'.$idzona.'" class="col-sm-12 prov"><i class="checkbox '.$check.'" data-check="'.$idzona.'"></i>'.$lia.'</li>';
 					}
 				}else{
-					$tree .= '<li id="'.$idzona.'" class="col-sm-12"><i data-tree="'.$data.'" class="collapsible exp"></i><i class="checkbox '.$check.'"></i>'.$lia.'</li>';
+					$tree .= '<li id="'.$idzona.'" class="col-sm-12 '.$li.'"><i data-tree="'.$data.'" class="collapsible exp"></i>
+						<i class="checkbox '.$check.'" data-check="'.$idzona.'"></i>'.$lia.'</li>';
 				}
 			endforeach;
 			
 			$tree .= '</ul>';
-		
-		}else{ $zonas = array(); }
+		}
 		
 		$data = array( 'tree' => $tree );
+		echo json_encode($data);
+	}
+	public function permisos(){
+		$dptos = json_decode($_POST['dptos']); $provs = json_decode($_POST['provs']); $dres = json_decode($_POST['dres']); $ugels = json_decode($_POST['ugels']); $msg = '';
+		$id = $this->input->post('idusuario');
+		$msg .= (!empty($dptos))? 'Tiene Dptos ': 'No tiene Dptos ';
+		$msg .= (!empty($provs))? 'Tiene Provincias ': 'No tiene Provincias ';
+		$msg .= (!empty($dres))? 'Tiene Direcciones Regionales ': 'No tiene Direcciones Regionales ';
+		$msg .= (!empty($ugels))? 'Tiene Ugeles ': 'No tiene Ugeles ';
+		$data = array(
+			'dpto' => $dptos,
+			'dre' => $dres,
+			'ugel' => $ugels,
+			'prov' => $provs,
+			'msg' => $msg,
+			'idusuario' => $id
+		);
 		
 		echo json_encode($data);
 	}

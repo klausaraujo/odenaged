@@ -1,7 +1,7 @@
 <?
 $sombrabtn = 'box-shadow: 2px 2px 0px 0px rgba(142, 173, 255,5)';
-$btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1 py-0" title="Asignar Permisos" 
-				style="'.$sombrabtn.'" ><i class="fa fa-lock" aria-hidden="true"></i></button>';
+$btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1 py-0" title="Asignar Permisos" data-toggle="modal"
+				style="'.$sombrabtn.'" data-target="#permisosModal"><i class="fa fa-lock" aria-hidden="true"></i></button>';
 ?>	
 
 	<div class="container-fluid">
@@ -120,10 +120,10 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
+						<input type="text" id="idusuarioPermiso" />
 						<div class="row col-sm-12">
 							<div class="container jtree">
 								<div class="row">
-								<i class="collap colap"></i>
 									<nav>
 										<div class="nav nav-tabs" id="nav-tab" role="tablist">
 											<a class="nav-item nav-link active" id="nav-regiones-tab" data-toggle="tab" href="#nav-regiones" role="tab" aria-controls="nav-regiones" aria-selected="true">Asignar Regiones</a>
@@ -138,6 +138,12 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 										<div id="jstree" class="jstreecont col-sm-9"></div>
 									</div>
 								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<div class="row col-sm-12">
+								<button class="btn btn-sirese mx-3" id="btnPermisos">Guardar</button>
+								<button class="btn btn-sirese" id="btnCancelPer" name="btnCancelPer" data-dismiss="modal" aria-label="Close">Retornar</button>
 							</div>
 						</div>
 					</div>
