@@ -1,4 +1,5 @@
 <?
+date_default_timezone_set("America/Lima");
 $anio = $this->session->userdata('anio');
 $mes = $this->session->userdata('mes');
 if(null !== $zonas){
