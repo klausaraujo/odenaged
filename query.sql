@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS evento;
 DROP TABLE IF EXISTS tipo_evento;
 DROP TABLE IF EXISTS estado_evento;
 DROP TABLE IF EXISTS nivel;
+DROP VIEW IF EXISTS acceso_usuarios_dre_ugeles_ubigeos;
 DROP VIEW IF EXISTS lista_ubigeo;
 DROP VIEW IF EXISTS lista_departamentos;
 DROP VIEW IF EXISTS lista_provincias;
@@ -2206,7 +2207,8 @@ Select ubigeo,departamento,provincia,distrito,CONCAT_WS(' - ',departamento,provi
 
 CREATE TABLE usuarios  (
   idusuario smallint(4) NOT NULL AUTO_INCREMENT,
-  dni varchar(8) NOT NULL,
+  tipo_dni smallint(4) default 1,
+  dni varchar(9) NOT NULL,
   avatar varchar(30),
   apellidos varchar(50) NOT NULL,
   nombres varchar(50) NOT NULL,
@@ -2218,216 +2220,8 @@ CREATE TABLE usuarios  (
 	FOREIGN KEY (idperfil) REFERENCES perfil (idperfil) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
-INSERT INTO usuarios (dni,avatar,apellidos,nombres,usuario,passwd,idperfil) VALUES ('42545573', '000120190310064855.png', 'ARAUJO CUADROS', 'KLAUS JOSEPH', 'admin', 'e4619e8fb50a0aa59ad1b92364f127afad06afe1',1);
-INSERT INTO usuarios (dni,avatar,apellidos,nombres,usuario,passwd,idperfil) VALUES ('00000000', '000120190310064855.png', 'ARAUJO CUADROS', 'JAVIER ANDES', 'jaraujo', 'e4619e8fb50a0aa59ad1b92364f127afad06afe1',2);
-
-CREATE TABLE usuarios_ubigeo  (
-	idusuarioubigeo smallint(4) NOT NULL AUTO_INCREMENT,
-	idusuario smallint(4) NOT NULL,
-	cod_dep varchar(2) NOT NULL,
-	cod_pro varchar(2) NOT NULL,
-	activo char(1) DEFAULT '1',
-	PRIMARY KEY (idusuarioubigeo),
-	FOREIGN KEY (idusuario) REFERENCES usuarios (idusuario) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
-
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'01','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'01','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'01','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'01','04');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'01','05');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'01','06');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'01','07');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','04');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','05');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','06');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','07');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','08');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','09');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','10');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','11');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','12');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','13');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','14');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','15');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','16');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','17');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','18');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','19');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'02','20');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'03','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'03','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'03','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'03','04');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'03','05');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'03','06');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'03','07');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'04','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'04','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'04','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'04','04');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'04','05');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'04','06');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'04','07');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'04','08');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'05','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'05','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'05','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'05','04');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'05','05');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'05','06');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'05','07');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'05','08');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'05','09');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'05','10');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'05','11');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'06','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'06','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'06','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'06','04');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'06','05');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'06','06');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'06','07');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'06','08');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'06','09');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'06','10');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'06','11');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'06','12');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'06','13');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'07','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'08','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'08','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'08','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'08','04');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'08','05');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'08','06');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'08','07');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'08','08');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'08','09');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'08','10');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'08','11');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'08','12');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'08','13');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'09','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'09','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'09','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'09','04');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'09','05');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'09','06');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'09','07');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'10','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'10','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'10','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'10','04');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'10','05');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'10','06');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'10','07');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'10','08');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'10','09');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'10','10');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'10','11');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'11','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'11','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'11','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'11','04');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'11','05');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'12','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'12','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'12','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'12','04');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'12','05');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'12','06');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'12','07');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'12','08');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'12','09');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'13','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'13','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'13','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'13','04');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'13','05');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'13','06');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'13','07');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'13','08');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'13','09');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'13','10');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'13','11');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'13','12');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'14','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'14','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'14','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'15','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'15','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'15','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'15','04');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'15','05');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'15','06');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'15','07');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'15','08');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'15','09');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'15','10');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'16','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'16','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'16','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'16','04');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'16','05');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'16','06');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'16','07');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'16','08');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'17','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'17','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'17','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'18','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'18','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'18','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'19','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'19','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'19','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'20','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'20','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'20','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'20','04');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'20','05');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'20','06');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'20','07');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'20','08');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'21','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'21','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'21','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'21','04');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'21','05');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'21','06');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'21','07');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'21','08');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'21','09');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'21','10');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'21','11');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'21','12');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'21','13');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'22','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'22','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'22','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'22','04');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'22','05');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'22','06');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'22','07');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'22','08');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'22','09');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'22','10');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'23','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'23','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'23','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'23','04');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'24','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'24','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'24','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'25','01');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'25','02');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'25','03');
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (1,'25','04');
-
-insert into usuarios_ubigeo(idusuario,cod_dep,cod_pro) values (2,'01','01');
+INSERT INTO usuarios (tipo_dni,dni,avatar,apellidos,nombres,usuario,passwd,idperfil) VALUES (1,'42545573', '000120190310064855.png', 'ARAUJO CUADROS', 'KLAUS JOSEPH', 'admin', 'e4619e8fb50a0aa59ad1b92364f127afad06afe1',1);
+INSERT INTO usuarios (tipo_dni,dni,avatar,apellidos,nombres,usuario,passwd,idperfil) VALUES (1,'00000000', '000120190310064855.png', 'ARAUJO CUADROS', 'JAVIER ANDES', 'jaraujo', 'e4619e8fb50a0aa59ad1b92364f127afad06afe1',2);
 
 CREATE TABLE usuarios_dre  (
 	idusuariodre smallint(4) NOT NULL AUTO_INCREMENT,
@@ -5055,6 +4849,11 @@ CREATE TABLE ubigeo_dre_ugel(
 	insert into ubigeo_dre_ugel (idubigeo,iddre) values(1874,26);
 	insert into ubigeo_dre_ugel (idubigeo,iddre,idugel) values(1874,26,220);
 
+create view acceso_usuarios_dre_ugeles_ubigeos
+as
+select usuarios.idusuario,case usuarios.tipo_dni when 1 then '01' when 4 then '04' end as 'tipo_documento',usuarios.dni as 'numero_documento', usuarios.avatar,usuarios.apellidos,usuarios.nombres,usuarios.usuario,usuarios.idperfil,perfil.perfil,
+IFNULL(ugel.iddre,0) as 'iddre',IFNULL(dre.codigo_dre,'0000') as 'codigo_dre',IFNULL(dre.nombre,'[N/A]') as 'dre',IFNULL(usuarios_ugel.idugel,0) as 'idugel',IFNULL(ugel.codigo_ugel,'000000') as 'codigo_ugel',IFNULL(ugel.nombre,'[N/A]') as 'ugel',IFNULL(ubigeo.cod_dep,'00') as 'cod_dep',IFNULL(ubigeo.cod_pro,'00') as 'cod_pro',IFNULL(ubigeo.cod_dis,'00') as 'cod_dis',IFNULL(ubigeo.departamento,'[N/A]') as 'departamento',IFNULL(ubigeo.provincia,'[N/A]') as 'provincia',IFNULL(ubigeo.distrito,'[N/A]') as 'distrito'
+from usuarios  left JOIN usuarios_ugel on usuarios_ugel.idusuario=usuarios.idusuario  INNER JOIN perfil on perfil.idperfil = usuarios.idperfil left JOIN ugel on ugel.idugel=usuarios_ugel.idugel LEFT JOIN dre on dre.iddre = ugel.iddre left join ubigeo_dre_ugel on ubigeo_dre_ugel.iddre=dre.iddre and ubigeo_dre_ugel.idugel=ugel.idugel and ugel.iddre=dre.iddre left join ubigeo on ubigeo.idubigeo=ubigeo_dre_ugel.idubigeo;
 
 CREATE TABLE modulo  (
   idmodulo smallint(4) NOT NULL AUTO_INCREMENT,
@@ -5097,8 +4896,11 @@ CREATE TABLE permiso  (
   PRIMARY KEY (idpermiso),
 	FOREIGN KEY (idmodulo) REFERENCES modulo (idmodulo) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
-	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Nuevo Registro','1',1,1);
+	
 	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Editar Registro','1',2,1);
+	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Preliminar ','1',2,1);
+	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Complementario','1',2,1);
+	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Reporte PDF','1',2,1);
 	
 CREATE TABLE menu  (
   idmenu smallint(4) NOT NULL AUTO_INCREMENT,
