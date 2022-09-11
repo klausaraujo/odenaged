@@ -18,6 +18,7 @@ class Usuario_model extends CI_Model
     private $avatar;
     private $activo;
 	private $provincia;
+	private $valores;
 	
     public function setAnio_Ejecucion($data){ $this->Anio_Ejecucion = $this->db->escape_str($data); }
     public function setId($data){ $this->id = $this->db->escape_str($data); }
@@ -32,6 +33,7 @@ class Usuario_model extends CI_Model
     public function setRegion($data){ $this->Codigo_Region = $this->db->escape_str($data); }
 	public function setProvincia($data){ $this->provincia = $this->db->escape_str($data); }
     public function setAvatar($data){ $this->avatar = $this->db->escape_str($data); }
+	public function setValores($data){ $this->valores = $this->db->escape_str($data); }
 	
     public function __construct() { parent::__construct(); }
 	
@@ -153,5 +155,15 @@ class Usuario_model extends CI_Model
             $error = $this->db->error();
             return $error["code"];
         }
+    }
+	public function borraDreUsuario(){ $this->db->where('idusuario', $this->id); return $this->db->delete('usuarios_dre'); }
+	public function borraUgelUsuario(){ $this->db->where('idusuario', $this->id); return $this->db->delete('usuarios_ugel'); }
+	public function guardaUgelUsuario(){
+		$query = 'INSERT INTO usuarios_ugel (idusuario,idugel,activo) VALUES '.$this->valores;
+		$query = $this->db->query($query); return $query;
+    }
+	public function guardaDreUsuario(){
+		$query = 'INSERT INTO usuarios_dre (idusuario,iddre,activo) VALUES '.$this->valores;
+		$query = $this->db->query($query); return $query;
     }
 }

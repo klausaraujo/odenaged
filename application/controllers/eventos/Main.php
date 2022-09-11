@@ -57,17 +57,19 @@ class Main extends CI_Controller
 			}
 		}
     }
-	
 	public function listar(){
-		$this->load->model("Evento_model");
-		$listar = $this->Evento_model->listar();		
+		$this->load->model("Evento_model"); $this->load->model('Ubigeo_model'); $this->Ubigeo_model->setIdUser($this->session->userdata('idusuario'));
+		$evts = $this->Evento_model->listarEv(); $listar = []; $i = 0;
+		if($evts->num_rows() > 0){
+			$evts = $evts->result();
+			foreach($evts as $evt):
+				$pro = $evt->provincia;
+				$this->Ubigeo_model->setIdProv($pro);
+				$ctatemp = $this->Ubigeo_model->ubigeosEvtUser();
+				if($ctatemp > 0){ $listar[$i] = $evt; $i++; }
+			endforeach;
+		}
 		
-		if ($listar->num_rows() > 0) {
-            $listar = $listar->result();
-        } else {
-            $listar = array();
-        }
-
         $data = array(
             "status" => 200,
             "data" => array( "lista" => $listar )
@@ -75,7 +77,6 @@ class Main extends CI_Controller
 
         echo json_encode($data);
 	}
-	
 	public function cargarEvento(){
 		$this->load->model("Evento_model");
 		$this->Evento_model->setIdTipoEvt($this->input->post("tipo"));
@@ -85,61 +86,17 @@ class Main extends CI_Controller
 		);
 		
 		echo json_encode($data);
-	}
-	
-	public function cargarprov(){
-		$this->load->model("Ubigeo_model");
-		$this->Ubigeo_model->setIdUser($this->session->userdata("idusuario"));
-		$this->Ubigeo_model->setIdDpto($this->input->post("region"));
-		
-		$listaProv = $this->Ubigeo_model->prov();		
-		
-		$data = array(
-            "lista" => $listaProv->result()
-        );
-        
-        echo json_encode($data);
-	}
-	
-	public function cargardis(){
-		$this->load->model("Ubigeo_model");
-		
-		$this->Ubigeo_model->setIdDpto($this->input->post("region"));
-		$this->Ubigeo_model->setIdProv($this->input->post("provincia"));
-		
-		$listaDis = $this->Ubigeo_model->dttos();		
-		
-		$data = array(
-            "lista" => $listaDis->result()
-        );
-        
-        echo json_encode($data);
-	}
-	
-	public function cargarLatLng(){
-		$this->load->model("Ubigeo_model");
-		
-		$this->Ubigeo_model->setUbigeo($this->input->post("dpto").$this->input->post("prov").$this->input->post("dtto"));
-		$ubigeo = $this->Ubigeo_model->latLng();
-		
-		$data = array(
-			"ubigeo" => $ubigeo->result()
-		);
-		echo json_encode($data);
-	}
-	
+	}	
 	public function registrar()
     {
 		$this->load->model("Evento_model");
 		$id = $this->Evento_model->registrar();
 		if ($id > 0){
-			$this->Evento_model->setId($id);
-			$data = $this->guardarMapa($id);
-		}else{
-			$data = array(
-				"status" => 500
-            );
-        }
+			$this->Evento_model->setId($id); $resp = $this->guardarMapa($id);
+			if($resp === 500) $data = array('status' => 200, 'mensaje' => 'Evento Registrado Exitosamente. Imagen del mapa no guardada');
+			else $data = array('status' => 200, 'mensaje' => 'Evento Registrado Exitosamente');
+			
+		}else{ $data = array( "status" => 500, 'mensaje' => 'No se pudo registrar el Evento'); }
 		
 		echo json_encode($data);
     }
@@ -150,55 +107,41 @@ class Main extends CI_Controller
 		$id = $this->Evento_model->editar();
 		if ($id > 0){
 			$edita = $this->guardarMapa($id);
-			$data = array(
-				'status' => 200,
-				'data' => $edita
-			);
-		}else{
-			$data = array(
-				"status" => 500
-            );
-        }
+			if($edita === 500) $data = array('status' => 200, 'mensaje' => 'Evento Registrado Exitosamente. Imagen del mapa no guardada');
+			else $data = array('status' => 200, 'mensaje' => 'Evento Registrado Exitosamente');
+			
+		}else{ $data = array( "status" => 500, 'mensaje' => 'No se pudo registrar el Evento'); }
+		
 		echo json_encode($data);
 	}
 	
 	public function guardarMapa($id){
 		$this->load->library('general');
 		$pa = '';
-		$imag = $this->general->saveImageMap($this->path .'public/images/mapas_eventos/',$this->coun .'_gm.png',
+		$imag = $this->general->guardarMapaCurl($this->path .'public/images/mapas_eventos/',$this->coun .'_gm.png',
 											$this->input->post('lat'),$this->input->post('lng'),$this->input->post('zoom'));
-		$resp_Mapa = '';
 		
-		if(!$imag == ''){
-			$this->Evento_model->setMapa($imag);
-			$resp_Mapa = $this->Evento_model->guardarMapa();
-		}
-		$data = array(
-			"status" => 200,
-			"img" => $imag,
-			'mapa' => $resp_Mapa,
-			//'segmento' => $this->uri->segment(2),
-			'path' => $this->path
-        );
-		return $data;
+		$imag = (!$imag == '')? $imag : ''; $resp_Mapa = false;
+		
+		if(!$imag == ''){ $this->Evento_model->setMapa($imag); $resp_Mapa = $this->Evento_model->guardarMapa(); }
+		
+		return ($resp_Mapa)? 200 : 500;
 	}
 	
 	public function ubicacion($data){
 		$this->load->model('Ubigeo_model');
 		$this->Ubigeo_model->setIdUser($this->session->userdata("idusuario"));
 		$this->Ubigeo_model->setUbigeo($data->ubigeo);
-		#Obtener Provincias del Usuario
+		#Obtener Provincias del Usuario correspondientes al ubigeo
 		$this->Ubigeo_model->setIdDpto(substr($data->ubigeo, 0, 2));
-		$prov = $this->Ubigeo_model->prov();		
-		$prov->num_rows() > 0? $prov = $prov->result() : $prov = array();
-		#Obtener Distritos del Usuario
+		$prov = $this->Ubigeo_model->proUser();
+		($prov->num_rows() > 0)? $prov = $prov->result() : $prov = array();
+		#Obtener Distritos del Usuario correspondientes al ubigeo
 		$this->Ubigeo_model->setIdProv(substr($data->ubigeo,2,2));
 		$dtto = $this->Ubigeo_model->dttos();
-		$dtto->num_rows() > 0? $dtto = $dtto->result() : $dtto = array();
-		$ubicacion = array(
-			'prov' => $prov,
-			'dtto' => $dtto
-		);
+		($dtto->num_rows() > 0)? $dtto = $dtto->result() : $dtto = array();
+		$ubicacion = array( 'prov' => $prov, 'dtto' => $dtto );
+		
 		return $ubicacion;
 	}
 	
@@ -212,27 +155,17 @@ class Main extends CI_Controller
 			$data = $data->row();
 			#Carga ubigeo del evento y regiones generales
 			$ubicacion = $this->ubicacion($data);
-			#Carga datos generales de los eventos
-			#$tipo = $this->Evento_model->tipoEvento(); $tipo->num_rows() > 0? $tipo = $tipo->result() : $tipo = array();
-			#$nivel = $this->Evento_model->cargaNivel(); $nivel->num_rows() > 0? $nivel = $nivel->result() : $nivel = array();
 			$this->Evento_model->setIdTipoEvt($data->idtipoevento);
 			$evento = $this->Evento_model->cargarEvento(); $evento->num_rows() > 0? $evento = $evento->result() : $evento = array();
 			
 			$data = array(
 				'regiones' => $ubicacion,
-				#'tipoevento' => $tipo,
-				#'nivel' => $nivel,
 				'eventos' => $evento,
 				'data' => $data,
 				'status' => 200
 			);
 			
-			//$data =  array('form'=>$this->load->view('eventos/form-edit',$data,TRUE),'data'=>$data);
-		}else{
-			$data = array(
-				'status' => 500
-			);
-		}
+		}else{ $data = array( 'status' => 500 ); }
 		
 		echo json_encode($data);
 	}

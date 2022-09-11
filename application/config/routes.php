@@ -53,16 +53,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'login';
 $route['login'] = 'login/login';
 $route['doLogin'] = 'login/doLogin';
+
+#funciones generales para todos los modulos
 $route['curl'] = 'main/curl';
+$route['urlCurl'] = 'main/urlCurl';
 $route['eventos'] = 'main/eventos';
 $route['usuarios'] = 'main/usuarios';
-$route['regusuario'] = 'usuarios/main/registrar';
+$route['cargarprov'] = 'main/cargarprov';
+$route['cargardis'] = 'main/cargardis';
+$route['cargarLatLng'] = 'main/cargarLatLng';
 
 #Formularios de Registro y edicion de Eventos
 $route['cargarEvento'] = 'eventos/main/cargarEvento';
-$route['cargarprov'] = 'eventos/main/cargarprov';
-$route['cargardis'] = 'eventos/main/cargardis';
-$route['cargarLatLng'] = 'eventos/main/cargarLatLng';
 $route['registrarEvento'] = 'eventos/main/index';
 $route['eventosListar'] = 'eventos/main/listar';
 $route['editarEvento'] = 'eventos/main/editarEvento';
@@ -84,6 +86,10 @@ $route['pass'] = 'usuario/password';
 $route['buscaRegion'] = 'usuarios/main/buscaRegiones';
 $route['buscaDRE'] = 'usuarios/main/buscaDRE';
 $route['permisos'] = 'usuarios/main/permisos';
+$route['regusuario'] = 'usuarios/main/registrar';
+
+# Mapas interactivos
+$route['mapasinteractivos'] = 'main/mapasInteractivos';
 /**/
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

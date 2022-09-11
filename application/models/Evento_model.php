@@ -61,7 +61,8 @@ class Evento_model extends CI_Model
 		$this->db->select('idregistroevento,anio_evento,numero_evento,nivel,tipo_evento,evento,ubigeo,ubigeo_descripcion,departamento,provincia,distrito,estado,fecha,hora,mes');
         $this->db->from("lista_general_eventos");
 		$this->db->join('mes','idmes = CAST(SUBSTR(fecha,4,2) AS UNSIGNED)');
-		$this->db->where('SUBSTR(ubigeo,1,4)',$this->ubigeo);
+		$this->db->order_by('idregistroevento', 'asc');
+		//$this->db->where('SUBSTR(ubigeo,1,4)',$this->ubigeo);
 		//$this->db->limit(1);
         return $this->db->get();
     }
@@ -114,7 +115,7 @@ class Evento_model extends CI_Model
 		return $this->db->get();
 	}
 	public function sumaEventos(){
-		$this->db->select('*');
+		$this->db->select('idregistroevento');
         $this->db->from('registro_evento');
 		return $this->db->count_all_results();
 	}
@@ -193,7 +194,7 @@ class Evento_model extends CI_Model
 		$this->db->db_debug = FALSE;
 		$this->db->set('mapa_imagen', $this->mapa, TRUE);
         $this->db->where("idregistroevento", $this->id);
-		if($this->db->update('registro_evento'))return 1;
+		if($this->db->update('registro_evento'))return true;
         else { $error = $this->db->error(); return $error["code"];}
 	}
 }

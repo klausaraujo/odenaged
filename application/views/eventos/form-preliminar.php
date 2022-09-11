@@ -1,3 +1,12 @@
+<? 
+	$dtz = new DateTimeZone("America/Lima");
+	$dt = new DateTime("now", $dtz);
+	$fechaActual = $dt->format("Y-m-d");
+	$hora = $dt->format("H:i:s");
+	//$fechaActual = str_replace("-","/",$fechaActual);
+	//echo $fechaActual;
+?>
+
 <style>
 .table th, td{text-align:center;align-items:center;justify-content:center}
 .table td{text-align:left}
@@ -11,14 +20,6 @@
 			<input type="hidden" id="informe" value="" />
 			<div class="row">
 				<div class="col-sm-12">
-				<? 
-					$dtz = new DateTimeZone("America/Lima");
-					$dt = new DateTime("now", $dtz);
-					$fechaActual = $dt->format("Y-m-d");
-					$hora = $dt->format("H:i:s");
-					//$fechaActual = str_replace("-","/",$fechaActual);
-					//echo $fechaActual;
-				?>
 					<div class="iq-card px-3">
 						<div class="iq-card-header d-flex justify-content-between">
 							<div class="iq-header-title"><h4>Datos Preliminares de la Emergencia</h4></div>

@@ -4,27 +4,31 @@
   padding:0;
   margin: 3px;
   background: url("checktree_icon.png") no-repeat;
-  border-radius:3px;
+  width:14px; height:14px;
 }
-.checkbox{ width:12px; height:16px; }
-.collapsible{ width:14px; height:18px; }
+.checkbox{ border-radius:3px; }
+.collapsible{ border-radius:6px; }
 .loading {
   width: 16px;
-  height: 18px;
+  height: 16px;
   cursor: pointer;
   float: left;
   padding:0;
   margin: 3px;
   background: url("loading.gif") no-repeat;
-  background-position: -2 -2px;
+  background-position: 0 0px;
   /*border-radius:5px;*/
 }
 .jstreecont { border-radius: 15px;box-shadow:5px 3px 10px 3px #000;padding:25px;margin:auto;background-color:aliceblue/*seashell*/;color:#000/*firebrick*/;height:500px;overflow-y:scroll; }
-.unchecked { background-position: -2px -2px; }
-.checked { background-position: -18px -2px; }
-.mid-checked { background-position: -34px -2px; }
-.exp { background-position: 0 -20px; }/* + */
-.colap { background-position: -14px -20px; }/* - */
+/*Checkboxes*/
+.unchecked { background-position: -1px -4px; }
+.checked { background-position: -17px -4px; }
+.mid-checked { background-position: -33px -4px; }
+.ddbb { background-position: -33px -21px; }
+/*Collapsible*/
+.exp { background-position: 0 -22px; }/* + */
+.colap { background-position: -14px -22px; }/* - */
+/*Contenedor y lista*/
 .root { margin: 0; padding: 0 }
 .root li { list-style:none; margin-bottom:5px; }
 .root li ul {/*position:relative;*/top:50px; left: 10px; /*float:left;*/ }

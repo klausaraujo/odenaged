@@ -95,7 +95,7 @@
 			const ie = [{'CEN_EDU':'inst. educativa','descripcion':'descripcion','fecha':'fecha'}];
 			const ieUB = [{'CEN_EDU':'institucion educativa','COD_MOD':'cod. mod','CODLOCAL':'cod. local','D_NIV_MOD':'nivel'}];
 			const comp = [{'version':'version','fecha_apertura':'fecha apertura'}];
-			table = tablePersonalized('#tablaEvento',headers,lista[0]);
+			table = tablePersonalized('#tablaEvento',headers,lista);
 			tableDanio = tableComp('#tableDanio',danio,datos); tableAccion = tableComp('#tableAccion',accion,datos);
 			tableFotos = tableComp('#tableFotos',foto,datos,'foto'); tableIEF = tableComp('#tableIE',ie,datos);
 			tableIEUbigeo = tableIE('#tableIEUbigeo',ieUB,datos); tabComp = tablePersonalized('#tableComp',comp,datos,'complementario');

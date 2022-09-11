@@ -9,8 +9,8 @@ class General {
 	private $c = 0;
 	
 	#Funcion para guardar la imagen del mapa segun las coordenadas
-	public function saveImageMap($path,$image,$lat,$lng,$zoom){
-		$url = "https://maps.googleapis.com/maps/api/staticmap?language=es&center=" . trim($lat) ."," . trim($lng) . "&markers=color:red|label:|" . trim($lat) . "," . trim($lng) . "&zoom=" . $zoom . "&size=596x280&key=AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc";
+	/*public function saveImageMap($path,$image,$lat,$lng,$zoom){
+		$url = "https://maps.googleapis.com/maps/api/staticmap?language=es&center=".trim($lat).",".trim($lng)."&markers=color:red|label:|".trim($lat).",".trim($lng)."&zoom=".$zoom."&size=596x280&key=AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc";
 		if(!file_exists($path)){
 			$parts = explode('/', $path);
 			array_pop($parts);
@@ -18,11 +18,11 @@ class General {
 			if( !is_dir( $dir ) )
 				mkdir( $dir, 0777, true );
 		}
-		if(!file_put_contents($path . $image, file_get_contents($url)) > 0)
+		if(!file_put_contents($path.$image, file_get_contents($url)) > 0)
 			$image = '';
 		
 		return $image;
-	}
+	}*/
 	
 	public function saveImage($path,$data){
 		$this->c++;
@@ -65,9 +65,36 @@ class General {
 
         curl_close($handler);
 
-        return $data;
+        return ($data)?$data : '';
     }
+	
+	public function guardarMapaCurl($path,$image,$lat,$lng,$zoom)
+	{
+		$url = "https://maps.googleapis.com/maps/api/staticmap?language=es&center=".trim($lat).",".trim($lng)."&markers=color:red|label:|".trim($lat).",".trim($lng)."&zoom=".$zoom."&size=596x280&key=AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc";
 
+		if(!file_exists($path)){
+			$parts = explode('/', $path);
+			array_pop($parts);
+			$dir = implode( '/', $parts );
+			if( !is_dir( $dir ) ) mkdir( $dir, 0777, true );
+		}
+		
+		$ch = curl_init();
+		$fp = fopen($path.$image, 'wb');
+		curl_setopt($ch, CURLOPT_URL, trim($url));
+		curl_setopt($ch, CURLOPT_VERBOSE, 1);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_AUTOREFERER, false);
+		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+		curl_setopt($ch, CURLOPT_FILE, $fp);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // <-- don't forget this
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); // <-- and this
+		$result = curl_exec($ch);
+		curl_close($ch);
+		//fwrite($fp, $result);
+		fclose($fp);
+		
+		return(($result === true)? $image : '');
+	}
 }
-
-?>

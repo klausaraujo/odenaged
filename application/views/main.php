@@ -1,7 +1,6 @@
 <?php
-if (!isset($_SESSION['usuario'])) {
-	header("location:" . base_url() . "login");
-}
+if (!isset($_SESSION['usuario'])) { header("location:" . base_url() . "login"); }
+date_default_timezone_set("America/Lima");
 ?>
 <!doctype html>
 <html lang="en">

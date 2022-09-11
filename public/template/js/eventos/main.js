@@ -125,18 +125,13 @@ function main(map) {
 				},
 				success: function (data) {
 					//console.log(data);
-					var $message = "";
+					var $message = data.mensaje;;
 					//$('#message').switchClass('succes', 'warn');
 					
-					if (parseInt(data.status) == 200){ $('#message').switchClass('warn', 'succes'); $message = 'Evento registrado exitosamente'; }
-					else { $message = 'No se pudo registrar el Evento'; }
+					if (parseInt(data.status) === 200) $('#message').switchClass('warn', 'succes');
 					
 					setTimeout(function () { $('#cargando').hide(); $("#message").html($message); $("#message").show() }, 300);
-					if (parseInt(data.status) == 200){
-						setTimeout(function () {
-							ocultarElem(true);
-						}, 1000);
-					}
+					if (parseInt(data.status) === 200) setTimeout(function(){ ocultarElem(true); }, 1000);
 				}
 			}).fail( function( jqXHR, textStatus, errorThrown ) {
 				// Un callback .fail()
@@ -174,24 +169,34 @@ function main(map) {
         var dpto = $("#region").val();
 		var prov = $("#provincia").val();
         if (id.length > 0) {
-          $.ajax({
-            data: { dpto: dpto, prov: prov, dtto: id },
-            url: path + "cargarLatLng",
-            method: "POST",
-            dataType: "json",
-            beforeSend: function () {
-              //$("#distrito").html('<option value="">Cargando...</option>');
-            },
-            success: function (data) {
-				//console.log(data);
-				const {ubigeo} = data;
-				var opt = {lat: parseFloat(ubigeo[0].latitud), lng: parseFloat(ubigeo[0].longitud), zoom: 16};
-				//console.log(map.getZoom());
-				map.setCenter(opt);
-				if($('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 0) $('.ajaxMap').show();
-            }
-          });
-        }
+			$.ajax({
+				data: { dpto: dpto, prov: prov, dtto: id },
+				url: path + "cargarLatLng",
+				method: "POST",
+				dataType: "json",
+				beforeSend: function () {
+				  //$("#distrito").html('<option value="">Cargando...</option>');
+				},
+				success: function (data) {
+					//console.log(data);
+					const {ubigeo} = data;
+					var opt = {lat: parseFloat(ubigeo[0].latitud), lng: parseFloat(ubigeo[0].longitud), zoom: 16};
+					//console.log(map.getZoom());
+					map.setCenter(opt);
+					if($('.ajaxMap').css('display') == 'none' || $('.ajaxMap').css('opacity') == 0) $('.ajaxMap').show();
+					/*$.ajax({
+						data: {lat: parseFloat(ubigeo[0].latitud), lng: parseFloat(ubigeo[0].longitud), zoom: 16},
+						url: 'urlCurl',
+						method: "POST",
+						dataType: "json",
+						beforeSend: function () {},
+						success: function (data) {
+							console.log(data);
+						}
+					});*/
+				}
+			});
+		}
     });
 	
 	$('#evento').change(function(){

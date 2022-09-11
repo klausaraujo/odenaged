@@ -1,10 +1,8 @@
 <?
-date_default_timezone_set("America/Lima");
 $anio = $this->session->userdata('anio');
 $mes = $this->session->userdata('mes');
 if(null !== $zonas){
 ?>
-
 		<div class="col-xl-12 col-md-12">
 			<div class="ajaxForm" style="display:none"><?php $this->load->view("eventos/form-new"); ?></div>
 			<div class="ajaxTable">
@@ -17,7 +15,7 @@ if(null !== $zonas){
 							<select class="form-control col-sm-2 mx-2" name="anio" id="anio">
 							<?if(!empty($anio)){
 								foreach($anio as $row):?>
-									<option value="<?=$row->anio?>" <?=($row->anio == strftime('%Y'))? 'selected': ''?> ><?=$row->anio?></option>;
+									<option value="<?=$row->anio?>" <?=($row->anio === strftime('%Y'))? 'selected': ''?> ><?=$row->anio?></option>;
 							<? 	endforeach;
 							  }else{ echo '<option value="">-- Seleccione --</option>'; }
 							?>
@@ -25,7 +23,7 @@ if(null !== $zonas){
 							<select class="form-control col-sm-2 mx-2" name="mes" id="mes">
 							<?if(!empty($mes)){
 								foreach($mes as $row):?>
-									<option value="<?=$row->mes?>" <?=(intval($row->idmes) == date('n'))? 'selected': ''?> ><?=$row->mes?></option>;
+									<option value="<?=$row->mes?>" <?=($row->idmes === date('n'))? 'selected': ''?> ><?=$row->mes?></option>;
 							<? 	endforeach;
 							  }else{ echo '<option value="">-- Seleccione --</option>'; }
 							?>
@@ -34,7 +32,8 @@ if(null !== $zonas){
 						<br>
 						<div class="container-fluid">
 							<div class="row">
-								<div class="col-sm-12 mx-auto" style="overflow-x:scroll"><!--align-items-center text-center-->
+								<div class="table-responsive mx-auto" style="overflow-x:scroll">
+								<!--<div class="col-sm-12 mx-auto" style="overflow-x:scroll"><!--align-items-center text-center-->
 									<table id="tablaEvento" class="table table-striped dt-responsive table-bordered display nowrap table-hover mb-0"></table>
 								</div>
 							</div>

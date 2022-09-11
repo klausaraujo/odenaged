@@ -7,7 +7,7 @@ $(document).ready(function(){
 		else if($(this).hasClass('exp')){ if(ul.length > 0){ ul.show(); remAdd($(this),'collapsible colap');}else remAdd($(this),'loading'); }
 		
 		/*Botones de check*/
-		else if($(this).hasClass('unchecked') || $(this).hasClass('mid-checked')){
+		else if($(this).hasClass('unchecked') || $(this).hasClass('mid-checked') || $(this).hasClass('ddbb')){
 			remAdd($(this),'checkbox checked');
 			$(this).parents('ul').each(function(){
 				ul = $(this); let checks = ul.find('.unchecked'), checkPad = ul.prev();

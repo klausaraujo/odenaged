@@ -2,9 +2,8 @@
 $sombrabtn = 'box-shadow: 2px 2px 0px 0px rgba(142, 173, 255,5)';
 $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1 py-0" title="Asignar Permisos" data-toggle="modal"
 				style="'.$sombrabtn.'" data-target="#permisosModal"><i class="fa fa-lock" aria-hidden="true"></i></button>';
-?>	
-
-	<div class="container-fluid">
+?>
+		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="iq-card px-3">
@@ -21,8 +20,9 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 									</button>
 								</div><?}?>
 								<div class="col-sm-12">
-									<div class="table-responsive">
-										<table id="tablaUsuarios" class="table dt-responsive table-bordered display nowrap table-hover px-0 mx-auto" style="100%">
+									<div class="row justify-content-center" style="fontweight:bold;font-size:18px"><span class="mesg" style="display:none"></span></div>
+									<div class="table-responsive mx-auto" style="overflow-x:scroll">
+										<table id="tablaUsuarios" class="table dt-responsive table-bordered display nowrap table-hover px-0 mx-auto" style="display:none">
 											<thead class="text-center"><tr><th>Acciones</th><th style="visibility:collapse; display:none;">Id</th><th>DNI</th><th>Avatar</th><th>Apellidos</th>
 													<th>Nombres</th><th>Usuario</th><th>Perfil</th><th>Estado</th></tr>
 											</thead>
@@ -46,20 +46,24 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 								</div>
 							</div>
 							<div class="row nuevoAjax" style="display:none">
-								<form id="formUsuarios" name="formUsuarios" class="col-12" method="POST" action="<?=base_url()?>regusuario" autocomplete="off" enctype="multipart/form-data">
+								<form id="formUsuarios" name="formUsuarios" class="col-12" method="POST" action="regusuario" autocomplete="off" enctype="multipart/form-data">
 									<div >
 										<div class="row mx-auto">
 											<div class="col-md-4">
 												<div class="form-group">
-													<label class="">Usuario</label>
-													<input type="text" class="form-control text-lowercase" name="usuario" autocomplete="off"/>
+													<label for="tipodoc">Tipo de Documento</label>
+													<select class="form-control" id="tipodoc" name="tipodoc">
+														<option value="">-- Seleccione --</option>
+														<option value="01">DNI</option>
+														<option value="03">CARNET DE EXTRANJER&Iacute;A</option>
+													</select>
 												</div>
 											</div>
 											<div class="col-md-4">
 												<div class="form-group">
 													<label class="">DNI</label>
 													<div class="input-group group-dni">
-														<input type="text" class="form-control" maxlength="8" minlength="8" name="dni" id="dni" autocomplete="off">
+														<input type="text" class="form-control" maxlength="9" minlength="8" name="dni" id="dni" autocomplete="off">
 														<span class="input-group-btn col-sm-2">
 															<button type="button" class="btn btn-info btn_curl"><i class="fa fa-search" aria-hidden="true"></i></button>
 														</span>
@@ -82,6 +86,12 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 											</div>
 										</div>
 										<div class="row mx-auto">
+											<div class="col-md-4">
+												<div class="form-group">
+													<label class="">Usuario</label>
+													<input type="text" class="form-control text-lowercase" name="usuario" autocomplete="off"/>
+												</div>
+											</div>
 											<div class="col-md-4">
 												<div class="form-group">
 													<label class="">Perfil</label>
@@ -113,7 +123,6 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 		
 		<div class="modal fade" id="permisosModal" tabindex="-1" role="dialog" aria-labelledby="activateModal">
             <div class="modal-dialog modal-lg" role="document">
-				<input type="hidden" id="hIdUsuario" value="" />
                 <div class="modal-content">
                     <div class="modal-header">
 						<h6 class="modal-title">Otorgar Permisos</h6>
@@ -121,6 +130,18 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
                     </div>
                     <div class="modal-body">
 						<input type="hidden" id="idusuarioPermiso" />
+						<div class="row mx-1" style="align-items:center">
+								<label for="apPermisos" class="col-sm-3 mb-2">Apellidos:</label>
+								<input type="text" class="form-control text-uppercase col-sm-4 mb-2" name="apPermisos" id="apPermisos" autocomplete="off" readonly />
+							</div>
+							<div class="row mx-1" style="align-items:center">
+								<label for="nmPermisos" class="col-sm-3 mb-2">Nombres:</label>
+								<input type="text" class="form-control text-uppercase col-sm-4 mb-2" name="nmPermisos" id="nmPermisos" autocomplete="off" readonly />
+							</div>
+							<div class="row mx-1" style="align-items:center">
+								<label for="lgPermisos" class="col-sm-3 mb-4">Usuario (Login):</label>
+								<input type="text" class="form-control text-uppercase col-sm-4 mb-4" name="lgPermisos" id="lgPermisos" autocomplete="off" readonly />
+							</div>
 						<div class="row col-sm-12">
 							<div class="container jtree">
 								<div class="row">
@@ -142,7 +163,7 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 						</div>
 						<div class="modal-footer">
 							<div class="row col-sm-12">
-								<button class="btn btn-sirese mx-3" id="btnPermisos">Guardar</button>
+								<button class="btn btn-sirese mx-3" id="btnPermisos" data-dismiss="modal">Guardar</button>
 								<button class="btn btn-sirese" id="btnCancelPer" name="btnCancelPer" data-dismiss="modal" aria-label="Close">Retornar</button>
 							</div>
 						</div>

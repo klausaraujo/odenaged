@@ -5,21 +5,11 @@ if (! defined("BASEPATH"))
 class Login extends CI_Controller
 {
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    public function __construct(){ parent::__construct(); }
 
-    public function index()
-    {
-		if ($this->session->userdata("usuario")) $this->load->view('main');
-        else header("location:" . base_url() . "login");
-    }
+    public function index(){ if ($this->session->userdata("usuario")) $this->load->view('main'); else header("location:" . base_url() . "login"); }
 
-    public function login()
-    {
-        $this->load->view("login");
-    }
+    public function login(){ $this->load->view("login"); }
     
     public function doLogin()
     {
@@ -95,7 +85,7 @@ class Login extends CI_Controller
 			
 			#Trae el ubigeo del usuario
             $this->Ubigeo_model->setIdUser($row->idusuario);
-			$dptos = $this->Ubigeo_model->dptos(); $ubigeo = (Object)[]; $i = 0; $j = 0;
+			$dptos = $this->Ubigeo_model->depUser(); $ubigeo = (Object)[]; $i = 0; $j = 0;
 			
 			if( $dptos->num_rows() > 0 ){
 				$dptos = $dptos->result();
@@ -103,7 +93,7 @@ class Login extends CI_Controller
 					if($i === 0){
 						$this->Ubigeo_model->setIdDpto($dpto->cod_dep);
 						$ubigeo->cod_dep = $dpto->cod_dep;
-						$prov = $this->Ubigeo_model->prov();
+						$prov = $this->Ubigeo_model->proUser();
 						if( $prov->num_rows() > 0 ){
 							$prov = $prov->result();
 							foreach($prov as $pro):
@@ -146,7 +136,7 @@ class Login extends CI_Controller
                 header("location:" . base_url() . "login");
 				exit();
             }
-            */
+            
             $this->Usuario_model->setNombres($row->nombre);
             $this->Usuario_model->setactivo(1);
             /*$resultChat = $this->Usuario_model->actualizar_chat();

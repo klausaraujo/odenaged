@@ -10,10 +10,12 @@ function main(){
 			let ul = $(this).closest('li').children('ul');
 			if(ul.length === 0){
 				let el = $(this).closest('li'), id = el.attr('id'), tree = $(this).attr('data-tree'), p = $(this), chek = $(this).next();
+				let idusuario = $('#idusuarioPermiso').val(), dpto = $(this).parents('.dep').attr('id');
+				console.log(dpto);
 				$.ajax({
 					type: 'POST',
 					url: path + 'buscaDRE',
-					data: { id:id, tree:tree, check:(chek.hasClass('checked'))? 1 : 0 },
+					data: { id:id, tree:tree, check:(chek.hasClass('checked'))? 1 : 0,idusuario:idusuario,dpto:dpto },
 					dataType: 'json',
 					success: function (data){
 						const { tree } = data; el.find('.niveles').remove(); el.append(tree); p.prop('class','collapsible colap');
@@ -22,6 +24,65 @@ function main(){
 			}
 		};
 	});
+	
+	$('#btnPermisos').bind('click', function(e){
+		/*let evt = e || e.target;
+		evt.preventDefault();*/
+		let dep = $('.dep').children('.checkbox'), dre = $('.dre').children('.checkbox'), ugel = $('.ugel').children('.checkbox');
+		let dptos = [], dres = [], ugels = [], provs = [], i = 0, idusuario = $('#idusuarioPermiso').val(), detalleprov = {};
+		
+		if(dep.length > 0){ dep.each(function(){ if($(this).hasClass('checked') || $(this).hasClass('mid-checked') || $(this).hasClass('ddbb'))
+												{ dptos[i] = $(this).attr('data-check'); i++; } }); }
+		if(dre.length > 0){ i= 0; dre.each(function(){ if($(this).hasClass('checked') || $(this).hasClass('mid-checked') || $(this).hasClass('ddbb'))
+												{ dres[i] = { dres:$(this).attr('data-check'), dep:$(this).attr('data-dep') }; i++; } }); }
+		if(ugel.length > 0){ i= 0; ugel.each(function(){ if($(this).hasClass('checked') || $(this).hasClass('mid-checked') || $(this).hasClass('ddbb'))
+												{ ugels[i] = { ugel:$(this).attr('data-check'), dep:$(this).attr('data-dep') }; i++; } }); }
+		
+		//console.log(dptos+'  '+dres+'  '+ugels+'  '+provs);
+		
+		if(dptos.length > 0 || dres.length > 0 || ugels.length > 0 || provs.length > 0){
+			dptos = JSON.stringify(dptos); dres = JSON.stringify(dres); ugels = JSON.stringify(ugels); provs = JSON.stringify(provs);
+			$.ajax({
+				type: 'POST',
+				url: path + 'permisos',
+				data: {dptos:dptos,dres:dres,ugels:ugels,provs:provs,idusuario:idusuario},
+				dataType: 'json',
+				success: function (data) {
+					console.log(data);
+					if(data.status === 200) $('.mesg').attr('class','mesg text-success');
+					else $('.mesg').attr('class','mesg text-danger');
+					$('.mesg').html(data.msg); $('.mesg').show();
+				}
+			}).fail( function( jqXHR, textStatus, errorThrown ) { alert(jqXHR + ",  " + textStatus + ",  " + errorThrown); });
+		}else alert('Debe elegir alguna Región');
+	});
+	
+	$('#permisosModal').on('show.bs.modal',function(e){
+		let evt = e || e.target, boton = $(evt.relatedTarget), tab = boton.closest('table').attr('id');
+		let idusuario = $('#'+tab).dataTable().api().row($(boton).parents("tr")).data()[1], apell = $('#'+tab).dataTable().api().row($(boton).parents("tr")).data()[4];
+		let nomb = $('#'+tab).dataTable().api().row($(boton).parents("tr")).data()[5], user = $('#'+tab).dataTable().api().row($(boton).parents("tr")).data()[6];
+		
+		$('#apPermisos').val(apell), $('#nmPermisos').val(nomb), $('#lgPermisos').val(user);
+		//console.log());
+		//console.log(tab.row($(boton).parents("tr")).data());
+		$.ajax({
+			type: 'POST',
+			url: path + 'buscaRegion',
+			data: {idusuario:idusuario},
+			dataType: 'json',
+			success: function (data) {
+				console.log(data);
+				const { tree } = data; $('#jstree').html(tree); $('#idusuarioPermiso').val(idusuario); $('#jstree').animate({ scrollTop: 0 }, 'fast');
+			}
+		}).fail( function( jqXHR, textStatus, errorThrown ) { alert(jqXHR + ",  " + textStatus + ",  " + errorThrown); });
+	});
+	
+	$('#permisosModal').on('hidden.bs.modal',function(e){
+		$('#jstree').find('.checkbox').attr('class','checkbox unchecked');
+		$('body,html').animate({ scrollTop: 0 }, 'fast');
+		setTimeout(function () { if(!$('.mesg').css('display') == 'none' || $('.mesg').css('opacity') == 1) $('.mesg').hide('slow'); }, 3000);
+	});
+	
 	
 	function ocultar(on){
 		$('html, body').animate({ scrollTop: 0 }, 'fast');
@@ -38,48 +99,7 @@ function main(){
 	}
 	
 	function resetForm(){ $("#formUsuarios")[0].reset();$("#formUsuarios select").prop('selectedIndex',0); }
-	
-	$('#btnPermisos').bind('click', function(e){
-		/*let evt = e || e.target;
-		evt.preventDefault();*/
-		let dep = $('.dep').children('.checkbox'), dre = $('.dre').children('.checkbox'), ugel = $('.ugel').children('.checkbox'), prov = $('.prov').children('.checkbox');
-		let dptos = [], dres = [], ugels = [], provs = [], i = 0, idusuario = $('#idusuarioPermiso').val();
 		
-		if(dep.length > 0){ dep.each(function(){ if($(this).hasClass('checked') || $(this).hasClass('mid-checked')){ dptos[i] = $(this).attr('data-check'); i++; } }); }
-		if(dre.length > 0){ i= 0; dre.each(function(){ if($(this).hasClass('checked') || $(this).hasClass('mid-checked')){ dres[i] = $(this).attr('data-check'); i++; } }); }
-		if(ugel.length > 0){ i= 0; ugel.each(function(){ if($(this).hasClass('checked') || $(this).hasClass('mid-checked')){ ugels[i] = $(this).attr('data-check'); i++; } }); }
-		if(prov.length > 0){ i= 0; prov.each(function(){ if($(this).hasClass('checked') || $(this).hasClass('mid-checked')){ provs[i] = $(this).attr('data-check'); i++; } }); }
-		
-		console.log(dptos+'  '+dres+'  '+ugels+'  '+provs);
-		
-		if(dptos.length > 0 || dres.length > 0 || ugels.length > 0 || provs.length > 0){
-			dptos = JSON.stringify(dptos); dres = JSON.stringify(dres); ugels = JSON.stringify(ugels); provs = JSON.stringify(provs);
-			$.ajax({
-				type: 'POST',
-				url: path + 'permisos',
-				data: {dptos:dptos,dres:dres,ugels:ugels,provs:provs,idusuario:idusuario},
-				dataType: 'json',
-				success: function (data) {
-					console.log(data);
-				}
-			}).fail( function( jqXHR, textStatus, errorThrown ) { alert(jqXHR + ",  " + textStatus + ",  " + errorThrown); });
-		}
-	});
-	
-	$('#permisosModal').on('show.bs.modal',function(e){
-		let evt = e || e.target, boton = $(evt.relatedTarget), tab = boton.closest('table').attr('id');
-		let idusuario = $('#'+tab).dataTable().api().row($(boton).parents("tr")).data()[1];
-		//console.log());
-		//console.log(tab.row($(boton).parents("tr")).data());
-		$.ajax({
-			type: 'POST',
-			url: path + 'buscaRegion',
-			data: {idusuario:idusuario},
-			dataType: 'json',
-			success: function (data) { const { tree } = data; $('#jstree').html(tree); $('#idusuarioPermiso').val(idusuario); $('#jstree').animate({ scrollTop: 0 }, 'fast'); }
-		}).fail( function( jqXHR, textStatus, errorThrown ) { alert(jqXHR + ",  " + textStatus + ",  " + errorThrown); });
-	});
-	
 	$("#formUsuarios").validate({
 		rules: {
 			usuario: { required: function () { if ($("#usuario").css("display") != "none") return true; else return false; } },
@@ -143,26 +163,31 @@ function main(){
 	upload.bind('click',function(e){ file.trigger('click'); });
 	
 	curl.bind('click',function(){
-		let dni = $('#dni').val();
-		if(dni !== ''){
-			if(dni.length === 8){
-				$.ajax({
-					data: {type: '01',dni: $('#dni').val()},
-					url: path + 'curl',
-					method: "POST",
-					dataType: "json",
-					beforeSend: function () { curl.html('<i class="fa fa-spinner fa-pulse"></i>'); },
-					success: function (data) {
-						curl.html('<i class="fa fa-search aria-hidden="true"></i>');
+		let dni = $('#dni').val(), doc = $('#tipodoc').val();
+		if(dni !== '' && doc !== ''){
+			if(dni.length !== 8 && doc === '01'){ alert('Debe ingresar un DNI válido'); $('#dni').focus(); return}
+			$.ajax({
+				data: {type: doc,dni: dni},
+				url: path + 'curl',
+				method: "POST",
+				dataType: "json",
+				error: function (xhr) { curl.removeAttr("disabled"); curl.html('<i class="fa fa-search aria-hidden="true"></i>'); },
+				beforeSend: function () { curl.html('<i class="fa fa-spinner fa-pulse"></i>'); curl.attr('disabled', 'disabled'); },
+				success: function (data) {
+					curl.html('<i class="fa fa-search aria-hidden="true"></i>');
+					curl.removeAttr("disabled");
+					if(data !== ''){
 						$('#apellidos').val(data.data.attributes.apellido_paterno+' '+data.data.attributes.apellido_materno);
 						$('#nombres').val(data.data.attributes.nombres);
 					}
-				}).fail( function( jqXHR, textStatus, errorThrown ) {//Tambien se activa si da error
-					curl.html('<i class="fa fa-search aria-hidden="true"></i>');
-					alert(jqXHR + ",  " + textStatus + ",  " + errorThrown);
-				});
-			}else{ alert('Debe ingresar un DNI válido'); $('#dni').focus(); }
-		}else{ alert('Debe ingresar un DNI'); $('#dni').focus(); }
+				}
+			}).fail( function( jqXHR, textStatus, errorThrown ) {
+				curl.html('<i class="fa fa-search aria-hidden="true"></i>'); alert(jqXHR + ",  " + textStatus + ",  " + errorThrown);
+			});
+		}else{ 
+			if(doc === ''){ alert('Debe elegir un tipo de Documento'); $('#tipodoc').focus(); }
+			else{ alert('Debe ingresar un DNI'); $('#dni').focus(); }
+		}
 	});
 	
 	file.bind('change',function(){
@@ -202,7 +227,7 @@ function main(){
 	}
 	
 	$(document).ready(function () {
-		if($('#tablaUsuarios')){ tablaUsuarios = $('#tablaUsuarios').DataTable(); tablaUsuarios.columns(1).visible(false);/*console.log($(tablaUsuarios.data()[1][3]))*/}
+		if($('#tablaUsuarios')){ tablaUsuarios = $('#tablaUsuarios').DataTable(); tablaUsuarios.columns(1).visible(false); $('#tablaUsuarios').show(); }
 		
 		$("#formPassword").validate({
 			rules: {
