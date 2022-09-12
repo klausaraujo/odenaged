@@ -91,7 +91,7 @@ $route['permisos'] = 'usuarios/main/permisos';
 $route['regusuario'] = 'usuarios/main/registrar';
 
 # Mapas interactivos
-$route['mapasinteractivos'] = 'main/mapasInteractivos';
+$route['mapas'] = 'main/mapasInteractivos';
 /**/
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

@@ -30,4 +30,3 @@
 			</a>
 		</div>
 	<?php endforeach; ?>
-	<a href="mapasinteractivos">Ver eventos Generales</a>

@@ -32,6 +32,13 @@ class General {
 		$img = base64_decode($base_to_php[1]);
 		$name = date('Ymdhis');
 		$filename = $name.$this->c.'.png';
+		if(!file_exists($path)){
+			$parts = explode('/', $path);
+			array_pop($parts);
+			$dir = implode( '/', $parts );
+			if( !is_dir( $dir ) ) mkdir( $dir, 0777, true );
+		}
+		
 		if(!file_put_contents($path.$filename,$img) > 0)
 			$filename = '';
 		
@@ -40,6 +47,12 @@ class General {
 	public function saveImage1($path,$data,$name){
 		$img = base64_decode($data);
 		$filename = $name;
+		if(!file_exists($path)){
+			$parts = explode('/', $path);
+			array_pop($parts);
+			$dir = implode( '/', $parts );
+			if( !is_dir( $dir ) ) mkdir( $dir, 0777, true );
+		}		
 		if(!file_put_contents($path.$filename,$img) > 0)
 			$filename = '';
 		

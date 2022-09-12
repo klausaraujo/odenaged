@@ -62,7 +62,7 @@ function tablePersonalized(table, headersCols, data, comp){/**/
 		cols = cols.concat(activo);titles = titles.concat([{title: 'Fecha Cierre',targets: j},{title: 'Estado',targets: j + 1}]);
 		botones = '<"row"<"col-sm-6 float-left"l><"col-sm-6 float-right"f>rt>ip';
 		
-	}else{
+	}/*else{
 		mes = [
 			{
 				data: 'mes',
@@ -72,8 +72,8 @@ function tablePersonalized(table, headersCols, data, comp){/**/
 			}
 		];
 		cols = cols.concat(mes);
-		titles.push({title: 'Mes', targets: [j],/* visible: false*/});
-	}
+		titles.push({title: 'Mes', targets: [j], visible: false});
+	}*/
 	
 	//String JSON con su identificador
 	//json = {"data":[{"name":"Tiger Nikon","position":"system"}]};

@@ -118,13 +118,14 @@ class Main extends CI_Controller
 		echo $resp;
 	}
 	public function mapasInteractivos(){
-		$data = array(
+		/*$data = array(
             "tipo" => array(),
             "nivel" => array(),
             "departamentos" => array()
         );
 		
-		$this->load->view("mapas/eventosMonitoreo", $data);
+		$this->load->view("mapas/eventosMonitoreo", $data);*/
+		echo 'Mapas';
 	}
 	
 	/*public function urlCurl() {

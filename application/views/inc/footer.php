@@ -88,7 +88,7 @@
 		
 		window.onload = function(){
 			var opt = {lat: 42.1382114, lng: -71.5212585,zoom: 16}; $('.ajaxMap').hide();
-			const headers = [{'anio_evento':'A&ntilde;o','numero_evento':'nro. evento','nivel':'nivel','tipo_evento':'tipo evento','evento':'evento','ubigeo_descripcion':'ubigeo','estado':'estado'}];
+			const headers = [{'anio_evento':'A&ntilde;o','mes':'Mes','numero_evento':'nro. evento','nivel':'nivel','tipo_evento':'tipo evento','evento':'evento','ubigeo_descripcion':'ubigeo','estado':'estado'}];
 			const danio = [{'tipo_danio':'tipo de da&ntilde;o','cantidad':'cantidad'}];
 			const accion = [{'tipo_accion':'tipo de accion','descripcion':'descripcion','fecha':'fecha'}];
 			const foto = [{'fotografia':'fotografia','descripcion':'descripcion'}];

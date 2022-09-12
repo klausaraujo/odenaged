@@ -20,7 +20,7 @@
 			margin: 0; 
 	    }
 	    input[type=number] { -moz-appearance:textfield; }
-		table.dataTable td {font-size: 0.8rem;}
+		table.dataTable tr, th, td{font-size: 0.8rem;}
 		#message, #cargando{text-align:center}
 		.succes{color:#008F39;font-size:1.1rem}
 		.warn{color:#FF0000;font-size:1.1rem}

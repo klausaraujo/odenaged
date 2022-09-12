@@ -376,7 +376,7 @@ function main(map) {
 	
 	$('#dre').bind('change',function(e){
 		tableIEUbigeo.clear(); tableIEUbigeo.draw(); let iddre = $(this).val();
-		alert(iddre); let optUgel = '<option value="">-- Seleccione --</option>'; 
+		let optUgel = '<option value="">-- Seleccione --</option>'; 
 		$.ajax({
 			data: { iddre: iddre },
 			url: 'buscaUGELPrel',
@@ -393,7 +393,6 @@ function main(map) {
 	});
 	$('#ugel').bind('change',function(e){
 		tableIEUbigeo.clear(); tableIEUbigeo.draw(); let cod_ugel = $(this).val();
-		alert(cod_ugel);
 		$.ajax({
 			data: { idugel: cod_ugel },
 			url: 'buscaIESPrel',
