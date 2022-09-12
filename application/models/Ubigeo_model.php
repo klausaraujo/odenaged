@@ -65,15 +65,7 @@ class Ubigeo_model extends CI_Model
 	public function zonasDRE(){
 		$this->db->select('iddre,codigo_dre,nombre,codigo_region');
 		$this->db->from('dre');
-		$this->db->where('codigo_region', $this->idDpto);
 		$this->db->order_by('codigo_region', 'asc');
-		return $this->db->get();
-	}
-	public function zonasUGEL(){
-		$this->db->select('idugel,iddre,codigo_ugel,nombre');
-		$this->db->from('ugel');
-		$this->db->where('iddre', $this->iddre);
-		$this->db->order_by('iddre', 'asc');
 		return $this->db->get();
 	}
 	public function dreUsuario(){
@@ -83,6 +75,13 @@ class Ubigeo_model extends CI_Model
 		$this->db->order_by('iddre', 'asc');
 		return $this->db->get();
     }
+	public function zonasUGEL(){
+		$this->db->select('idugel,iddre,codigo_ugel,nombre');
+		$this->db->from('ugel');
+		$this->db->where('iddre', $this->iddre);
+		$this->db->order_by('iddre', 'asc');
+		return $this->db->get();
+	}	
 	public function ugelUsuario(){
 		$this->db->select('idugel');
 		$this->db->from('usuarios_ugel');
@@ -106,5 +105,22 @@ class Ubigeo_model extends CI_Model
 		$this->db->where('provincia', $this->idProv);
 		$this->db->limit(1);
 		return $this->db->count_all_results();
+	}
+	public function buscaIEDre(){
+		$this->db->distinct();
+		$this->db->select('iddre,dre,codigo_dre');
+		$this->db->from('acceso_usuarios_dre_ugeles_ubigeos');
+		$this->db->where('idusuario', $this->idUser);
+		$this->db->where('cod_dep', $this->idDpto);
+		$this->db->order_by('iddre', 'asc');
+		return $this->db->get();
+	}
+	public function buscaIEUgel(){
+		$this->db->distinct();
+		$this->db->select('idugel,codigo_ugel,ugel');
+		$this->db->from('acceso_usuarios_dre_ugeles_ubigeos');
+		$this->db->where('iddre', $this->iddre);
+		$this->db->order_by('idugel', 'asc');
+		return $this->db->get();
 	}
 }

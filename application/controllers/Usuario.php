@@ -16,17 +16,13 @@ class Usuario extends CI_Controller
 		$this->path = $_SERVER["DOCUMENT_ROOT"].'/odenaged/';
     }
 
-    public function index()
-    {
-		
-    }
-	public function perfil()
-    {
-        $this->load->view('main');
-    }
+    public function index(){ }
+	
+	public function perfil(){ $this->load->view('main'); }
+	
 	public function uploadIMG(){
-		$this->load->library('general');
-		$this->load->model("Usuario_model");
+		$this->load->library('general'); $this->load->model("Usuario_model");
+		
 		$src = $this->input->post('src'); $img = ''; $status = 500; $msg = '';
 		$ubi = $this->path.'public/images/perfil_usuarios/';
 		

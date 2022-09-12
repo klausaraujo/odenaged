@@ -83,8 +83,8 @@ $route['informe'] = 'eventos/informes/informe';
 $route['perfil'] = 'usuario/perfil';
 $route['uploadIMG'] = 'usuario/uploadIMG';
 $route['pass'] = 'usuario/password';
-$route['buscaRegion'] = 'usuarios/main/buscaRegiones';
 $route['buscaDRE'] = 'usuarios/main/buscaDRE';
+$route['buscaUGEL'] = 'usuarios/main/buscaUGEL';
 $route['permisos'] = 'usuarios/main/permisos';
 $route['regusuario'] = 'usuarios/main/registrar';
 

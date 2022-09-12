@@ -9,13 +9,11 @@ function main(){
 		else if($(this).hasClass('loading')){
 			let ul = $(this).closest('li').children('ul');
 			if(ul.length === 0){
-				let el = $(this).closest('li'), id = el.attr('id'), tree = $(this).attr('data-tree'), p = $(this), chek = $(this).next();
-				let idusuario = $('#idusuarioPermiso').val(), dpto = $(this).parents('.dep').attr('id');
-				console.log(dpto);
+				let el = $(this).closest('li'), id = el.attr('id'), chek = $(this).next(), idusuario = $('#idusuarioPermiso').val(), p = $(this);
 				$.ajax({
 					type: 'POST',
-					url: path + 'buscaDRE',
-					data: { id:id, tree:tree, check:(chek.hasClass('checked'))? 1 : 0,idusuario:idusuario,dpto:dpto },
+					url: path + 'buscaUGEL',
+					data: { id:id, check:(chek.hasClass('checked'))? 1 : 0,idusuario:idusuario },
 					dataType: 'json',
 					success: function (data){
 						const { tree } = data; el.find('.niveles').remove(); el.append(tree); p.prop('class','collapsible colap');
@@ -28,51 +26,52 @@ function main(){
 	$('#btnPermisos').bind('click', function(e){
 		/*let evt = e || e.target;
 		evt.preventDefault();*/
-		let dep = $('.dep').children('.checkbox'), dre = $('.dre').children('.checkbox'), ugel = $('.ugel').children('.checkbox');
-		let dptos = [], dres = [], ugels = [], provs = [], i = 0, idusuario = $('#idusuarioPermiso').val(), detalleprov = {};
+		let dre = $('.dre').children('.checkbox'), ugel = $('.ugel').children('.checkbox'), dres = [], ugels = [], i = 0, idusuario = $('#idusuarioPermiso').val();
 		
-		if(dep.length > 0){ dep.each(function(){ if($(this).hasClass('checked') || $(this).hasClass('mid-checked') || $(this).hasClass('ddbb'))
-												{ dptos[i] = $(this).attr('data-check'); i++; } }); }
 		if(dre.length > 0){ i= 0; dre.each(function(){ if($(this).hasClass('checked') || $(this).hasClass('mid-checked') || $(this).hasClass('ddbb'))
-												{ dres[i] = { dres:$(this).attr('data-check'), dep:$(this).attr('data-dep') }; i++; } }); }
+												{ dres[i] = { dres:$(this).attr('data-check') }; i++; } }); }
 		if(ugel.length > 0){ i= 0; ugel.each(function(){ if($(this).hasClass('checked') || $(this).hasClass('mid-checked') || $(this).hasClass('ddbb'))
-												{ ugels[i] = { ugel:$(this).attr('data-check'), dep:$(this).attr('data-dep') }; i++; } }); }
+												{ ugels[i] = { ugel:$(this).attr('data-check'), dre:$(this).attr('data-dre') }; i++; } }); }
 		
 		//console.log(dptos+'  '+dres+'  '+ugels+'  '+provs);
 		
-		if(dptos.length > 0 || dres.length > 0 || ugels.length > 0 || provs.length > 0){
-			dptos = JSON.stringify(dptos); dres = JSON.stringify(dres); ugels = JSON.stringify(ugels); provs = JSON.stringify(provs);
+		if(dres.length > 0 || ugels.length > 0){
+			dres = JSON.stringify(dres); ugels = JSON.stringify(ugels);
 			$.ajax({
 				type: 'POST',
 				url: path + 'permisos',
-				data: {dptos:dptos,dres:dres,ugels:ugels,provs:provs,idusuario:idusuario},
+				data: { dres:dres,ugels:ugels,idusuario:idusuario },
 				dataType: 'json',
+				beforeSend: function(){ $("#loadGuardaPer").show(); },
 				success: function (data) {
-					console.log(data);
+					//console.log(data);
+					$("#loadGuardaPer").hide();
 					if(data.status === 200) $('.mesg').attr('class','mesg text-success');
 					else $('.mesg').attr('class','mesg text-danger');
+					
 					$('.mesg').html(data.msg); $('.mesg').show();
+					$('#permisosModal').modal('hide');
 				}
 			}).fail( function( jqXHR, textStatus, errorThrown ) { alert(jqXHR + ",  " + textStatus + ",  " + errorThrown); });
-		}else alert('Debe elegir alguna Región');
+		}else{ alert('Debe elegir alguna DRE'); $("#loadGuardaPer").hide(); return;}
 	});
 	
 	$('#permisosModal').on('show.bs.modal',function(e){
 		let evt = e || e.target, boton = $(evt.relatedTarget), tab = boton.closest('table').attr('id');
-		let idusuario = $('#'+tab).dataTable().api().row($(boton).parents("tr")).data()[1], apell = $('#'+tab).dataTable().api().row($(boton).parents("tr")).data()[4];
-		let nomb = $('#'+tab).dataTable().api().row($(boton).parents("tr")).data()[5], user = $('#'+tab).dataTable().api().row($(boton).parents("tr")).data()[6];
+		let idusuario = $('#'+tab).dataTable().api().row($(boton).parents("tr")).data()[1], apell = $('#'+tab).dataTable().api().row($(boton).parents("tr")).data()[5];
+		let nomb = $('#'+tab).dataTable().api().row($(boton).parents("tr")).data()[6], user = $('#'+tab).dataTable().api().row($(boton).parents("tr")).data()[7];
 		
-		$('#apPermisos').val(apell), $('#nmPermisos').val(nomb), $('#lgPermisos').val(user);
+		$('#apPermisos').val(apell), $('#nmPermisos').val(nomb), $('#lgPermisos').val(user); $('#idusuarioPermiso').val(idusuario);
 		//console.log());
 		//console.log(tab.row($(boton).parents("tr")).data());
 		$.ajax({
 			type: 'POST',
-			url: path + 'buscaRegion',
+			url: 'buscaDRE',
 			data: {idusuario:idusuario},
 			dataType: 'json',
 			success: function (data) {
-				console.log(data);
-				const { tree } = data; $('#jstree').html(tree); $('#idusuarioPermiso').val(idusuario); $('#jstree').animate({ scrollTop: 0 }, 'fast');
+				//console.log(data);
+				const { tree } = data; $('#jstree').html(tree); $('#jstree').animate({ scrollTop: 0 }, 'fast');
 			}
 		}).fail( function( jqXHR, textStatus, errorThrown ) { alert(jqXHR + ",  " + textStatus + ",  " + errorThrown); });
 	});
@@ -102,16 +101,20 @@ function main(){
 		
 	$("#formUsuarios").validate({
 		rules: {
-			usuario: { required: function () { if ($("#usuario").css("display") != "none") return true; else return false; } },
-			dni: { required: function () { if ($("#dni").css("display") != "none") return true; else return false; } },
+			tipodoc: { required: function () { if ($("#usuario").css("display") != "none") return true; else return false; } },
+			dni: { required: function () { if ($("#dni").css("display") != "none") return true; else return false; }, minlength: 8 },
 			apellidos: { required: function () { if ($("#nivelevento").css("display") != "none") return true; else return false; } },
 			nombres: { required: function () { if ($("#fechaevento").css("display") != "none") return true; else return false; } },
+			usuario: { required: function () { if ($("#usuario").css("display") != "none") return true; else return false; } },
+			codperfil: { required: function () { if ($("#usuario").css("display") != "none") return true; else return false; } },
 		},
 		messages: {
-			usuario: { required : "Campo Requerido" },
-			dni: { required : "Campo Requerido" },
+			tipodoc: { required : "Campo Requerido" },
+			dni: { required : "Campo Requerido", minlength: "Debe ingresar mínimo 8 caracteres" },
 			apellidos: { required : "Campo Requerido" },
 			nombres: { required : "Campo Requerido" },
+			usuario: { required : "Campo Requerido" },
+			codperfil: { required : "Campo Requerido" },
 		},
 		errorPlacement: function (error, element) {
 			if (element.attr("name") == "dni") {
@@ -163,9 +166,14 @@ function main(){
 	upload.bind('click',function(e){ file.trigger('click'); });
 	
 	curl.bind('click',function(){
-		let dni = $('#dni').val(), doc = $('#tipodoc').val();
+		let dni = $('#dni').val(), doc = $('#tipodoc').val(); $('#apellidos').val(''); $('#nombres').val('');
+		
 		if(dni !== '' && doc !== ''){
-			if(dni.length !== 8 && doc === '01'){ alert('Debe ingresar un DNI válido'); $('#dni').focus(); return}
+			if(dni.length < 8){ alert('Debe ingresar un documento válido'); $('#dni').focus(); return}
+			if(doc === '01' && dni.length !== 8){ alert('Debe ingresar un número de DNI válido, 8 caracteres'); $('#dni').focus(); return}
+			if(doc === '04' && dni.length < 9){ alert('Debe ingresar un número de documento válido, 9 caracteres'); $('#dni').focus(); return}
+			if(doc === '04')doc = '0' + (parseInt(doc)-1).toString();
+			
 			$.ajax({
 				data: {type: doc,dni: dni},
 				url: path + 'curl',
@@ -174,19 +182,20 @@ function main(){
 				error: function (xhr) { curl.removeAttr("disabled"); curl.html('<i class="fa fa-search aria-hidden="true"></i>'); },
 				beforeSend: function () { curl.html('<i class="fa fa-spinner fa-pulse"></i>'); curl.attr('disabled', 'disabled'); },
 				success: function (data) {
+					let msg = data.errors? data.errors[0].detail : '';
 					curl.html('<i class="fa fa-search aria-hidden="true"></i>');
 					curl.removeAttr("disabled");
-					if(data !== ''){
+					if(msg === ''){
 						$('#apellidos').val(data.data.attributes.apellido_paterno+' '+data.data.attributes.apellido_materno);
 						$('#nombres').val(data.data.attributes.nombres);
-					}
+					}else alert(msg);
 				}
 			}).fail( function( jqXHR, textStatus, errorThrown ) {
-				curl.html('<i class="fa fa-search aria-hidden="true"></i>'); alert(jqXHR + ",  " + textStatus + ",  " + errorThrown);
+				curl.html('<i class="fa fa-search aria-hidden="true"></i>'); curl.removeAttr("disabled"); alert(jqXHR + ",  " + textStatus + ",  " + errorThrown);
 			});
 		}else{ 
 			if(doc === ''){ alert('Debe elegir un tipo de Documento'); $('#tipodoc').focus(); }
-			else{ alert('Debe ingresar un DNI'); $('#dni').focus(); }
+			else{ alert('Debe ingresar un número de documento válido'); $('#dni').focus(); }
 		}
 	});
 	
@@ -264,8 +273,7 @@ function main(){
 							//createAlert('', '', '  Se cambió la clave correctamente.', 'success', false, true, 'pageMessages');
 
 							//$(".alert-success").removeClass("hide");
-							$(".alert-success span").html(data.message);
-							$("#formPassword")[0].reset();
+							$(".alert-success span").html(data.message); $("#formPassword")[0].reset();
 							setTimeout(function () { $(".alert-success span").html('');/*$(".alert-success").addClass("hide");*/ }, 3000);
 						}
 						else {

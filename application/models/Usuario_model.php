@@ -4,6 +4,7 @@ if (! defined('BASEPATH'))
 class Usuario_model extends CI_Model
 {
     private $id;
+	private $tipoDoc;
     private $usuario;
     private $password;
 	private $idperfil;
@@ -22,6 +23,7 @@ class Usuario_model extends CI_Model
 	
     public function setAnio_Ejecucion($data){ $this->Anio_Ejecucion = $this->db->escape_str($data); }
     public function setId($data){ $this->id = $this->db->escape_str($data); }
+	public function setTipoDoc($data){ $this->tipoDoc = $this->db->escape_str($data); }
     public function setactivo($data){ $this->activo = $this->db->escape_str($data); }
     public function setUsuario($data){ $this->usuario = $this->db->escape_str($data); }
     public function setPassword($data){ $this->password = $this->db->escape_str($data); }
@@ -68,10 +70,10 @@ class Usuario_model extends CI_Model
     }
     public function lista()
     {
-        $this->db->select("u.idusuario,u.dni,u.avatar,u.apellidos,u.nombres,u.usuario,u.passwd,u.idperfil,u.activo,p.perfil");
-        $this->db->from("usuarios u");
-        $this->db->join("perfil p", "u.idperfil=p.idperfil");
-        $this->db->group_by("u.idusuario,u.dni,u.avatar,u.apellidos,u.nombres,u.usuario,u.passwd,u.idperfil,u.activo");
+        $this->db->select('idusuario,u.tipo_dni,u.dni,u.avatar,u.apellidos,u.nombres,u.usuario,u.passwd,u.idperfil,u.activo,p.perfil');
+        $this->db->from('usuarios u');
+        $this->db->join('perfil p', 'u.idperfil = p.idperfil');
+        $this->db->group_by('u.idusuario');
         return $this->db->get();
     }
 	public function validar_password()
@@ -124,14 +126,15 @@ class Usuario_model extends CI_Model
     public function registrar()
     {
         $data = array(
-            "dni" => $this->dni,
-			"avatar" => "user.jpg",
-            "apellidos" => strtoupper($this->apellidos),
-            "nombres" => strtoupper($this->nombres),
+            'dni' => $this->dni,
+			'tipo_dni' => $this->tipoDoc,
+			'avatar' => "user.jpg",
+            'apellidos' => strtoupper($this->apellidos),
+            'nombres' => strtoupper($this->nombres),
 			'usuario' => $this->usuario,
-			"passwd" => sha1($this->dni),
-            "idperfil" => $this->idperfil,
-            "activo" => "1"
+			'passwd' => sha1($this->dni),
+            'idperfil' => $this->idperfil,
+            'activo' => '1'
         );
         if ($this->db->insert('usuarios', $data))
             return true;

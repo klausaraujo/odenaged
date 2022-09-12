@@ -19,27 +19,50 @@ class Informes extends CI_Controller
 		$this->fecha = $dt->format("Y-m-d H:i:s");
     }
 
-    public function index()
-    {
-    }
+    public function index(){ }
 	
 	function preliminar(){
 		//echo $this->input->post('idevento');
-		$this->load->model("Informe_model");
+		$this->load->model("Informe_model"); $this->load->model("Ubigeo_model");
+		$ieDRE = null; $ieUGEL = null; $ieUB = null; $i = 0; $j = 0; $codUgel = ''; $idDre = '';
+		
 		$this->Informe_model->setIdEvento($this->input->post('idevento'));
 		$this->Informe_model->setUbigeo($this->input->post('ubigeo'));
 		$this->Informe_model->setVersion($this->input->post('version'));
+		# DRE y Ugeles
+		$this->Ubigeo_model->setIdUser($this->session->userdata('idusuario'));
+		$this->Ubigeo_model->setIdDpto(substr($this->input->post('ubigeo'),0,2));
+		$ieDRE = $this->Ubigeo_model->buscaIEDre();
+		if($ieDRE->num_rows() > 0){
+			$ieDRE = $ieDRE->result();
+			foreach($ieDRE as $row):
+				if($i === 0){ $idDre = $row->iddre; $i++; }
+			endforeach;
+		}
+		$i = 0;
+		/*if(!$idDre == ''){
+			$this->Ubigeo_model->setIdDre($idDre); $ieUGEL = $this->Ubigeo_model->buscaIEUgel();
+			if($ieUGEL->num_rows() > 0){
+				$ieUGEL = $ieUGEL->result();
+				foreach($ieUGEL as $row):
+					if($i === 0){ $codUgel = $row->codigo_ugel; $i++; }
+				endforeach;
+			}
+		}
+		if(!$codUgel == ''){ $this->Informe_model->setCodUgel($codUgel); $ieUB = $this->Informe_model->buscaIE(); }*/
+		
+		
 		$danio = $this->Informe_model->listaDanio();
 		$accion = $this->Informe_model->listaAccion();
 		$fotos = $this->Informe_model->listaFotos();
 		$ies = $this->Informe_model->listaIE();
-		$ieUB = $this->Informe_model->buscaIE();
+		//$ieUB = $this->Informe_model->buscaIE();
 		
 		($danio->num_rows() > 0)? $danio = json_encode($danio->result()) : $danio = array();
 		($accion->num_rows() > 0)? $accion = json_encode($accion->result()) : $accion = array();
 		($fotos->num_rows() > 0)? $fotos = json_encode($fotos->result()) : $fotos = array();
 		($ies->num_rows() > 0)? $ies = json_encode($ies->result()) : $ies = array();
-		($ieUB->num_rows() > 0)? $ieUB = json_encode($ieUB->result()) : $ieUB = array();
+		//($ieUB->num_rows() > 0)? $ieUB = json_encode($ieUB->result()) : $ieUB = array();
 		$activo = $this->Informe_model->traeEstadoVersion();
 		$activo = ($activo->num_rows() > 0) ? $activo->row() : 1;
 		
@@ -48,10 +71,13 @@ class Informes extends CI_Controller
 			'accion' => $accion,
 			'fotos' => $fotos,
 			'ies' => $ies,
-			'iesUB' => $ieUB,
+			//'iesUB' => $ieUB,
 			'url' => 'public/images/galerias_eventos/',
 			'activo' => $activo,
-			'status' => 200
+			'status' => 200,
+			'dpto' => $ieDRE,
+			'pro' => $ieUGEL,
+			//'ieub' => $ieUB->result(),
 		);
 		echo json_encode($data);
 	}

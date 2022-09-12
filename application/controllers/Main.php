@@ -111,13 +111,11 @@ class Main extends CI_Controller
 		$data = array( 'ubigeo' => ($ubigeo->num_rows() > 0)? $ubigeo->result() : array() );
 		echo json_encode($data);
 	}
-	
 	public function curl(){
 		$this->load->library('general');
 		$tipo = $this->input->post('type'); $doc = $this->input->post('dni');
 		$resp = $this->general->curl($tipo, $doc);
 		echo $resp;
-		//echo $tipo.'  '.$doc;
 	}
 	public function mapasInteractivos(){
 		$data = array(

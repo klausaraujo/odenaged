@@ -20,17 +20,19 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 									</button>
 								</div><?}?>
 								<div class="col-sm-12">
-									<div class="row justify-content-center" style="fontweight:bold;font-size:18px"><span class="mesg" style="display:none"></span></div>
+									<div class="row justify-content-center" style="font-size:18px"><span class="mesg" style="display:none"></span></div>
 									<div class="table-responsive mx-auto" style="overflow-x:scroll">
 										<table id="tablaUsuarios" class="table dt-responsive table-bordered display nowrap table-hover px-0 mx-auto" style="display:none">
-											<thead class="text-center"><tr><th>Acciones</th><th style="visibility:collapse; display:none;">Id</th><th>DNI</th><th>Avatar</th><th>Apellidos</th>
-													<th>Nombres</th><th>Usuario</th><th>Perfil</th><th>Estado</th></tr>
+											<thead class="text-center">
+												<tr><th>Acciones</th><th style="visibility:collapse; display:none;">Id</th><th>Tipo Doc.</th><th>DNI</th>
+												<th>Avatar</th><th>Apellidos</th><th>Nombres</th><th>Usuario</th><th>Perfil</th><th>Estado</th></tr>
 											</thead>
 											<tbody>
 											<? 	foreach($data as $row): ?>
 											<tr>
 												<td class="text-center"><?=$btn_permisos?></td>
 												<td style="visibility:collapse; display:none;"><?=$row->idusuario?></td>
+												<td><?=($row->tipo_dni === '1')? 'DNI' : 'CARNET DE EXTRANJER&Iacute;A';?></td>
 												<td><?=$row->dni?></td>
 												<td><img style="display:block;margin:auto" width="36px" src="<?=base_url()?>public/images/perfil_usuarios/<?=$row->avatar?>"></td>
 												<td><?=$row->apellidos?></td>
@@ -55,7 +57,7 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 													<select class="form-control" id="tipodoc" name="tipodoc">
 														<option value="">-- Seleccione --</option>
 														<option value="01">DNI</option>
-														<option value="03">CARNET DE EXTRANJER&Iacute;A</option>
+														<option value="04">CARNET DE EXTRANJER&Iacute;A</option>
 													</select>
 												</div>
 											</div>
@@ -95,7 +97,7 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 											<div class="col-md-4">
 												<div class="form-group">
 													<label class="">Perfil</label>
-													<select name="codPerfil" class="form-control">
+													<select name="codperfil" id="codperfil" class="form-control">
 														<option value="">--Seleccione--</option>
 											<?		foreach($perfil as $row):	?>
 														<option value="<?=$row->idperfil;?>" ><?=$row->perfil;?></option>
@@ -131,17 +133,17 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
                     <div class="modal-body">
 						<input type="hidden" id="idusuarioPermiso" />
 						<div class="row mx-1" style="align-items:center">
-								<label for="apPermisos" class="col-sm-3 mb-2">Apellidos:</label>
-								<input type="text" class="form-control text-uppercase col-sm-4 mb-2" name="apPermisos" id="apPermisos" autocomplete="off" readonly />
-							</div>
-							<div class="row mx-1" style="align-items:center">
-								<label for="nmPermisos" class="col-sm-3 mb-2">Nombres:</label>
-								<input type="text" class="form-control text-uppercase col-sm-4 mb-2" name="nmPermisos" id="nmPermisos" autocomplete="off" readonly />
-							</div>
-							<div class="row mx-1" style="align-items:center">
-								<label for="lgPermisos" class="col-sm-3 mb-4">Usuario (Login):</label>
-								<input type="text" class="form-control text-uppercase col-sm-4 mb-4" name="lgPermisos" id="lgPermisos" autocomplete="off" readonly />
-							</div>
+							<label for="apPermisos" class="col-sm-3 mb-2">Apellidos:</label>
+							<input type="text" class="form-control text-uppercase col-sm-4 mb-2" name="apPermisos" id="apPermisos" autocomplete="off" readonly />
+						</div>
+						<div class="row mx-1" style="align-items:center">
+							<label for="nmPermisos" class="col-sm-3 mb-2">Nombres:</label>
+							<input type="text" class="form-control text-uppercase col-sm-4 mb-2" name="nmPermisos" id="nmPermisos" autocomplete="off" readonly />
+						</div>
+						<div class="row mx-1" style="align-items:center">
+							<label for="lgPermisos" class="col-sm-3 mb-4">Usuario (Login):</label>
+							<input type="text" class="form-control text-uppercase col-sm-4 mb-4" name="lgPermisos" id="lgPermisos" autocomplete="off" readonly />
+						</div>
 						<div class="row col-sm-12">
 							<div class="container jtree">
 								<div class="row">
@@ -161,9 +163,12 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 								</div>
 							</div>
 						</div>
+						<div class="row justify-content-center pb-2">
+							<h6 id="loadGuardaPer" class="mx-auto" style="display:none"><i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i></h6>
+						</div>
 						<div class="modal-footer">
 							<div class="row col-sm-12">
-								<button class="btn btn-sirese mx-3" id="btnPermisos" data-dismiss="modal">Guardar</button>
+								<button class="btn btn-sirese mx-3" id="btnPermisos" >Guardar</button>
 								<button class="btn btn-sirese" id="btnCancelPer" name="btnCancelPer" data-dismiss="modal" aria-label="Close">Retornar</button>
 							</div>
 						</div>

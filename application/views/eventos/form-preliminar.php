@@ -219,28 +219,25 @@
 						<div class="modal-body" style="overflow: hidden;">
 							<form id="formIE" name="formIE" method="POST" action="" autocomplete="off" enctype="multipart/form-data">
 								<div id="content"></div>
-								<div class="row">
+								<div class="row pb-3">
+									<div class="col-sm-2"></div>
 									<div class="col-sm-4">
-										<div class="row">
-											<label for="dpto" class="col-sm-12">Departamento:</label>
-												<select class="form-control col-sm-11 ml-2" name="dpto" id="dpto">
-												</select>
+										<div class="row ml-3">
+											<label for="dre" class="col-sm-12">DRE:</label>
+											<select class="form-control col-sm-11" name="dre" id="dre">
+												<option value="">-- Seleccione --</option>
+											</select>
 										</div>
 									</div>
 									<div class="col-sm-4">
 										<div class="row ml-3">
-											<label for="prov" class="col-sm-12">Provincia:</label>
-											<select class="form-control col-sm-11" name="prov" id="prov">
+											<label for="ugel" class="col-sm-12">UGEL:</label>
+											<select class="form-control col-sm-11" name="ugel" id="ugel">
+												<option value="">-- Seleccione --</option>
 											</select>
 										</div>
 									</div>
-									<div class="col-sm-4">
-										<div class="row">
-											<label for="dist" class="col-sm-12">Distrito:</label>
-											<select class="form-control col-sm-11" name="dist" id="dist">
-											</select>
-										</div>
-									</div>
+									<div class="col-sm-2"></div>
 								</div>
 								<div class="row justify-content-center">
 									<div class="col-sm-12">

@@ -23,6 +23,7 @@ class Informe_model extends CI_Model
 	private $fRegistro;
 	private $uActualiza;
 	private $fActualiza;
+	private $codUgel;
 	
 	#Registro
 	public function setIdEvento($data){ $this->idRegistroEvento = $this->db->escape_str($data); }
@@ -45,6 +46,7 @@ class Informe_model extends CI_Model
 	public function setFechaReg($data){ $this->fRegistro = $this->db->escape_str($data); }
 	public function setUsuarioAct($data){ $this->uActualiza = $this->db->escape_str($data); }
 	public function setFechaAct($data){ $this->fActualiza = $this->db->escape_str($data); }
+	public function setCodUgel($data){ $this->codUgel = $this->db->escape_str($data); }
     
     public function clonarAcciones(){
 		$query = 'INSERT INTO '.$this->tabla.' ('.$this->camposClonar.') SELECT '.$this->campos.' FROM '.
@@ -165,7 +167,7 @@ class Informe_model extends CI_Model
 	public function buscaIE(){
 		$this->db->select('ID,CEN_EDU,COD_MOD,CODLOCAL,NIV_MOD,D_NIV_MOD,D_DPTO,D_PROV,D_DIST');
         $this->db->from('iest_2020_all');
-		$this->db->where('CODGEO', $this->ubigeo);		
+		$this->db->where('CODOOII', $this->codUgel);		
         return $this->db->get();
 	}
 	public function borraAccionesEvento(){

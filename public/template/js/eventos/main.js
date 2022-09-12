@@ -309,7 +309,7 @@ function main(map) {
             dataType: "json",
             beforeSend: function () {},
             success: function (data) {
-				//console.log(data);
+				console.log(data);
 				const { danio } = data;
 				const { accion } = data;
 				const { fotos } = data;
@@ -317,7 +317,7 @@ function main(map) {
 				const { url } = data;
 				const { iesUB } = data;
 				const { activo } = data;
-				console.log(activo.activo);
+				//console.log(activo.activo);
 				$('#formInforme button').each(function(i,e){
 					//if($(this).prop('id') !== 'btnCancelPrel') $(this).text('Retornar');
 					if(activo.activo == '0'){
@@ -341,7 +341,7 @@ function main(map) {
 					});
 					tableFotos.rows.add(json).draw();
 				}
-				tableIEUbigeo.clear(); if(iesUB.length > 0) tableIEUbigeo.rows.add(JSON.parse(iesUB)).draw();
+				//tableIEUbigeo.clear(); if(iesUB.length > 0) tableIEUbigeo.rows.add(JSON.parse(iesUB)).draw();
 				$('#dpto').html('<option " selected>' + dpto + '</option>');
 				$('#prov').html('<option " selected>' + pro + '</option>');
 				$('#dist').html('<option " selected>' + dis + '</option>');

@@ -55,17 +55,14 @@ class General {
 
         curl_setopt($handler, CURLOPT_URL,  $api.$tipo."/".$doc."/");
         curl_setopt($handler, CURLOPT_HEADER, false);
-        curl_setopt($handler, CURLOPT_HTTPHEADER, array(
-            "Authorization: " . $token,
-            "Content-Type: application/json"
-        ));
+        curl_setopt($handler, CURLOPT_HTTPHEADER, array("Authorization: " . $token, "Content-Type: application/json" ));
         curl_setopt($handler, CURLOPT_RETURNTRANSFER, true);
         $data = curl_exec($handler);
         $code = curl_getinfo($handler, CURLINFO_HTTP_CODE);
 
         curl_close($handler);
 
-        return ($data)?$data : '';
+        return $data;
     }
 	
 	public function guardarMapaCurl($path,$image,$lat,$lng,$zoom)

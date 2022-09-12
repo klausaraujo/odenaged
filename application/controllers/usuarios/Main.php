@@ -1,6 +1,5 @@
 <?php
-if (! defined("BASEPATH"))
-    exit("No direct script access allowed");
+if (! defined("BASEPATH")) exit("No direct script access allowed");
 
 class Main extends CI_Controller
 {
@@ -11,33 +10,28 @@ class Main extends CI_Controller
 		if (!$this->session->userdata("usuario")) header("location:" . base_url() . "login");
 	}
 
-    public function index()
-    {
-		
-    }
+    public function index(){ }
+	
 	public function registrar()
     {
         $this->load->model("Usuario_model");
 
-        $usuario = $this->input->post("usuario");
-        $dni = $this->input->post("dni");
-        $apellidos = $this->input->post("apellidos");
-        $nombres = $this->input->post("nombres");
-        $codPerfil = $this->input->post("codPerfil");
-        /*$codRegion = $this->input->post("codRegion");
-		$codPro = $this->input->post("codPro");*/
+        $tipodoc = $this->input->post('tipodoc');
+		$usuario = $this->input->post('usuario');
+        $dni = $this->input->post('dni');
+        $apellidos = $this->input->post('apellidos');
+        $nombres = $this->input->post('nombres');
+        $codPerfil = $this->input->post('codperfil');
 
-        $this->Usuario_model->setUsuario($usuario);
+        $this->Usuario_model->setTipoDoc(intval($tipodoc));
+		$this->Usuario_model->setUsuario($usuario);
         $this->Usuario_model->setDNI($dni);
         $this->Usuario_model->setApellidos($apellidos);
         $this->Usuario_model->setNombres($nombres);
         $this->Usuario_model->setPerfil($codPerfil);
-        /*$this->Usuario_model->setRegion($codRegion);
-		$this->Usuario_model->setProvincia($codPro);*/
 		$this->session->set_flashdata('claseMsg', 'warning');
 
         if (! $this->Usuario_model->existe()) {
-			//$this->session->keep_flashdata('mensajeError');
 			if ($this->Usuario_model->registrar()) {
 				$this->session->set_flashdata('flashSuccess', 'Usuario Registrado Exitosamente');
                 $this->session->set_flashdata('claseMsg', 'success');
@@ -48,115 +42,96 @@ class Main extends CI_Controller
 		
 		header('location:' . base_url() . 'usuarios');
     }
-	
-	public function buscaRegiones(){
-        $this->load->model("Ubigeo_model");
-		$idusuario = $this->input->post('idusuario');
-		
-		$reg = $this->Ubigeo_model->zonasRegion(); $i = 0; $tree = ''; $sub = [];
-		
-		$this->Ubigeo_model->setIdUser($idusuario);
-		$permisosreg = $this->Ubigeo_model->depUser();
-		$permisosreg = ($permisosreg->num_rows() > 0)? $permisosreg->result() : array();
-		
-		if($reg->num_rows() > 0){
-			$regiones = $reg->result();
-			$tree .= '<ul class="row root">';
-			foreach($regiones as $row):
-				$check = 'unchecked';
-				if(!empty($permisosreg)){
-					foreach($permisosreg as $drow):
-						if($row->cod_dep === $drow->cod_dep) $check ='ddbb';
-					endforeach;
-				}
-				$tree .= '<li id="'.$row->cod_dep.'" class="col-sm-12 dep"><i data-tree="DRE" class="collapsible exp"></i>
-						<i class="checkbox '.$check.'" data-check="'.$row->cod_dep.'"></i>'.$row->departamento.'</li>';
-			endforeach;
-			
-			if($reg->num_rows() > 0) $tree .= '</ul>';
-		}
-		$data = array( 'tree' => $tree, );
-		echo json_encode($data);
-	}
-	
 	public function buscaDRE(){
-		$this->load->model("Ubigeo_model");
+        $this->load->model("Ubigeo_model");
 		
-		$id = $this->input->post('id'); $datatree = $this->input->post('tree'); $check = $this->input->post('check'); $zonas = null; $tree = '';
-		$idusuario = $this->input->post('idusuario'); $pro = ''; $dreUsuario; $dep = '';
+		$idusuario = $this->input->post('idusuario'); $this->Ubigeo_model->setIdUser($idusuario); $tree = '';
 		
-		$this->Ubigeo_model->setIdUser($idusuario);
+		$zonasDRE = $this->Ubigeo_model->zonasDRE(); $usuarioDRE = $this->Ubigeo_model->dreUsuario();
+		//$reg = $this->Ubigeo_model->zonasRegion(); $i = 0; $tree = ''; $sub = [];
+		//$permisosreg = $this->Ubigeo_model->depUser();
+		$usuarioDRE = ($usuarioDRE->num_rows() > 0)? $usuarioDRE->result() : array();
 		
-		if($datatree === 'DRE'){
-			$this->Ubigeo_model->setIdDpto($id); $zonas = $this->Ubigeo_model->zonasDRE();
-			$dreUsuario = $this->Ubigeo_model->dreUsuario(); $dreUsuario = ($dreUsuario->num_rows() > 0)? $dreUsuario->result() : array();
-		}else if($datatree === 'UGEL'){
-			$this->Ubigeo_model->setIdDre($id); $zonas = $this->Ubigeo_model->zonasUGEL();
-			$dreUsuario = $this->Ubigeo_model->ugelUsuario(); $dreUsuario = ($dreUsuario->num_rows() > 0)? $dreUsuario->result() : array();
-		}		
-		
-		if(!$zonas == null && $zonas->num_rows() > 0){
-			$zonas = $zonas->result(); $tree .= '<ul class="niveles row">';
-			
-			foreach($zonas as $row):
-				$ch = ($check === '1')? 'checked' : 'unchecked';
-				
-				if(!empty($dreUsuario)){
-					foreach($dreUsuario as $drow):
-						if($datatree === 'DRE'){ if($row->iddre === $drow->iddre) $ch ='ddbb'; }
-						if($datatree === 'UGEL'){ if($row->idugel === $drow->idugel) $ch ='ddbb'; }
+		if($zonasDRE->num_rows() > 0){
+			$tree .= '<ul class="row root">';
+			$dres = $zonasDRE->result();
+			foreach($dres as $row):
+				$check = 'unchecked';
+				if(!empty($usuarioDRE)){
+					foreach($usuarioDRE as $udre):
+						if($row->iddre === $udre->iddre) $check ='ddbb';
 					endforeach;
 				}
-				if($datatree === 'DRE'){ $data = 'UGEL'; $idzona = $row->iddre; $lia = $row->codigo_dre.' - '.$row->nombre; $li = 'dre'; $dep = $this->input->post('dpto'); }
-				elseif($datatree === 'UGEL'){ $data = 'PROV'; $idzona = $row->idugel; $lia = $row->codigo_ugel.' - '.$row->nombre; $li = 'ugel'; $dep = $row->iddre; }
-				
-				$tree .= '<li id="'.$idzona.'" class="col-sm-12 '.$li.'">'.(($datatree === 'DRE')? '<i data-tree="'.$data.'" class="collapsible exp">' : '').
-						'</i><i class="checkbox '.$ch.'" data-dep="'.$dep.'" data-check="'.$idzona.'"></i>'.$lia.'</li>';
+				$tree .= '<li id="'.$row->iddre.'" class="col-sm-12 dre"><i data-tree="UGEL" class="collapsible exp"></i>
+							<i class="checkbox '.$check.'" data-check="'.$row->iddre.'"></i>'.$row->nombre.'</li>';
 			endforeach;
 			
 			$tree .= '</ul>';
 		}
 		
-		$data = array( 'idusuario' => $dep, 'tree' => $tree );
+		$data = array( 'tree' => $tree );
+		
+		echo json_encode($data);
+	}	
+	public function buscaUGEL(){
+		$this->load->model("Ubigeo_model");
+		
+		$id = $this->input->post('id'); $check = $this->input->post('check'); $zonas = null; $tree = ''; $idusuario = $this->input->post('idusuario');
+		
+		$this->Ubigeo_model->setIdUser($idusuario);
+		$this->Ubigeo_model->setIdDre($id);
+		$zonasUGEL= $this->Ubigeo_model->zonasUGEL();
+		$usuarioUGEL = $this->Ubigeo_model->ugelUsuario(); $usuarioUGEL = ($usuarioUGEL->num_rows() > 0)? $usuarioUGEL->result() : array();
+		
+		if(!$zonasUGEL == null && $zonasUGEL->num_rows() > 0){
+			$zonasUGEL = $zonasUGEL->result(); $tree .= '<ul class="niveles row">';
+			
+			foreach($zonasUGEL as $row):
+				$ch = ($check === '1')? 'checked' : 'unchecked';
+				
+				if(!empty($usuarioUGEL)){
+					foreach($usuarioUGEL as $drow):
+						if($row->idugel === $drow->idugel) $ch ='ddbb';
+					endforeach;
+				}
+				$data = 'PROV'; $idzona = $row->idugel; $lia = $row->codigo_ugel.' - '.$row->nombre; $li = 'ugel';
+				
+				$tree .= '<li id="'.$idzona.'" class="col-sm-12 ugel"></i><i class="checkbox '.$ch.'" data-dre="'.$row->iddre.'" data-check="'.$idzona.'"></i>'.$lia.'</li>';
+			endforeach;
+			
+			$tree .= '</ul>';
+		}
+		
+		$data = array( 'idusuario' => $idusuario, 'check' => $check, 'iddre' => $id, 'tree' => $tree );
 		echo json_encode($data);
 	}
 	
 	public function permisos(){
 		$this->load->model("Ubigeo_model"); $this->load->model("Usuario_model");
 		# Arrays desde Ajax
-		$dptos = json_decode($_POST['dptos']); $provs = json_decode($_POST['provs']); $dres = json_decode($_POST['dres']); $ugels = json_decode($_POST['ugels']); $msg = '';
+		$dres = json_decode($_POST['dres']); $ugels = json_decode($_POST['ugels']); $msg = '';
 		# Variables de la funcion
-		$id = $this->input->post('idusuario'); $ugelQuery = ''; $dreQuery = '';$i = 0; $j = 0; $zonasUGEL = null; $rUg = null; $rDre = null; $bUg = null; $bDre = null;
+		$id = $this->input->post('idusuario'); $ugelQuery = ''; $dreQuery = ''; $i; $zonasUGEL = null; $rUg = null; $rDre = null; $bUg = null; $bDre = null;
 		$status = 500;
 		//insert into dre(iddre,codigo_dre,nombre,codigo_region) values (1,'0100','DRE AMAZONAS','01');
-		if(!empty($dptos)){
-			foreach($dptos as $dpto):
-				$i = 0;
-				if(!empty($dres)){
-					foreach($dres as $dre):
-						$j = 0;
-						if(!empty($ugels)){
-							foreach($ugels as $ugel):
-								if($dre->dep === $dpto)
-									if($ugel->dep === $dre->dres){ $ugelQuery .= (($ugelQuery === '')?'(' : ',(').$id.','.$ugel->ugel.',1)'; $j++; }
-							endforeach;
-							if($j > 0){ $dreQuery .= (($dreQuery === '')?'(' : ',(').$id.','.$dre->dres.',1)'; }
-						}
-						if($dre->dep === $dpto && $j === 0){
-							$msg .= $dre->dep;
-							$this->Ubigeo_model->setIdDre($dre->dres);
-							$zonasUGEL = $this->Ubigeo_model->zonasUGEL(); $zonasUGEL = ($zonasUGEL->num_rows() > 0)? $zonasUGEL->result() : array();
-							foreach($zonasUGEL as $zugel):
-								if($dre->dep === $dpto){ $ugelQuery .= (($ugelQuery === '')?'(' : ',(').$id.','.$zugel->idugel.',1)'; }
-							endforeach;
-							$dreQuery .= (($dreQuery === '')?'(' : ',(').$id.','.$dre->dres.',1)';
-							$i++;
-						}
+		if(!empty($dres)){
+			foreach($dres as $dre):
+				$i = 0; $dre1 = $dre->dres;
+				if(!empty($ugels)){
+					foreach($ugels as $ugel):
+						if($ugel->dre === dre1){ $ugelQuery .= (($ugelQuery === '')?'(' : ',(').$id.','.$ugel->ugel.',1)'; $i++; }
 					endforeach;
+					if($i > 0){ $dreQuery .= (($dreQuery === '')?'(' : ',(').$id.','.$dre->dres.',1)'; }
 				}
 				if($i === 0){
-					#$this->Ubigeo_model->setIdDpto($dpto);
-					#$ubigeo = $this->Ubigeo_model->ubigeoByDep(); $regiones[$j] = ($ubigeo->num_rows() > 0)? $ubigeo->result() : array(); $j++;
+					$this->Ubigeo_model->setIdDre($dre1);
+					$zonasUGEL = $this->Ubigeo_model->zonasUGEL(); $zonasUGEL = ($zonasUGEL->num_rows() > 0)? $zonasUGEL->result() : array();
+					if(!empty($zonasUGEL)){
+						foreach($zonasUGEL as $zugel):
+							if($zugel->iddre === $dre1) $ugelQuery .= (($ugelQuery === '')?'(' : ',(').$id.','.$zugel->idugel.',1)';
+						endforeach;
+					}
+					$dreQuery .= (($dreQuery === '')?'(' : ',(').$id.','.$dre1.',1)';
 				}
 			endforeach;
 			
@@ -177,7 +152,7 @@ class Main extends CI_Controller
 			'borra1' => $bUg,
 			'borra2' => $bDre,
 			'status' => $status,
-			'msg' => (($status === 200)?'Permisos Registrados con &Eacute;xito' : 'No se pudo Registrar los Permisos')
+			'msg' => (($status === 200)?'Permisos Registrados Exitosamente' : 'No se pudo Registrar los Permisos'),
 		);
 		
 		echo json_encode($data);
