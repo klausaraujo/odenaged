@@ -4857,7 +4857,7 @@ from usuarios  left JOIN usuarios_ugel on usuarios_ugel.idusuario=usuarios.idusu
 
 CREATE TABLE modulo  (
   idmodulo smallint(4) NOT NULL AUTO_INCREMENT,
-  descripcion varchar(100) NOT NULL,
+  descripcion varchar(200) NOT NULL,
   menu varchar(30) NOT NULL,
   icono varchar(25) NOT NULL,
   url varchar(25) NOT NULL,
@@ -4866,9 +4866,16 @@ CREATE TABLE modulo  (
   orden smallint(4) NOT NULL,
   PRIMARY KEY (idmodulo)) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 	
-	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Registro de Eventos de Emergencias y Desastres','Módulo Emergencias','emergencias.png','eventos','1','fa fa-list-alt',1);
-	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Registro de Directorio Nacional','Módulo Directorio','directorio.png','directorio','1','fa fa-list-alt',2);
-	INSERT INTO modulo (descripcion,menu,icono,url,imagen,mini,orden) VALUES ('Módulo de Registro de Usuarios del Sistema y Parámetros Básicos de Configuración','Módulo Usuarios','seguridad.png','usuarios','1','fa fa-wrench',3);
+	INSERT INTO modulo (idmodulo,descripcion,menu,icono,url,imagen,mini,orden) VALUES (1,'Módulo de Registro de Eventos de Emergencias y Desastres','Módulo Eventos','emergencias.png','eventos','1','fa fa-list-alt',1);
+	INSERT INTO modulo (idmodulo,descripcion,menu,icono,url,imagen,mini,orden) VALUES (2,'Módulo de Registro de la Fichas de Monitoreo aplicadas a Instituciones Educativas en Materia de GRD','Módulo Fichas','fichas.png','fichas','1','fa fa-check-square-o',2);
+	INSERT INTO modulo (idmodulo,descripcion,menu,icono,url,imagen,mini,orden) VALUES (3,'Módulo de Visor de Datos de Emergencias y Desastres a Nivel Nacional','Módulo Visor','mapas.png','mapas','1','fa fa-map-marker',3);
+	
+	
+	
+	
+	
+	INSERT INTO modulo (idmodulo,descripcion,menu,icono,url,imagen,mini,orden) VALUES (10,'Módulo de Registro de Usuarios del Sistema y Parámetros Básicos de Configuración','Módulo Usuarios','seguridad.png','usuarios','1','fa fa-wrench',4);
+
 
 CREATE TABLE modulo_rol  (	
 	idmodulorol smallint(4) NOT NULL AUTO_INCREMENT,
@@ -4878,13 +4885,18 @@ CREATE TABLE modulo_rol  (
 	PRIMARY KEY (idmodulorol),
 	FOREIGN KEY (idmodulo) REFERENCES modulo (idmodulo) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (idperfil) REFERENCES perfil (idperfil) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
-
-  INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(1,1,'1');
+	/*Administrador*/
+	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(1,1,'1');
 	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(2,1,'1');
 	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(3,1,'1');
+	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(10,1,'1');
+	
+		
+	/*Estandar*/
 	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(1,2,'1');
 	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(2,2,'1');
-	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(3,2,'0');
+	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(3,2,'1');
+	INSERT INTO modulo_rol(idmodulo,idperfil,activo) VALUES(10,2,'0');
 
 CREATE TABLE permiso  (
   idpermiso smallint(4) NOT NULL AUTO_INCREMENT,
@@ -4896,11 +4908,10 @@ CREATE TABLE permiso  (
   PRIMARY KEY (idpermiso),
 	FOREIGN KEY (idmodulo) REFERENCES modulo (idmodulo) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
-	
-	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Editar Registro','1',2,1);
-	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Preliminar ','1',2,1);
-	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Complementario','1',2,1);
-	INSERT INTO permiso(descripcion,tipo,orden,idmodulo) VALUES('Reporte PDF','1',2,1);
+	INSERT INTO permiso(idpermiso,descripcion,tipo,orden,idmodulo) VALUES(1,'Editar Evento','1',1,1);
+	INSERT INTO permiso(idpermiso,descripcion,tipo,orden,idmodulo) VALUES(2,'Informe Preliminar ','1',2,1);
+	INSERT INTO permiso(idpermiso,descripcion,tipo,orden,idmodulo) VALUES(3,'Informe Complementario','1',3,1);
+	INSERT INTO permiso(idpermiso,descripcion,tipo,orden,idmodulo) VALUES(4,'Reporte en PDF','1',4,1);
 	
 CREATE TABLE menu  (
   idmenu smallint(4) NOT NULL AUTO_INCREMENT,
@@ -4913,11 +4924,13 @@ CREATE TABLE menu  (
   PRIMARY KEY (idmenu),
 	FOREIGN KEY (idmodulo) REFERENCES modulo (idmodulo) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
-	INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Lista Eventos','0','eventos','fa fa-list');
-	INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Nuevo Registro','0','nuevo','fa fa-pencil-square-o');
-	INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(1,'Gestor de Reportes','1','#','fa fa-table');
+	INSERT INTO menu(idmenu,idmodulo,descripcion,nivel,url,icono) VALUES(1,1,'Lista Eventos','0','eventos','fa fa-list');
+	INSERT INTO menu(idmenu,idmodulo,descripcion,nivel,url,icono) VALUES(2,1,'Nuevo Registro','0','nuevo','fa fa-pencil-square-o');
+	INSERT INTO menu(idmenu,idmodulo,descripcion,nivel,url,icono) VALUES(3,1,'Gestor de Reportes','1','#','fa fa-table');
 	
-	INSERT INTO menu(idmodulo,descripcion,nivel,url,icono) VALUES(3,'Nuevo Registro','0','nuevousuario','fa fa-pencil-square-o');
+	INSERT INTO menu(idmenu,idmodulo,descripcion,nivel,url,icono) VALUES(4,10,'Lista Usuarios','0','usuarios','fa fa-list');
+	INSERT INTO menu(idmenu,idmodulo,descripcion,nivel,url,icono) VALUES(5,10,'Nuevo Registro','0','nuevousuario','fa fa-pencil-square-o');
+
 
 CREATE TABLE menu_detalle  (
   idmenudetalle smallint(4) NOT NULL AUTO_INCREMENT,
@@ -4930,8 +4943,8 @@ CREATE TABLE menu_detalle  (
   PRIMARY KEY (idmenudetalle),
 	FOREIGN KEY (idmenu) REFERENCES menu (idmenu) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
-	INSERT INTO menu_detalle (idmenu,descripcion,url,icono,orden) VALUES(3,'Consolidado','consolidado','fa fa-th-list',1);
-	INSERT INTO menu_detalle (idmenu,descripcion,url,icono,orden) VALUES(3,'Mapa de Eventos','mapas','fa fa-newspaper-o',2);
+	INSERT INTO menu_detalle (idmenudetalle,idmenu,descripcion,url,icono,orden) VALUES(1,3,'Consolidado','consolidado','fa fa-th-list',1);
+	INSERT INTO menu_detalle (idmenudetalle,idmenu,descripcion,url,icono,orden) VALUES(2,3,'Mapa de Eventos','mapas','fa fa-newspaper-o',2);
 
 CREATE TABLE permisos_menu  (
   idpermisosmenu smallint(4) NOT NULL AUTO_INCREMENT,
@@ -4942,13 +4955,16 @@ CREATE TABLE permisos_menu  (
 	FOREIGN KEY (idmenu) REFERENCES menu (idmenu) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (idusuario) REFERENCES usuarios (idusuario) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 	
-	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(1,1);
-	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(2,1);
-	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(3,1);
-	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(4,1);
-	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(1,2);
-	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(2,2);
-	INSERT INTO permisos_menu(idmenu,idusuario) VALUES(3,2);
+	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(1,1,1);
+	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(2,2,1);
+	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(3,3,1);
+	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(4,4,1);
+	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(5,5,1);
+	
+		
+	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(6,1,2);
+	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(7,2,2);
+	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(8,3,2);
 	
 CREATE TABLE permisos_menu_detalle  (
   idpermisosmenudetalle smallint(4) NOT NULL AUTO_INCREMENT,
@@ -4959,10 +4975,11 @@ CREATE TABLE permisos_menu_detalle  (
 	FOREIGN KEY (idmenudetalle) REFERENCES menu_detalle (idmenudetalle) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (idusuario) REFERENCES usuarios (idusuario) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 	
-	Insert Into permisos_menu_detalle(idmenudetalle,idusuario) Values (1,1);
-	Insert Into permisos_menu_detalle(idmenudetalle,idusuario) Values (2,1);
-	Insert Into permisos_menu_detalle(idmenudetalle,idusuario) Values (1,2);
-	Insert Into permisos_menu_detalle(idmenudetalle,idusuario) Values (2,2);
+	Insert Into permisos_menu_detalle(idpermisosmenudetalle,idmenudetalle,idusuario) Values (1,1,1);
+	Insert Into permisos_menu_detalle(idpermisosmenudetalle,idmenudetalle,idusuario) Values (2,2,1);
+	
+	Insert Into permisos_menu_detalle(idpermisosmenudetalle,idmenudetalle,idusuario) Values (3,1,2);
+	Insert Into permisos_menu_detalle(idpermisosmenudetalle,idmenudetalle,idusuario) Values (4,2,2);
 
 CREATE TABLE permisos_opcion  (
   idpermisoopcion smallint(4) NOT NULL AUTO_INCREMENT,
@@ -4973,8 +4990,15 @@ CREATE TABLE permisos_opcion  (
 	FOREIGN KEY (idpermiso) REFERENCES permiso (idpermiso) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (idusuario) REFERENCES usuarios (idusuario) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
-	INSERT INTO permisos_opcion(idpermiso,idusuario) VALUES(1,1);
-	INSERT INTO permisos_opcion(idpermiso,idusuario) VALUES(2,1);
+	INSERT INTO permisos_opcion(idpermisoopcion,idpermiso,idusuario) VALUES(1,1,1);
+	INSERT INTO permisos_opcion(idpermisoopcion,idpermiso,idusuario) VALUES(2,2,1);
+	INSERT INTO permisos_opcion(idpermisoopcion,idpermiso,idusuario) VALUES(3,3,1);
+	INSERT INTO permisos_opcion(idpermisoopcion,idpermiso,idusuario) VALUES(4,4,1);
+	
+	INSERT INTO permisos_opcion(idpermisoopcion,idpermiso,idusuario) VALUES(5,1,2);
+	INSERT INTO permisos_opcion(idpermisoopcion,idpermiso,idusuario) VALUES(6,2,2);
+	INSERT INTO permisos_opcion(idpermisoopcion,idpermiso,idusuario) VALUES(7,3,2);
+	INSERT INTO permisos_opcion(idpermisoopcion,idpermiso,idusuario) VALUES(8,4,2);
 
 create view lista_departamentos
 as
