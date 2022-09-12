@@ -15,9 +15,9 @@
 
 	<div class="container-fluid"><!---->
 		<form id="formInforme" name="formInforme" method="POST" action="" autocomplete="off" enctype="multipart/form-data">
-			<input type="hidden" id="idregevento" value="" />
-			<input type="hidden" id="version" value="" />
-			<input type="hidden" id="informe" value="" />
+			<input type="text" id="idregevento" value="" />
+			<input type="text" id="version" value="" />
+			<input type="text" id="informe" value="" />
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="iq-card px-3">
@@ -245,6 +245,9 @@
 											<table id="tableIEUbigeo" class="table table-striped dt-responsive table-bordered display nowrap table-hover px-0" style="width:100%"></table>
 										</div>
 									</div>
+								</div>
+								<div class="row justify-content-center pb-2">
+									<h6 id="loadIES" class="mx-auto" style="display:none"><i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i></h6>
 								</div>
 							</form>
 						</div>

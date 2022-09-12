@@ -22,7 +22,7 @@
 					<div style="margin-top: 15px;" class="doc-profile">
 						<img class="img-fluid avatar-80" src="<?=base_url()?>public/template/images/principal/<?=$row->icono?>" alt="<?=$row->url?>">
 					</div>
-					<div class="dashboard__title">
+					<div class="dashboard__title mt-4">
 						<h6 style="color: <?=($row->activo === '1')? 'white' : '#AAAAAA';?>;"> <?=$row->descripcion?></h6>
 					</div>
 				</div>

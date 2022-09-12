@@ -78,6 +78,8 @@ $route['buscaIE'] = 'eventos/informes/buscaIE';
 $route['registraInforme'] = 'eventos/informes/registrar';
 $route['existeAccion'] = 'eventos/informes/existeAccion';
 $route['informe'] = 'eventos/informes/informe';
+$route['buscaIESPrel'] = 'eventos/informes/buscaIESPrel';
+$route['buscaUGELPrel'] = 'eventos/informes/buscaUGELPrel';
 
 #Gestion de Usuarios
 $route['perfil'] = 'usuario/perfil';

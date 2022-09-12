@@ -24,7 +24,7 @@ class Informes extends CI_Controller
 	function preliminar(){
 		//echo $this->input->post('idevento');
 		$this->load->model("Informe_model"); $this->load->model("Ubigeo_model");
-		$ieDRE = null; $ieUGEL = null; $ieUB = null; $i = 0; $j = 0; $codUgel = ''; $idDre = '';
+		$ieDRE = null; $ieUGEL = null; $ieUB = null; $i = 0;
 		
 		$this->Informe_model->setIdEvento($this->input->post('idevento'));
 		$this->Informe_model->setUbigeo($this->input->post('ubigeo'));
@@ -36,33 +36,23 @@ class Informes extends CI_Controller
 		if($ieDRE->num_rows() > 0){
 			$ieDRE = $ieDRE->result();
 			foreach($ieDRE as $row):
-				if($i === 0){ $idDre = $row->iddre; $i++; }
+				if($i === 0){
+					$this->Ubigeo_model->setIdDre($row->iddre); $ieUGEL = $this->Ubigeo_model->buscaIEUgel();
+					$ieUGEL = ($ieUGEL->num_rows() > 0)? $ieUGEL->result() : array(); $i++; break; 
+				}
 			endforeach;
 		}
-		$i = 0;
-		/*if(!$idDre == ''){
-			$this->Ubigeo_model->setIdDre($idDre); $ieUGEL = $this->Ubigeo_model->buscaIEUgel();
-			if($ieUGEL->num_rows() > 0){
-				$ieUGEL = $ieUGEL->result();
-				foreach($ieUGEL as $row):
-					if($i === 0){ $codUgel = $row->codigo_ugel; $i++; }
-				endforeach;
-			}
-		}
-		if(!$codUgel == ''){ $this->Informe_model->setCodUgel($codUgel); $ieUB = $this->Informe_model->buscaIE(); }*/
-		
 		
 		$danio = $this->Informe_model->listaDanio();
 		$accion = $this->Informe_model->listaAccion();
 		$fotos = $this->Informe_model->listaFotos();
 		$ies = $this->Informe_model->listaIE();
-		//$ieUB = $this->Informe_model->buscaIE();
 		
 		($danio->num_rows() > 0)? $danio = json_encode($danio->result()) : $danio = array();
 		($accion->num_rows() > 0)? $accion = json_encode($accion->result()) : $accion = array();
 		($fotos->num_rows() > 0)? $fotos = json_encode($fotos->result()) : $fotos = array();
 		($ies->num_rows() > 0)? $ies = json_encode($ies->result()) : $ies = array();
-		//($ieUB->num_rows() > 0)? $ieUB = json_encode($ieUB->result()) : $ieUB = array();
+		
 		$activo = $this->Informe_model->traeEstadoVersion();
 		$activo = ($activo->num_rows() > 0) ? $activo->row() : 1;
 		
@@ -71,17 +61,26 @@ class Informes extends CI_Controller
 			'accion' => $accion,
 			'fotos' => $fotos,
 			'ies' => $ies,
-			//'iesUB' => $ieUB,
 			'url' => 'public/images/galerias_eventos/',
 			'activo' => $activo,
 			'status' => 200,
-			'dpto' => $ieDRE,
-			'pro' => $ieUGEL,
-			//'ieub' => $ieUB->result(),
+			'dre' => $ieDRE,
+			'ugel' => $ieUGEL,
 		);
 		echo json_encode($data);
 	}
-	
+	public function buscaIESPrel(){
+		$this->load->model("Informe_model");
+		$this->Informe_model->setCodUgel($this->input->post('idugel'));
+		$ugeles = $this->Informe_model->buscaIE();
+		$ugeles = ($ugeles->num_rows() > 0)? $ugeles->result() : array();
+		echo json_encode($ugeles);
+	}
+	public function buscaUGELPrel(){
+		$this->load->model('Ubigeo_model'); $this->Ubigeo_model->setIdDre($row->iddre);
+		$ieUGEL = $this->Ubigeo_model->buscaIEUgel(); $ieUGEL = ($ieUGEL->num_rows() > 0)? $ieUGEL->result() : array();
+		echo json_encode($ugeles);
+	}
 	function complementario(){
 		$this->load->model("Informe_model");
 		$id = $this->input->post('idevento');
@@ -131,8 +130,7 @@ class Informes extends CI_Controller
 		$versiones = ($versiones->num_rows() > 0) ? $versiones->result() : array();
 		
 		echo json_encode(array('versiones' => $versiones,'max' => $ver));
-	}
-	
+	}	
 	public function borraComplementario(){
 		$this->load->model("Informe_model");
 		$id = $this->input->post('idevento');
@@ -176,8 +174,7 @@ class Informes extends CI_Controller
 		$versiones = ($versiones->num_rows() > 0) ? $versiones->result() : array();
 		
 		echo json_encode(array('versiones' => $versiones,'max' => $ver - 1));
-	}
-	
+	}	
 	public function traeVersion(){
 		$this->load->model("Informe_model");
 		$id = $this->input->post('idevento');
@@ -188,9 +185,7 @@ class Informes extends CI_Controller
 		$maximo = $maximo->maximo;
 		
 		echo json_encode(array('versiones' => $versiones,'max' => $maximo));
-	}
-	
-	
+	}	
 	function registrar(){
 		$this->load->model("Informe_model");
 		$us = $this->session->userdata('idusuario');
@@ -326,8 +321,7 @@ class Informes extends CI_Controller
 		
 		echo json_encode($data);
 	}
-	
-	function buscaIE(){
+	/*function buscaIE(){
 		$this->load->model("Informe_model");
 		$ubigeo = $this->input->post('dpto').$this->input->post('prov').$this->input->post('dtto');
 		$this->Informe_model->setUbigeo($ubigeo);
@@ -335,7 +329,7 @@ class Informes extends CI_Controller
 		($ies->num_rows() > 0)? $ies = $ies->result() : $ies = array();
 		
 		return $ies;
-	}
+	}*/
 	function existeAccion(){
 		$this->load->model("Informe_model");
 		$idEvt = $this->input->post('id');

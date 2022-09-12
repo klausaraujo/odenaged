@@ -1,5 +1,54 @@
+let dre = null, ugel = null;
+
+function informe(id,ub,v){
+	ies = null;
+	$.ajax({
+        data: { idevento: id, ubigeo: ub, version: v },
+        url: path + "buscaPreliminar",
+        method: "POST",
+        dataType: "json",
+        beforeSend: function () {},
+        success: function (data) {
+			//console.log(data);
+			const { danio } = data;
+			const { accion } = data;
+			const { fotos } = data;
+			const { ies } = data;
+			const { url } = data;
+			const { activo } = data;
+				
+			$('#formInforme button').each(function(i,e){
+				//if($(this).prop('id') !== 'btnCancelPrel') $(this).text('Retornar');
+				if(activo.activo == '0'){
+					var el = $(this).prop('nodeName');
+					if(el == 'BUTTON'){ if($(this).prop('id') !== 'btnCancelPrel') $(this).prop('disabled',true); }
+						//console.log($(this).prop('disabled'));
+				}else{ if($(this).prop('disabled')) $(this).prop('disabled',false); }
+			});
+					
+			tableDanio.clear(); if(danio.length > 0) tableDanio.rows.add(JSON.parse(danio)).draw();
+			tableAccion.clear(); if(accion.length > 0) tableAccion.rows.add(JSON.parse(accion)).draw();
+			tableIEF.clear(); if(ies.length > 0) tableIEF.rows.add(JSON.parse(ies)).draw();
+			tableFotos.clear();
+			if(fotos.length > 0){
+				let json = [];
+				let row = JSON.parse(fotos);
+				row.forEach(function(col){
+					json.push({ 'version':col.version,'fotografia':col.fotografia,'descripcion':col.descripcion,'foto':URI+url+col.fotografia,
+						'idusuario_apertura':col.idusuario_apertura,'fecha_apertura':col.fecha_apertura });
+				});
+				tableFotos.rows.add(json).draw();
+			}
+			//tableIEUbigeo.clear(); if(iesUB.length > 0) tableIEUbigeo.rows.add(JSON.parse(iesUB)).draw();
+			if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
+			if($('.ajaxPreliminar').css('display') == 'none' || $('.ajaxPreliminar').css('opacity') == 0) $('.ajaxPreliminar').show();
+			if(!$('.ajaxComplementario').css('display') == 'none' || $('.ajaxComplementario').css('opacity') == 1) $('.ajaxComplementario').hide();
+			ugel = data.ugel; dre = data.dre;
+		}
+	});
+}
+
 function main(map) {
-	
 	$('#anio').on('change', function(){ table.search($(this).val()).draw(); });
 	$('#mes').on('change', function(){ table.search($(this).val()).draw(); });
 	//if(comp === 'undefined'){ this.api().search($("#anio").val()).draw(); this.api().search($("#mes").val()).draw(); }
@@ -301,56 +350,59 @@ function main(map) {
 		});
 	}
 	
-	function informe(id,ub,dpto,pro,dis,v){
+	$('#modalIE').on('show.bs.modal',function(e){
+		let evt = e || e.target, boton = $(evt.relatedTarget), ugelOption = '', dreOption = '', i = 0; cod_ugel = '';
+		
+		ugel.forEach(function(el){
+			ugelOption += '<option value="'+el.codigo_ugel+'" '+((i === 0)? 'selected' : '')+' >'+el.codigo_ugel+' '+el.ugel+'</option>';
+			if(i === 0) cod_ugel = el.codigo_ugel; i++;
+		});
+		$('#ugel').html(ugelOption); i = 0;
+		dre.forEach(function(el){ dreOption += '<option value="'+el.iddre+'" '+((i === 0)? 'selected' : '')+' >'+el.codigo_dre+' '+el.dre+'</option>'; i++; });
+		$('#dre').html(dreOption);
+		
+		tableIEUbigeo.clear(); tableIEUbigeo.draw();
 		$.ajax({
-            data: { idevento: id, ubigeo: ub, version: v },
-            url: path + "buscaPreliminar",
-            method: "POST",
-            dataType: "json",
-            beforeSend: function () {},
-            success: function (data) {
-				console.log(data);
-				const { danio } = data;
-				const { accion } = data;
-				const { fotos } = data;
-				const { ies } = data;
-				const { url } = data;
-				const { iesUB } = data;
-				const { activo } = data;
-				//console.log(activo.activo);
-				$('#formInforme button').each(function(i,e){
-					//if($(this).prop('id') !== 'btnCancelPrel') $(this).text('Retornar');
-					if(activo.activo == '0'){
-						var el = $(this).prop('nodeName');
-						if(el == 'BUTTON'){ if($(this).prop('id') !== 'btnCancelPrel') $(this).prop('disabled',true); }
-						//console.log($(this).prop('disabled'));
-					
-					}else{ if($(this).prop('disabled')) $(this).prop('disabled',false); }
-				});
-				
-				tableDanio.clear(); if(danio.length > 0) tableDanio.rows.add(JSON.parse(danio)).draw();
-				tableAccion.clear(); if(accion.length > 0) tableAccion.rows.add(JSON.parse(accion)).draw();
-				tableIEF.clear(); if(ies.length > 0) tableIEF.rows.add(JSON.parse(ies)).draw();
-				tableFotos.clear();
-				if(fotos.length > 0){
-					let json = [];
-					let row = JSON.parse(fotos);
-					row.forEach(function(col){
-						json.push({ 'version':col.version,'fotografia':col.fotografia,'descripcion':col.descripcion,'foto':URI+url+col.fotografia,
-							'idusuario_apertura':col.idusuario_apertura,'fecha_apertura':col.fecha_apertura });
-					});
-					tableFotos.rows.add(json).draw();
-				}
-				//tableIEUbigeo.clear(); if(iesUB.length > 0) tableIEUbigeo.rows.add(JSON.parse(iesUB)).draw();
-				$('#dpto').html('<option " selected>' + dpto + '</option>');
-				$('#prov').html('<option " selected>' + pro + '</option>');
-				$('#dist').html('<option " selected>' + dis + '</option>');
-				//console.log(iesUB);
-				if(!$('.ajaxTable').css('display') == 'none' || $('.ajaxTable').css('opacity') == 1) $('.ajaxTable').hide();
-				if($('.ajaxPreliminar').css('display') == 'none' || $('.ajaxPreliminar').css('opacity') == 0) $('.ajaxPreliminar').show();
+			data: { idugel: cod_ugel },
+			url: 'buscaIESPrel',
+			method: "POST",
+			dataType: "json",
+			beforeSend: function(){ $('#loadIES').show(); },
+			success: function(data){
+				if(data.length > 0) tableIEUbigeo.rows.add(data).draw(); $('#loadIES').hide();
 			}
-        });
-	}
+		}).fail( function( jqXHR, textStatus, errorThrown ){ alert(jqXHR + ",  " + textStatus + ",  " + errorThrown); $('#loadIES').hide(); });
+	});
+	
+	$('#dre').bind('change',function(e){
+		tableIEUbigeo.clear(); tableIEUbigeo.draw(); let iddre = $(this).val();
+		alert(iddre); let optUgel = '<option value="">-- Seleccione --</option>'; 
+		$.ajax({
+			data: { iddre: iddre },
+			url: 'buscaUGELPrel',
+			method: "POST",
+			dataType: "json",
+			beforeSend: function(){ $('#loadIES').show(); $('#ugel').html('<option>Cargando...</option>'); },
+			success: function(data){
+				if(data.length > 0){
+					data.forEach(function(el){ optUgel += '<option value="'+el.codigo_ugel+'" >'+el.codigo_ugel+' '+el.ugel+'</option>'; });
+					$('#ugel').html(optUgel); $('#loadIES').hide();
+				}else alert('No se encontraron Resultados');
+			}
+		}).fail( function( jqXHR, textStatus, errorThrown ){ alert(jqXHR + ",  " + textStatus + ",  " + errorThrown); $('#loadIES').hide(); });
+	});
+	$('#ugel').bind('change',function(e){
+		tableIEUbigeo.clear(); tableIEUbigeo.draw(); let cod_ugel = $(this).val();
+		alert(cod_ugel);
+		$.ajax({
+			data: { idugel: cod_ugel },
+			url: 'buscaIESPrel',
+			method: "POST",
+			dataType: "json",
+			beforeSend: function(){ $('#loadIES').show(); },
+			success: function(data){ if(data.length > 0) tableIEUbigeo.rows.add(data).draw(); $('#loadIES').hide(); }
+		}).fail( function( jqXHR, textStatus, errorThrown ){ alert(jqXHR + ",  " + textStatus + ",  " + errorThrown); $('#loadIES').hide(); });
+	});
 	
 	table.on('click', 'button', function(){
 		//console.log(table.row($(this).parents("tr")).data());
@@ -369,7 +421,7 @@ function main(map) {
 			//$('#nav-tab:visible:first a').tab('show');
 			$('#idregevento').val(data.idregistroevento);
 			$('#version').val(0);
-			informe(data.idregistroevento,data.ubigeo,data.departamento,data.provincia,data.distrito,0);
+			informe(data.idregistroevento,data.ubigeo,0);
 		}
 		if($(this).hasClass('actionReport')){window.open('informe?id='+data.idregistroevento+'&version=0', "_blank");}
 		if($(this).hasClass('actionComp')){
@@ -389,7 +441,7 @@ function main(map) {
 				dataType: "json",
 				beforeSend: function () {},
 				success: function (data) {
-					console.log(data);
+					//console.log(data);
 					const { versiones } = data;
 					const { max } = data;
 					

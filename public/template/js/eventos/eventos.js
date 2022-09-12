@@ -104,9 +104,13 @@ function eventos() {
 		}if($(this).hasClass('actionInforme')){
 			/*console.log( ($('#ubigeoComp').val()).substr(0,2) +'  '+ ($('#ubigeoComp').val()).substr(2,2) +' '+ ($('#ubigeoComp').val()).substr(4,2) );
 			console.log( $('#idregComp').val() +'  '+ $('#versionComp').val() );*/
+			let id = $('#idregComp').val();
 			resetear();
 			$('#formInforme .iq-header-title h4').html('Datos Complementarios de la Emergencia');
-			informeComp( $('#idregComp').val(),$('#ubigeoComp').val(),$('#dptoComp').val(),$('#provComp').val(),$('#dttoComp').val(),data.version );
+			$('#version').val(data.version);
+			$('#idregevento').val(id);
+			$('#informe').val('complementario');
+			informe( $('#idregComp').val(),$('#ubigeoComp').val(),data.version );
 		}if($(this).hasClass('actionReport')){window.open('informe?id='+data.idregistroevento+'&version='+data.version, "_blank");}
 	});
 	
@@ -129,7 +133,7 @@ function eventos() {
         });
 	}
 	
-	function informeComp(id,ubigeo,dpto,pro,dis,ver){
+	/*function informeComp(id,ubigeo,dpto,pro,dis,ver){
 		$.ajax({
             data: { idevento: id, ubigeo: ubigeo, version: ver },
             url: path + "buscaPreliminar",
@@ -182,7 +186,7 @@ function eventos() {
 				if($('.ajaxPreliminar').css('display') == 'none' || $('.ajaxPreliminar').css('opacity') == 0) $('.ajaxPreliminar').show();
 			}
         });
-	}
+	}*/
 	
 	function imagen(files){
 		$.each(files, function(index, file) {
