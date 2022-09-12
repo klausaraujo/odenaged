@@ -119,7 +119,7 @@ class Main extends CI_Controller
 				$i = 0; $dre1 = $dre->dres;
 				if(!empty($ugels)){
 					foreach($ugels as $ugel):
-						if($ugel->dre === dre1){ $ugelQuery .= (($ugelQuery === '')?'(' : ',(').$id.','.$ugel->ugel.',1)'; $i++; }
+						if($ugel->dre === $dre1){ $ugelQuery .= (($ugelQuery === '')?'(' : ',(').$id.','.$ugel->ugel.',1)'; $i++; }
 					endforeach;
 					if($i > 0){ $dreQuery .= (($dreQuery === '')?'(' : ',(').$id.','.$dre->dres.',1)'; }
 				}
@@ -153,6 +153,8 @@ class Main extends CI_Controller
 			'borra2' => $bDre,
 			'status' => $status,
 			'msg' => (($status === 200)?'Permisos Registrados Exitosamente' : 'No se pudo Registrar los Permisos'),
+			'drequery' => $dreQuery,
+			'ugelquery' => $ugelQuery,
 		);
 		
 		echo json_encode($data);

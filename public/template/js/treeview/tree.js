@@ -12,12 +12,12 @@ $(document).ready(function(){
 			$(this).parents('ul').each(function(){
 				ul = $(this); let checks = ul.find('.unchecked'), checkPad = ul.prev();
 				if(ul.attr('class') !== 'root'){
-					if(checks.length > 0){ if(checkPad.hasClass('unchecked')) remAdd(checkPad,'checkbox mid-checked'); }
+					if(checks.length > 0){ if(checkPad.hasClass('unchecked') || checkPad.hasClass('ddbb')) remAdd(checkPad,'checkbox mid-checked'); }
 					else if(checks.length === 0) remAdd(checkPad,'checkbox checked');
 				}
 			});
 			if(li1.children('ul').length > 0) remAdd(li1.find('.checkbox.unchecked'),'checkbox checked');
-			if($(this).parents('.dep').find('.unchecked').length == 0) remAdd($(this).parents('.dep').find('.checkbox'),'checkbox checked');
+			if($(this).parents('.dre').find('.unchecked').length == 0) remAdd($(this).parents('.dre').find('.checkbox'),'checkbox checked');
 		
 		}else if($(this).hasClass('checked')){
 			remAdd($(this),'checkbox unchecked');
@@ -29,7 +29,7 @@ $(document).ready(function(){
 				}
 			}); 
 			if(li1.children('ul').length > 0) remAdd(li1.find('.checkbox.checked'),'checkbox unchecked');
-			if($(this).parents('.dep').find('.checked').length == 0) remAdd($(this).parents('.dep').find('.checkbox'),'checkbox unchecked');
+			if($(this).parents('.dre').find('.checked').length == 0) remAdd($(this).parents('.dre').find('.checkbox'),'checkbox unchecked');
 		}
 	});
 });
