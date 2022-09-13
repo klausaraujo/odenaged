@@ -2221,7 +2221,7 @@ CREATE TABLE usuarios  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
 INSERT INTO usuarios (tipo_dni,dni,avatar,apellidos,nombres,usuario,passwd,idperfil) VALUES (1,'42545573', '000120190310064855.png', 'ARAUJO CUADROS', 'KLAUS JOSEPH', 'admin', 'e4619e8fb50a0aa59ad1b92364f127afad06afe1',1);
-INSERT INTO usuarios (tipo_dni,dni,avatar,apellidos,nombres,usuario,passwd,idperfil) VALUES (1,'00000000', '000120190310064855.png', 'ARAUJO CUADROS', 'JAVIER ANDES', 'jaraujo', 'e4619e8fb50a0aa59ad1b92364f127afad06afe1',2);
+INSERT INTO usuarios (tipo_dni,dni,avatar,apellidos,nombres,usuario,passwd,idperfil) VALUES (1,'44636456', '000120190310064855.png', 'ARAUJO CUADROS', 'JAVIER ANDES', 'jaraujo', 'e4619e8fb50a0aa59ad1b92364f127afad06afe1',2);
 
 CREATE TABLE usuarios_dre  (
 	idusuariodre smallint(4) NOT NULL AUTO_INCREMENT,

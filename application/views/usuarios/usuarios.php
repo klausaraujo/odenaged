@@ -24,7 +24,7 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 									<div class="table-responsive" style="overflow-x:scroll">
 										<table id="tablaUsuarios" class="table dt-responsive table-bordered display nowrap table-hover px-0 mx-auto" style="display:none">
 											<thead class="text-center">
-												<tr><th>Acciones</th><th style="visibility:collapse; display:none;">Id</th><th>Tipo Doc.</th><th>DNI</th>
+												<tr><th>Acciones</th><th style="visibility:collapse; display:none;">Id</th><th>Tipo Doc.</th><th>Num.Doc.</th>
 												<th>Avatar</th><th>Apellidos</th><th>Nombres</th><th>Usuario</th><th>Perfil</th><th>Estado</th></tr>
 											</thead>
 											<tbody>
@@ -149,7 +149,7 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 								<div class="row">
 									<nav>
 										<div class="nav nav-tabs" id="nav-tab" role="tablist">
-											<a class="nav-item nav-link active" id="nav-regiones-tab" data-toggle="tab" href="#nav-regiones" role="tab" aria-controls="nav-regiones" aria-selected="true">Asignar Regiones</a>
+											<a class="nav-item nav-link active" id="nav-regiones-tab" data-toggle="tab" href="#nav-regiones" role="tab" aria-controls="nav-regiones" aria-selected="true">Asignar Acceso a UGELES</a>
 											<!--<a class="nav-item nav-link font-sirese" id="nav-acciones-tab" data-toggle="tab" href="#nav-acciones" role="tab" aria-controls="nav-acciones" aria-selected="false">Registro de Acciones</a>
 											<a class="nav-item nav-link font-sirese" id="nav-ie-tab" data-toggle="tab" href="#nav-ie" role="tab" aria-controls="nav-ie" aria-selected="false">Registro de IE Afectadas</a>
 											<a class="nav-item nav-link font-sirese" id="nav-fotos-tab" data-toggle="tab" href="#nav-fotos" role="tab" aria-controls="nav-fotos" aria-selected="false">Galer&iacute;a de fotos</a>-->
