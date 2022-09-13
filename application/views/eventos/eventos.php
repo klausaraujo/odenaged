@@ -32,9 +32,9 @@ if(null !== $zonas){
 						<br>
 						<div class="container-fluid">
 							<div class="row">
-								<div class="table-responsive mx-auto" style="overflow-x:scroll">
+								<div class="table-responsive" style="overflow-x:scroll">
 								<!--<div class="col-sm-12 mx-auto" style="overflow-x:scroll"><!--align-items-center text-center-->
-									<table id="tablaEvento" class="table table-striped dt-responsive table-bordered display nowrap table-hover mb-0"></table>
+									<table id="tablaEvento" class="table table-striped dt-responsive table-bordered display nowrap table-hover mb-0 mx-auto"></table>
 								</div>
 							</div>
 						</div>

@@ -108,5 +108,7 @@
 <?	}else{	?>
 <script>window.onload = function(){ alert('El Usuario no tiene Regiones Asignadas'); }</script>
 <?	}
-}
-?>
+}if($this->uri->segment(1) === 'fichas'){	?>
+<script src="<?=base_url()?>public/template/js/table/datatable/datatables.min.js"></script>
+<script src="<?=base_url()?>public/template/js/fichas/fichas.js"></script>
+<?}?>

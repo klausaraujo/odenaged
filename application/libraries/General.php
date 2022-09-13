@@ -8,6 +8,15 @@ class General {
 
 	private $c = 0;
 	
+	private function existeDIR($ruta){
+		if(!file_exists($ruta)){
+			$parts = explode('/', $ruta);
+			array_pop($parts);
+			$dir = implode( '/', $parts );
+			if( !is_dir( $dir ) ) mkdir( $dir, 0777, true );
+		}
+	}
+	
 	#Funcion para guardar la imagen del mapa segun las coordenadas
 	/*public function saveImageMap($path,$image,$lat,$lng,$zoom){
 		$url = "https://maps.googleapis.com/maps/api/staticmap?language=es&center=".trim($lat).",".trim($lng)."&markers=color:red|label:|".trim($lat).",".trim($lng)."&zoom=".$zoom."&size=596x280&key=AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc";
@@ -32,12 +41,7 @@ class General {
 		$img = base64_decode($base_to_php[1]);
 		$name = date('Ymdhis');
 		$filename = $name.$this->c.'.png';
-		if(!file_exists($path)){
-			$parts = explode('/', $path);
-			array_pop($parts);
-			$dir = implode( '/', $parts );
-			if( !is_dir( $dir ) ) mkdir( $dir, 0777, true );
-		}
+		$this->existeDIR($path);
 		
 		if(!file_put_contents($path.$filename,$img) > 0)
 			$filename = '';
@@ -47,12 +51,8 @@ class General {
 	public function saveImage1($path,$data,$name){
 		$img = base64_decode($data);
 		$filename = $name;
-		if(!file_exists($path)){
-			$parts = explode('/', $path);
-			array_pop($parts);
-			$dir = implode( '/', $parts );
-			if( !is_dir( $dir ) ) mkdir( $dir, 0777, true );
-		}		
+		$this->existeDIR($path);
+		
 		if(!file_put_contents($path.$filename,$img) > 0)
 			$filename = '';
 		

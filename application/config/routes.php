@@ -62,6 +62,7 @@ $route['usuarios'] = 'main/usuarios';
 $route['cargarprov'] = 'main/cargarprov';
 $route['cargardis'] = 'main/cargardis';
 $route['cargarLatLng'] = 'main/cargarLatLng';
+$route['fichas'] = 'main/fichas';
 
 #Formularios de Registro y edicion de Eventos
 $route['cargarEvento'] = 'eventos/main/cargarEvento';

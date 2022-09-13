@@ -21,7 +21,7 @@ $btn_permisos = '<button class="border border-primary btn-sm actionPermisos px-1
 								</div><?}?>
 								<div class="col-sm-12">
 									<div class="row justify-content-center" style="font-size:18px"><span class="mesg" style="display:none"></span></div>
-									<div class="table-responsive mx-auto" style="overflow-x:scroll">
+									<div class="table-responsive" style="overflow-x:scroll">
 										<table id="tablaUsuarios" class="table dt-responsive table-bordered display nowrap table-hover px-0 mx-auto" style="display:none">
 											<thead class="text-center">
 												<tr><th>Acciones</th><th style="visibility:collapse; display:none;">Id</th><th>Tipo Doc.</th><th>DNI</th>

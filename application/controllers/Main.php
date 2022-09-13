@@ -74,6 +74,13 @@ class Main extends CI_Controller
 		);
 		$this->load->view('main',$data);
 	}
+	public function fichas(){
+		$data = array(
+			'data' => 'Fichas',
+		);
+		
+		$this->load->view('main',$data);
+	}
 	public function cargarprov(){
 		$this->load->model("Ubigeo_model");
 		$this->Ubigeo_model->setIdUser($this->session->userdata("idusuario"));
@@ -118,49 +125,6 @@ class Main extends CI_Controller
 		echo $resp;
 	}
 	public function mapasInteractivos(){
-		/*$data = array(
-            "tipo" => array(),
-            "nivel" => array(),
-            "departamentos" => array()
-        );
-		
-		$this->load->view("mapas/eventosMonitoreo", $data);*/
 		echo 'Mapas';
 	}
-	
-	/*public function urlCurl() {
-		$lat = $this->input->post('lat');
-		$lng = $this->input->post('lng');
-		$zoom = $this->input->post('zoom');
-		$url = "https://maps.googleapis.com/maps/api/staticmap?language=es&center=".trim($lat).",".trim($lng)."&markers=color:red|label:|".trim($lat).",".trim($lng)."&zoom=".$zoom."&size=596x280&key=AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc";
-
-		$imagen = $_SERVER["DOCUMENT_ROOT"].'/odenaged/public/imagen_mapa.png';
-		$ch = curl_init();
-		$fp = fopen($imagen, 'wb');
-		curl_setopt($ch, CURLOPT_URL, trim($url));
-		curl_setopt($ch, CURLOPT_VERBOSE, 1);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_AUTOREFERER, false);
-		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-		curl_setopt($ch, CURLOPT_FILE, $fp);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // <-- don't forget this
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); // <-- and this
-		$result = curl_exec($ch);
-		curl_close($ch);
-		//fwrite($fp, $result);
-		fclose($fp);
-		
-		
-		$data = array(
-			'resp' => ($result === true)? 200 : 500,
-			'curl' => $result,
-			'lat' => $lat,
-			'lng' => $lng,
-			'zoom' => $zoom,
-			'url' => $url,
-		);
-
-		echo json_encode($data);
-	}*/
 }
