@@ -4923,14 +4923,17 @@ CREATE TABLE menu  (
   activo char(1) DEFAULT '1',
   PRIMARY KEY (idmenu),
 	FOREIGN KEY (idmodulo) REFERENCES modulo (idmodulo) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
-
+	/*Menus del Módulo de Eventos*/
 	INSERT INTO menu(idmenu,idmodulo,descripcion,nivel,url,icono) VALUES(1,1,'Lista Eventos','0','eventos','fa fa-list');
-	INSERT INTO menu(idmenu,idmodulo,descripcion,nivel,url,icono) VALUES(2,1,'Nuevo Registro','0','nuevo','fa fa-pencil-square-o');
+	INSERT INTO menu(idmenu,idmodulo,descripcion,nivel,url,icono) VALUES(2,1,'Nuevo Registro','0','nuevoevento','fa fa-pencil-square-o');
 	INSERT INTO menu(idmenu,idmodulo,descripcion,nivel,url,icono) VALUES(3,1,'Gestor de Reportes','1','#','fa fa-table');
-	
+	/*Menus del Módulo de Usuarios*/
 	INSERT INTO menu(idmenu,idmodulo,descripcion,nivel,url,icono) VALUES(4,10,'Lista Usuarios','0','usuarios','fa fa-list');
 	INSERT INTO menu(idmenu,idmodulo,descripcion,nivel,url,icono) VALUES(5,10,'Nuevo Registro','0','nuevousuario','fa fa-pencil-square-o');
-
+	/*Menus del Módulo de Fichas*/
+	INSERT INTO menu(idmenu,idmodulo,descripcion,nivel,url,icono) VALUES(6,2,'Lista Fichas','0','fichas','fa fa-list');
+	INSERT INTO menu(idmenu,idmodulo,descripcion,nivel,url,icono) VALUES(7,2,'Nuevo Registro','0','nuevaficha','fa fa-pencil-square-o');
+	INSERT INTO menu(idmenu,idmodulo,descripcion,nivel,url,icono) VALUES(8,2,'Gestor de Reportes','1','#','fa fa-table');
 
 CREATE TABLE menu_detalle  (
   idmenudetalle smallint(4) NOT NULL AUTO_INCREMENT,
@@ -4943,8 +4946,12 @@ CREATE TABLE menu_detalle  (
   PRIMARY KEY (idmenudetalle),
 	FOREIGN KEY (idmenu) REFERENCES menu (idmenu) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
+	/*SubMenus del Módulo de Eventos*/
 	INSERT INTO menu_detalle (idmenudetalle,idmenu,descripcion,url,icono,orden) VALUES(1,3,'Consolidado','consolidado','fa fa-th-list',1);
 	INSERT INTO menu_detalle (idmenudetalle,idmenu,descripcion,url,icono,orden) VALUES(2,3,'Mapa de Eventos','mapas','fa fa-newspaper-o',2);
+	/*SubMenus del Módulo de Fichas*/	
+	INSERT INTO menu_detalle (idmenudetalle,idmenu,descripcion,url,icono,orden) VALUES(3,8,'Consolidado','consolidadofichas','fa fa-th-list',1);
+	INSERT INTO menu_detalle (idmenudetalle,idmenu,descripcion,url,icono,orden) VALUES(4,8,'Mapa de Fichas','mapasfichas','fa fa-newspaper-o',2);
 
 CREATE TABLE permisos_menu  (
   idpermisosmenu smallint(4) NOT NULL AUTO_INCREMENT,
@@ -4960,11 +4967,17 @@ CREATE TABLE permisos_menu  (
 	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(3,3,1);
 	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(4,4,1);
 	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(5,5,1);
+	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(6,6,1);
+	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(7,7,1);
+	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(8,8,1);
 	
 		
-	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(6,1,2);
-	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(7,2,2);
-	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(8,3,2);
+	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(9,1,2);
+	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(10,2,2);
+	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(11,3,2);
+	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(12,6,2);
+	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(13,7,2);
+	INSERT INTO permisos_menu(idpermisosmenu,idmenu,idusuario) VALUES(14,8,2);
 	
 CREATE TABLE permisos_menu_detalle  (
   idpermisosmenudetalle smallint(4) NOT NULL AUTO_INCREMENT,
@@ -4977,9 +4990,13 @@ CREATE TABLE permisos_menu_detalle  (
 	
 	Insert Into permisos_menu_detalle(idpermisosmenudetalle,idmenudetalle,idusuario) Values (1,1,1);
 	Insert Into permisos_menu_detalle(idpermisosmenudetalle,idmenudetalle,idusuario) Values (2,2,1);
+	Insert Into permisos_menu_detalle(idpermisosmenudetalle,idmenudetalle,idusuario) Values (5,3,1);
+	Insert Into permisos_menu_detalle(idpermisosmenudetalle,idmenudetalle,idusuario) Values (6,4,1);
 	
 	Insert Into permisos_menu_detalle(idpermisosmenudetalle,idmenudetalle,idusuario) Values (3,1,2);
 	Insert Into permisos_menu_detalle(idpermisosmenudetalle,idmenudetalle,idusuario) Values (4,2,2);
+	Insert Into permisos_menu_detalle(idpermisosmenudetalle,idmenudetalle,idusuario) Values (7,3,2);
+	Insert Into permisos_menu_detalle(idpermisosmenudetalle,idmenudetalle,idusuario) Values (8,4,2);
 
 CREATE TABLE permisos_opcion  (
   idpermisoopcion smallint(4) NOT NULL AUTO_INCREMENT,
