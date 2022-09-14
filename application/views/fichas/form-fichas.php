@@ -21,21 +21,20 @@ $ubigeo = $this->session->userdata('ubigeo');
 								<div class="row">
 									<div class="col-sm-4">
 										<div class="row">
-											<label for="fechaevento" class="col-sm-12">Fecha del Evento:</label>
+											<label for="fechaevento" class="col-sm-12">Fecha de Ficha:</label>
 											<input type="date" class="form-control col-sm-11" name="fechaevento" id="fechaevento" value="<?=$fechaActual?>"/>
 										</div>
 									</div>
 									<div class="col-sm-4">
 										<div class="row">
-											<label for="horaevento" class="col-sm-12">Hora del Evento:</label>
+											<label for="horaevento" class="col-sm-12">Hora de la Ficha:</label>
 											<input type="time" class="form-control col-sm-11" name="horaevento" id="horaevento" value="<?=$hora?>"/>
 										</div>
 									</div>
 									<div class="col-sm-4">
-										<div class="row">
-											<label class="col-sm-12">&nbsp;</label>
-											<label class="form-check-label col-sm-9" for="afecta">Afecta al Sector Educaci&oacute;n:</label>
-											<input class="form-control col-sm-1" type="checkbox" id="afecta">
+										<div class="row justify-content-center">
+											<label class="col-sm-12" for="afecta">Fichas:</label>
+											<input class="form-control col-sm-11" type="text" id="afecta">
 										</div>
 									</div>
 								</div>

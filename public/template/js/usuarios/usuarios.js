@@ -5,6 +5,7 @@ function main(){
 	$('body').on('click dblclick', 'input, button, a, i', function(e){
 		var elementType = $(this).prop('nodeName');
 		if($(this).attr('rel') && $(this).attr('rel') === 'nuevousuario'){ resetForm(); ocultar(true); }
+		else if($(this).attr('rel') && $(this).attr('rel') === 'usuarios'){ resetForm(); ocultar(false); }
 		else if($(this).attr('name') === 'btnCancelar'){ let evt = e || e.target; evt.preventDefault(); resetForm(); ocultar(false); }
 		else if($(this).hasClass('loading')){
 			let ul = $(this).closest('li').children('ul');
@@ -93,7 +94,7 @@ function main(){
 			if(!$('.nuevoAjax').css('display') == 'none' || $('.nuevoAjax').css('opacity') == 1) $('.nuevoAjax').hide();
 			if($('.tablaUsuario').css('display') == 'none' || $('.tablaUsuario').css('opacity') == 0) $('.tablaUsuario').show();
 			$('.tituloUsers h4').html('Gesti&oacute;n de Usuarios');
-			$('.active').removeClass('active');
+			//$('.active').removeClass('active');
 		}
 	}
 	

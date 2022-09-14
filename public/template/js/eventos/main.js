@@ -460,14 +460,8 @@ function main(map) {
 			$(this).on('click',function(evt) {
 				var rel= $(this).attr('rel');
 				evt.preventDefault();
-				if(rel == 'nuevo'){
-					resetForm();
-					$('#tipo').val('registrar');
-					ocultarElem(false);
-				}else if(rel !== 'nuevo' && rel != null){
-					ocultarElem(true);
-					resetForm();
-				}
+				if(rel === 'nuevoevento'){ resetForm(); $('#tipo').val('registrar'); ocultarElem(false);
+				}else if(rel === 'eventos'){ ocultarElem(true); resetForm(); }
 			});
 		});
 	});
