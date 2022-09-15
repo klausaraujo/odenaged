@@ -351,6 +351,7 @@ class Informes extends CI_Controller
 		else echo json_encode(200);
 	}
 	public function informe(){
+		$versionphp = 7;
 		if ( $this->input->get('id') !== null){
 			$id = $this->input->get('id');
 			$version = $this->input->get('version');
@@ -373,7 +374,6 @@ class Informes extends CI_Controller
 			($ies->num_rows() > 0)? $ies = $ies->result() : $ies = array();
 			
 			if($evento->num_rows() > 0){
-				$this->load->library("dom");
 				$evento = $evento->row();
 				$data = array(
 					'evento' => $evento,
@@ -384,7 +384,17 @@ class Informes extends CI_Controller
 					'version' => $version
 				);
 				$html = $this->load->view('eventos/informe', $data, true);
-				$this->dom->generate("portrait", "informe", $html, "Informe");
+				//echo $this->dom1->versionDom();
+				if(floatval(phpversion()) < $versionphp){
+					$this->load->library('dom');
+					$this->dom->generate("portrait", "informe", $html, "Informe");
+				}else{
+					$this->load->library('dom1');
+					$this->dom1->generate("portrait", "informe", $html, "Informe");
+				}
+				//echo $html;
+				//$this->dom1->generate("portrait", "informe", $html, "Informe");
+				
 				#foreach($danios as $row):
 				#	echo var_dump($row);
 				#	echo $row->ideventotipodanio;

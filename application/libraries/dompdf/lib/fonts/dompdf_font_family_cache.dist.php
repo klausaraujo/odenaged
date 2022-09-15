@@ -91,13 +91,5 @@ return array(
             'bold_italic' => $distFontDir . 'DejaVuSerif-BoldItalic',
             'italic' => $distFontDir . 'DejaVuSerif-Italic',
             'normal' => $distFontDir . 'DejaVuSerif'
-        ),
-    'Roboto' =>
-        array(
-            'bold' => $distFontDir . 'Roboto-Bold',
-            'bold_italic' => $distFontDir . 'Roboto-Light',
-            'italic' => $distFontDir . 'Roboto-Thin',
-            'normal' => $distFontDir . 'Roboto-Regular'
         )
-)
-?>
+);
