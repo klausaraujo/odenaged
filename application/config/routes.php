@@ -63,6 +63,7 @@ $route['cargarprov'] = 'main/cargarprov';
 $route['cargardis'] = 'main/cargardis';
 $route['cargarLatLng'] = 'main/cargarLatLng';
 $route['fichas'] = 'main/fichas';
+$route['mapas'] = 'main/mapas';
 
 #Formularios de Registro y edicion de Eventos
 $route['cargarEvento'] = 'eventos/main/cargarEvento';
@@ -92,7 +93,7 @@ $route['permisos'] = 'usuarios/main/permisos';
 $route['regusuario'] = 'usuarios/main/registrar';
 
 # Mapas interactivos
-$route['mapas'] = 'main/mapasInteractivos';
+
 /**/
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

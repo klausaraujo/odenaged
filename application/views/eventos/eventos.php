@@ -2,6 +2,7 @@
 $anio = $this->session->userdata('anio');
 $mes = $this->session->userdata('mes');
 if(null !== $zonas){
+	date_default_timezone_set("America/Lima");
 ?>
 		<div class="col-xl-12 col-md-12">
 			<div class="ajaxForm" style="display:none"><?php $this->load->view("eventos/form-new"); ?></div>

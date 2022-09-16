@@ -124,7 +124,8 @@ class Main extends CI_Controller
 		$resp = $this->general->curl($tipo, $doc);
 		echo $resp;
 	}
-	public function mapasInteractivos(){
-		echo 'Mapas';
+	public function mapas(){
+		//echo 'Mapas Interactivos';
+		$this->load->view('main');
 	}
 }

@@ -12,7 +12,9 @@
    <link rel="stylesheet" href="<?=base_url()?>public/template/css/responsive.css">
    <link rel="stylesheet" href="<?=base_url()?>public/template/js/table/datatable/datatables.min.css" type="text/css">
 
-   <?if($this->uri->segment(1) === 'eventos'){?>	
+   <?if($this->uri->segment(1) === 'eventos'){?>
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=default" async></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=<?='AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc'?>&libraries=places&v=weekly" async></script>
    <style>
 		input[type=number]::-webkit-inner-spin-button, 
 		input[type=number]::-webkit-outer-spin-button { 
@@ -44,8 +46,10 @@
 		#uploader #uploaderCont .row.fileQueue>div.name b{overflow:hidden;text-overflow:ellipsis}
 		#uploader #uploaderCont .row.fileQueue>div.remove{margin-left:20px;justify-content:flex-end}*/
 	</style>
-	<?}?>
-	<?if($this->uri->segment(1) === 'usuarios'){?>
+	<?}else if($this->uri->segment(1) === 'usuarios'){?>
 	<link rel="stylesheet" href="<?=base_url()?>public/template/js/treeview/style.css" type="text/css">
+	<?}else if($this->uri->segment(1) === 'mapas'){?>
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=default" async></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=<?='AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc'?>&libraries=places&v=weekly" async></script>
 	<?}?>
 </head>

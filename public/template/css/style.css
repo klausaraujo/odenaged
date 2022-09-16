@@ -66,7 +66,7 @@ NOTE: This file contains the styling for responsive Template.
 *::-moz-selection { background-color: #e33d3d; color: white; text-shadow: none; }/**/
 ::-moz-selection { background-color: #e33d3d; color: white; text-shadow: none; }
 ::selection { background: #e33d3d; color: #fff; text-shadow: none; }
-.btn-sirese{ background: -moz-linear-gradient(left, #e33d3d, #FF0000);background: -o-linear-gradient(left, #e33d3d, #FF0000);background: linear-gradient(to right, #e33d3d, #FF0000); color: white; }
+.btn-sirese{ background: -moz-linear-gradient(left, #e33d3d, #FF0000);background: -o-linear-gradient(left, #e33d3d, #FF0000);background: linear-gradient(to right, #e33d3d, #FF0000); color: white; box-shadow: 2px 2px 5px 0 rgba(13, 0, 25,0.5); }
 .btn-sirese:hover{ background: -moz-linear-gradient(right, #e33d3d, #FF0000);background: -o-linear-gradient(right, #e33d3d, #FF0000);background: linear-gradient(to left, #e33d3d, #FF0000);color: white; }
 .font-sirese{ color : #e33d3d }
 .bg-sirese{ background: -moz-linear-gradient(right, #e33d3d, #e33d3d) !important;background: -o-linear-gradient(right, #e33d3d, #e33d3d) !important;background: linear-gradient(to left, #e33d3d, #e33d3d) !important; }

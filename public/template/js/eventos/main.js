@@ -403,6 +403,13 @@ function main(map) {
 		}).fail( function( jqXHR, textStatus, errorThrown ){ alert(jqXHR + ",  " + textStatus + ",  " + errorThrown); $('#loadIES').hide(); });
 	});
 	
+	/*function reqListener () {
+		var url = URL.createObjectURL(this.response);
+		console.log(url);
+		console.log(this.response);
+		window.open(url,'_blank');
+	}*/
+	
 	table.on('click', 'button', function(){
 		//console.log(table.row($(this).parents("tr")).data());
 		//table.row($(this).parents("tr")).deselect();
@@ -422,7 +429,14 @@ function main(map) {
 			$('#version').val(0);
 			informe(data.idregistroevento,data.ubigeo,0);
 		}
-		if($(this).hasClass('actionReport')){window.open('informe?id='+data.idregistroevento+'&version=0', "_blank");}
+		if($(this).hasClass('actionReport')){
+			/*var oReq = new XMLHttpRequest();
+			oReq.addEventListener('load', reqListener);
+			oReq.open('GET', 'informe?id='+data.idregistroevento+'&version=0', true);
+			oReq.responseType = 'blob';
+			oReq.send();*/
+			window.open('informe?id='+data.idregistroevento+'&version=0', "_blank");
+		}
 		if($(this).hasClass('actionComp')){
 			$('#tipoEvtComp').val(data.tipo_evento);
 			$('#evtComp').val(data.evento);

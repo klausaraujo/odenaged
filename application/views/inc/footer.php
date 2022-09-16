@@ -69,46 +69,72 @@
 			main();
 		}
 	</script>
-<?	}if($this->uri->segment(1) === 'eventos'){	if(null !== $zonas){	?>
+<?	}else if($this->uri->segment(1) === 'eventos'){	
+		if(null !== $zonas){	?>
+		<script src="<?=base_url()?>public/template/js/table/datatable/datatables.min.js"></script>
+		<script src="<?=base_url()?>public/template/js/table/datatable/jszip.min.js"></script>
+		<script src="<?=base_url()?>public/template/js/table/datatable/pdfmake.min.js"></script>
+		<script src="<?=base_url()?>public/template/js/table/datatable/vfs_fonts.js"></script>
+		<script src="<?=base_url()?>public/template/js/table/table.js"></script>
+		<!--<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=<?//='AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc'?>&libraries=places&v=weekly" async></script>-->
+		<script src="<?=base_url()?>public/template/js/mapa/map.js"></script>
+		<script src="<?=base_url()?>public/template/js/eventos/main.js"></script>
+		<script src="<?=base_url()?>public/template/js/eventos/eventos.js"></script>
+		<script src="<?=base_url()?>public/template/js/table/tableComp.js"></script>
+		<script src="<?=base_url()?>public/template/js/table/tableIE.js"></script>
+		<script>
+			const lista = JSON.parse('<?=json_encode($ubi)?>'); const datos = [];
+			let table, tableDanio, tableAccion, tableFotos, tableIEF, tableIEUbigeo, tabComp;
+			
+			window.onload = function(){
+				var opt = {lat: 42.1382114, lng: -71.5212585,zoom: 16}; $('.ajaxMap').hide();
+				const headers = [{'anio_evento':'A&ntilde;o','mes':'Mes','numero_evento':'nro. evento','nivel':'nivel','tipo_evento':'tipo evento','evento':'evento','ubigeo_descripcion':'ubigeo','estado':'estado'}];
+				const danio = [{'tipo_danio':'tipo de da&ntilde;o','cantidad':'cantidad'}];
+				const accion = [{'tipo_accion':'tipo de accion','descripcion':'descripcion','fecha':'fecha'}];
+				const foto = [{'fotografia':'fotografia','descripcion':'descripcion'}];
+				const ie = [{'CEN_EDU':'inst. educativa','descripcion':'descripcion','fecha':'fecha'}];
+				const ieUB = [{'CEN_EDU':'institucion educativa','COD_MOD':'cod. mod','CODLOCAL':'cod. local','D_NIV_MOD':'nivel'}];
+				const comp = [{'version':'version','fecha_apertura':'fecha apertura'}];
+				table = tablePersonalized('#tablaEvento',headers,lista);
+				tableDanio = tableComp('#tableDanio',danio,datos); tableAccion = tableComp('#tableAccion',accion,datos);
+				tableFotos = tableComp('#tableFotos',foto,datos,'foto'); tableIEF = tableComp('#tableIE',ie,datos);
+				tableIEUbigeo = tableIE('#tableIEUbigeo',ieUB,datos); tabComp = tablePersonalized('#tableComp',comp,datos,'complementario');
+				main(mapa(opt)); eventos();
+				//table.column(1).visible(false); //Ocultar columna dinamicamente
+			}
+			
+			function mayus(e){e.value = e.value.toUpperCase();}
+		</script>
+<?		}else{	?>
+		<script>window.onload = function(){ alert('El Usuario no tiene Regiones Asignadas'); }</script>
+<?		}
+	}else if($this->uri->segment(1) === 'fichas'){	?>
 	<script src="<?=base_url()?>public/template/js/table/datatable/datatables.min.js"></script>
-	<script src="<?=base_url()?>public/template/js/table/datatable/jszip.min.js"></script>
-	<script src="<?=base_url()?>public/template/js/table/datatable/pdfmake.min.js"></script>
-	<script src="<?=base_url()?>public/template/js/table/datatable/vfs_fonts.js"></script>
-	<script src="<?=base_url()?>public/template/js/table/table.js"></script>
-	<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=<?='AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc'?>&libraries=places&v=weekly" async></script>
-	<script src="<?=base_url()?>public/template/js/mapa/map.js"></script>
-	<script src="<?=base_url()?>public/template/js/eventos/main.js"></script>
-	<script src="<?=base_url()?>public/template/js/eventos/eventos.js"></script>
-	<script src="<?=base_url()?>public/template/js/table/tableComp.js"></script>
-	<script src="<?=base_url()?>public/template/js/table/tableIE.js"></script>
+	<script src="<?=base_url()?>public/template/js/fichas/fichas.js"></script>
+<?	}else if($this->uri->segment(1) === 'mapas'){	?>
+	<script src="<?=base_url()?>public/template/js/mapas/mapaMonitoreoEventos.js"></script>
 	<script>
-		const lista = JSON.parse('<?=json_encode($ubi)?>'); const datos = [];
-		let table, tableDanio, tableAccion, tableFotos, tableIEF, tableIEUbigeo, tabComp;
+		var escAncho = screen.width;
+		var escAlto = screen.height;
+		var activeInfoWindow;
+		
+		var escala = 6;
+
+		if (escAncho == 1920 && escAlto == 1080) escala = 6;
+		if (escAncho == 1680 && escAlto == 1050) escala = 6;
+		if (escAncho == 1600 && escAlto == 900) escala = 6;
+		if (escAncho == 1440 && escAlto == 900) escala = 6;
+		if (escAncho == 1400 && escAlto == 1050) escala = 6;
+		if (escAncho == 1366 && escAlto == 768) escala = 5;
+		if (escAncho == 1360 && escAlto == 768) escala = 5;
+		if (escAncho == 1280 && escAlto == 1024) escala = 6;
+		if (escAncho == 1024 && escAlto == 768) escala = 5;
+		if (escAncho == 800 && escAlto == 600) escala = 5;
+		var opt = {lat:  -9.318990, lng:-75.234375,zoom: escala};
 		
 		window.onload = function(){
-			var opt = {lat: 42.1382114, lng: -71.5212585,zoom: 16}; $('.ajaxMap').hide();
-			const headers = [{'anio_evento':'A&ntilde;o','mes':'Mes','numero_evento':'nro. evento','nivel':'nivel','tipo_evento':'tipo evento','evento':'evento','ubigeo_descripcion':'ubigeo','estado':'estado'}];
-			const danio = [{'tipo_danio':'tipo de da&ntilde;o','cantidad':'cantidad'}];
-			const accion = [{'tipo_accion':'tipo de accion','descripcion':'descripcion','fecha':'fecha'}];
-			const foto = [{'fotografia':'fotografia','descripcion':'descripcion'}];
-			const ie = [{'CEN_EDU':'inst. educativa','descripcion':'descripcion','fecha':'fecha'}];
-			const ieUB = [{'CEN_EDU':'institucion educativa','COD_MOD':'cod. mod','CODLOCAL':'cod. local','D_NIV_MOD':'nivel'}];
-			const comp = [{'version':'version','fecha_apertura':'fecha apertura'}];
-			table = tablePersonalized('#tablaEvento',headers,lista);
-			tableDanio = tableComp('#tableDanio',danio,datos); tableAccion = tableComp('#tableAccion',accion,datos);
-			tableFotos = tableComp('#tableFotos',foto,datos,'foto'); tableIEF = tableComp('#tableIE',ie,datos);
-			tableIEUbigeo = tableIE('#tableIEUbigeo',ieUB,datos); tabComp = tablePersonalized('#tableComp',comp,datos,'complementario');
-			main(mapa(opt)); eventos();
-			//table.column(1).visible(false); //Ocultar columna dinamicamente
+			mapaMonitoreoEventos(opt);
 		}
-		
-		function mayus(e){e.value = e.value.toUpperCase();}
 	</script>
-<?	}else{	?>
-<script>window.onload = function(){ alert('El Usuario no tiene Regiones Asignadas'); }</script>
-<?	}
-}if($this->uri->segment(1) === 'fichas'){	?>
-<script src="<?=base_url()?>public/template/js/table/datatable/datatables.min.js"></script>
-<script src="<?=base_url()?>public/template/js/fichas/fichas.js"></script>
 <?}?>
