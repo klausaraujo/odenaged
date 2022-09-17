@@ -49,6 +49,7 @@
 	<?}else if($this->uri->segment(1) === 'usuarios'){?>
 	<link rel="stylesheet" href="<?=base_url()?>public/template/js/treeview/style.css" type="text/css">
 	<?}else if($this->uri->segment(1) === 'mapas'){?>
+	<link rel="stylesheet" href="<?=base_url()?>public/template/mapas/main.css" type="text/css">
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=default" async></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=<?='AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc'?>&libraries=places&v=weekly" async></script>
 	<?}?>

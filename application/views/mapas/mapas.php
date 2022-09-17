@@ -3,12 +3,13 @@ $sombradiv = 'box-shadow: 2px 2px 5px 1px rgba(13, 0, 25,0.5)';
 $dtz = new DateTimeZone("America/Lima");
 $dt = new DateTime("now", $dtz);
 $fechaActual = $dt->format("Y-m-d");
+$ubigeo = $this->session->userdata('ubigeo');
 ?>
 <style>
-	.formu, .mapa{ margin:0;padding:0 }
+	.formu, .mapa{ margin:0;padding:0;min-height:100vh }
 	.formu{<?=$sombradiv?>;z-index:10}
 	label{margin-top:5px; margin-bottom:2px}
-	.card-body{min-height:600px}
+	.card-body{min-height:100vh}
 </style>
 <div class="clearfix"></div>
 <div class="col-sm-12">
@@ -22,20 +23,38 @@ $fechaActual = $dt->format("Y-m-d");
 							<div class="col-md-6">
 								<div class="row">
 									<label for="region" class="col-md-12">Region:</label>
-									<select class="form-control col-md-11" name="region" id="region">
+									<select class="form-control col-md-11 region" name="region" id="region">
 										<option value=""> -- TODOS -- </option>
+									<?php
+										if(!empty($ubigeo->dptos)){
+											foreach($ubigeo->dptos as $row):	?>
+												<option value="<?=$row->cod_dep;?>" ><?=$row->departamento;?></option>
+									<?		endforeach;
+										}	?>
 									</select>
 								</div>
 								<div class="row">
 									<label for="distrito" class="col-md-12">Distrito:</label>
-									<select class="form-control col-md-11" name="distrito" id="distrito">
+									<select class="form-control col-md-11 distrito" name="distrito" id="distrito">
 										<option value=""> -- TODOS -- </option>
+									<?php
+										if(!empty($ubigeo->dttos)){
+											foreach($ubigeo->dttos as $row):	?>
+												<option value="<?=$row->cod_dis;?>" ><?=$row->distrito;?></option>
+									<?		endforeach;
+										}	?>
 									</select>
 								</div>
 								<div class="row">
 									<label for="nivel" class="col-md-12">Nivel:</label>
 									<select class="form-control col-md-11" name="nivel" id="nivel">
 										<option value=""> -- TODOS -- </option>
+									<?php
+										if(!empty($nivel)){
+											foreach($nivel as $row):	?>
+												<option value="<?=$row->idnivel;?>" ><?=$row->nivel;?></option>
+									<?		endforeach;
+										}	?>
 									</select>
 								</div>
 								<div class="row">
@@ -46,19 +65,31 @@ $fechaActual = $dt->format("Y-m-d");
 							<div class="col-md-6">
 								<div class="row">
 									<label for="provincia" class="col-md-12">Provincia:</label>
-									<select class="form-control col-md-11" name="provincia" id="provincia">
+									<select class="form-control col-md-11 provincia" name="provincia" id="provincia">
 										<option value=""> -- TODOS -- </option>
+									<?php
+										if(!empty($ubigeo->dttos)){
+											foreach($ubigeo->dttos as $row):	?>
+												<option value="<?=$row->cod_dis;?>" ><?=$row->distrito;?></option>
+									<?		endforeach;
+										}	?>
 									</select>
 								</div>
 								<div class="row">
-									<label for="tipoevento" class="col-md-12">TIpo de Evento::</label>
-									<select class="form-control col-md-11" name="tipoevento" id="tipoevento">
+									<label for="tipoevento" class="col-md-12">Tipo de Evento::</label>
+									<select class="form-control col-md-11 tipoevento" name="tipoevento" id="tipoevento">
 										<option value=""> -- TODOS -- </option>
+									<?php
+										if(!empty($tipo)){
+											foreach($tipo as $row):	?>
+												<option value="<?=$row->idtipoevento;?>" ><?=$row->tipo_evento;?></option>
+									<?		endforeach;
+										}	?>
 									</select>
 								</div>
 								<div class="row">
 									<label for="evento" class="col-md-12">Evento:</label>
-									<select class="form-control col-md-11" name="evento" id="evento">
+									<select class="form-control col-md-11 eventotipo" name="evento" id="evento">
 										<option value=""> -- TODOS -- </option>
 									</select>
 								</div>
@@ -90,11 +121,11 @@ $fechaActual = $dt->format("Y-m-d");
 								</div>
 							</div>
 						</div>
-						<div class="row"><button class="btn col-sm-11 mx-auto btn-sirese" style="position:absolute;bottom:10px">Mostrar Reporte dentro del Mapa</button></div>
+						<div class="row"><button class="btn col-sm-11 mx-auto btn-sirese" id="buscar" style="position:absolute;bottom:10px">Mostrar Reporte dentro del Mapa</button></div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div id="map" style="min-height:600px" class="col-md-7 mapa"></div>
+		<div id="map" class="col-md-7 mapa"></div>
 	</div>
 </div>

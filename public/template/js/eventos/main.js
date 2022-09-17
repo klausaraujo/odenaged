@@ -250,7 +250,7 @@ function main(map) {
 	
 	$('#evento').change(function(){
 		var id = $(this).val();
-		var txt = $(this).find(":selected").text()
+		var txt = $(this).find(':selected').text();
 		if(txt == 'SISMO'){
 			if($('.sismo').css('display') == 'none' || $('.sismo').css('opacity') == 0) $('.sismo').show();
 		}else{

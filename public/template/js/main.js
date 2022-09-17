@@ -48,4 +48,28 @@ $(document).ready(function () {
     
         }
     });
+	
+	$('.tipoevento').change(function(){
+		var val = $(this).val();
+        if (val.length > 0) {
+          $.ajax({
+            data: { tipo: val },
+            url: 'evtbytipo',
+            method: "POST",
+            dataType: "json",
+            beforeSend: function () {
+              $(".eventotipo").html('<option value="">Cargando...</option>');
+            },
+            success: function (data) {
+				//console.log(data);
+				var $html = '<option value="">--Seleccione--</option>';
+				$.each(data, function (i, e) {
+					$html += '<option value="' + e.idevento + '">' + e.evento + '</option>';
+				});
+				$(".eventotipo").html($html);
+            }
+          });
+    
+        }
+    });
 });

@@ -180,13 +180,14 @@
 										<div class="row">
 											<label for="distrito" class="col-sm-12">Distrito:</label>
 											<select class="form-control col-sm-10 distrito" name="distrito" id="distrito">
-												<option value="">-- Seleccione --</option>
 									<?php
-											if(!empty($ubigeo->dttos)){
+											if(!empty($ubigeo->dttos)){ $i = 0;
 												foreach($ubigeo->dttos as $row):	?>
-													<option value="<?=$row->cod_dis;?>"><?=$row->distrito;?></option>
-									<?		endforeach;
-											}	?>
+													<option value="<?=$row->cod_dis;?>" <?=($i === 0)? 'selected' : ''?> ><?=$row->distrito;?></option>
+									<?			$i++; endforeach;
+											}else{	?>
+												<option value="">-- Seleccione --</option>
+									<? 		}	?>
 											</select>
 										</div>
 									</div>

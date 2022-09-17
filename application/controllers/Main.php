@@ -124,8 +124,27 @@ class Main extends CI_Controller
 		$resp = $this->general->curl($tipo, $doc);
 		echo $resp;
 	}
+	public function cargaEventoByTipo(){
+		$this->load->model("Evento_model");
+		$this->Evento_model->setIdTipoEvt($this->input->post("tipo"));
+		$evtByTip = $this->Evento_model->cargarEvento();
+		$evtByTip = ($evtByTip->num_rows() > 0)? $evtByTip->result() : array();
+		
+		echo json_encode($evtByTip);
+	}
 	public function mapas(){
 		//echo 'Mapas Interactivos';
-		$this->load->view('main');
+		$this->load->model("Evento_model");
+		$tipoevento = $this->Evento_model->tipoEvento();
+		$nivel = $this->Evento_model->cargaNivel();
+		$tipoevento = ($tipoevento->num_rows() > 0)? $tipoevento->result() : array();
+		$nivel = ($nivel->num_rows() > 0)? $nivel->result() : array();
+		
+		$data = array(
+			'tipo' => $tipoevento,
+			'nivel' => $nivel,
+		);
+		
+		$this->load->view('main',$data);
 	}
 }

@@ -113,28 +113,12 @@
 	<script src="<?=base_url()?>public/template/js/table/datatable/datatables.min.js"></script>
 	<script src="<?=base_url()?>public/template/js/fichas/fichas.js"></script>
 <?	}else if($this->uri->segment(1) === 'mapas'){	?>
-	<script src="<?=base_url()?>public/template/js/mapas/mapaMonitoreoEventos.js"></script>
+	<script src="<?=base_url()?>public/template/mapas/mapaMonitoreoEventos.js"></script>
+	<script src="<?=base_url()?>public/template/js/mapas/mapas.js"></script>
 	<script>
-		var escAncho = screen.width;
-		var escAlto = screen.height;
-		var activeInfoWindow;
-		
-		var escala = 6;
-
-		if (escAncho == 1920 && escAlto == 1080) escala = 6;
-		if (escAncho == 1680 && escAlto == 1050) escala = 6;
-		if (escAncho == 1600 && escAlto == 900) escala = 6;
-		if (escAncho == 1440 && escAlto == 900) escala = 6;
-		if (escAncho == 1400 && escAlto == 1050) escala = 6;
-		if (escAncho == 1366 && escAlto == 768) escala = 5;
-		if (escAncho == 1360 && escAlto == 768) escala = 5;
-		if (escAncho == 1280 && escAlto == 1024) escala = 6;
-		if (escAncho == 1024 && escAlto == 768) escala = 5;
-		if (escAncho == 800 && escAlto == 600) escala = 5;
-		var opt = {lat:  -9.318990, lng:-75.234375,zoom: escala};
-		
 		window.onload = function(){
 			mapaMonitoreoEventos(opt);
+			mapas();
 		}
 	</script>
 <?}?>
