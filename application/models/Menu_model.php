@@ -17,30 +17,28 @@ class Menu_model extends CI_Model
     public function setStatus($data){ $this->status = $this->db->escape_str($data); }
     public function setIdPermiso($data){ $this->idpermiso = $this->db->escape_str($data); }
     
-	public function __construct()
+	public function __construct(){ parent::__construct(); }
+    
+	public function listaMenuPermisos()
     {
-        parent::__construct();
-    }
-    public function listaPermisos()
-    {
-        $this->db->select("m.idmenu,descripcion,nivel,url,icono,idmodulo,m.activo");
-        $this->db->from("menu m");
-        $this->db->join("permisos_menu pm","pm.idmenu = m.idmenu");
-        $this->db->where("idmodulo", $this->idmodulo);
-        $this->db->where("idusuario", $this->idusuario);
-		$this->db->where("pm.activo", "1");
-		$this->db->order_by("idmenu", "ASC");
+        $this->db->select("pm.idmenu,descripcion,nivel,url,icono,idmodulo,pm.activo");
+        $this->db->from("permisos_menu pm");
+        $this->db->join("menu m","pm.idmenu=m.idmenu");
+		$this->db->where("idusuario", $this->idusuario);
+        //$this->db->where("idmodulo", $this->idmodulo);
+        $this->db->where("pm.activo", "1");
         return $this->db->get();
     }
-    public function listaSubMenuPermisos()
+	public function listaSubMenuPermisos()
     {
-        $this->db->select("md.idmenudetalle,idmenu,descripcion,url,icono,orden,md.activo");
-        $this->db->from("menu_detalle md");
-        $this->db->join("permisos_menu_detalle p","p.idmenudetalle = md.idmenudetalle");
-        $this->db->where("idmenu", $this->id);
+        $this->db->select("pd.idmenudetalle,idmenu,descripcion,url,icono,orden,pd.activo");
+        $this->db->from("permisos_menu_detalle pd");
+        $this->db->join("menu_detalle md","pd.idmenudetalle=md.idmenudetalle");
         $this->db->where("idusuario", $this->idusuario);
-        $this->db->where("p.activo", "1");
-        $this->db->order_by("orden", "ASC");
+		//$this->db->where("idmenu", $this->id);
+        $this->db->where("pd.activo", "1");
+        $this->db->order_by("pd.idmenudetalle", "ASC");
+		$this->db->order_by("orden", "ASC");
         return $this->db->get();
     }
     public function listaPermisosOpcion(){
@@ -55,35 +53,6 @@ class Menu_model extends CI_Model
         $this->db->from("permiso");
         $this->db->where("estado", "1");
 
-        return $this->db->get();
-    }
-    public function permisosMenu(){
-        $this->db->select("m.idmenu,pm.Activo,idmodulo,nivel");
-        $this->db->from("menu m");
-        $this->db->join("permisos_menu pm","m.idmenu=pm.idmenu","LEFT");
-        $this->db->where("idusuario", $this->idusuario);
-        return $this->db->get();
-    }
-    public function permisosSubMenu(){
-        $this->db->select("m.idmenudetalle,pm.activo,m.idmenu");
-        $this->db->from("menu_detalle m");
-        $this->db->join("permisos_menu_detalle pm","m.idmenudetalle=pm.idmenudetalle","LEFT");
-        $this->db->where("idusuario", $this->idusuario);
-        return $this->db->get();
-    }
-    public function permisosSubMenuById(){
-        $this->db->select("m.idmenudetalle,pm.Activo,m.idmenu");
-        $this->db->from("menu_detalle m");
-        $this->db->join("permisos_menu_detalle pm","m.idmenudetalle=pm.idmenudetalle","LEFT");
-        $this->db->where("idusuario", $this->idusuario);
-        $this->db->where("idmenu", $this->id);
-        return $this->db->get();
-    }
-    public function permisosDetalle(){
-        $this->db->select("m.idpermiso,pm.Activo,m.idmodulo");
-        $this->db->from("permiso m");
-        $this->db->join("permisos_opcion pm","m.idpermiso=pm.idpermiso","LEFT");
-        $this->db->where("idusuario", $this->idusuario);
         return $this->db->get();
     }
     public function otorgarPermisoMenu(){

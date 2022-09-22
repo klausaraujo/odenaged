@@ -85,7 +85,8 @@
 		<script src="<?=base_url()?>public/template/js/table/tableIE.js"></script>
 		<script>
 			const lista = JSON.parse('<?=json_encode($ubi)?>'); const datos = [];
-			let table, tableDanio, tableAccion, tableFotos, tableIEF, tableIEUbigeo, tabComp;
+			let table, tableDanio, tableAccion, tableFotos, tableIEF, tableIEUbigeo, tabComp, reporteEvento;
+			let inicio = '', fin = '';
 			
 			window.onload = function(){
 				var opt = {lat: 42.1382114, lng: -71.5212585,zoom: 16}; $('.ajaxMap').hide();
@@ -118,7 +119,7 @@
 	<script>
 		window.onload = function(){
 			mapaMonitoreoEventos(opt);
-			mapas();
+			//mapas();
 		}
 	</script>
 <?}?>

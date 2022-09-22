@@ -78,8 +78,58 @@ function marcadores(data){
 	var anime = google.maps.Animation.DROP;
 	
 	data.forEach(function(el){
-		console.log(el.idregistroevento);
+		//console.log(el.idregistroevento);
 		//console.log(parseFloat(el.latitud)+',  '+parseFloat(el.longitud));
+		switch (el.idtipoevento) {
+			case '1':
+			  icono = URI + "public/template/mapas/icons/ic_natural.png";
+			  switch (el.idevento) {
+				case '1':
+				  icono = URI + "public/template/mapas/icons/ic_volcan.png";
+				  break;
+				case '11':
+				  icono = URI + "public/template/mapas/icons/ic_friaje.png";
+				  break;
+				case '13':
+				  icono = URI + "public/template/mapas/icons/ic_helada.png";
+				  break;
+				case '15':
+				  icono = URI + "public/template/mapas/icons/ic_forestal.png";
+				  break;
+				case '17':
+				case '18':
+				  icono = URI + "public/template/mapas/icons/ic_lluvias.png";
+				  break;
+				case '26':
+				  icono = URI + "public/template/mapas/icons/ic_sismos.png";
+				  break;
+				case '27':
+				  icono = URI + "public/template/mapas/icons/ic_vientos.png";
+				  break;
+				default:
+				  break;
+			  }
+			  break;
+			case '2':
+			  icono = URI + "public/template/mapas/icons/ic_antropico.png";
+			  switch (el.idevento) {
+				case '35':
+				  icono = URI + "public/template/mapas/icons/ic_transito.png";
+				  break;
+				case '48':
+				  icono = URI + "public/template/mapas/icons/ic_explosion.png";
+				  break;
+				case '53':
+				  icono = URI + "public/template/mapas/icons/ic_incendio.png";
+				  break;
+				default:
+				  break;
+			  }
+			  break;
+			case '3':
+			  icono = URI + "public/template/mapas/icons/ic_sanitario.png";
+			  break;
+		}
 		var icon = {
 			url: icono,
 			size: new google.maps.Size(32, 32),

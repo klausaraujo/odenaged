@@ -24,7 +24,7 @@
 									<div class="col-sm-4">
 										<div class="row">
 											<label for="tipoevento" class="col-sm-12">Tipo de Evento:</label>
-											<select class="form-control col-sm-11" name="tipoevento" id="tipoevento">
+											<select class="form-control col-sm-11 tipoevento" name="tipoevento" id="tipoevento">
 												<option value="">-- Seleccione --</option>
 									<?php
 											foreach($tipoevento as $row):	?>
@@ -36,7 +36,7 @@
 									<div class="col-sm-4">
 										<div class="row">
 											<label for="evento" class="col-sm-12">Nombre del Evento:</label>
-											<select class="form-control col-sm-11" name="evento" id="evento">
+											<select class="form-control col-sm-11 evento" name="evento" id="evento">
 												<option value="">-- Seleccione --</option>
 											</select>
 										</div>
@@ -180,11 +180,12 @@
 										<div class="row">
 											<label for="distrito" class="col-sm-12">Distrito:</label>
 											<select class="form-control col-sm-10 distrito" name="distrito" id="distrito">
+												<option value="">-- Seleccione --</option>
 									<?php
-											if(!empty($ubigeo->dttos)){ $i = 0;
+											if(!empty($ubigeo->dttos)){
 												foreach($ubigeo->dttos as $row):	?>
-													<option value="<?=$row->cod_dis;?>" <?=($i === 0)? 'selected' : ''?> ><?=$row->distrito;?></option>
-									<?			$i++; endforeach;
+													<option value="<?=$row->cod_dis;?>" ><?=$row->distrito;?></option>
+									<?			endforeach;
 											}else{	?>
 												<option value="">-- Seleccione --</option>
 									<? 		}	?>

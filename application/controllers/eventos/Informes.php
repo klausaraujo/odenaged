@@ -16,7 +16,7 @@ class Informes extends CI_Controller
 		
 		$dtz = new DateTimeZone("America/Lima");
 		$dt = new DateTime("now", $dtz);
-		$this->fecha = $dt->format("Y-m-d H:i:s");
+		$this->fecha = $dt->format('Y-m-d H:i:s');
     }
 
     public function index(){ }
@@ -272,7 +272,7 @@ class Informes extends CI_Controller
 				$this->Informe_model->setTipoAccion($row->idtipoaccion);
 				$this->Informe_model->setDescripcion($row->descripcion);
 				$dt = new DateTime($row->fecha, $dtz);
-				$fechaAccion = $dt->format("Y-m-d h:i:s");
+				$fechaAccion = $dt->format('Y-m-d H:i:s');
 				$this->Informe_model->setFechaHora($fechaAccion);
 				if(isset($row->idusuario_apertura)){
 					$this->Informe_model->setUsuarioReg($row->idusuario_apertura);

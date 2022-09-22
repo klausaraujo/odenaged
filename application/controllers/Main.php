@@ -81,18 +81,26 @@ class Main extends CI_Controller
 		
 		$this->load->view('main',$data);
 	}
+	public function mapas(){
+		//echo 'Mapas Interactivos';
+		$this->load->model("Evento_model");
+		$tipoevento = $this->Evento_model->tipoEvento();
+		$nivel = $this->Evento_model->cargaNivel();
+		$tipoevento = ($tipoevento->num_rows() > 0)? $tipoevento->result() : array();
+		$nivel = ($nivel->num_rows() > 0)? $nivel->result() : array();
+		
+		$data = array( 'tipo' => $tipoevento, 'nivel' => $nivel );
+		
+		$this->load->view('main',$data);
+	}
 	public function cargarprov(){
 		$this->load->model("Ubigeo_model");
 		$this->Ubigeo_model->setIdUser($this->session->userdata("idusuario"));
 		$this->Ubigeo_model->setIdDpto($this->input->post("region"));
 		
-		$listaProv = $this->Ubigeo_model->proUser();		
+		$listaProv = $this->Ubigeo_model->proUser();
 		
-		$data = array(
-            "lista" => $listaProv->result()
-        );
-        
-        echo json_encode($data);
+        echo json_encode($listaProv->result());
 	}
 	public function cargardis(){
 		$this->load->model("Ubigeo_model");
@@ -101,13 +109,9 @@ class Main extends CI_Controller
 		$this->Ubigeo_model->setIdDpto($this->input->post("region"));
 		$this->Ubigeo_model->setIdProv($this->input->post("provincia"));
 		
-		$listaDis = $this->Ubigeo_model->dttos();		
-		
-		$data = array(
-            "lista" => $listaDis->result()
-        );
+		$listaDis = $this->Ubigeo_model->dttos();
         
-        echo json_encode($data);
+        echo json_encode($listaDis->result());
 	}
 	public function cargarLatLng(){
 		$this->load->model("Ubigeo_model");
@@ -131,20 +135,5 @@ class Main extends CI_Controller
 		$evtByTip = ($evtByTip->num_rows() > 0)? $evtByTip->result() : array();
 		
 		echo json_encode($evtByTip);
-	}
-	public function mapas(){
-		//echo 'Mapas Interactivos';
-		$this->load->model("Evento_model");
-		$tipoevento = $this->Evento_model->tipoEvento();
-		$nivel = $this->Evento_model->cargaNivel();
-		$tipoevento = ($tipoevento->num_rows() > 0)? $tipoevento->result() : array();
-		$nivel = ($nivel->num_rows() > 0)? $nivel->result() : array();
-		
-		$data = array(
-			'tipo' => $tipoevento,
-			'nivel' => $nivel,
-		);
-		
-		$this->load->view('main',$data);
 	}
 }

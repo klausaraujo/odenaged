@@ -1,7 +1,6 @@
 <?php
-error_reporting(0);
-if (! defined("BASEPATH"))
-    exit("No direct script access allowed");
+//error_reporting(0);
+if (! defined("BASEPATH")) exit("No direct script access allowed");
 
 class Login extends CI_Controller
 {
@@ -39,50 +38,17 @@ class Login extends CI_Controller
                 header("location:" . base_url() . "login");
             }
 			
-            $this->Usuario_model->setIdRol($row->idrol);
-            $listaModulo = $this->Usuario_model->listaModulo();
-			//$menus = $this->Usuario_model->listaMenu();
-			
-			$lMenu = array(); $i = 0; $lSubMenu = array();
-			
+			$this->Usuario_model->setIdRol($row->idrol);
 			$this->Menu_model->setIdUsuario($row->idusuario);
-            #$permisosOpcion = $this->Menu_model->listaPermisosOpcion();
-            foreach ($listaModulo->result() as $lrow) :
-				if ($lrow->activo == 1) {
-					
-					$this->Menu_model->setIdModulo($lrow->idmodulo);
-                    $lista = $this->Menu_model->listaPermisos(); 
-					
-                    foreach ($lista->result() as $menu) :
-
-                        $lMenu[$i]['idmenu'] = $menu->idmenu;
-						$lMenu[$i]['idmodulo'] = $menu->idmodulo;
-						$lMenu[$i]['descripcion'] = $menu->descripcion;
-						$lMenu[$i]['nivel'] = $menu->nivel;
-						$lMenu[$i]['url'] = $menu->url;
-						$lMenu[$i]['icono'] = $menu->icono;
-						$lMenu[$i]['activo'] = $menu->activo;
-						
-						if ($menu->nivel === '1') {
-							$j = 0;
-							$this->Menu_model->setId($menu->idmenu);
-							$subM = $lista = $this->Menu_model->listaSubMenuPermisos();
-							
-							foreach ($subM->result() as $srow) :
-                                $lSubMenu[$j]['idmenudetalle'] = $srow->idmenudetalle;
-                                $lSubMenu[$j]['descripcion'] = $srow->descripcion;
-                                $lSubMenu[$j]['url'] = $srow->url;
-                                $lSubMenu[$j]['icono'] = $srow->icono;
-								$lSubMenu[$j]['activo'] = $srow->activo;
-                                $j ++;
-							endforeach;
-                        }
-						
-                        $i ++;
-
-                    endforeach;
-                }
-            endforeach;
+            
+			# Modulos y Menus del usuario
+			$listaModulo = $this->Usuario_model->listaModulo();
+			$lMenu = $this->Menu_model->listaMenuPermisos();
+			$lSubMenu = $this->Menu_model->listaSubMenuPermisos();
+			
+			$listaModulo = ($listaModulo->num_rows() > 0)? $listaModulo->result() : array();
+			$lMenu = ($lMenu->num_rows() > 0)? $lMenu->result() : array();
+			$lSubMenu = ($lSubMenu->num_rows() > 0)? $lSubMenu->result() : array();
 			
 			#Trae el ubigeo del usuario
             $this->Ubigeo_model->setIdUser($row->idusuario);
@@ -149,7 +115,7 @@ class Login extends CI_Controller
             $this->session->set_userdata("nombre", $row->nombre);
             $this->session->set_userdata("apellido", $row->apellido);
             $this->session->set_userdata("avatar", $row->avatar);
-            $this->session->set_userdata("modulos", $listaModulo->result());
+            $this->session->set_userdata("modulos", $listaModulo);
             $this->session->set_userdata("menu", $lMenu);
 			$this->session->set_userdata("submenu", $lSubMenu);
             /*$token = JWT::encode(array("usuario"=>sha1($row->idusuario),"modulos"=>$listaModulo->result()),getenv("SECRET_SERVER_KEY"));

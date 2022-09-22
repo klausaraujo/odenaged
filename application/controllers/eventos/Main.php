@@ -23,7 +23,7 @@ class Main extends CI_Controller
 			$dtz = new DateTimeZone("America/Lima");
 			$dt = new DateTime("now", $dtz);
 			//$fechaActual = $dt->format("Y-m-d h:i:s a");
-			$fechaActual = $dt->format("Y-m-d h:i:s");
+			$fechaActual = $dt->format("Y-m-d H:i:s");
 			
 			$this->Evento_model->setAnio($this->input->post('anio'));
 			$this->Evento_model->setNivelEvento($this->input->post('nivelevento'));
@@ -77,32 +77,22 @@ class Main extends CI_Controller
 
         echo json_encode($data);
 	}
-	public function cargarEvento(){
-		$this->load->model("Evento_model");
-		$this->Evento_model->setIdTipoEvt($this->input->post("tipo"));
-		$evento = $this->Evento_model->cargarEvento();
-		$data = array(
-			"lista" => $evento->result()
-		);
-		
-		echo json_encode($data);
-	}	
 	public function registrar()
     {
-		$this->load->model("Evento_model");
+		$this->load->model('Evento_model');
 		$id = $this->Evento_model->registrar();
 		if ($id > 0){
 			$this->Evento_model->setId($id); $resp = $this->guardarMapa($id);
 			if($resp === 500) $data = array('status' => 200, 'mensaje' => 'Evento Registrado Exitosamente. Imagen del mapa no guardada');
 			else $data = array('status' => 200, 'mensaje' => 'Evento Registrado Exitosamente');
 			
-		}else{ $data = array( "status" => 500, 'mensaje' => 'No se pudo registrar el Evento'); }
+		}else{ $data = array( 'status' => 500, 'mensaje' => 'No se pudo registrar el Evento'); }
 		
 		echo json_encode($data);
     }
 	
 	public function editar(){
-		$this->load->model("Evento_model");
+		$this->load->model('Evento_model');
 		
 		$id = $this->Evento_model->editar();
 		if ($id > 0){
@@ -110,7 +100,7 @@ class Main extends CI_Controller
 			if($edita === 500) $data = array('status' => 200, 'mensaje' => 'Evento Registrado Exitosamente. Imagen del mapa no guardada');
 			else $data = array('status' => 200, 'mensaje' => 'Evento Registrado Exitosamente');
 			
-		}else{ $data = array( "status" => 500, 'mensaje' => 'No se pudo registrar el Evento'); }
+		}else{ $data = array( 'status' => 500, 'mensaje' => 'No se pudo registrar el Evento'); }
 		
 		echo json_encode($data);
 	}
@@ -154,9 +144,8 @@ class Main extends CI_Controller
 		if($data->num_rows() > 0){
 			$data = $data->row();
 			#Carga ubigeo del evento y regiones generales
-			$ubicacion = $this->ubicacion($data);
-			$this->Evento_model->setIdTipoEvt($data->idtipoevento);
-			$evento = $this->Evento_model->cargarEvento(); $evento->num_rows() > 0? $evento = $evento->result() : $evento = array();
+			$ubicacion = $this->ubicacion($data); $this->Evento_model->setIdTipoEvt($data->idtipoevento);
+			$evento = $this->Evento_model->cargarEvento(); $evento = $evento->num_rows() > 0? $evento->result() : array();
 			
 			$data = array(
 				'regiones' => $ubicacion,
@@ -166,6 +155,49 @@ class Main extends CI_Controller
 			);
 			
 		}else{ $data = array( 'status' => 500 ); }
+		
+		echo json_encode($data);
+	}
+	public function listaReporteConsolidado(){
+		$this->load->model('Mapas_model'); $this->load->model('Ubigeo_model');
+		$reg = $this->input->post('idregion'); $pro = $this->input->post('idpro'); $dis = $this->input->post('iddis');
+		$desde = $this->input->post('inicio'); $hasta = $this->input->post('fin'); $tipo = $this->input->post('tipo');
+		$nivel = $this->input->post('nivel'); $evento = $this->input->post('evt'); $ubis = []; $i = 0;
+		$zonas = $this->session->userdata('ubigeo');
+		
+		# Setear las variables del Modelo
+		$this->Ubigeo_model->setIdUser($this->session->userdata('idusuario'));
+		$this->Mapas_model->setId($this->session->userdata('idusuario'));
+		
+		$dtz = new DateTimeZone("America/Lima");
+		$dt = new DateTime($desde, $dtz);
+		$desde = $dt->format('d/m/Y');
+		$dt = new DateTime($hasta, $dtz);
+		$hasta = $dt->format('d/m/Y');
+		
+		(!$reg == '')? $this->Mapas_model->setDpto($reg):''; (!$pro == '')? $this->Mapas_model->setPro($pro):''; (!$dis == '')?$this->Mapas_model->setDis($dis):'';
+		(!$tipo == '')? $this->Mapas_model->setTipoEvt($tipo):''; (!$nivel == '')? $this->Mapas_model->setNivel($nivel):'';
+		$this->Mapas_model->setFechaInicio($desde); $this->Mapas_model->setFechaFin($hasta); (!$evento == '')? $this->Mapas_model->setEvento($evento):'';
+		$this->Mapas_model->setCampos('*');
+		//else $this->Mapas_model->setCampos('*');
+		
+		$detevt = $this->Mapas_model->buscaEventoMapa();
+		
+		if($detevt->num_rows() > 0){
+			$detevt = $detevt->result();
+			if(!$reg || !$pro){
+				if(null !== $zonas){
+					foreach($detevt as $evt):
+						$pro = $evt->provincia;
+						$this->Ubigeo_model->setIdProv($pro);
+						$ctatemp = $this->Ubigeo_model->ubigeosEvtUser();
+						if($ctatemp > 0){ $ubis[$i] = $evt; $i++; }
+					endforeach;
+				}
+			}
+		}else $detevt = array();
+		
+		$data = array( 'data' => (!empty($ubis)? $ubis : $detevt) );
 		
 		echo json_encode($data);
 	}

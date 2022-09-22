@@ -14,17 +14,17 @@
             <nav class="iq-sidebar-menu">
 				<ul id="iq-sidebar-toggle" class="iq-menu">
 					<li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Panel de Navegación</span></li>
-                    <li class="<?php echo $this->uri->segment(1) === '' ? 'active main-active': ''; ?>" >
+                    <li class="<?php echo $this->uri->segment(1) == '' ? 'active main-active': ''; ?>" >
                         <a href="<?=base_url()?>" class="iq-waves-effect"><i class="ri-home-8-fill"></i><span>Inicio</span></a>
                     </li>
 					<?php 
-                        if($this->uri->segment(1)=="") {
-							$listaModulos = $this->session->userdata("modulos");
+                        if($this->uri->segment(1) == '') {
+							$listaModulos = $this->session->userdata('modulos');
 							foreach($listaModulos as $row): ?>
-                        <li class="<?php echo $this->uri->segment(1)==$row->url ? "active main-active": ""; ?>">
+                        <li class="<?php echo $this->uri->segment(1) === $row->url ? "active main-active": ""; ?>">
                     <?php  	if($row->activo > 0){ ?>
 					
-							<a href="<?=base_url()?><?=$row->url?>" class="iq-waves-effect">
+							<a href="<?=$row->url?>" class="iq-waves-effect">
                                 <i class="<?=$row->mini?>"></i>
                                 <span><?=$row->menu?></span>
                             </a>
@@ -56,55 +56,55 @@
 						echo var_dump($lMenu);
 						echo var_dump($submenu);*/
 						
-						if(!empty($lMenu)){
-							foreach($lMenu as $row):
-								if($row['idmodulo'] === $idModulo){
-						?>
-                            <li id="menu<?=$row['idmenu']?>">
-                        <?php if($row['nivel'] === '0'){ ?>
-								<?php if($row['activo'] === '1'){ ?>
-								<a href="#" rel="<?=$row['url']?>" id="linkAjax">
-                                    <div class="pull-left">
-                                        <i class="<?=$row['icono']?> mr-20"></i>
-                                        <span class="right-nav-text"><?=$row['descripcion']?></span>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </a>
-								<?php }else{ ?>	
-								<span class="disable">
-									<div class="pull-left">
-                                        <i class="<?=$row['icono']?> mr-20"></i>
-                                        <span class="right-nav-text"><?=$row['descripcion']?></span>
-                                    </div>
-                                    <div class="clearfix"></div>
-								</span>
-								<?php }							
-							}else{ ?>
-                                <a href="javascript:void(0);" data-toggle="collapse" data-target="#sub_<?=$row['idmenu']?>">
-                                    <div class="pull-left">
-                                        <i class="<?=$row['icono']?>  mr-20"></i>
-                                        <span class="right-nav-text"><?=$row['descripcion']?></span>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </a>
-								<?if($row['nivel'] === '1'){?>
-									<div class="">
-										<ul id="sub_<?=$row["idmenu"]?>" class="collapse collapse-level-1 pb-1 pl-1">
-										<?php foreach($submenu as $srow): ?>
-											<li>
-												<a href="<?=base_url()?><?=$srow['url']?>"><i class="<?=$srow['icono']?>  mr-20"></i><?=$srow['descripcion']?></a>
-											</li>
-										<?php endforeach; ?> 
-										</ul>
-									</div>
-								<?}?>
-                            <?php } ?>
-							</li>
-                        <?php
-								}
-							endforeach;
+							if(!empty($lMenu)){
+								foreach($lMenu as $row):
+									if($row->idmodulo === $idModulo){
+							?>
+								<li id="menu<?=$row->idmenu?>">
+							<?  if($row->nivel === '0'){ 
+									if($row->activo === '1'){ ?>
+									<a href="#" rel="<?=$row->url?>" id="linkAjax">
+										<div class="pull-left">
+											<i class="<?=$row->icono?> mr-20"></i>
+											<span class="right-nav-text"><?=$row->descripcion?></span>
+										</div>
+										<!--<div class="clearfix"></div>-->
+									</a>
+									<?php }else{ ?>	
+									<span class="disable">
+										<div class="pull-left">
+											<i class="<?=$row->icono?> mr-20"></i>
+											<span class="right-nav-text"><?=$row->descripcion?></span>
+										</div>
+										<!--<div class="clearfix"></div>-->
+									</span>
+									<?php }							
+								}else{ ?>
+									<a href="javascript:void(0);" data-toggle="collapse" data-target="#sub_<?=$row->idmenu?>">
+										<div class="pull-left">
+											<i class="<?=$row->icono?>  mr-20"></i>
+											<span class="right-nav-text"><?=$row->descripcion?></span>
+										</div>
+										<!--<div class="clearfix"></div>-->
+									</a>
+									<?//if($row->nivel === '1'){?>
+										<div class="submenu-1">
+											<ul id="sub_<?=$row->idmenu?>" class="collapse collapse-level-1 pb-1 pl-1">
+											<?  foreach($submenu as $srow):
+													if($row->idmenu === $srow->idmenu){ ?>
+												<li><a href="<?=$srow->url?>" rel=""><i class="<?=$srow->icono?> mr-20"></i><?=$srow->descripcion?></a></li>
+													<?}
+												endforeach; ?> 
+											</ul>
+										</div>
+									<?//}?>
+								<?  } ?>
+								</li>
+							<?php
+									}
+								endforeach;
+							}
 						}
-					}
 				  ?>
 				</ul>
 			</nav>

@@ -71,6 +71,7 @@ $route['cargarEvento'] = 'eventos/main/cargarEvento';
 $route['registrarEvento'] = 'eventos/main/index';
 $route['eventosListar'] = 'eventos/main/listar';
 $route['editarEvento'] = 'eventos/main/editarEvento';
+$route['reporteConsolidado'] = 'eventos/main/listaReporteConsolidado';
 
 #Informes
 $route['buscaPreliminar'] = 'eventos/informes/preliminar';
@@ -94,7 +95,7 @@ $route['permisos'] = 'usuarios/main/permisos';
 $route['regusuario'] = 'usuarios/main/registrar';
 
 # Mapas interactivos
-$route['buscaEvento'] = 'mapas/main/buscaEvento';
+$route['buscaEventoMapa'] = 'mapas/main/buscaEventoMapa';
 $route['infoWindowEventos'] = 'mapas/main/infoWindowEventos';
 /**/
 $route['404_override'] = '';

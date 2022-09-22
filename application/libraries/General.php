@@ -62,13 +62,13 @@ class General {
 	#Funcion para conectarse a la api de la RENIEC
 	public function curl($tipo,$doc)
     {
-        $api = "http://mpi.minsa.gob.pe/api/v1/ciudadano/ver/";
-        $token = "Bearer d90f5ad5d9c64268a00efaa4bd62a2a0";
+        $api = 'http://mpi.minsa.gob.pe/api/v1/ciudadano/ver/';
+        $token = 'Bearer d90f5ad5d9c64268a00efaa4bd62a2a0';
         $handler = curl_init();
 
-        curl_setopt($handler, CURLOPT_URL,  $api.$tipo."/".$doc."/");
+        curl_setopt($handler, CURLOPT_URL,  $api.$tipo.'/'.$doc.'/');
         curl_setopt($handler, CURLOPT_HEADER, false);
-        curl_setopt($handler, CURLOPT_HTTPHEADER, array("Authorization: " . $token, "Content-Type: application/json" ));
+        curl_setopt($handler, CURLOPT_HTTPHEADER, array('Authorization: '.$token, 'Content-Type: application/json' ));
         curl_setopt($handler, CURLOPT_RETURNTRANSFER, true);
         $data = curl_exec($handler);
         $code = curl_getinfo($handler, CURLINFO_HTTP_CODE);
@@ -80,7 +80,8 @@ class General {
 	
 	public function guardarMapaCurl($path,$image,$lat,$lng,$zoom)
 	{
-		$url = "https://maps.googleapis.com/maps/api/staticmap?language=es&center=".trim($lat).",".trim($lng)."&markers=color:red|label:|".trim($lat).",".trim($lng)."&zoom=".$zoom."&size=596x280&key=AIzaSyByPoOpv9DTDZfL0dnMxewn5RHnzC8LGpc";
+		$url = 'https://maps.googleapis.com/maps/api/staticmap?language=es&center='.trim($lat).','.trim($lng).'&markers=color:red|label:|'.
+				trim($lat).','.trim($lng).'&zoom='.$zoom.'&size=596x280&key=AIzaSyC8SkAwVF2XQKlN56C0Ixv2An6d4_cdW5A';
 
 		if(!file_exists($path)){
 			$parts = explode('/', $path);

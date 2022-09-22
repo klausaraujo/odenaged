@@ -23,7 +23,7 @@ $ubigeo = $this->session->userdata('ubigeo');
 							<div class="col-md-6">
 								<div class="row">
 									<label for="region" class="col-md-12">Region:</label>
-									<select class="form-control col-md-11 region" name="region" id="region">
+									<select class="form-control col-md-11 region" name="region" id="regionMapa">
 										<option value=""> -- TODOS -- </option>
 									<?php
 										if(!empty($ubigeo->dptos)){
@@ -35,7 +35,7 @@ $ubigeo = $this->session->userdata('ubigeo');
 								</div>
 								<div class="row">
 									<label for="distrito" class="col-md-12">Distrito:</label>
-									<select class="form-control col-md-11 distrito" name="distrito" id="distrito">
+									<select class="form-control col-md-11 distrito" name="distrito" id="distritoMapa">
 										<option value=""> -- TODOS -- </option>
 									<?php
 										if(!empty($ubigeo->dttos)){
@@ -47,7 +47,7 @@ $ubigeo = $this->session->userdata('ubigeo');
 								</div>
 								<div class="row">
 									<label for="nivel" class="col-md-12">Nivel:</label>
-									<select class="form-control col-md-11" name="nivel" id="nivel">
+									<select class="form-control col-md-11" name="nivel" id="nivelMapa">
 										<option value=""> -- TODOS -- </option>
 									<?php
 										if(!empty($nivel)){
@@ -65,19 +65,19 @@ $ubigeo = $this->session->userdata('ubigeo');
 							<div class="col-md-6">
 								<div class="row">
 									<label for="provincia" class="col-md-12">Provincia:</label>
-									<select class="form-control col-md-11 provincia" name="provincia" id="provincia">
+									<select class="form-control col-md-11 provincia" name="provincia" id="provinciaMapa">
 										<option value=""> -- TODOS -- </option>
 									<?php
-										if(!empty($ubigeo->dttos)){
-											foreach($ubigeo->dttos as $row):	?>
-												<option value="<?=$row->cod_dis;?>" ><?=$row->distrito;?></option>
+										if(!empty($ubigeo->prov)){
+											foreach($ubigeo->prov as $row):	?>
+												<option value="<?=$row->cod_pro;?>" ><?=$row->provincia;?></option>
 									<?		endforeach;
 										}	?>
 									</select>
 								</div>
 								<div class="row">
 									<label for="tipoevento" class="col-md-12">Tipo de Evento::</label>
-									<select class="form-control col-md-11 tipoevento" name="tipoevento" id="tipoevento">
+									<select class="form-control col-md-11 tipoevento" name="tipoevento" id="tipoeventoMapa">
 										<option value=""> -- TODOS -- </option>
 									<?php
 										if(!empty($tipo)){
@@ -89,7 +89,7 @@ $ubigeo = $this->session->userdata('ubigeo');
 								</div>
 								<div class="row">
 									<label for="evento" class="col-md-12">Evento:</label>
-									<select class="form-control col-md-11 eventotipo" name="evento" id="evento">
+									<select class="form-control col-md-11 evento" name="evento" id="eventoMapa">
 										<option value=""> -- TODOS -- </option>
 									</select>
 								</div>
@@ -101,7 +101,7 @@ $ubigeo = $this->session->userdata('ubigeo');
 							<div class="col-md-12">
 								<div class="row pr-2">
 									<label for="consolidado" class="col-md-12">Consolidado de Evento:</label>
-									<select class="form-control col-md-12" name="consolidado" id="consolidado">
+									<select class="form-control col-md-12" name="consoevt" id="consoevt">
 										<option value=""> -- TODOS -- </option>
 									</select>
 								</div>
@@ -121,7 +121,9 @@ $ubigeo = $this->session->userdata('ubigeo');
 								</div>
 							</div>
 						</div>
-						<div class="row"><button class="btn col-sm-11 mx-auto btn-sirese" id="buscar" style="position:absolute;bottom:10px">Mostrar Reporte dentro del Mapa</button></div>
+						<div class="row">
+							<button class="btn col-sm-11 mx-auto btn-sirese buscaConsolidado" id="buscarMapa" style="position:absolute;bottom:10px">Mostrar Reporte dentro del Mapa</button>
+						</div>
 					</div>
 				</div>
 			</div>

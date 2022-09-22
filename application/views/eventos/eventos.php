@@ -42,7 +42,8 @@ if(null !== $zonas){
 						</div>
 				</div>
 			</div>
-			<div class="ajaxPreliminar" style="display:none"><?php $this->load->view("eventos/form-preliminar"); ?></div>
-			<div class="ajaxComplementario" style="display:none"><?php $this->load->view("eventos/form-complementario"); ?></div>
+			<div class="ajaxPreliminar" style="display:none"><?php $this->load->view('eventos/form-preliminar'); ?></div>
+			<div class="ajaxComplementario" style="display:none"><?php $this->load->view('eventos/form-complementario'); ?></div>
+			<div class="repòrteConsolidado" style="display:none"><?php $this->load->view('eventos/reporte-consolidado'); ?></div>
 		</div>
 <? } ?>
