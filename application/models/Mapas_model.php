@@ -47,6 +47,7 @@ class Mapas_model extends CI_Model
 		$this->db->where('fecha >=',$this->inicio);
 		$this->db->where('fecha <=',$this->fin);
 		$this->db->where('activo', '1');
+		$this->db->order_by('idregistroevento');
 		//$this->db->group_by('lg.idregistroevento');
 		return $this->db->get();
     }

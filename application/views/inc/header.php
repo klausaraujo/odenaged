@@ -13,8 +13,9 @@
    <link rel="stylesheet" href="<?=base_url()?>public/template/js/table/datatable/datatables.min.css" type="text/css">
 
    <?if($this->uri->segment(1) === 'eventos'){?>
-   <script src="https://polyfill.io/v3/polyfill.min.js?features=default" async></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=<?='AIzaSyC8SkAwVF2XQKlN56C0Ixv2An6d4_cdW5A'?>&libraries=places&v=weekly" async></script>
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=default" async ></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=<?='AIzaSyC8SkAwVF2XQKlN56C0Ixv2An6d4_cdW5A'?>&libraries=places&v=weekly" async ></script>
+	<!--<script src="<?=base_url()?>public/template/html2canvas/html2canvas.min.js" async ></script>-->
    <style>
 		input[type=number]::-webkit-inner-spin-button, 
 		input[type=number]::-webkit-outer-spin-button { 

@@ -79,6 +79,7 @@ $('body').bind('click','a',function(e){
 				success: function (resp) {
 					const { data } = resp;
 					marcadores(data);
+					console.log(data);
 				}
 			});
 		}else if(idbtn === 'buscaEvtCons'){
