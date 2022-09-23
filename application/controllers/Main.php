@@ -91,7 +91,7 @@ class Main extends CI_Controller
 		
 		$data = array( 'tipo' => $tipoevento, 'nivel' => $nivel );
 		
-		$this->load->view('main',$data);
+		$this->load->view('mapas/mapas',$data);
 	}
 	public function cargarprov(){
 		$this->load->model("Ubigeo_model");

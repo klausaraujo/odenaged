@@ -44,7 +44,7 @@ date_default_timezone_set("America/Lima");
 						if($this->uri->segment(1) === 'usuarios') $this->load->view("usuarios/usuarios");
 						if($this->uri->segment(2) === 'perfil')$this->load->view('usuarios/perfil');
 						if($this->uri->segment(1) === 'fichas') $this->load->view('fichas/fichas');
-						if($this->uri->segment(1) === 'mapas') $this->load->view('mapas/mapas');
+						#if($this->uri->segment(1) === 'mapas') $this->load->view('mapas/mapas');
 					?>
 				</div>
 			</div>

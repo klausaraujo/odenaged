@@ -76,10 +76,13 @@ $('body').bind('click','a',function(e){
 				url: 'buscaEventoMapa',
 				data: {idregion:region,idpro:pro,iddis:dis,inicio:desde,fin:hasta,tipo:tipo,nivel:nivel,evt:evento,idboton:idbtn},
 				method: 'post', dataType: 'json',
+				beforeSend: function(){ $('#cargando').html('<i class="fa fa-spinner fa-pulse"></i>'); },
+				error: function(){ $("#cargando").html('&nbsp;'); },
 				success: function (resp) {
 					const { data } = resp;
 					marcadores(data);
-					console.log(data);
+					//console.log(data);
+					$("#cargando").html('&nbsp;');
 				}
 			});
 		}else if(idbtn === 'buscaEvtCons'){

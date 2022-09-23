@@ -1,6 +1,6 @@
 let dre = null, ugel = null;
 
-function format(d) {
+/*function format(d) {
     // `d` is the original data object for the row
     return (
 		'<div class="row"><div class="col-sm-2 col-md-1">' +
@@ -14,7 +14,7 @@ function format(d) {
 		'</ul>' +
 		'</div>'
     );
-}
+}*/
 
 function informe(id,ub,v){
 	ies = null;
@@ -465,6 +465,7 @@ function main(map) {
 				{data:'fecha'},{data:'hora'},{data:'usuario_registro'},{data:'fecha_registro'},{data:'estado'}
 			];
 			reporteConsolidado(cols);
+			reporteEvento.columns(1).visible(false);
 			/*reporteEvento = $('#reporteEventos').DataTable({ columns:cols, 'bAutoWidth': true,'bDestroy': true,'responsive': true, });
 			reporteEvento.columns(0).visible(false); $('#reporteEventos').show();*/
 		}
@@ -482,10 +483,10 @@ function main(map) {
 function reporteConsolidado(cols){
 	reporteEvento = $('#reporteEventos').DataTable({
         ajax: {
-			dom: '<"html5buttons"B>lTfgitp',
+			dom: '<B>lTfgitp',
 			pageLength: 10,
 			url: 'reporteConsolidado',
-			type: "POST",
+			type: 'POST',
 			data: function (d) {
 				d.idregion = document.getElementById('regionMapa').value,
 				d.idpro = document.getElementById('provinciaMapa').value,
@@ -505,7 +506,7 @@ function reporteConsolidado(cols){
 		}
     });
 	// Add event listener for opening and closing details
-	$('#reporteEventos tbody').on('click', 'td.dt-control', function () {
+	/*$('#reporteEventos tbody').on('click', 'td.dt-control', function () {
 		var tr = $(this).closest('tr');
 		var row = table.row(tr);
 
@@ -518,5 +519,5 @@ function reporteConsolidado(cols){
 			row.child(format(row.data())).show();
 			tr.addClass('shown');
 		}
-	});
+	});*/
 }

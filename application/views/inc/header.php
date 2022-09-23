@@ -13,6 +13,7 @@
    <link rel="stylesheet" href="<?=base_url()?>public/template/js/table/datatable/datatables.min.css" type="text/css">
 
    <?if($this->uri->segment(1) === 'eventos'){?>
+   
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=default" async ></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=<?='AIzaSyC8SkAwVF2XQKlN56C0Ixv2An6d4_cdW5A'?>&libraries=places&v=weekly" async ></script>
 	<!--<script src="<?=base_url()?>public/template/html2canvas/html2canvas.min.js" async ></script>-->
@@ -47,11 +48,22 @@
 		#uploader #uploaderCont .row.fileQueue>div.name b{overflow:hidden;text-overflow:ellipsis}
 		#uploader #uploaderCont .row.fileQueue>div.remove{margin-left:20px;justify-content:flex-end}*/
 	</style>
+	
 	<?}else if($this->uri->segment(1) === 'usuarios'){?>
+	
 	<link rel="stylesheet" href="<?=base_url()?>public/template/js/treeview/style.css" type="text/css">
+	
 	<?}else if($this->uri->segment(1) === 'mapas'){?>
+	
 	<link rel="stylesheet" href="<?=base_url()?>public/template/mapas/main.css" type="text/css">
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=default" async></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=<?='AIzaSyC8SkAwVF2XQKlN56C0Ixv2An6d4_cdW5A'?>&libraries=places&v=weekly" async></script>
+	<style>
+		.formu, .mapa{ margin:0;padding:0;min-height:100vh }
+		.formu{z-index:10}
+		label{margin-top:5px; margin-bottom:2px}
+		.card-body{min-height:100vh;<?=$sombradiv?>;}
+	</style>
+	
 	<?}?>
 </head>
